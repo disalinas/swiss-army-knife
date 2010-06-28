@@ -28,8 +28,20 @@
 
 23/06/10             - Create progress-bar for transcoding blueray-mkv inside shell-script.
                      - Test the progress-bar for transcoding inside shell. works :-)            
-27/06/10             - Innitial Setup for a XBMX-Addon 
+
+                     *******************************************************                       
+                     * The King is dead, long live the king !
+                     * Le roi est mort,vive Roi !
+                     * Der König ist tot, lang lebe der König !
+                     * rex mortuus est, vivat rex !
+                     *******************************************************   
+                                      
+
+27/06/10             - Innitial Setup for a XBMX-Addon.
                      - Created Addon.xml and a valid Addon-ID 
-                     - Own configurations-settings replaces with native xbmc-settings.
-                     - Starting from a scrath with the python code (gui-part / os-part)
+                     - Own configurations-settings are replaced with native xbmc-settings.
+                     - Starting from a scratch with the python code (gui-part / os-part)
+                     - created folders linux / windows / mac
+                     - Starting from a scratch with string.xml (english) 
+                     - MainMenu and Advanced-Menu created
 }}}
