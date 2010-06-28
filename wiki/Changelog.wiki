@@ -53,5 +53,7 @@
 
 
                      - Changed all output from shell-scripts to the default addon-directory   
-                     - Intergrate this changelog inside the root-directory of the addon                  
+                     - Intergrate this changelog inside the root-directory of the addon  
+                     - Added 32/64 deb-packet for linux
+                
 }}}
