@@ -44,4 +44,6 @@
                      - created folders linux / windows / mac
                      - Starting from a scratch with string.xml (english) 
                      - MainMenu and Advanced-Menu created
+27/06/10             - Testing installation of Handbrake / Makekmv 32-Bit
+                     
 }}}
