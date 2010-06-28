@@ -52,6 +52,5 @@
                        1598293 2010-06-28 23:18  makemkv_v1.5.6_beta_oss.tar.bz2
 
 
- 
-                     
+                     - Changed all output from shell-scripts to the default addon-directory                     
 }}}
