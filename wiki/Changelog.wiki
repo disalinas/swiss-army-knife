@@ -1,0 +1,35 @@
+{{{               
+12/06/10 0.6C   We   - New Red-pill icon (Thanks to P.Hocher from luxeria.ch )
+                     - Info Box was not showing correctly with skin Confluence 
+                       (Patch was provided by P.Hocher) 
+                     - Integrate livecd.sh as a new script "setup.sh" inside installer directory 
+                     - Replace getDVDState API Function with a shell-script ....
+                     - Rename Mainmenu-DVD-RIPPER to Mainmenu
+                     - Integrate blueray function to main-menu (added ID-32049)
+15/06/10             - Replace all references from getDVDState to internal function dvd_inserted 
+                     - Update internal handbrake version 0.9.3 to version 0.9.4
+                     - Added handbrake 0.9.4 source-code to the folder 
+                     - Change needed softare for handbrake 0.9.4 inside setup.sh 
+                     - Tested handbrake inside Ubuntu 10.04 LTS / 32 Bit 
+                     - New encode dvd's with handbrake -high-profile mkv and AC3 sound 
+                       (Thanks to xbmc forum-member hotlobsteer)
+                     - Integrate the handbrake settings from doom9 forum
+                       (Thanks to xbmc forum-member hotlobsteer)   
+                     - Add missing header for file mp4.sh with all parameters
+                     - Changed extension for transcoding h264 from mp4 to mkv
+16/06/10             - Integrate BusyDialog inside script (had not effect with xbmc 9.11 ... needs xbmc 10.5) 
+                     - Problem with secound audio stream inside HandBrake fixed
+                     - Added chapter breaks inside mkv 
+19/06/10             - rename function drive_no_dvd() to rive_no_disc():
+                     - change string id 33051
+                     - create shell script to read chapters from blueray [blueray-chapters.sh] 
+                     - create shell script to transcode a chapter from bluray [bluereay-transcode.sh]
+                     - Made the scripts puplic for testing. I hope I have some feedback    
+
+23/06/10             - Create progress-bar for transcoding blueray-mkv inside shell-script.
+                     - Test the progress-bar for transcoding inside shell. works :-)            
+27/06/10             - Innitial Setup for a XBMX-Addon 
+                     - Created Addon.xml and a valid Addon-ID 
+                     - Own configurations-settings replaces with native xbmc-settings.
+                     - Starting from a scrath with the python code (gui-part / os-part)
+}}}
