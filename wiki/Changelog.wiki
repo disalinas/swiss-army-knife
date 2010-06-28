@@ -45,5 +45,13 @@
                      - Starting from a scratch with string.xml (english) 
                      - MainMenu and Advanced-Menu created
 27/06/10             - Testing installation of Handbrake / Makekmv 32-Bit
+                     - Created tar.bz2 archives for linux
+ 
+                       1787142  2010-06-15 18:21 HandBrake-0.9.4.tar.bz2
+                       3661919  2010-06-28 23:16 makemkv_v1.5.6_beta_bin.tar.bz2
+                       1598293 2010-06-28 23:18  makemkv_v1.5.6_beta_oss.tar.bz2
+
+
+ 
                      
 }}}
