@@ -26,7 +26,7 @@
                      - create shell script to transcode a chapter from bluray [bluereay-transcode.sh]
                      - Made the scripts puplic for testing. I hope I have some feedback    
 
-23/06/10             - Create progress-bar for transcoding blueray-mkv inside shell-script.
+23/06/10             - Create progress-counter for transcoding blueray-mkv inside shell-script.
                      - Test the progress-bar for transcoding inside shell. works :-)            
 
                      *******************************************************                       
