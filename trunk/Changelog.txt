@@ -69,3 +69,13 @@
 - Changed all output from shell-scripts to the default addon-directory   
 - Intergrate this Changelog.txt inside the root-directory of the addon  
 - Added 32/64 deb-packet for linux
+
+29/06/10        We
+
+- Activate svn at google.code 
+  Anomyous read-only cvs access with the following command is possible 
+  svn checkout http://swiss-army-knife.googlecode.com/svn/trunk/ swiss-army-knife-read-only
+ 
+- Added linux-shell/setup.sh 
+  This file needs to executed with uid 0 
+
