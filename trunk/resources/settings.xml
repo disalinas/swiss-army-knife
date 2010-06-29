@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting id="info" type="text" label="32000" default="http://code.google.com/p/swiss-army-knife/" enable="false"/>
+	<setting id="first_time_use" type="bool" default="true" visible="false"/>
+
+	<!-- Device Settings -->
+
+	<setting id="separator" type="lsep" label="32050"/>
+        <setting id="swissknife_dvd" type="text" label="32051" default="/dev/sr0" />
+        <setting id="swissknife_blureay" type="text" label="32052" default="/dev/sr0" />       
+       
+        <!-- Directorys settings -->
+
+        <setting id="separator" type="lsep" label="32053"/> 
+        <setting id="swissknife_dir1" type="text" label="32054" default="/dvdrip/iso" />
+        <setting id="swissknife_dir2" type="text" label="32055" default="/dvdrip/h264" />    
+        <setting id="swissknife_dir3" type="text" label="32056" default="/dvdrip/blueray" />  
+       
+        <!-- Various Settings  -->
+
+        <setting id="separator" type="lsep" label="32057"/> 
+        <setting id="swissknife_var1" type="text" label="32058" default="user@localhost"/>
+        <setting id="swissknife_var2" type="text" label="32059" default="en"/>    
+        <setting id="swissknife_var3" type="text" label="32060" default=""/>
+        <setting id="swissknife_var4" type="enum" label="32061" values="iso|mpeg2|divx|h264" default="0"/>
+
+</settings>

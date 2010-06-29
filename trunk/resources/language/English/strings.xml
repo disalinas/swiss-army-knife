@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+        <!--              -->
+        <!-- General Main -->
+        <!--              -->  
+        
+        <string id="32000">Swiss-Army-Knife Addon</string>
+        <string id="32001">http://code.google.com/p/swiss-army-knife</string>
+
+        <!--          --> 
+        <!-- Settings -->
+        <!--          --> 
+
+        <string id="32050">Script Devices</string> 
+        <string id="32051">default dvd-device</string>
+        <string id="32052">default blueray-device</string>   
+        <string id="32053">Used Directorys</string> 
+        <string id="32054">default rip-directory</string> 
+        <string id="32055">default dvd transcode-directory</string> 
+        <string id="32056">default blueray mkv-directory</string>
+        <string id="32057">Various Settings</string> 
+        <string id="32058">Default ssh-command</string> 
+        <string id="32059">Default 1. audio language (dvd)</string> 
+        <string id="32060">Default 2. audio language (dvd)</string> 
+        <string id="32061">Default transcoding (dvd)</string> 
+
+        <!--           --> 
+        <!-- Main-Menu -->
+        <!--           --> 
+                
+        <string id="32100">Transcode BlueRay to mkv</string>
+        <string id="32101">Transcode DVD</string>
+        <string id="32102">Advanced-Menu</string>
+        <string id="32103">Job-List</string>
+        <string id="32104">Exit</string>
+
+        <!--               --> 
+        <!-- Advanced-Menu -->
+        <!--               -->
+
+        <string id="32120">ISO-Rip (dvd)</string>
+        <string id="32121">Transcode (dvd)</string>
+        <string id="32122">Burn (dvd)</string>
+        <string id="32123">Network Master (dvd)</string>
+        <string id="32124">Network Slave (dvd)</string>      
+        <string id="32125">Check-Software</string>
+        <string id="32126">Info</string>
+        <string id="32127">Back to MainScreen</string>
+         
+               
+</strings>
