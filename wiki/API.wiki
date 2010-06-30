@@ -119,5 +119,18 @@ DONE
 {{{
 300
 }}}
+==== =====
+==== =====
+==== =====
+------------------------------------------------------------------------------------------
+=== File .xbmc/userdata/addon_data/script-video-ripper/blueray/BR_TRACKS ===
+------------------------------------------------------------------------------------------
+ * Contains the list of all tracks witch could be later selected inside the gui.
+   * The shell-script musst produce this list. 
+ * Example (BR_TRACKS)
+{{{
+
+}}}
+
 
 
