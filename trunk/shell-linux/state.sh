@@ -92,11 +92,11 @@ if [ $RETVAL1 -eq 0 ] ; then
 
        cat $MEDIA_TYPE | head -3 | tail -1 | awk '{print $4}' > $MEDIA_RETURN
 
-       echo  
-       echo -------------------
+       echo
+       echo -------------------------
        echo DVD found inside $1
-       echo -------------------
-       echo 
+       echo -------------------------
+       echo
 
        # If the filesystem of the inserted dvd is incorrect we should not copy the dvd with dd
 
@@ -122,9 +122,9 @@ if [ $RETVAL1 -eq 0 ] ; then
    if [ $RETVAL3 -eq 0 ] ; then
 
       echo  
-      echo -------------------
+      echo -----------------------------
       echo BLUERAY found inside $1
-      echo -------------------
+      echo -----------------------------
       echo 
 
       echo 'BLUERAY'  > $MEDIA_RETURN

@@ -83,6 +83,7 @@ if [ ! -e /home/$1//.xbmc/userdata/addon_data/script-video-ripper ] ; then
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/log
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/progress
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/tmp
+   mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/media
    chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script-video-ripper
 fi
 
