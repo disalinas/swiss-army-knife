@@ -82,3 +82,7 @@
 30/06/10	We
 
 - Added md5 checksumms for the debian installer files 
+- Added gui-api functions to blueray-transcode.sh 
+- Testing the 2 blue-ray functions 
+- Tested DVDState function inside a new-svn build (works)
+- Create shell-linux/state.sh to detect bluray and dvd-media  

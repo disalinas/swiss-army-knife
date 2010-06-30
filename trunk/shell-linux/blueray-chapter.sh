@@ -124,9 +124,9 @@ echo -----------------------------------
 nohup makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
 
 echo -----------------------------------------
-echo wait 30 secounds until webserver is ready
+echo wait 40 secounds until webserver is ready
 echo -----------------------------------------
-sleep 30.0
+sleep 40.0
 
 lynx --dump  http://127.0.0.1:51000/web/titles > ~/.xbmc/userdata/addon_data/script-video-ripper/blueray/brmain.000
 echo --------------------------------------

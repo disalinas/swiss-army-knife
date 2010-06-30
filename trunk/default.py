@@ -66,7 +66,6 @@ __language__ = __settings__.getLocalizedString
 
 
 
-
 #########################################################
 # Function : GUIMain02Class                             #
 #########################################################
@@ -109,6 +108,13 @@ class GUIMain01Class(xbmcgui.Window):
              choice  = dialog.select(__language__(32000) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
              if (choice == 0): 
                  print 'menu-1'
+                 dvd_info = xbmc.getDVDState()
+                 if (dvd_info == 4):
+                     OS_transcode_blueray()
+                 else:
+                      xbmc.executebuiltin("ActivateWindow(busydialog)")
+                      time.sleep 1
+                      xbmc.executebuiltin("Dialog.Close(busydialog)")
              if (choice == 1): 
                  print 'menu-2'
              if (choice == 2): 
@@ -127,15 +133,6 @@ class GUIMain01Class(xbmcgui.Window):
 ####################### MAIN ############################
 #########################################################
 if __name__ == '__main__':
-
-   # Check Release of xbmc 
- 
-   xbmc_version = xbmc.getInfoLabel("System.BuildVersion")
-
-   xbmc.executebuiltin("ActivateWindow(busydialog)")
-   time.sleep(5)
-   xbmc.executebuiltin("Dialog.Close(busydialog)")     
-
    menu01 = GUIMain01Class() 
 #########################################################
 #########################################################
