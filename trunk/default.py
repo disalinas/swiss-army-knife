@@ -30,7 +30,7 @@ __script__ 		= "Swiss-Army-Knife"
 __scriptID__ 		= "script-video-ripper"
 __author__ 		= "linuxluemmel"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
-__svn_url__ 		= "SVN not supported on this addon"
+__svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "27-06-2010"
 __version__ 		= "0.6C"
@@ -68,14 +68,14 @@ __language__ = __settings__.getLocalizedString
 
 
 #########################################################
-# Function : Main02Class                                #
+# Function : GUIMain02Class                             #
 #########################################################
 # Parameter                                             #
 # xbmcgui.Window  Window                                # 
 #                                                       # 
 # Returns      none 0                                   #
 #########################################################
-class Main02Class(xbmcgui.Window):
+class GUIMain02Class(xbmcgui.Window):
       def __init__(self):
 
        exit_script = True 
@@ -92,14 +92,14 @@ class Main02Class(xbmcgui.Window):
 
 
 #########################################################
-# Function : Main01Class                                #
+# Function : GUIMain01Class                             #
 #########################################################
 # Parameter                                             #
 # xbmcgui.Window  Window                                # 
 #                                                       # 
 # Returns      none 0                                   #
 #########################################################
-class Main01Class(xbmcgui.Window):
+class GUIMain01Class(xbmcgui.Window):
       def __init__(self):
 
        exit_script = True 
@@ -115,7 +115,7 @@ class Main01Class(xbmcgui.Window):
                  print 'menu-3' 
              if (choice == 3): 
                  print 'menu-4'
-                 menu02 = Main02Class() 
+                 menu02 = GUIMain02Class() 
              if (choice == 4): 
                  print 'menu-5'
                  exit_script = False
@@ -136,7 +136,7 @@ if __name__ == '__main__':
    time.sleep(5)
    xbmc.executebuiltin("Dialog.Close(busydialog)")     
 
-   menu01 = Main01Class() 
+   menu01 = GUIMain01Class() 
 #########################################################
 #########################################################
 #########################################################
