@@ -65,6 +65,11 @@
  * libstdc++6 
  * zlib1g
 
+
+ * The following packages are used by makemkv and must not be present if you disable blueray-functions.
+
+ * build-essential libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev
+
 ===                            ====
 ===                            ====
 ===I only a have dvd-drive. Can I use this addon without a blueray ?==
