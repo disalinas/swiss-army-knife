@@ -113,17 +113,52 @@ nohup makemkvcon --messages=/dev/null --progress=blueray.progress mkv $PARA $4 $
 
 sleep 40
 
+
+echo --------------------------------------------
+echo Send  back current progress data to XBMC-GUI
+echo --------------------------------------------
+
+echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
+echo "1 transcode blueray to mkv" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
+if [ $4 -lt '10' ] ; then
+   echo $2/title0$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
+fi
+
+if [ $4 -gt '10' ] ; then
+   echo $2/title$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
+fi
+
+# We send back 2 pid
+# bash-pid
+# makemkvcon
+
+echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+ps axu | grep makemkvcon | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+
+echo -----------------------------
+echo All data send for XBMC-GUI
+echo -----------------------------
+echo
+echo --------------------------------------------
+echo Looping until transcode is finished
+echo --------------------------------------------
+echo
+
 while [ 1=1 ];
 do
    progress=$(cat blueray.progress | tail -1 | awk '{print $4}'| sed "s/[^0-9]//g")
-   echo progress transcoding mkv $progress%
+   echo transcode blueray [$1] track [$4] [$progress %]
    echo $progress > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
    sleep 2
+
    if [ $progress -eq "100"  ] ; then
        echo ----------------------------
-       echo finished transcode track $4
+
+       echo finished transcode blueray [$1] track [$4]
        echo ----------------------------
        rm blueray.progress > /dev/null 2>&1
+       echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
        break
    fi
 done
