@@ -6,7 +6,7 @@
 
   * Are valid for any action -> copy to iso , transcoding or copy 
   * The gui-handling will only work with the above files.
-  * You could replace a internal shell-scipt with your own -> As long the general functions are used. 
+  * You could replace a internal shell-scipt with your own. 
 ==== =====
 ==== =====
 ==== =====
