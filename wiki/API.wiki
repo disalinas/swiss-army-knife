@@ -20,6 +20,43 @@
 {{{
 87
 }}}
+------------------------------------------------------------------------------------------
+=== File .xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid ===
+------------------------------------------------------------------------------------------
+ * contains all the pid's that would be needed to kill the current transaction over the gui
+ * On or more PIDs that should be killed.If multiple pid are writtem has every a single line.
+ * If multiple pid's are written , the kill order is from botton to top
+ * Example 
+{{{
+30889
+20903
+88939
+}}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ==== =====
 ==== =====
