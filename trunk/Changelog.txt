@@ -86,3 +86,4 @@
 - Testing the 2 blue-ray functions 
 - Tested DVDState function inside a new-svn build (works)
 - Create shell-linux/state.sh to detect bluray and dvd-media  
+- Show roland svn 
