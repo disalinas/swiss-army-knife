@@ -31,3 +31,9 @@
  * dvdrip/blueray       
 ===                            ====
 ===                            ====
+===I only a have dvd-drive. Can I use this addon without a blueray ?==
+-----------------------------------------------------------------------------------------
+===                            ====
+ * Yes. For this reason I plan to implement a function to enable / disable blueray functions.
+ 
+ 
