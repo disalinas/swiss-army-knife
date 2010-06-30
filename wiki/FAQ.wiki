@@ -66,7 +66,7 @@
  * zlib1g
 
 
- * The following packages are used by makemkv and must not be present if you disable blueray-functions.
+ * The following packages from the above list are used by makemkv and must not be present if you disable blueray-functions.
 
  * build-essential libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev
 
