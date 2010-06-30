@@ -8,5 +8,6 @@
 ===Could the rip-containers be placed inside a SAN ?===
 -----------------------------------------------------------------------------------------
 ===                            ====
- * Yes . But you need to make a entry for the nas inside /etc/fstab to be shure that the 
-nas after booting is mountet.
+ * Yes . Configure /etc/fstab to mount the nas at booting.
+===                            ====
+===                            ====
