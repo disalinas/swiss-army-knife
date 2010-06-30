@@ -126,11 +126,18 @@ DONE
 === File .xbmc/userdata/addon_data/script-video-ripper/blueray/BR_TRACKS ===
 ------------------------------------------------------------------------------------------
  * Contains the list of all tracks witch could be later selected inside the gui.
-   * The shell-script musst produce this list. 
+   * The shell-script musst produce this list or the selection list will not show up.
  * Example (BR_TRACKS)
 {{{
-
+TRACK : [0] DURATION : [1:56:38] CHAPTERS : [29]
+TRACK : [1] DURATION : [0:05:30] CHAPTERS : [32]
+TRACK : [2] DURATION : [0:38:23] CHAPTERS : [11]
+TRACK : [3] DURATION : [0:24:36] CHAPTERS : [0]
+TRACK : [4] DURATION : [0:04:32] CHAPTERS : [0]
+TRACK : [5] DURATION : [0:06:43] CHAPTERS : [0]
+TRACK : [6] DURATION : [0:14:42] CHAPTERS : [0]
+TRACK : [7] DURATION : [0:03:40] CHAPTERS : [0]
+TRACK : [8] DURATION : [0:03:23] CHAPTERS : [0]
+TRACK : [9] DURATION : [0:05:51] CHAPTERS : [0]
 }}}
-
-
 
