@@ -1,4 +1,12 @@
-=API DOCUMENTATION GENERIC-FUNCTIONS FOR THE GUI=
+=API DOCUMENTATION=
+==== =====
+==== =====
+==== =====
+= Generic API Functions =
+
+  * Are valid for an action -> copy to iso , transcoding or copy 
+  * The gui-handling will only work with the above files.
+  * You could replace a internal shell-scipt with your own -> As long the general functions are used. 
 ==== =====
 ==== =====
 ==== =====
@@ -37,25 +45,20 @@
 === File .xbmc/userdata/addon_data/script-video-ripper/progress/progress-files ===
 ------------------------------------------------------------------------------------------
  * contains all the files including full path that could be removed in the case th user wishes to abbort.
+ * Every file use at least one line.
  * Example 
 {{{
 /dvdrip/iso/300.iso
 }}}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+------------------------------------------------------------------------------------------
+=== File .xbmc/userdata/addon_data/script-video-ripper/progress/progress-done===
+------------------------------------------------------------------------------------------
+ * This file is the trigger for the GUI that all actions are done 
+ * Example 
+{{{
+DONE 
+}}}
 ==== =====
 ==== =====
 ==== =====
