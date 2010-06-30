@@ -5,9 +5,9 @@
  * With linux you have the choice between : ext2,ext3,ext4,xfs and reiserfs. I would choose xfs.
 ===                            ====
 ===                            ====
-===Could the rip-containers be placed inside a SAN ?===
+===Could the rip-containers be placed inside a NAS ?===
 -----------------------------------------------------------------------------------------
 ===                            ====
- * Yes . Configure /etc/fstab to mount the nas at booting.
+ * Yes . Configure /etc/fstab to mount the NAS at booting.
 ===                            ====
 ===                            ====
