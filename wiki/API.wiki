@@ -1,4 +1,4 @@
-=API DOCUMENTATION=
+=API DOCUMENTATION GENERIC-FUNCTIONS FOR THE GUI=
 ==== =====
 ==== =====
 ==== =====
