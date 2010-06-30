@@ -26,9 +26,8 @@
 
  * Following rip-containers are created.
 
- *  mkdir /dvdrip/iso            # contains all future dvd iso copys
- *  mkdir /dvdrip/h264           # contains all future transcoded dvd's
- *  mkdir /dvdrip/blueray        # contains all mkv from transcoded bluerays
-
+ * /dvdrip/iso          
+ * /dvdrip/h264          
+ * dvdrip/blueray       
 ===                            ====
 ===                            ====
