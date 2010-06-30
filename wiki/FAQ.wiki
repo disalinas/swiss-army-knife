@@ -11,3 +11,19 @@
  * Yes . Configure /etc/fstab to mount the NAS at booting.
 ===                            ====
 ===                            ====
+===Where is the script livecd.sh gone ?==
+-----------------------------------------------------------------------------------------
+===                            ====
+ * inside /linux/setup.sh is a replacement script.This script is for the user root.
+
+ * Following user directorys are created if you run the script with *./setup.sh xbmc*
+
+ * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper
+ * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/blueray
+ * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/log
+ * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/progress
+ * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/tmp
+
+
+===                            ====
+===                            ====
