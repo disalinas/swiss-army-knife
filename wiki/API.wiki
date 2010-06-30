@@ -13,7 +13,7 @@
 
 {{{
 0 .. 100  this progress will be shown as %
-101       this progress doesn't have a progress-bar 
+101       this stage doesn't have a progress-bar to show (information inside the gui if value 101)
 }}}
  * Example 
 
