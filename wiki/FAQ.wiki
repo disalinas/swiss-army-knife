@@ -29,6 +29,42 @@
  * /dvdrip/iso          
  * /dvdrip/h264          
  * dvdrip/blueray       
+
+ * medibuntu is added to your /etc/apt/sources.list and the following software is installed
+  
+ * mencoder
+ * netcat
+ * original-awk
+ * dvdauthor
+ * mkisofs
+ * dvd+rw-tools
+ * lsdvd
+ * submux-dvd
+ * submux-dvd
+ * transcode 
+ * mjpegtools
+ * libdvdcss2
+ * openssh-server
+ * openssh-client
+ * liba52-0.7.4 
+ * libfaac0 
+ * libmp3lame0 
+ * libmp4v2-0
+ * libogg0 
+ * libsamplerate0 
+ * libx264-85 
+ * libxvidcore4
+ * lynx
+ * build-essential
+ * libc6-dev 
+ * libssl-dev 
+ * libgl1-mesa-dev 
+ * libqt4-dev 
+ * libbz2-1.0 
+ * libgcc1 
+ * libstdc++6 
+ * zlib1g
+
 ===                            ====
 ===                            ====
 ===I only a have dvd-drive. Can I use this addon without a blueray ?==
