@@ -1,0 +1,11 @@
+
+ * File .xbmc/userdata/addon_data/script-video-ripper/progress/progress
+
+Every longer action will be reported here in this text-file 
+
+ * No difference between ripping dvd or transcoding blueray 
+ * Valid Values : 0-100 
+
+
+
+   
