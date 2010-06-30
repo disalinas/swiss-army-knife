@@ -75,6 +75,14 @@
 ===I only a have dvd-drive. Can I use this addon without a blueray ?==
 -----------------------------------------------------------------------------------------
 ===                            ====
- * Yes. For this reason I plan to implement a function to enable / disable all blueray functions.
- 
+ * Yes. For this reason I plan to implement a function to enable / disable all blueray functions inside the setting with a radio-button.
+===                            ====
+===                            ====
+===Is this script running only on Ubuntu based systems ?==
+-----------------------------------------------------------------------------------------
+===                            ==== 
+  * No. But I can only provide debian packages for handbrake and makekmkv.
+  * If you would send me the 2 packages in other format (rpm as exmaple) I can store them inside the script. If you would also send me a new setup.sh for your Linux would be great.
+
+
  
