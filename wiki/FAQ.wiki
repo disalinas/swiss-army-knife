@@ -55,12 +55,12 @@
  * libsamplerate0 
  * libx264-85 
  * libxvidcore4
- * lynx*
- * build-essential*
- * libc6-dev* 
- * libssl-dev* 
- * libgl1-mesa-dev* 
- * libqt4-dev*
+ * lynx
+ * build-essential
+ * libc6-dev 
+ * libssl-dev 
+ * libgl1-mesa-dev 
+ * libqt4-dev
  * libbz2-1.0 
  * libgcc1 
  * libstdc++6 
