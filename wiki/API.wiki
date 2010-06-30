@@ -1,13 +1,16 @@
 ------------------------------------------------------------------------------------------
- * File .xbmc/userdata/addon_data/script-video-ripper/progress/progress
+=== File .xbmc/userdata/addon_data/script-video-ripper/progress/progress ===
 ------------------------------------------------------------------------------------------
  * Descripton API 
  * Every longer action will be reported by the external scripts in this text-file 
  * Valid Values : 0-100 
  * Only integer-values are allowed ... no float-values or % 
- {{{
- 87
- }}}
+ * Example
+
+{{{
+87
+}}}
+
 ==== =====
 ==== =====
 ==== =====
@@ -15,16 +18,17 @@
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
- * File .xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
+=== File .xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter ===
 ------------------------------------------------------------------------------------------
  * Descripton API 
  * How may stages the pendinf process will have ....
  * Valid Values : 1-XX
  * Only Integer-Values are alloewd
  * Example 
- {{{
+
+{{{
  3
- }}}
+}}}
  
 ==== =====
 ==== =====
@@ -33,17 +37,17 @@
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
- * File .xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+=== File .xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions ===
 ------------------------------------------------------------------------------------------
  * Descripton API 
  * What will happen in the stages 
  * Example 
 
- {{{
+{{{
  1 copy subtitle 1
  2 copy subtitle 2
  3 transcode vob
- }}} 
+}}} 
 ==== =====
 ==== =====
 ==== =====
