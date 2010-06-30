@@ -4,8 +4,11 @@
  * Progress from 0-101. This value will be used to display progress-bar inside the gui 
  * Valid Values : 0-101 
  * Only integer-values are allowed ... no float-values or % 
-   0 .. 100  this will be shown as %
-   101       this stage doesn't have a progress-bar 
+
+{{{
+0 .. 100  this progress will be shown as %
+101       this progress doesn't have a progress-bar 
+}}}
  * Example 
 
 {{{
