@@ -79,3 +79,6 @@
 - Added linux-shell/setup.sh 
   This file needs to executed with uid 0 
 
+30/06/10	We
+
+- Added md5 checksumms for the debian installer files 
