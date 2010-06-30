@@ -11,6 +11,18 @@
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
+=== File .xbmc/userdata/addon_data/script-video-ripper/media/state ===
+------------------------------------------------------------------------------------------
+ * Contains a detailed state about the inserted disk 
+ * Valid values : BLUERAY DVD-ROM
+ * Example (state)
+{{{
+BLUERAY
+}}}
+==== ====
+==== ====
+==== ====
+------------------------------------------------------------------------------------------
 === File .xbmc/userdata/addon_data/script-video-ripper/progress/progress ===
 ------------------------------------------------------------------------------------------
  * Progress from 0-101. This value will be used to display progress-bar inside the gui 
@@ -140,4 +152,3 @@ TRACK : [7] DURATION : [0:03:40] CHAPTERS : [0]
 TRACK : [8] DURATION : [0:03:23] CHAPTERS : [0]
 TRACK : [9] DURATION : [0:05:51] CHAPTERS : [0]
 }}}
-
