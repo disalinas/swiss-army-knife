@@ -2,9 +2,9 @@
 ==== =====
 ==== =====
 ==== =====
-= Generic API Functions =
+= Generic api-functions for all shell-scripts=
 
-  * Are valid for an action -> copy to iso , transcoding or copy 
+  * Are valid for any action -> copy to iso , transcoding or copy 
   * The gui-handling will only work with the above files.
   * You could replace a internal shell-scipt with your own -> As long the general functions are used. 
 ==== =====
