@@ -1,11 +1,12 @@
 ------------------------------------------------------------------------------------------
 === File .xbmc/userdata/addon_data/script-video-ripper/progress/progress ===
 ------------------------------------------------------------------------------------------
- * Descripton API 
- * Every longer action will be reported by the external scripts in this text-file 
- * Valid Values : 0-100 
+ * Progress from 0-101. This value will be used to display progress-bar inside the gui 
+ * Valid Values : 0-101 
  * Only integer-values are allowed ... no float-values or % 
- * Example
+   0 .. 100  this will be shown as %
+   101       this stage doesn't have a progress-bar 
+ * Example 
 
 {{{
 87
@@ -20,10 +21,9 @@
 ------------------------------------------------------------------------------------------
 === File .xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter ===
 ------------------------------------------------------------------------------------------
- * Descripton API 
- * How may stages the pendinf process will have ....
+ * How may stages the pending process or processes will have ....
  * Valid Values : 1-XX
- * Only Integer-Values are alloewd
+ * Only Integer-Values are alloewd and if you have 3 stages you must have 3 lines inside description file. 
  * Example 
 
 {{{
@@ -39,8 +39,7 @@
 ------------------------------------------------------------------------------------------
 === File .xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions ===
 ------------------------------------------------------------------------------------------
- * Descripton API 
- * What will happen in the stages 
+ * Descriptions to stages. This text will be shown inside the gui  
  * Example 
 
 {{{
@@ -52,4 +51,4 @@
 ==== =====
 ==== =====
 
-   
+
