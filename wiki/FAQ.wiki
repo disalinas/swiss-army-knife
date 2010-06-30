@@ -23,6 +23,7 @@
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/log
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/progress
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/tmp
+ * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/media
 
  * Following rip-containers are created.
 
@@ -54,12 +55,12 @@
  * libsamplerate0 
  * libx264-85 
  * libxvidcore4
- * lynx
- * build-essential
- * libc6-dev 
- * libssl-dev 
- * libgl1-mesa-dev 
- * libqt4-dev 
+ * lynx*
+ * build-essential*
+ * libc6-dev* 
+ * libssl-dev* 
+ * libgl1-mesa-dev* 
+ * libqt4-dev*
  * libbz2-1.0 
  * libgcc1 
  * libstdc++6 
@@ -68,7 +69,7 @@
 
  * The following packages from the above list are used by makemkv and must not be present if you disable blueray-functions.
 
- * build-essential libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev
+ * build-essential lynx libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev
 
 ===                            ====
 ===                            ====
