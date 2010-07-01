@@ -125,7 +125,7 @@ DONE
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/blueray/BR_VOLUME ===
+=== File .xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME ===
 ------------------------------------------------------------------------------------------
  * Contains the volume name of bluray
  * All spaces or non asci chars should be removed inside the script.
@@ -137,7 +137,7 @@ DONE
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/blueray/BR_TRACKS ===
+=== File .xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS ===
 ------------------------------------------------------------------------------------------
  * Contains the list of all tracks witch could be later selected inside the gui.
    * The shell-script musst produce this list or the selection list will not show up.
