@@ -27,9 +27,9 @@
         <string id="32063">Enable network-ripping-functions</string>
         <string id="32064">Enable burning-functions</string>
         <string id="32065">Enable customer-execution-functions</string>
-        <string id="32065">Enable customer-execution-functions</string>
-        <string id="32066">Default size single-layer dvd</string>  
-        <string id="32067">Default netcat start-port (6 ports)</string>
+        <string id="32066">Command to execute</string>
+        <string id="32067">Default size single-layer dvd</string>  
+        <string id="32068">Default netcat start-port (6 ports)</string>
  
         <!--           --> 
         <!-- Main-Menu -->

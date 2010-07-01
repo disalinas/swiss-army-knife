@@ -6,22 +6,31 @@
 	<!-- Device Settings -->
 
 	<setting id="separator" type="lsep" label="32050"/>
-        <setting id="swissknife_dvd" type="text" label="32051" default="/dev/sr0" />
-        <setting id="swissknife_blureay" type="text" label="32052" default="/dev/sr0" />       
+        <setting id="id-dvd" type="text" label="32051" default="/dev/sr0" />
+        <setting id="id-bluray" type="text" label="32052" default="/dev/sr0" />       
        
         <!-- Directorys settings -->
 
         <setting id="separator" type="lsep" label="32053"/> 
-        <setting id="swissknife_dir1" type="text" label="32054" default="/dvdrip/iso" />
-        <setting id="swissknife_dir2" type="text" label="32055" default="/dvdrip/h264" />    
-        <setting id="swissknife_dir3" type="text" label="32056" default="/dvdrip/blueray" />  
+        <setting id="id-iso" type="text" label="32054" default="/dvdrip/iso" />
+        <setting id="id-dvd" type="text" label="32055" default="/dvdrip/dvd" />    
+        <setting id="id-bluray" type="text" label="32056" default="/dvdrip/bluray" />  
        
         <!-- Various Settings  -->
 
         <setting id="separator" type="lsep" label="32057"/> 
-        <setting id="swissknife_var1" type="text" label="32058" default="user@localhost"/>
-        <setting id="swissknife_var2" type="text" label="32059" default="en"/>    
-        <setting id="swissknife_var3" type="text" label="32060" default=""/>
-        <setting id="swissknife_var4" type="enum" label="32061" values="iso|mpeg2|divx|h264" default="0"/>
+        <setting id="id-command" type="text" label="32058" default="user@localhost"/>
+        <setting id="id-lang1" type="text" label="32059" default="en"/>    
+        <setting id="id-lang2" type="text" label="32060" default=""/>
+        <setting id="id-def_dvd" type="enum" label="32061" values="iso|mpeg2|divx|h264" default="0"/>
+        <setting id="id-show-bluray" type="bool" label="32062" default="true"/>
+        <setting id="id-show-network" type="bool" label="32063" default="false"/>
+        <setting id="id-show-burning" type="bool" label="32064" default="false"/> 
+        <setting id="id-show-customer" type="bool" label="32065" default="false"/> 
+        <setting id="id-customer1" type="text"label="32066" default=""/> 
+        <setting id="id-burn" type="integer"label="32067" default="0000"/>
+        <setting id="id-netcat" type="integer"label="32068" default="0000"/>
+   
+ 
 
 </settings>
