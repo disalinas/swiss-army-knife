@@ -67,7 +67,7 @@
  * zlib1g
 
 
- * The following packages from the above list are used by makemkv and must not be present if you disable blueray-functions.
+ * The following packages from the above list are used by makemkv and must not be present if you disable bluray-functions.
 
  * build-essential lynx libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev
 
@@ -76,7 +76,7 @@
 ===I only a have dvd-drive. Can I use this addon without a blueray ?==
 -----------------------------------------------------------------------------------------
 ===                            ====
- * Yes. For this reason I plan to implement a function to enable / disable all blueray functions inside the setting with a radio-button.
+ * Yes. For this reason I plan to implement a function to enable / disable all bluray functions inside the setting with a radio-button.
 ===                            ====
 ===                            ====
 ===Is this script running only on Ubuntu based systems ?==
