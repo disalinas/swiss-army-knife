@@ -89,3 +89,8 @@
 - Show roland svn 
 - Testet state.sh and made some minor changes ...
 
+01/07/10 
+
+- Add a nice looking icon to the addon like suggested inside 
+  the xbmc-forum.
+
