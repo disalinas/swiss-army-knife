@@ -116,7 +116,6 @@ if [ $# -eq 5 ]; then
       #    echo ----------------------------
       #    echo finished transcode track $4
       #    echo ----------------------------
-      #    rm blueray.progress > /dev/null 2>&1
       #    break
       #fi
     done

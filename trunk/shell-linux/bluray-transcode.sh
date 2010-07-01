@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# scriptname : blueray-transcode.sh                       #
+# scriptname : bluray-transcode.sh                        #
 ###########################################################
 # RELEASE 0.6C swiss-army-knife                           #
 # This script is part of the addon swiss-army-knife for   #
@@ -14,7 +14,7 @@
 # $3 name of mkv (excluding extension mkv)                #
 # $4 Track to extract (Tracks starting at index 0)        #
 # description :                                           #
-# Convert blueray track to mkv container                  #
+# Convert bluray track to mkv container                   #
 ###########################################################
 
 
@@ -40,14 +40,14 @@ OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/bluray-err
 
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: blueray-transcode.sh p1 p2 p3 p4"
+  echo "Usage: bluray-transcode.sh p1 p2 p3 p4"
   echo "                            "
   echo "[p1] device"
   echo "[p2] rip-directory"
   echo "[p3] name of mkv (excluding mkv)"
   echo "[p4] Track to extract 0-X"
   echo "                            "
-  echo "blueray-transcode.sh was called with wrong arguments" > $OUTPUT_ERROR
+  echo "bluray-transcode.sh was called with wrong arguments" > $OUTPUT_ERROR
   exit $E_BADARGS
 fi
 
@@ -100,8 +100,8 @@ echo parameter for transcoder : $PARA
 echo ---------------------------------
 
 
-if [ -e blueray.progress ] ; then
-   rm blueray.progress > /dev/null 2>&1 
+if [ -e bluray.progress ] ; then
+   rm bluray.progress > /dev/null 2>&1 
 fi
 
 
@@ -109,17 +109,17 @@ echo -----------------------------------
 echo starting makemkvcon in stream-mode
 echo -----------------------------------
 
-nohup makemkvcon --messages=/dev/null --progress=blueray.progress mkv $PARA $4 $2 > /dev/null 2>&1  &
+nohup makemkvcon --messages=/dev/null --progress=bluray.progress mkv $PARA $4 $2 > /dev/null 2>&1  &
 
 sleep 40
 
 
 echo --------------------------------------------
-echo Send  back current progress data to XBMC-GUI
+echo Send back current progress data to XBMC-GUI
 echo --------------------------------------------
 
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
-echo "1 transcode blueray to mkv" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+echo "1 transcode bluray to mkv" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
 if [ $4 -lt '10' ] ; then
    echo $2/title0$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
@@ -147,17 +147,17 @@ echo
 
 while [ 1=1 ];
 do
-   progress=$(cat blueray.progress | tail -1 | awk '{print $4}'| sed "s/[^0-9]//g")
-   echo transcode blueray [$1] track [$4] [$progress %]
+   progress=$(cat bluray.progress | tail -1 | awk '{print $4}'| sed "s/[^0-9]//g")
+   echo transcode bluray [$1] track [$4] [$progress %]
    echo $progress > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
    sleep 2
 
    if [ $progress -eq "100"  ] ; then
        echo ----------------------------
 
-       echo finished transcode blueray [$1] track [$4]
+       echo finished transcode bluray [$1] track [$4]
        echo ----------------------------
-       rm blueray.progress > /dev/null 2>&1
+       rm bluray.progress > /dev/null 2>&1
        echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
        break
    fi

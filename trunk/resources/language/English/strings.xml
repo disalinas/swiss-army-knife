@@ -12,27 +12,35 @@
         <!--          --> 
 
         <string id="32050">Script Devices</string> 
-        <string id="32051">default dvd-device</string>
-        <string id="32052">default blueray-device</string>   
+        <string id="32051">Default dvd-device</string>
+        <string id="32052">Default bluray-device</string>   
         <string id="32053">Used Directorys</string> 
-        <string id="32054">default rip-directory</string> 
-        <string id="32055">default dvd transcode-directory</string> 
-        <string id="32056">default blueray mkv-directory</string>
+        <string id="32054">default iso-rip-directory</string> 
+        <string id="32055">default dvd-transcode-directory</string> 
+        <string id="32056">default bluray mkv-directory</string>
         <string id="32057">Various Settings</string> 
         <string id="32058">Default ssh-command</string> 
         <string id="32059">Default 1. audio language (dvd)</string> 
         <string id="32060">Default 2. audio language (dvd)</string> 
         <string id="32061">Default transcoding (dvd)</string> 
-
+        <string id="32062">Enable bluray-functions</string>
+        <string id="32063">Enable network-ripping-functions</string>
+        <string id="32064">Enable burning-functions</string>
+        <string id="32065">Enable customer-execution-functions</string>
+        <string id="32065">Enable customer-execution-functions</string>
+        <string id="32066">Default size single-layer dvd</string>  
+        <string id="32067">Default netcat start-port (6 ports)</string>
+ 
         <!--           --> 
         <!-- Main-Menu -->
         <!--           --> 
                 
-        <string id="32100">Transcode BlueRay to mkv</string>
+        <string id="32100">Transcode BD to mkv</string>
         <string id="32101">Transcode DVD</string>
         <string id="32102">Advanced-Menu</string>
         <string id="32103">Job-List</string>
-        <string id="32104">Exit</string>
+        <string id="32104">User-Functions</string>
+        <string id="32105">Exit</string>
 
         <!--               --> 
         <!-- Advanced-Menu -->

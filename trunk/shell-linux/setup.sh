@@ -79,7 +79,7 @@ fi
 
 if [ ! -e /home/$1//.xbmc/userdata/addon_data/script-video-ripper ] ; then
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper
-   mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/blueray
+   mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/bluray
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/log
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/progress
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/tmp
@@ -93,8 +93,8 @@ fi
 if [ ! -e /dvdrip ] ; then
    mkdir /dvdrip
    mkdir /dvdrip/iso
-   mkdir /dvdrip/h264
-   mkdir /dvdrip/blueray
+   mkdir /dvdrip/dvd
+   mkdir /dvdrip/bluray
    chown -R $1:$1 /dvdrip
 fi
 
@@ -126,7 +126,7 @@ apt-get install submux-dvd subtitleripper transcode mjpegtools libdvdcss2 openss
 
 apt-get install liba52-0.7.4 libfaac0 libmp3lame0 libmp4v2-0 libogg0 libsamplerate0 libx264-85 libxvidcore4
 
-# Blueray makemv and new Handbrake 0.9.4
+# Bluray makemv and new Handbrake 0.9.4
 
 apt-get install lynx build-essential libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev libbz2-1.0 libgcc1 libstdc++6 zlib1g
 

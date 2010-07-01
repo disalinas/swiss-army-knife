@@ -93,4 +93,7 @@
 
 - Add a nice looking icon to the addon like suggested inside 
   the xbmc-forum.
+- Yes it is called bluray and not blueray ... I change all references ....
+  ;-( Damm it ... wihtout sed I would be lost ...
+
 

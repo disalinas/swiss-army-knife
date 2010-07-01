@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# scriptname : blueray-chapter.sh                         #
+# scriptname : bluray-chapter.sh                          #
 ###########################################################
 # RELEASE 0.6C swiss-army-knife                           #
 # This script is part of the addon swiss-army-knife for   #
@@ -36,11 +36,11 @@ E_VOLUMEERROR=4
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/bluray-error.log"
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: blueray-chapter.sh p1"
+  echo "Usage: bluray-chapter.sh p1"
   echo "                            "
   echo "[p1] device"
   echo "                            "
-  echo "blueray-chapter.sh was called with wrong arguments" > $OUTPUT_ERROR
+  echo "bluray-chapter.sh was called with wrong arguments" > $OUTPUT_ERROR
   exit $E_BADARGS
 fi
 
@@ -128,7 +128,7 @@ echo wait 40 secounds until webserver is ready
 echo -----------------------------------------
 sleep 40.0
 
-lynx --dump  http://127.0.0.1:51000/web/titles > ~/.xbmc/userdata/addon_data/script-video-ripper/blueray/brmain.000
+lynx --dump  http://127.0.0.1:51000/web/titles > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/brmain.000
 echo --------------------------------------
 echo get titel info with the http-protocoll
 echo --------------------------------------
@@ -137,7 +137,7 @@ index=0
 while [ $chapter -gt $index ]
 do
       link="http://127.0.0.1:51000/web/title$index"
-      lynx --dump $link > ~/.xbmc/userdata/addon_data/script-video-ripper/blueray/br$index.000
+      lynx --dump $link > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/br$index.000
       index=`expr $index + 1`
 done
 
@@ -148,15 +148,15 @@ echo -----------------------------------------
 pkill -c -15 makemkvcon > /dev/null 2>&1
 
 echo -----------------------------------------
-echo get blueray volume-name
+echo get bluray volume-name
 echo -----------------------------------------
 
-VOLNAME=$(cat ~/.xbmc/userdata/addon_data/script-video-ripper/blueray/brmain.000 | grep name | tail -1 | awk '{print $2}' | tr -dc ‘[:alnum:]‘ )
+VOLNAME=$(cat ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/brmain.000 | grep name | tail -1 | awk '{print $2}' | tr -dc ‘[:alnum:]‘ )
 
 
 echo -----------------------------------------
-echo Volume-Name of blueray :[$VOLNAME]
-echo $VOLNAME > ~/.xbmc/userdata/addon_data/script-video-ripper/blueray/BR_VOLUME
+echo Volume-Name of bluray :[$VOLNAME]
+echo $VOLNAME > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME
 echo -----------------------------------------
 echo
 echo
@@ -169,11 +169,11 @@ echo ------------------------------
 echo
 while [ $chapter -gt $Tindex ]
 do
-    TITLE=~/.xbmc/userdata/addon_data/script-video-ripper/blueray/br$Tindex.000
+    TITLE=~/.xbmc/userdata/addon_data/script-video-ripper/bluray/br$Tindex.000
     duration=$(cat $TITLE | grep duration | awk '{print $2}')
     chaps=$(cat $TITLE | grep chaptercount | awk '{print $2}')
     echo TRACK : [$Tindex]    DURATION : [$duration]   CHAPTERS : [$chaps]
-    echo TRACK : [$Tindex]    DURATION : [$duration]   CHAPTERS : [$chaps] > ~/.xbmc/userdata/addon_data/script-video-ripper/blueray/BR_TRACKS
+    echo TRACK : [$Tindex]    DURATION : [$duration]   CHAPTERS : [$chaps] > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS
     Tindex=`expr $Tindex + 1`
 done
 

@@ -10,6 +10,7 @@
 # TASKS   : - copy a dvd 1:1 as a iso file to a disk    #
 #           - transcode bluray to matroska container    #
 #           - transcode dvd to multiple formats         #
+#           - Integration of user-functions             #
 # VERSION : 0.6C                                        #
 # DATE    : 06-27-10                                    #
 # STATE   : Alpha 1                                     #
@@ -27,8 +28,8 @@
 ################## CONTANTS #############################
 
 __script__ 		= "Swiss-Army-Knife"
-__scriptID__ 		= "script-video-ripper"
-__author__ 		= "linuxluemmel"
+__scriptID__ 		= "script.video.ripper"
+__author__ 		= "linuxluemmel.ch@gmail.com"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
@@ -57,7 +58,7 @@ import urllib, urlparse, urllib2, xml.dom.minidom
 
 ####################### LANGUAGE FUNCTIONS ##############
 
-__settings__ = xbmcaddon.Addon(id='script-video-ripper')
+__settings__ = xbmcaddon.Addon(id='script.video.ripper')
 __language__ = __settings__.getLocalizedString
 
 #########################################################
@@ -125,6 +126,7 @@ class GUIMain01Class(xbmcgui.Window):
              if (choice == 4): 
                  print 'menu-5'
                  exit_script = False
+
        self.close()
 #########################################################
 

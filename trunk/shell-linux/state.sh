@@ -11,7 +11,7 @@
 # parameters :                                            #
 # $1 device                                               #
 # description :                                           #
-# returns the state of the dvd or blueray-drive           #
+# returns the state of the dvd or bluray-drive            #
 # 0              Media inserted                           #
 # 1              Media not reconized                      #
 ###########################################################
@@ -121,17 +121,17 @@ if [ $RETVAL1 -eq 0 ] ; then
 
    if [ $RETVAL3 -eq 0 ] ; then
 
-      echo  
+      echo
       echo -----------------------------
-      echo BLUERAY found inside $1
+      echo BLURAY found inside $1
       echo -----------------------------
-      echo 
+      echo
 
-      echo 'BLUERAY'  > $MEDIA_RETURN
+      echo 'BLURAY'  > $MEDIA_RETURN
       exit 0
    fi
 
-   # The ripper script do only support dvd and blueray .....
+   # The ripper script do only support dvd and bluray .....
 
    exit 1
 fi
