@@ -7,6 +7,8 @@
   * Are valid for any action -> copy to iso , transcoding or copy 
   * The gui-handling will only work with the above files.
   * You could replace a internal shell-scipt with your own. 
+  * As long you are using this functions to report-back to the gui-part you can replace the linux-shell-scripts with anyithing you like. You could use a local installed Python / Perl or anything other that is executeable.
+
 ==== =====
 ==== =====
 ==== =====
