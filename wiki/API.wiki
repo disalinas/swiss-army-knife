@@ -7,7 +7,7 @@
   * Are valid for any action -> copy to iso , transcoding or copy 
   * The gui-handling will only work with the above files.
   * You could replace a internal shell-scipt with your own. 
-  * As long you are using this functions to report-back to the gui-part you can replace the linux-shell-scripts with anyithing you like. You could use a local installed Python / Perl or anything other that is executeable.
+  * As long you are using this functions to report-back to the gui-part, you can replace the linux-shell-scripts with anything you like. You could use a local installed Python / Perl or anything other that is executeable.
 
 ==== =====
 ==== =====
@@ -16,10 +16,10 @@
 === File .xbmc/userdata/addon_data/script-video-ripper/media/state ===
 ------------------------------------------------------------------------------------------
  * Contains a detailed state about the inserted disk 
- * Valid values : BLUERAY DVD-ROM
+ * Valid values : BLURAY DVD-ROM
  * Example (state)
 {{{
-BLUERAY
+BLURAY
 }}}
 ==== ====
 ==== ====
@@ -127,7 +127,7 @@ DONE
 ------------------------------------------------------------------------------------------
 === File .xbmc/userdata/addon_data/script-video-ripper/blueray/BR_VOLUME ===
 ------------------------------------------------------------------------------------------
- * Contains the volume name of blueray
+ * Contains the volume name of bluray
  * All spaces or non asci chars should be removed inside the script.
  * Example (BR_VOLUME)
 {{{
