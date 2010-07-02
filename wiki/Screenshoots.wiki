@@ -6,7 +6,7 @@
 === ====
 === ====
 === ====
-=== Addon Information ===
+=== Programm Screen Addon ===
 [http://swiss-army-knife.googlecode.com/files/Screen05.png]
 === ====
 === ====
