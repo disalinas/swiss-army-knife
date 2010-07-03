@@ -64,10 +64,28 @@ configuration = []
 __settings__ = xbmcaddon.Addon(id=__scriptID__)
 __language__ = __settings__.getLocalizedString
 
+enable_bluray = 0
+enable_network = 0
+enable_burning = 0
+enable_customer = 0
+
+
 CWD = os.getcwd().rstrip(";")
 sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
 
-from Linux import OSConfiguration
+
+##########################################################
+# Every Operating-System get a own import section        #
+##########################################################            
+
+system = os.uname()
+if system[0] == 'Linux': 
+   from Linux import OSConfiguration
+   from Linux import OSRun
+   from Linux import OSCheckBlu
+
+else:
+   sys.exit
 
 #########################################################
 
@@ -90,8 +108,6 @@ def GUIlog(msg):
 
 
 
-
-
 #########################################################
 # Function : GUIInfo                                    #
 #########################################################
@@ -102,12 +118,10 @@ def GUIlog(msg):
 #########################################################
 def GUIInfo(Info):
     dialog = xbmcgui.Dialog()
-    title = ''
+    title = __language__(33201)
     selected = dialog.ok(title,Info)
     return 0
 #########################################################
-
-
 
 
 
@@ -123,8 +137,12 @@ def GUIInfo(Info):
 class GUIMain02Class(xbmcgui.Window):
       def __init__(self):
 
-       exit_script = True 
+       global enable_bluray
+       global enable_network
+       global enable_burning
+       global enable_customer
 
+       exit_script = True 
        while (exit_script): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32102), [__language__(32120), __language__(32121), __language__(32122),__language__(32123),
@@ -147,27 +165,40 @@ class GUIMain02Class(xbmcgui.Window):
 class GUIMain01Class(xbmcgui.Window):
       def __init__(self):
 
-       exit_script = True 
+       global enable_bluray
+       global enable_network
+       global enable_burning
+       global enable_customer
 
+       exit_script = True 
        while (exit_script): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32000) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
              if (choice == 0): 
-                 print 'menu-1'
-                 dvd_info = xbmc.getDVDState()
-                 if (dvd_info == 4):
-                     GUIInfo("Go")
+                 if (enable_bluray == True):
+                     GUIlog('menu bluray to mkv activated')
+                     dvd_info = xbmc.getDVDState()
+                     if (dvd_info == 4):
+                         BluState = OSCheckBlu()
+                         if (BluState == 2):
+                             GUIInfo(__language__(33302)) 
+                         if (BluState == 1):
+                             GUIInfo(__language__(33301))
+                         if (BluState == 0):
+                             GUIInfo("TRANSCODING") 
+                     else:
+                         GUIInfo(__language__(33000))
                  else:
-                     GUIInfo(__language__(33000))
+                      GUIInfo(__language__(33303))
              if (choice == 1): 
-                 print 'menu-2'
+                 GUIlog('menu default dvd activated')                 
              if (choice == 2): 
-                 print 'menu-3' 
+                  print 'menu-3' 
              if (choice == 3): 
                  print 'menu-4'
                  menu02 = GUIMain02Class() 
              if (choice == 4): 
-                 print 'menu-5'
+                 GUIlog('menu exit activated')
                  exit_script = False
 
        self.close()
@@ -178,11 +209,26 @@ class GUIMain01Class(xbmcgui.Window):
 ####################### MAIN ############################
 #########################################################
 if __name__ == '__main__':
+   
+   global configuration 
+   global enable_bluray
+   global enable_network
+   global enable_burning
+   global enable_customer
+
    GUIlog ("addon-startet")
+
    GUIlog ("loading-configuration")
    configuration = OSConfiguration(__index_config__)
+   
+   enable_bluray = configuration[10]
+   enable_network = configuration[11]
+   enable_burning = configuration[15]
+   enable_customer = configuration[14]
+ 
    GUIlog ("create main-menu")
    menu01 = GUIMain01Class()
+
    GUIlog ("addon-ended")   
 #########################################################
 #########################################################

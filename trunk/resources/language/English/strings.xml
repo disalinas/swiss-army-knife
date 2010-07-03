@@ -30,7 +30,9 @@
         <string id="32066">Command to execute</string>
         <string id="32067">Default size single-layer dvd</string>  
         <string id="32068">Default netcat start-port (6 ports)</string>
- 
+        <string id="32069">Verbose debug</string>
+  
+
         <!--           --> 
         <!-- Main-Menu -->
         <!--           --> 
@@ -56,12 +58,18 @@
         <string id="32127">Back to MainScreen</string>
 
 
+        <!--               --> 
+        <!-- Info          -->
+        <!--               -->
+
+        <string id="33201">info-box</string>
 
         <!--               --> 
         <!-- Error         -->
         <!--               -->
         
-        <string id="3300">Disc not ready</string>
- 
-               
+        <string id="33301">Inserted disc is not a bluray</string>
+        <string id="33302">File swiss-army-knife/media/state could not be openend</string>
+        <string id="33303">Bluray-functions are disabled.</string>
+                       
 </strings>

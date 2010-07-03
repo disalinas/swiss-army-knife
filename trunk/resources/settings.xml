@@ -6,8 +6,8 @@
 	<!-- Device Settings -->
 
 	<setting id="separator" type="lsep" label="32050"/>
-        <setting id="id-dvd" type="text" label="32051" default="/dev/sr0" />
-        <setting id="id-bluray" type="text" label="32052" default="/dev/sr0" />       
+        <setting id="id-device-dvd" type="text" label="32051" default="/dev/sr0" />
+        <setting id="id-device-bluray" type="text" label="32052" default="/dev/sr0" />       
        
         <!-- Directorys settings -->
 
@@ -22,7 +22,7 @@
         <setting id="id-command" type="text" label="32058" default="user@localhost"/>
         <setting id="id-lang1" type="text" label="32059" default="en"/>    
         <setting id="id-lang2" type="text" label="32060" default=""/>
-        <setting id="id-def_dvd" type="enum" label="32061" values="iso|mpeg2|divx|h264" default="0"/>
+        <setting id="id-def-dvd" type="enum" label="32061" values="iso|mpeg2|divx|h264" default="0"/>
         <setting id="id-show-bluray" type="bool" label="32062" default="true"/>
         <setting id="id-show-network" type="bool" label="32063" default="false"/>
         <setting id="id-show-burning" type="bool" label="32064" default="false"/> 
@@ -30,5 +30,5 @@
         <setting id="id-customer1" type="text"label="32066" default=""/> 
         <setting id="id-burn" type="text" label="32067" default="4706074624"/>
         <setting id="id-netcat" type="text" label="32068" default="4000"/>
-   
+        <setting id="id-verbose" type="bool" label="32069" default="false"/> 
 </settings>
