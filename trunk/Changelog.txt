@@ -89,7 +89,7 @@
 - Show roland svn 
 - Testet state.sh and made some minor changes ...
 
-01/07/10 
+01/07/10       We 
 
 - Add a nice looking icon to the addon like suggested inside 
   the xbmc-forum.
@@ -97,3 +97,20 @@
   ;-( Damm it ... wihtout sed I would be lost ...
 
 
+02/07/10       We 	R74	
+- Test icon.png on SV-Build (works)
+- Test bluray-functions bluray-chapter.sh 
+                        bluray-transcode.sh 
+- Added default size value for single dvd
+- Added default port for netcat 
+- Addes OS-linux.py
+
+
+03/07/10       We 
+
+- loading configuration into memory 
+- GUIlog and OSlog functions 
+
+
+
+   

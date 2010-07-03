@@ -6,6 +6,7 @@
 # AUTHOR  : Hans Weber                                  #
 # EMAIL   : linuxluemmel.ch@gmail.com                   #
 # XBMC    : Version 10.5  or higher                     #
+# PYTHON  : internal xbmc python 2.4.X                  #
 # OS      : Linux                                       #
 # TASKS   : - copy a dvd 1:1 as a iso file to a disk    #
 #           - transcode bluray to matroska container    #
@@ -28,18 +29,21 @@
 ################## CONTANTS #############################
 
 __script__ 		= "Swiss-Army-Knife"
-__scriptID__ 		= "script.video.ripper"
+__scriptID__ 		= "script-video-ripper"
 __author__ 		= "linuxluemmel.ch@gmail.com"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "27-06-2010"
 __version__ 		= "0.6C"
-__XBMC_Revision__ 	= "20000"
+__XBMC_Revision__ 	= "31504"
+__index_config__        = 50 
 
 xbmc.output(__script__ + " Version: " + __version__  + "\n")
 
 #########################################################
+
+
 
 
 
@@ -53,15 +57,56 @@ import urllib, urlparse, urllib2, xml.dom.minidom
 
 
 
+####################### GLOBAL DATA #####################
 
+configuration = []  
 
-
-####################### LANGUAGE FUNCTIONS ##############
-
-__settings__ = xbmcaddon.Addon(id='script.video.ripper')
+__settings__ = xbmcaddon.Addon(id=__scriptID__)
 __language__ = __settings__.getLocalizedString
 
+CWD = os.getcwd().rstrip(";")
+sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
+
+from Linux import OSConfiguration
+
 #########################################################
+
+
+
+
+#########################################################
+# Function : GUIlog                                     #
+#########################################################
+# Parameter                                             #
+# msg          String to be shown                       # 
+#                                                       # 
+# Returns      none 0                                   #
+#########################################################
+def GUIlog(msg):
+    xbmc.output("[%s]: [GUIlog] %s\n" % ("swiss-army-knife",str(msg))) 
+    return (0)
+#########################################################
+
+
+
+
+
+
+#########################################################
+# Function : GUIInfo                                    #
+#########################################################
+# Parameter                                             #
+# Info           String to be shown inside Dialog       # 
+#                                                       # 
+# Returns      none 0                                   #
+#########################################################
+def GUIInfo(Info):
+    dialog = xbmcgui.Dialog()
+    title = ''
+    selected = dialog.ok(title,Info)
+    return 0
+#########################################################
+
 
 
 
@@ -111,11 +156,9 @@ class GUIMain01Class(xbmcgui.Window):
                  print 'menu-1'
                  dvd_info = xbmc.getDVDState()
                  if (dvd_info == 4):
-                     OS_transcode_blueray()
+                     GUIInfo("Go")
                  else:
-                      xbmc.executebuiltin("ActivateWindow(busydialog)")
-                      time.sleep 1
-                      xbmc.executebuiltin("Dialog.Close(busydialog)")
+                     GUIInfo(__language__(33000))
              if (choice == 1): 
                  print 'menu-2'
              if (choice == 2): 
@@ -135,9 +178,12 @@ class GUIMain01Class(xbmcgui.Window):
 ####################### MAIN ############################
 #########################################################
 if __name__ == '__main__':
-   path = getAddonInfo("profile")
-   print path 
-   menu01 = GUIMain01Class() 
+   GUIlog ("addon-startet")
+   GUIlog ("loading-configuration")
+   configuration = OSConfiguration(__index_config__)
+   GUIlog ("create main-menu")
+   menu01 = GUIMain01Class()
+   GUIlog ("addon-ended")   
 #########################################################
 #########################################################
 #########################################################

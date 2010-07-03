@@ -54,6 +54,14 @@
         <string id="32125">Check-Software</string>
         <string id="32126">Info</string>
         <string id="32127">Back to MainScreen</string>
-         
+
+
+
+        <!--               --> 
+        <!-- Error         -->
+        <!--               -->
+        
+        <string id="3300">Disc not ready</string>
+ 
                
 </strings>
