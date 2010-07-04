@@ -37,7 +37,7 @@
         <!-- Main-Menu -->
         <!--           --> 
                 
-        <string id="32100">Transcode BD to mkv</string>
+        <string id="32100">Transcode BluRay to mkv</string>
         <string id="32101">Transcode DVD</string>
         <string id="32102">Advanced-Menu</string>
         <string id="32103">Job-List</string>
@@ -71,5 +71,6 @@
         <string id="33301">Inserted disc is not a bluray</string>
         <string id="33302">File swiss-army-knife/media/state could not be openend</string>
         <string id="33303">Bluray-functions are disabled.</string>
-                       
+        <string id="33304">Bluray-chapters could not be read</string>
+
 </strings>

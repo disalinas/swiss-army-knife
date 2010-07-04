@@ -124,9 +124,9 @@ echo -----------------------------------
 nohup makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
 
 echo -----------------------------------------
-echo wait 40 secounds until webserver is ready
+echo wait 35 secounds until webserver is ready
 echo -----------------------------------------
-sleep 40.0
+sleep 35.0
 
 lynx --dump  http://127.0.0.1:51000/web/titles > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/brmain.000
 echo --------------------------------------
@@ -145,7 +145,8 @@ echo -----------------------------------------
 echo Kill webserver
 echo -----------------------------------------
 
-pkill -c -15 makemkvcon > /dev/null 2>&1
+kill -15 $(ps axu | grep makemkvcon | grep -v grep | awk '{print $2}')
+
 
 echo -----------------------------------------
 echo get bluray volume-name
@@ -173,17 +174,15 @@ do
     duration=$(cat $TITLE | grep duration | awk '{print $2}')
     chaps=$(cat $TITLE | grep chaptercount | awk '{print $2}')
     echo TRACK : [$Tindex]    DURATION : [$duration]   CHAPTERS : [$chaps]
-    echo TRACK : [$Tindex]    DURATION : [$duration]   CHAPTERS : [$chaps] > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS
+    echo TRACK : [$Tindex]    DURATION : [$duration]   CHAPTERS : [$chaps] >> ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS
     Tindex=`expr $Tindex + 1`
 done
 
-
-rm nohup.out
-
-echo
+echo -------------
+echo all jobs done 
+echo -------------
 echo
 
 exit 0
-
 
 

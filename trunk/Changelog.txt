@@ -110,6 +110,13 @@
 
 - loading configuration into memory 
 - GUIlog and OSlog functions 
+- A lot of changes 
+
+04/07/10       We
+
+- Somtimes stream-server was not killed inside 
+  bluray-chaper.sh 
+
 
 
 

@@ -64,10 +64,10 @@ configuration = []
 __settings__ = xbmcaddon.Addon(id=__scriptID__)
 __language__ = __settings__.getLocalizedString
 
-enable_bluray = 0
-enable_network = 0
-enable_burning = 0
-enable_customer = 0
+enable_bluray = 'false'
+enable_network = 'false'
+enable_burning = 'false'
+enable_customer = 'false'
 
 
 CWD = os.getcwd().rstrip(";")
@@ -83,7 +83,7 @@ if system[0] == 'Linux':
    from Linux import OSConfiguration
    from Linux import OSRun
    from Linux import OSCheckBlu
-
+   from Linux import OSChapterBlu
 else:
    sys.exit
 
@@ -175,7 +175,7 @@ class GUIMain01Class(xbmcgui.Window):
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32000) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
              if (choice == 0): 
-                 if (enable_bluray == True):
+                 if (enable_bluray == 'true'):
                      GUIlog('menu bluray to mkv activated')
                      dvd_info = xbmc.getDVDState()
                      if (dvd_info == 4):
@@ -185,8 +185,13 @@ class GUIMain01Class(xbmcgui.Window):
                          if (BluState == 1):
                              GUIInfo(__language__(33301))
                          if (BluState == 0):
-                             GUIInfo("TRANSCODING") 
-                     else:
+                             tracklist = []
+                             tracklist = OSChapterBlu() 
+                             if (tracklist[0] != 'none'):
+                                  GUIInfo('Volles Rohr')                                 
+                             else:
+                                  GUIInfo(__language__(33304))
+                     else:        
                          GUIInfo(__language__(33000))
                  else:
                       GUIInfo(__language__(33303))
