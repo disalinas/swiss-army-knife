@@ -93,16 +93,16 @@ def OSConfiguration(index):
 
     # Default settings addon 
 
-    config[0] = __settings__.getAddonInfo("profile")
-    config[1] = __settings__.getSetting("id-device-dvd") 
-    config[2] = __settings__.getSetting("id-device-bluray")
-    config[3] = __settings__.getSetting("id-iso")
-    config[4] = __settings__.getSetting("id-dvd")
-    config[5] = __settings__.getSetting("id-bluray")
-    config[6] = __settings__.getSetting("id-command")  
-    config[7] = __settings__.getSetting("id-lang1")
-    config[8] = __settings__.getSetting("id-lang2")
-    config[9] = __settings__.getSetting("id-def-dvd")
+    config[0] =  __settings__.getAddonInfo("profile")
+    config[1] =  __settings__.getSetting("id-device-dvd") 
+    config[2] =  __settings__.getSetting("id-device-bluray")
+    config[3] =  __settings__.getSetting("id-iso")
+    config[4] =  __settings__.getSetting("id-dvd")
+    config[5] =  __settings__.getSetting("id-bluray")
+    config[6] =  __settings__.getSetting("id-command")  
+    config[7] =  __settings__.getSetting("id-lang1")
+    config[8] =  __settings__.getSetting("id-lang2")
+    config[9] =  __settings__.getSetting("id-def-dvd")
     config[10] = __settings__.getSetting("id-show-bluray") 
     config[11] = __settings__.getSetting("id-show-network") 
     config[12] = __settings__.getSetting("id-show-burning") 
@@ -150,16 +150,16 @@ def OSConfiguration(index):
     # By now we have a modul global list with all the settings ;-)
 
     if (verbose == 'true'):
-        OSlog("Configuration 0 reading : " + config[0])
-        OSlog("Configuration 1 reading : " + config[1])
-        OSlog("Configuration 2 reading : " + config[2]) 
-        OSlog("Configuration 3 reading : " + config[3])
-        OSlog("Configuration 4 reading : " + config[4])
-        OSlog("Configuration 5 reading : " + config[5])
-        OSlog("Configuration 6 reading : " + config[6]) 
-        OSlog("Configuration 7 reading : " + config[7])
-        OSlog("Configuration 8 reading : " + config[8])
-        OSlog("Configuration 9 reading : " + config[9])
+        OSlog("Configuration 00 reading : " + config[0])
+        OSlog("Configuration 01 reading : " + config[1])
+        OSlog("Configuration 02 reading : " + config[2]) 
+        OSlog("Configuration 03 reading : " + config[3])
+        OSlog("Configuration 04 reading : " + config[4])
+        OSlog("Configuration 05 reading : " + config[5])
+        OSlog("Configuration 06 reading : " + config[6]) 
+        OSlog("Configuration 07 reading : " + config[7])
+        OSlog("Configuration 08 reading : " + config[8])
+        OSlog("Configuration 09 reading : " + config[9])
         OSlog("Configuration 10 reading : " + config[10])
         OSlog("Configuration 11 reading : " + config[11])
         OSlog("Configuration 12 reading : " + config[12])
@@ -579,3 +579,52 @@ def OSGetProgressVal():
     else: 
         return -1 
 #########################################################
+
+
+
+
+
+#########################################################
+# Function : OSGetStagesCounter                         #
+#########################################################
+# Parameter                                             #
+# none                                                  #
+# Returns                                               # 
+# 1-X           Current progress-counter                #
+# -1            File could not be opened                # 
+#########################################################
+def OSGetStagesCounter():
+
+    global configLinux
+
+    if (os.path.exists(configLinux[35])):
+        ProgressFile = open(configLinux[35],'r')
+        line =  ProgressFile.readline()
+        ProgressFile.close
+        line = line.strip() 
+        rvalue = int(line)
+        return rvalue 
+    else: 
+        return -1 
+#########################################################
+
+
+
+
+#########################################################
+# Function : OSGetpids                                  #
+#########################################################
+# Parameter                                             #
+# none                                                  #
+# Returns                                               # 
+# List          List with all process-pid for killing   #
+# none          File could not be opened                # 
+#########################################################
+def OSGetpids():
+    print   
+    return 
+#########################################################
+
+
+
+

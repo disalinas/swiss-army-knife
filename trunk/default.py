@@ -88,6 +88,8 @@ if system[0] == 'Linux':
    from Linux import OSBlurayExecuteList 
    from Linux import OSBlurayTranscode
    from Linux import OSGetProgressVal 
+   from Linux import OSGetStagesCounter
+   from Linux import OSGetpids
 else:
    sys.exit
 
