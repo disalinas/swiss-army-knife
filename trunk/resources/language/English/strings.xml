@@ -31,6 +31,7 @@
         <string id="32067">Default size single-layer dvd</string>  
         <string id="32068">Default netcat start-port (6 ports)</string>
         <string id="32069">Verbose debug</string>
+        <string id="32070">Default subtitle (dvd)</string>   
   
 
         <!--           --> 
@@ -78,7 +79,8 @@
         <string id="33201">info-box</string>
         <string id="33202">Please select bluray-track to export</string>
         <string id="33203">Bluray transcoding startet </string>
-        <string id="33204">Bluray transcoding could not be stated</string>    
+        <string id="33204">Bluray transcoding could not be stated</string> 
+        <string id="33205">I'am a coder not a wizard ... this comes later</string>      
      
         <!--               --> 
         <!-- Error         -->

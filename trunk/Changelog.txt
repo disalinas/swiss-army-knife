@@ -94,7 +94,7 @@
 - Add a nice looking icon to the addon like suggested inside 
   the xbmc-forum.
 - Yes it is called bluray and not blueray ... I change all references ....
-  ;-( Damm it ... wihtout sed I would be lost ...
+  ;-( Bloody ... wihtout sed I would be lost ...
 
 
 02/07/10       We 	R74	
@@ -119,6 +119,9 @@
 - GUISelectList added
 - some sucess ... it shows the bluray track list inside the 
   gui to select. (yes ... it is slow ...)
+- I ripped my first bluray ... over my gui .. but it crashed 
+  xbmc after exit ... 
+
 
 
 

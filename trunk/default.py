@@ -87,6 +87,7 @@ if system[0] == 'Linux':
    from Linux import OSCleanTemp
    from Linux import OSBlurayExecuteList 
    from Linux import OSBlurayTranscode
+   from Linux import OSGetProgressVal 
 else:
    sys.exit
 
@@ -107,6 +108,41 @@ def GUIlog(msg):
     xbmc.output("[%s]: [GUIlog] %s\n" % ("swiss-army-knife",str(msg))) 
     return (0)
 #########################################################
+
+
+
+
+
+
+#########################################################
+# Function : GUIProgressbar                             #
+#########################################################
+# Parameter                                             #
+# InfoText       Text for select-box                    #
+#                                                       # 
+# Returns        none                                   #
+#########################################################
+def GUIProgressbar(InfoText):
+
+    dp = xbmcgui.DialogProgress()
+    dp.create(InfoText)
+
+    exit = True 
+    while (exit):
+           progress = OSGetProgressVal()
+           if (progress == 100):
+               dp.close() 
+               exit = False 
+           dp.update(progress,"")
+           if dp.iscanceled():
+              dp.close() 
+              exit = False 
+           time.sleep(3)
+    return  
+
+#########################################################
+
+
 
 
 
@@ -198,7 +234,16 @@ class GUIMain01Class(xbmcgui.Window):
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32000) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
 
-             if (choice == 0): 
+             if (choice == 0):
+
+                 # Transcode bluray to mkv 
+                 # The longest track of the bluray will be converted 
+                 # The directory on witch the converted mkv is saved is defined inside settings
+                 # The volname of the bluray-disc will be used as mkv-name 
+                 # There is nothinhg to do for the user as to press the button ....
+                 # Be aware that it could need long time to only start the transcode-process
+                 # I need tester now ... 
+ 
                  if (enable_bluray == 'true'):
                      GUIlog('menu bluray to mkv activated')
                      dvd_info = xbmc.getDVDState()
@@ -216,6 +261,8 @@ class GUIMain01Class(xbmcgui.Window):
                                   executeList = OSBlurayExecuteList()
                               
                                   # We could now show the executor-list and a track-list
+                                  # but we dont show the lists.
+
 
                                   # execute = GUISelectList(__language__(32150),executeList)
                                   # tracklist = GUISelectList(__language__(33202),trackist)
@@ -240,12 +287,12 @@ class GUIMain01Class(xbmcgui.Window):
                  else:
                       GUIInfo(__language__(33303))
 
-             if (choice == 1): 
-                 GUIlog('menu default dvd activated')                 
+             if (choice == 1):  
+                 GUIInfo(__language__(33205))              
              if (choice == 2): 
-                  print 'menu-3' 
+                 GUIInfo(__language__(33205))         
              if (choice == 3): 
-                 print 'menu-4'
+                 GUIProgressbar("Progress transcoding bluray")        
              if (choice == 4): 
                  GUIlog('menu exit activated')
                  exit_script = False

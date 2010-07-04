@@ -23,6 +23,7 @@
 #########################################################
 
 
+
 ####################### IMPORTS #########################
 
 import xbmc, xbmcgui,xbmcaddon
@@ -110,11 +111,11 @@ def OSConfiguration(index):
     config[15] = __settings__.getSetting("id-burn") 
     config[16] = __settings__.getSetting("id-netcat")
     config[17] = __settings__.getSetting("id-verbose")
-
-
+    config[18] = __settings__.getSetting("id-dvd-subt")
+ 
     verbose = config[17]
 
-    # config[18] until config[29] are reserved for future configurations-settings
+    # config[19] until config[29] are reserved for future configurations-settings
 
     # All used internal files are stored inside after here ...
 
@@ -223,9 +224,7 @@ def OSRun(command,backg,busys):
     if (backg):
         commandssh = commandssh + " > /dev/null 2>&1 &"
 
-    # We do send a copy of the command to ssh-log  configLinux[38]
-    #  
-    #
+    # We do send a copy of the command to ssh-log  configLinux[38] 
 
     if (verbose == 'true'):
         OSlog("Command to run :" + commandssh)
@@ -451,12 +450,12 @@ def OSBlurayExecuteList():
        for line in GUIFile.readlines():
            line = line.strip()
            tmp.append(line)
-
+       GUIFile.close
 
        # We prepare the arguments for bluray-transcode.sh 
 
        exec_bluray.append(tmp[0])
-       exec_bluray.append(ConfigLinux[5])
+       exec_bluray.append(configLinux[5])
        exec_bluray.append(tmp[3])
        exec_bluray.append(tmp[1])
 
@@ -543,7 +542,40 @@ def OSBlurayTranscode():
         
     # Clean exec-array 
  
+    del exec_bluray[3]
+    del exec_bluray[2]
+    del exec_bluray[1]
+    del exec_bluray[0]
+    
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     return 1
 #########################################################
 
+
+
+
+
+#########################################################
+# Function : OSGetProgressVal                           #
+#########################################################
+# Parameter                                             #
+# none                                                  #
+# Returns                                               # 
+# 0-100         Current progress                        #
+# 101           No value for progess to watch           #
+# -1            File could not be opened                # 
+#########################################################
+def OSGetProgressVal():
+
+    global configLinux
+
+    if (os.path.exists(configLinux[31])):
+        ProgressFile = open(configLinux[31],'r')
+        line =  ProgressFile.readline()
+        ProgressFile.close
+        line = line.strip() 
+        rvalue = int(line)
+        return rvalue 
+    else: 
+        return -1 
+#########################################################

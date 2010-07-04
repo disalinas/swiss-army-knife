@@ -21,7 +21,8 @@
         <setting id="separator" type="lsep" label="32057"/> 
         <setting id="id-command" type="text" label="32058" default="user@localhost"/>
         <setting id="id-lang1" type="text" label="32059" default="en"/>    
-        <setting id="id-lang2" type="text" label="32060" default=""/>
+        <setting id="id-lang2" type="text" label="32060" default="none"/>
+        <setting id="id-dvd-subt" type="text" label="32070" default="none"/>
         <setting id="id-def-dvd" type="enum" label="32061" values="iso|mpeg2|divx|h264" default="0"/>
         <setting id="id-show-bluray" type="bool" label="32062" default="true"/>
         <setting id="id-show-network" type="bool" label="32063" default="false"/>
