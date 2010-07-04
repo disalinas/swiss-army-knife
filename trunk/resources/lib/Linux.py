@@ -203,7 +203,7 @@ def OSConfiguration(index):
 #               DO ONLY SET THIS VALUE TO FALSE IF YOU  #
 #               DO ONLY A JOB WIHTOUT ANY HEAVY IO      #
 #               THE ADDON WILL WAIT UNTIL COMMAND IS    #
-#               FINISHED.                               #      
+#               FINISHED.DO SET TO FALSE ON OWN RISK    #      
 # busys         Boolean : Show busy-dialog during the   # 
 #               execution of the command                #
 # Returns                                               #
@@ -240,33 +240,62 @@ def OSRun(command,backg,busys):
 
 
 #########################################################
-# Function : OSCheckBlu                                 #
+# Function : OSCheckMedia                               #
 #########################################################
 # Parameter                                             #
-# none                                                  #
+# Media         Contains BLURAY or DVD-ROM              #
+#                                                       #
 # Returns                                               #
-# 0             bluray-disc inserted inside device      #
-# 1             No bluray-disc found inside device      #
+# 0             Checkedi Media is inside device         #
+# 1             No Media found inside device            #
 # 2             state file not exist                    #
 #########################################################
-def OSCheckBlu():
+def OSCheckMedia(Media):
 
     global configLinux
     global verbose 
+
+    # Erase  all temporary files 
+ 
+    OSCleanTemp()      
 
     # Execution of shell-script br0.sh inside shell-linux  
 
     if (verbose == 'true'):
         OSlog("state.sh command ready to start")
 
-    OSRun("br0.sh " +  configLinux[2],True,False)     
+    if (Media == 'BLURAY'):
+        OSRun("br0.sh " +  configLinux[2],True,False)
+    if (Media == 'DVD-ROM'):     
+        OSRun("br0.sh " +  configLinux[1],True,False)
 
     if (verbose == 'true'):
         OSlog("state.sh command executed")
 
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")   
+
+    # We must wait until the file with the state-information could be read 
+    # If someone knows a bettey way to get this list faster ... send me pm .-)
+
     time.sleep(3) 
+   
+    WCycles = 3 
+    Waitexit = True 
+    while (Waitexit):  
+           if (os.path.exists(configLinux[30])):  
+               if (verbose == 'true'):
+                   OSlog("state-files exist ...")
+               Waitexit = False 
+           else:
+               WCycles = WCycles + 1
+               time.sleep(1)
+           if (WCycles >= 10):
+               if (verbose == 'true'):
+                   OSlog("Timeout 10 secounds reached for track-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)") 
+               return 2   
+
     xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     # We shoud now have the file with the state 
@@ -275,15 +304,13 @@ def OSCheckBlu():
         f = open(configLinux[30],'r')
         media = f.readline()
         media = media.strip()
-        OSlog(media)  
+        OSlog("Media detected")  
         f.close
        
-        if (media == 'BLURAY'):
+        if (media == Media):
             return 0 
         else:
-            return 1
-    else:
-        return 2         
+            return 1     
 #########################################################
 
 
@@ -291,23 +318,19 @@ def OSCheckBlu():
 
 
 #########################################################
-# Function : OSChapterBlu                               #
+# Function : OSChapterBluray                            #
 #########################################################
 # Parameter                                             #
 # none                                                  #
 # Returns                                               #
 # list of tracks or list 'none' 0                       #
 #########################################################
-def OSChapterBlu():
+def OSChapterBluray():
 
     global configLinux
     global verbose 
 
     tracklist = []
-
-    # Erase  all temporary files 
- 
-    OSCleanTemp()      
 
     # Execution of shell-script br1.sh inside shell-linux 
 
@@ -337,9 +360,9 @@ def OSChapterBlu():
            else:
                WCycles = WCycles + 3
                time.sleep(3)
-           if (WCycles >= 91):
+           if (WCycles >= 90):
                if (verbose == 'true'):
-                   OSlog("Timeout 60 secounds reached fot track-file  ...")
+                   OSlog("Timeout 90 secounds reached for track-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                tracklist.append('none') 
                return tracklist       

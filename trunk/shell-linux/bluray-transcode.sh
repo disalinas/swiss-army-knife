@@ -57,6 +57,7 @@ fi
 REQUIRED_TOOLS=`cat << EOF
 nohup
 sed
+sort
 makemkvcon
 EOF`
 
@@ -75,11 +76,10 @@ do
    fi
 done
 
-echo
+
 echo ---------------
 echo Toolchain found
 echo ---------------
-echo
 
 
 if [ $1 == '/dev/sr0' ] ; then
@@ -177,6 +177,6 @@ if [ $4 -gt '10' ] ; then
    mv $2/title$4.mkv $2/$3.mkv
 fi
 
-
+exit 0
 
 

@@ -117,6 +117,9 @@
 - Somtimes stream-server was not killed inside 
 - bluray-chapter.sh needs very long to execute ....
 - GUISelectList added
+- some sucess ... it shows the bluray track list inside the 
+  gui to select. (yes ... it is slow ...)
+
 
 
 

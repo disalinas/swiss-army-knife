@@ -36,6 +36,8 @@ E_TOOLNOTF=2
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/media-error.log"
 MEDIA_TYPE="$HOME/.xbmc/userdata/addon_data/script-video-ripper/media/media.log"
 MEDIA_RETURN="$HOME/.xbmc/userdata/addon_data/script-video-ripper/media/state"
+GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI"
+
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: state.sh p1"
@@ -128,6 +130,12 @@ if [ $RETVAL1 -eq 0 ] ; then
       echo
 
       echo 'BLURAY'  > $MEDIA_RETURN
+
+      # No we prepare the GUI-List for execution ...
+      # We allready have all values ... 
+        
+      echo $1 > $GUI_RETURN
+
       exit 0
    fi
 

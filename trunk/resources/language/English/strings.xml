@@ -41,8 +41,8 @@
         <string id="32101">Transcode DVD</string>
         <string id="32102">Advanced-Menu</string>
         <string id="32103">Job-List</string>
-        <string id="32104">User-Functions</string>
-        <string id="32105">Exit</string>
+        <string id="32104">Exit</string>
+
 
         <!--               --> 
         <!-- Advanced-Menu -->
@@ -56,6 +56,20 @@
         <string id="32125">Check-Software</string>
         <string id="32126">Info</string>
         <string id="32127">Back to MainScreen</string>
+
+        <!--                      --> 
+        <!-- Execution Box Bluray -->
+        <!--                      -->
+        
+        <string id="32150">Do you wish to accept this settings ?</string>
+        <string id="32151">Device : </string>
+        <string id="32152">Track  : </string>
+        <string id="32153">Audio  : [all]</string>
+        <string id="32154">Length : </string>
+        <string id="32155">Name   : </string>      
+        <string id="32156"> </string>
+        <string id="32157">Accept</string>
+        <string id="32158">Cancel</string> 
 
 
         <!--               --> 
@@ -73,5 +87,6 @@
         <string id="33302">File swiss-army-knife/media/state could not be openend</string>
         <string id="33303">Bluray-functions are disabled.</string>
         <string id="33304">Bluray-chapters could not be read</string>
+
 
 </strings>

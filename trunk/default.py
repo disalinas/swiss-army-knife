@@ -82,8 +82,9 @@ system = os.uname()
 if system[0] == 'Linux': 
    from Linux import OSConfiguration
    from Linux import OSRun
-   from Linux import OSCheckBlu
-   from Linux import OSChapterBlu
+   from Linux import OSCheckMedia
+   from Linux import OSChapterBluray
+   from Linux import OSCleanTemp
 else:
    sys.exit
 
@@ -194,20 +195,27 @@ class GUIMain01Class(xbmcgui.Window):
        while (exit_script): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32000) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
+
              if (choice == 0): 
                  if (enable_bluray == 'true'):
+
                      GUIlog('menu bluray to mkv activated')
+
                      dvd_info = xbmc.getDVDState()
+
                      if (dvd_info == 4):
-                         BluState = OSCheckBlu()
+
+                         BluState = OSCheckMedia("BLURAY")
+
                          if (BluState == 2):
                              GUIInfo(__language__(33302)) 
                          if (BluState == 1):
                              GUIInfo(__language__(33301))
                          if (BluState == 0):
                              tracklist = []
-                             tracklist = OSChapterBlu() 
+                             tracklist = OSChapterBluray() 
                              if (tracklist[0] != 'none'):
+
                                   track = GUISelectList(__language__(33202),tracklist)
 
                                   # Allomost ready to transcode
@@ -218,6 +226,7 @@ class GUIMain01Class(xbmcgui.Window):
                          GUIInfo(__language__(33000))
                  else:
                       GUIInfo(__language__(33303))
+
              if (choice == 1): 
                  GUIlog('menu default dvd activated')                 
              if (choice == 2): 

@@ -33,6 +33,7 @@ E_NOCHAPERS=3
 E_VOLUMEERROR=4
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/bluray-error.log"
+GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI"
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: bluray-chapter.sh p1"
@@ -176,10 +177,27 @@ do
     TITLE=~/.xbmc/userdata/addon_data/script-video-ripper/bluray/br$Tindex.000
     duration=$(cat $TITLE | grep duration | awk '{print $2}')
     chaps=$(cat $TITLE | grep chaptercount | awk '{print $2}')
-    echo TRACK : [$Tindex]    DURATION : [$duration]   CHAPTERS : [$chaps]
-    echo TRACK : [$Tindex]    DURATION : [$duration]   CHAPTERS : [$chaps] >> ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS
+    echo track:[$Tindex] length:[$duration] chapters:[$chaps]
+
+    # We need a list to prepare for the GUI with other options
+
+    echo $duration $Tindex >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP
+
+    echo track:[$Tindex] length:[$duration] chapters:[$chaps] >> ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS
     Tindex=`expr $Tindex + 1`
 done
+
+
+echo ------------------------------
+echo Generate Info GUI-Exec List
+echo ------------------------------
+
+LONGTRACK=$(cat $HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP | sort -r | head -1 | awk '{print $2}')
+LONGDURATION=$(cat $HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP | sort -r | head -1 | awk '{print $1}')
+
+echo $LONGTRACK >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
+echo $LONGDURATION >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
+echo $VOLNAME.mkv  >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
 
 echo --------------
 echo all jobs done
