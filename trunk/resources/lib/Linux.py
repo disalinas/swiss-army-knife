@@ -47,6 +47,8 @@ __language__ = __settings__.getLocalizedString
 
 configLinux = [] 
 temp_files = []
+exec_bluray = []
+exec_dvd = []
 verbose = 'false'
 
 #########################################################
@@ -434,8 +436,14 @@ def OSCleanTemp():
 def OSBlurayExecuteList():
 
     global temp_files 
+    global exec_bluray
+    global configLinux
+ 
     GUIList = [] 
     tmp = []
+
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")    
 
     if (os.path.exists(configLinux[43])): 
 
@@ -445,8 +453,17 @@ def OSBlurayExecuteList():
            tmp.append(line)
 
 
+       # We prepare the arguments for bluray-transcode.sh 
+
+       exec_bluray.append(tmp[0])
+       exec_bluray.append(ConfigLinux[5])
+       exec_bluray.append(tmp[3])
+       exec_bluray.append(tmp[1])
+
+
        # Add device 
        GUIList.append(__language__(32151) + tmp[0])
+
 
        # Add track
        GUIList.append(__language__(32152) + tmp[1])
@@ -458,15 +475,20 @@ def OSBlurayExecuteList():
        GUIList.append(__language__(32154) + tmp[2])
  
        # Add name including extension mkv
-       GUIList.append(__language__(32155) + tmp[3])
+       GUIList.append(__language__(32155) + tmp[3] + ".mkv")
     
        # Add accept and cancel button 
        GUIList.append(__language__(32156))
        GUIList.append(__language__(32157))
         
+       time.sleep(1)
+       xbmc.executebuiltin("Dialog.Close(busydialog)")
        return GUIList
 
     else:
+
+       time.sleep(1)
+       xbmc.executebuiltin("Dialog.Close(busydialog)")
        GUIList.append("none")
        return GUIList
 
@@ -474,7 +496,54 @@ def OSBlurayExecuteList():
 
 
 
+#########################################################
+# Function : OSBlurayTranscode                          #
+#########################################################
+# Parameter                                             #
+# none                                                  #
+# Returns                                               #
+# 0               Transcode-process not startet         #
+# 1               Transcode-process startet             #
+#########################################################
+def OSBlurayTranscode():
 
+    global exec_bluray
 
+    xbmc.executebuiltin("ActivateWindow(busydialog)")    
 
+    # Execution of shell-script br2.sh inside shell-linux 
+
+    if (verbose == 'true'):
+        OSlog("bluray-transcode.sh command ready to start")
+
+    OSRun("br2.sh " +  exec_bluray[0] + " " + exec_bluray[1] + " " + exec_bluray[2] + " " + exec_bluray[3],True,False)
+
+    if (verbose == 'true'): 
+        OSlog("bluray-transcode.sh command executed")     
+ 
+    # Now we do loop until the PID-file exists
+
+    time.sleep(30) 
+   
+    WCycles = 20 
+    Waitexit = True 
+    while (Waitexit):  
+           if (os.path.exists(configLinux[32])):  
+               if (verbose == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False 
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 50):
+               if (verbose == 'true'):
+                   OSlog("Timeout 50 secounds reached for pid-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0       
+        
+    # Clean exec-array 
+ 
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+#########################################################
 

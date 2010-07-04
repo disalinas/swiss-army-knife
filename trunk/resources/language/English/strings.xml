@@ -77,7 +77,9 @@
 
         <string id="33201">info-box</string>
         <string id="33202">Please select bluray-track to export</string>
-
+        <string id="33203">Bluray transcoding startet </string>
+        <string id="33204">Bluray transcoding could not be stated</string>    
+     
         <!--               --> 
         <!-- Error         -->
         <!--               -->

@@ -86,6 +86,7 @@ if system[0] == 'Linux':
    from Linux import OSChapterBluray
    from Linux import OSCleanTemp
    from Linux import OSBlurayExecuteList 
+   from Linux import OSBlurayTranscode
 else:
    sys.exit
 
@@ -199,15 +200,10 @@ class GUIMain01Class(xbmcgui.Window):
 
              if (choice == 0): 
                  if (enable_bluray == 'true'):
-
                      GUIlog('menu bluray to mkv activated')
-
                      dvd_info = xbmc.getDVDState()
-
                      if (dvd_info == 4):
-
                          BluState = OSCheckMedia("BLURAY")
-
                          if (BluState == 2):
                              GUIInfo(__language__(33302)) 
                          if (BluState == 1):
@@ -216,17 +212,27 @@ class GUIMain01Class(xbmcgui.Window):
                              tracklist = []
                              tracklist = OSChapterBluray() 
                              if (tracklist[0] != 'none'):
-                               
                                   executeList = []      
-
                                   executeList = OSBlurayExecuteList()
                               
-                                  execute = GUISelectList(__language__(32150),executeList)
-                                  tracklist = GUISelectList(__language__(33202),tracklist)
+                                  # We could now show the executor-list and a track-list
+
+                                  # execute = GUISelectList(__language__(32150),executeList)
+                                  # tracklist = GUISelectList(__language__(33202),trackist)
 
                                   # Allomost ready to transcode
                                   # Here we are ... ready to transcode ....
-                               
+
+                                  execstate =  OSBlurayTranscode() 
+                                  
+                                  if (execstate == 0):
+                                      GUIInfo(__language__(33204))
+                                  if (execstate == 1):
+                          
+                                      # Now we should have a nice background job with the inserted 
+                                      # bluray .... until we let do it finish or we cancel the job 
+
+                                      GUIInfo(__language__(33203))
                              else:
                                   GUIInfo(__language__(33304))
                      else:        
@@ -240,7 +246,6 @@ class GUIMain01Class(xbmcgui.Window):
                   print 'menu-3' 
              if (choice == 3): 
                  print 'menu-4'
-                 menu02 = GUIMain02Class() 
              if (choice == 4): 
                  GUIlog('menu exit activated')
                  exit_script = False

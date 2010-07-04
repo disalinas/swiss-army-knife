@@ -197,7 +197,7 @@ LONGDURATION=$(cat $HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_
 
 echo $LONGTRACK >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
 echo $LONGDURATION >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
-echo $VOLNAME.mkv  >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
+echo $VOLNAME >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
 
 echo --------------
 echo all jobs done
