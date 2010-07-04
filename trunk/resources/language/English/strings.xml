@@ -64,12 +64,11 @@
         <string id="32150">Do you wish to accept this settings ?</string>
         <string id="32151">Device : </string>
         <string id="32152">Track  : </string>
-        <string id="32153">Audio  : [all]</string>
+        <string id="32153">Audio  : [all audio]</string>
         <string id="32154">Length : </string>
         <string id="32155">Name   : </string>      
-        <string id="32156"> </string>
-        <string id="32157">Accept</string>
-        <string id="32158">Cancel</string> 
+        <string id="32156">Accept</string>
+        <string id="32157">Cancel</string> 
 
 
         <!--               --> 

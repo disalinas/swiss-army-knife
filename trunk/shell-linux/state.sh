@@ -144,14 +144,3 @@ if [ $RETVAL1 -eq 0 ] ; then
    exit 1
 fi
 
-
-
-
-
-
-
-
-
-
-
-

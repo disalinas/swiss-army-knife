@@ -85,6 +85,7 @@ if system[0] == 'Linux':
    from Linux import OSCheckMedia
    from Linux import OSChapterBluray
    from Linux import OSCleanTemp
+   from Linux import OSBlurayExecuteList 
 else:
    sys.exit
 
@@ -215,10 +216,16 @@ class GUIMain01Class(xbmcgui.Window):
                              tracklist = []
                              tracklist = OSChapterBluray() 
                              if (tracklist[0] != 'none'):
+                               
+                                  executeList = []      
 
-                                  track = GUISelectList(__language__(33202),tracklist)
+                                  executeList = OSBlurayExecuteList()
+                              
+                                  execute = GUISelectList(__language__(32150),executeList)
+                                  tracklist = GUISelectList(__language__(33202),tracklist)
 
                                   # Allomost ready to transcode
+                                  # Here we are ... ready to transcode ....
                                
                              else:
                                   GUIInfo(__language__(33304))

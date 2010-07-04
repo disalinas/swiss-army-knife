@@ -126,6 +126,10 @@ def OSConfiguration(index):
     config[37] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current'
     config[38] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/log/ssh-log'
 
+    config[40] = os.getenv("HOME") + '/.xbmc/addons/swiss-army-knife/shell-linux/' 
+    config[41] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME' 
+    config[42] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS' 
+    config[43] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI'
   
     # With a list the deletetion of multiple files is very easy ;-) 
 
@@ -139,12 +143,6 @@ def OSConfiguration(index):
     temp_files.append(config[37])
     temp_files.append(config[41])
     temp_files.append(config[42]) 
-
-
-    
-    config[40] = os.getenv("HOME") + '/.xbmc/addons/swiss-army-knife/shell-linux/' 
-    config[41] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME' 
-    config[42] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS' 
 
     # By now we have a modul global list with all the settings ;-)
 
@@ -224,6 +222,8 @@ def OSRun(command,backg,busys):
         commandssh = commandssh + " > /dev/null 2>&1 &"
 
     # We do send a copy of the command to ssh-log  configLinux[38]
+    #  
+    #
 
     if (verbose == 'true'):
         OSlog("Command to run :" + commandssh)
@@ -416,5 +416,65 @@ def OSCleanTemp():
     return  
 
 #########################################################
+
+
+
+
+
+
+
+#########################################################
+# Function : OSBlurayExecuteList                        #
+#########################################################
+# Parameter                                             #
+# none                                                  #
+# Returns                                               #
+# list of blueray summary prio to execution             #
+#########################################################
+def OSBlurayExecuteList():
+
+    global temp_files 
+    GUIList = [] 
+    tmp = []
+
+    if (os.path.exists(configLinux[43])): 
+
+       GUIFile = open(configLinux[43],'r')
+       for line in GUIFile.readlines():
+           line = line.strip()
+           tmp.append(line)
+
+
+       # Add device 
+       GUIList.append(__language__(32151) + tmp[0])
+
+       # Add track
+       GUIList.append(__language__(32152) + tmp[1])
+
+       # Add audio 
+       GUIList.append(__language__(32153))
+
+       # Add length
+       GUIList.append(__language__(32154) + tmp[2])
+ 
+       # Add name including extension mkv
+       GUIList.append(__language__(32155) + tmp[3])
+    
+       # Add accept and cancel button 
+       GUIList.append(__language__(32156))
+       GUIList.append(__language__(32157))
+        
+       return GUIList
+
+    else:
+       GUIList.append("none")
+       return GUIList
+
+#########################################################
+
+
+
+
+
 
 
