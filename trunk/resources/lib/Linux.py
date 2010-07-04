@@ -99,7 +99,7 @@ def OSConfiguration(index):
     config[6] = __settings__.getSetting("id-command")  
     config[7] = __settings__.getSetting("id-lang1")
     config[8] = __settings__.getSetting("id-lang2")
-    config[9] = __settings__.getSetting("id-def_dvd")
+    config[9] = __settings__.getSetting("id-def-dvd")
     config[10] = __settings__.getSetting("id-show-bluray") 
     config[11] = __settings__.getSetting("id-show-network") 
     config[12] = __settings__.getSetting("id-show-burning") 
@@ -197,7 +197,7 @@ def OSConfiguration(index):
 #########################################################
 # Parameter                                             #
 # command       command to execute over ssh             # 
-# waitc         Boolean : If true the command is        #
+# backg         Boolean : If true the command is        #
 #               put into background.                    # 
 #               Warning :                               #
 #               DO ONLY SET THIS VALUE TO FALSE IF YOU  #
@@ -209,7 +209,7 @@ def OSConfiguration(index):
 # Returns                                               #
 # State of os.system call                               #
 #########################################################
-def OSRun(command,waitc,busys):    
+def OSRun(command,backg,busys):    
 
     global configLinux
     global verbose 
@@ -220,10 +220,10 @@ def OSRun(command,waitc,busys):
         xbmc.executebuiltin("ActivateWindow(busydialog)")  
     sys.platform.startswith('linux')
     commandssh = "ssh " + configLinux[6] + " " + configLinux[40] + command + " "  
-    if (waitc):
-        commandssh = commandssh + " & "
+    if (backg):
+        commandssh = commandssh + " > /dev/null 2>&1 &"
 
-    ## commandssh = commandssh + " >> " + configLinux[38]
+    # We do send a copy of the command to ssh-log  configLinux[38]
 
     if (verbose == 'true'):
         OSlog("Command to run :" + commandssh)
@@ -254,12 +254,19 @@ def OSCheckBlu():
     global configLinux
     global verbose 
 
-    # Execution of shell-script state.sh inside shell-linux 
+    # Execution of shell-script br0.sh inside shell-linux  
 
-    OSRun("state.sh " +  configLinux[2],True,True)     
+    if (verbose == 'true'):
+        OSlog("state.sh command ready to start")
+
+    OSRun("br0.sh " +  configLinux[2],True,False)     
+
+    if (verbose == 'true'):
+        OSlog("state.sh command executed")
+
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")   
-    time.sleep(10) 
+    time.sleep(3) 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
 
     # We shoud now have the file with the state 
@@ -302,24 +309,50 @@ def OSChapterBlu():
  
     OSCleanTemp()      
 
-    # Execution of shell-script bluray-chapter.sh inside shell-linux 
+    # Execution of shell-script br1.sh inside shell-linux 
 
     if (verbose == 'true'):
-        OSlog("Reading bluray-hapter start")
+        OSlog("bluray-chapter.sh command ready to start")
 
-    OSRun("bluray-chapter.sh " +  configLinux[2],True,True)
+    OSRun("br1.sh " +  configLinux[2],True,False)
 
     if (verbose == 'true'): 
-        OSlog("Reading bluray-chapter start") 
+        OSlog("bluray-chapter.sh command executed") 
 
-    xbmc.executebuiltin("ActivateWindow(busydialog)")   
-    time.sleep(45) 
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # We must wait until the file with the track-information could be read 
+    # Without the list of track we can not select inside the list .....
+    # If someone knows a bettey way to get this list faster ... send me pm .-)
+
+    time.sleep(20) 
+   
+    WCycles = 20 
+    Waitexit = True 
+    while (Waitexit):  
+           if (os.path.exists(configLinux[42])):  
+               if (verbose == 'true'):
+                   OSlog("track-files exist ...")
+               Waitexit = False 
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 91):
+               if (verbose == 'true'):
+                   OSlog("Timeout 60 secounds reached fot track-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               tracklist.append('none') 
+               return tracklist       
+ 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
-        
+    
+    if (verbose == 'true'):
+        OSlog("track-files exist . Create list for GUI")
+   
     # We should have the file with the state 
  
-    if (os.path.exists(configLinux[41])):   
-        trackfile = open(configLinux[41],'r')
+    if (os.path.exists(configLinux[42])):   
+        trackfile = open(configLinux[42],'r')
         for line in trackfile.readlines():
                 line = line.strip()
                 tracklist.append(line)
@@ -354,7 +387,7 @@ def OSCleanTemp():
          if (os.path.exists(item)):
              os.remove(item)
 
-    time.sleep(3)
+    time.sleep(1)
     xbmc.executebuiltin("Dialog.Close(busydialog)")
   
     return  

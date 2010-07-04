@@ -115,7 +115,8 @@
 04/07/10       We
 
 - Somtimes stream-server was not killed inside 
-  bluray-chaper.sh 
+- bluray-chapter.sh needs very long to execute ....
+- GUISelectList added
 
 
 

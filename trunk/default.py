@@ -108,6 +108,26 @@ def GUIlog(msg):
 
 
 
+
+#########################################################
+# Function : GUISelectList                              #
+#########################################################
+# Parameter                                             #
+# InfoText       Text for select-box                    #
+# SelectList     List with multpiple entrys to select   # 
+#                                                       # 
+# Returns        Index of list witch was selected       #
+#########################################################
+def GUISelectList(InfoText,SelectList):
+    dialog = xbmcgui.Dialog()
+    choice  = dialog.select(InfoText,SelectList)
+    return choice
+#########################################################
+
+
+
+
+
 #########################################################
 # Function : GUIInfo                                    #
 #########################################################
@@ -188,7 +208,10 @@ class GUIMain01Class(xbmcgui.Window):
                              tracklist = []
                              tracklist = OSChapterBlu() 
                              if (tracklist[0] != 'none'):
-                                  GUIInfo('Volles Rohr')                                 
+                                  track = GUISelectList(__language__(33202),tracklist)
+
+                                  # Allomost ready to transcode
+                               
                              else:
                                   GUIInfo(__language__(33304))
                      else:        

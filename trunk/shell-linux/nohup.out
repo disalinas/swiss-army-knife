@@ -1,0 +1,55 @@
+
+-----------------------------------------------------------------
+changed to /home/user/.xbmc/addons/swiss-army-knife/shell-linux
+-----------------------------------------------------------------
+
+
+---------------
+Toolchain found
+---------------
+
+---------------------------------
+parameter for transcoder : disc:0
+---------------------------------
+----------------------
+found 10 Titles
+----------------------
+-----------------------------------
+starting makemkvcon in stream-mode
+-----------------------------------
+-----------------------------------------
+wait 40 secounds until webserver is ready
+-----------------------------------------
+--------------------------------------
+get titel info with the http-protocoll
+--------------------------------------
+-----------------------------------------
+Kill webserver
+-----------------------------------------
+-----------------------------------------
+get bluray volume-name
+-----------------------------------------
+./bluray-chapter.sh: line 156:  8971 Terminated              nohup makemkvcon --messages=/dev/null stream $PARA
+-----------------------------------------
+Volume-Name of bluray :[300]
+-----------------------------------------
+
+
+------------------------------
+Generate track-list for script
+------------------------------
+
+TRACK : [0] DURATION : [1:56:38] CHAPTERS : [29]
+TRACK : [1] DURATION : [0:05:30] CHAPTERS : [32]
+TRACK : [2] DURATION : [0:38:23] CHAPTERS : [11]
+TRACK : [3] DURATION : [0:24:36] CHAPTERS : [0]
+TRACK : [4] DURATION : [0:04:32] CHAPTERS : [0]
+TRACK : [5] DURATION : [0:06:43] CHAPTERS : [0]
+TRACK : [6] DURATION : [0:14:42] CHAPTERS : [0]
+TRACK : [7] DURATION : [0:03:40] CHAPTERS : [0]
+TRACK : [8] DURATION : [0:03:23] CHAPTERS : [0]
+TRACK : [9] DURATION : [0:05:51] CHAPTERS : [0]
+-------------
+all jobs done
+-------------
+

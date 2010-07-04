@@ -16,11 +16,10 @@
 
 SCRIPTDIR="$HOME/.xbmc/addons/swiss-army-knife/shell-linux"
 
-echo
+
 echo -----------------------------------------------------------------
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo -----------------------------------------------------------------
-echo
 
 # Define the counting commands we expect inside the script
 
@@ -76,11 +75,17 @@ do
    fi
 done
 
-echo
+echo ----------------
+echo Clean temp files
+echo ----------------
+
+rm $HOME/.xbmc/userdata/addon_data/script-video-ripper/bluray/* >/dev/null 2>&1
+
+
 echo ---------------
 echo Toolchain found
 echo ---------------
-echo
+
 
 
 if [ $1 == '/dev/sr0' ] ; then
@@ -124,9 +129,9 @@ echo -----------------------------------
 nohup makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
 
 echo -----------------------------------------
-echo wait 35 secounds until webserver is ready
+echo wait 40 secounds until webserver is ready
 echo -----------------------------------------
-sleep 35.0
+sleep 40.0
 
 lynx --dump  http://127.0.0.1:51000/web/titles > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/brmain.000
 echo --------------------------------------
@@ -145,7 +150,7 @@ echo -----------------------------------------
 echo Kill webserver
 echo -----------------------------------------
 
-kill -15 $(ps axu | grep makemkvcon | grep -v grep | awk '{print $2}')
+kill -15 $(ps axu | grep makemkvcon | grep -v grep | awk '{print $2}') > /dev/null 2>&1
 
 
 echo -----------------------------------------
@@ -159,15 +164,13 @@ echo -----------------------------------------
 echo Volume-Name of bluray :[$VOLNAME]
 echo $VOLNAME > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME
 echo -----------------------------------------
-echo
-echo
 
 
 Tindex=0
 echo ------------------------------
 echo Generate track-list for script
 echo ------------------------------
-echo
+
 while [ $chapter -gt $Tindex ]
 do
     TITLE=~/.xbmc/userdata/addon_data/script-video-ripper/bluray/br$Tindex.000
@@ -178,10 +181,10 @@ do
     Tindex=`expr $Tindex + 1`
 done
 
-echo -------------
-echo all jobs done 
-echo -------------
-echo
+echo --------------
+echo all jobs done
+echo --------------
+
 
 exit 0
 
