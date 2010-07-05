@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# scriptname : mp4.sh                                     #
+# scriptname : dvd-handbrake.sh                           #
 ###########################################################
 # RELEASE 0.6C swiss-army-knife                           #
 # This script is part of the addon swiss-army-knife for   #
@@ -25,24 +25,23 @@
 
 SCRIPTDIR="$HOME/.xbmc/addons/swiss-army-knife/shell-linux"
 
-echo
 echo -----------------------------------------------------------------
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo -----------------------------------------------------------------
-echo
 
-OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/mp4-error.log"
+
+OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/handbrake-error.log"
 
 # Define the counting commands we expect inside the script
 
 EXPECTED_ARGS=5
 
-# Error-codes 
+# Error-codes
 
 E_BADARGS=1
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: mp4.sh p1 p2 p3 p4 p5"
+  echo "Usage: dvd-handbrake.sh p1 p2 p3 p4 p5"
   echo "                                      "
   echo "[p1] device or complet path to ripfile"
   echo "[p2] directory for rip"
@@ -55,14 +54,24 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo "                                            "
   echo "p6,7  second audio-track   -a 3 [0-X]"
   echo "p8,9  subtitle             -s 0 [0-X]"
-  echo "mp4.sh was called with wrong arguments"
+  echo "dvd-handbrake.sh was called with wrong arguments"
+  echo
   exit $E_BADARGS
 fi
+
+
+if [ $4 -eq 0 ]; then
+  echo "the parameter 4 must be starting with 1 !"
+  echo
+  exit $E_BADARGS
+fi
+
 
 # Define the commands we will be using inside the script ...
 
 REQUIRED_TOOLS=`cat << EOF
 HandBrakeCLI
+sleep
 mencoder
 nohup
 EOF`
@@ -84,51 +93,66 @@ do
    fi
 done
 
-echo
 echo ---------------
 echo Toolchain found
 echo ---------------
-echo
 
 
-echo
 echo ------------------
 echo Starting transcode
 echo ------------------
-echo
 
-echo transcoding > ~/.xbmc/userdata/addon_data/script-video-ripper/log/mp4.log
 
 if [ $# -eq 5 ]; then
     AUDIO1=$(($5 +  1))
+    echo -----------------------------------
     echo 5 paramters $1 $2 $3 $4 $5
-    echo 5 paramters $1 $2 $3 $4 $5 > ~/.xbmc/userdata/addon_data/script-video-ripper/log/mp4.log
+    echo -----------------------------------
+ 
+    echo --------------------------------------------
+    echo Send back current progress data to XBMC-GUI
+    echo --------------------------------------------
+
+    echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
+    echo "1 Pass 1/2 for transcoding" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+    echo "2 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+    echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
+    echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
+
     nohup HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-    -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="doom9.cfg" -a $AUDIO1 -E ac3 &
-    sleep 30
+    -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile"  \
+    -a $AUDIO1 -E ac3 &
+
+    echo ------------------------------
+    echo Handbrake has startet ...
+    echo ------------------------------
+
+    sleep 15
     while [ 1=1 ];
-    do
-      cat nohup.out | tail -1
-      # echo progress transcoding mkv $progress%
-      # echo $progress > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+     do
+      PASS1=$(cat nohup.out | grep "task 1 of 2" | tail -1 | sed  's/,//g' | sed  's/%//g' | sed  's/(//g' | sed  's/)//g' | sed  's/\./ /g' | sed  's/\://g')
+      echo ....
+      echo $PASS1
+      echo ....
       sleep 2
-      # if [ $progress -eq "100"  ] ; then
-      #    echo ----------------------------
-      #    echo finished transcode track $4
-      #    echo ----------------------------
-      #    break
-      #fi
     done
 fi
+
+
+
+
+
+
+
+
 
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-a ]] ; then
        AUDIO1=$(($5 +  1))
        AUDIO2=$(($7 +  1))
        echo 7 parameters 2 audio  $1 $2 $3 $4 $5 $6 $7
-       echo 7 parameters 2 audio  $1 $2 $3 $4 $5 $6 $7 > ~/.xbmc/userdata/addon_data/script-video-ripper/log/mp4.log
        HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="doom9.cfg" -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,auto -E ac3,acc >> ~/.xbmc/userdata/addon_data/script-video-ripper/log/mp4.log
+       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile" -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,auto -E ac3,acc
     fi
 fi
 
@@ -136,10 +160,9 @@ if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-s ]] ; then
        AUDIO1=$(($5 + 1))
        echo 7 parameters 1 audio 1 sub $1 $2 $3 $4 $5 $6 $7
-       echo 7 parameters 1 audio 1 sub $1 $2 $3 $4 $5 $6 $7 > ~/.xbmc/userdata/addon_data/script-video-ripper/log/mp4.log
        mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $7 -vobsubout $2/$3
        HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="doom9.cfg" -a $AUDIO1 -E ac3 >> ~/.xbmc/userdata/addon_data/script-video-ripper/log/mp4.log
+       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile" -a $AUDIO1 -E ac3
     fi
 fi
 
@@ -147,10 +170,9 @@ if [ $# -eq 9 ]; then
      AUDIO1=$(($5 +  1))
      AUDIO2=$(($7 +  1))
      echo 9 parameters $1 $2 $3 $4 $5 $6 $7 $8 $9
-     echo 9 parameters $1 $2 $3 $4 $5 $6 $7 $8 $9 > ~/.xbmc/userdata/addon_data/script-video-ripper/log/mp4.log
      mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $9 -vobsubout $2/$3
      HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-     -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="doom9.cfg" -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,dpl2 -E ac3,acc >> ~/.xbmc/userdata/addon_data/script-video-ripper/log/mp4.log
+     -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile" -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,dpl2 -E ac3,acc
 fi
 
 
