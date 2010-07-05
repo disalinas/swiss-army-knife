@@ -54,6 +54,7 @@ REQUIRED_TOOLS=`cat << EOF
 lsdvd
 volname
 awk
+cut
 nohup
 tr
 tail
@@ -101,15 +102,46 @@ echo $VOLNAME > ~/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_VOLUME
 echo -----------------------------------------
 
 
+lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f1 >  ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
+lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f2 >  ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdm
+lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f3 >  ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvds
+lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $6}' | sed  's/,/ /g' > ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdc
+
+chapter=$(lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | wc -l)
+
+echo ----------------------
+echo found $chapter Titles
+echo ---------------------
 
 
-VTRACKS=$(lsdvd -v $1 2>/dev/null | grep ^Title)
-ATRACKS=$(lsdvd -a $1 2>/dev/null | grep Audio:)
+echo ------------------
+echo Generate Tracklist
+echo ------------------
+
+
+index=0
+track=0
+while read HOUR
+do
+  index=`expr $index + 1`
+
+  MIN=$(head -$index ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdm | tail -1)
+  SEC=$(head -$index ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvds | tail -1)
+  CAP=$(head -$index ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdc | tail -1)
+
+
+  if [ $track -lt 10 ] ; then
+     echo track:[0$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP]
+  fi
+  if [ $track -gt 9 ] ; then
+     echo track:[$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP]
+  fi
+  track=`expr $track + 1`
+done < ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
 
 
 
 
 
 exit 0
-
 
