@@ -75,11 +75,12 @@ fi
 
 
 
-# Check to see if data-directory exists ...
+# Check to see if all data-directory exists ...
 
 if [ ! -e /home/$1//.xbmc/userdata/addon_data/script-video-ripper ] ; then
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/bluray
+   mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/dvd
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/log
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/progress
    mkdir /home/$1/.xbmc/userdata/addon_data/script-video-ripper/tmp

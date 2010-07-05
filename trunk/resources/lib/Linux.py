@@ -143,7 +143,9 @@ def OSConfiguration(index):
     config[41] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME' 
     config[42] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS' 
     config[43] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI'
+    config[44] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_VOLUME'
   
+
     # With a list the delete of multiple files is very easy ;-) 
 
     temp_files.append(config[30])
@@ -157,6 +159,8 @@ def OSConfiguration(index):
     temp_files.append(config[41])
     temp_files.append(config[42]) 
     temp_files.append(config[43]) 
+    temp_files.append(config[44])
+
 
     # By now we have a modul global list with all the settings ;-)
 
@@ -194,6 +198,8 @@ def OSConfiguration(index):
         OSlog("Configuration 41 reading : " + config[41])
         OSlog("Configuration 42 reading : " + config[42])
         OSlog("Configuration 43 reading : " + config[43]) 
+        OSlog("Configuration 44 reading : " + config[44])
+
 
     configLinux = config 
 
