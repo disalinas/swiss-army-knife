@@ -34,17 +34,13 @@ import os, sys, thread, stat, time, string, re
 
 
 
-####################### LANGUAGE #######################
-
-__settings__ = xbmcaddon.Addon(id='script-video-ripper')
-__language__ = __settings__.getLocalizedString
-
-#########################################################
-
 
 
 
 ####################### GLOBAL DATA #####################
+
+__settings__ = xbmcaddon.Addon(id='script-video-ripper')
+__language__ = __settings__.getLocalizedString
 
 configLinux = [] 
 temp_files = []
@@ -641,6 +637,33 @@ def OSGetpids():
     return 
 #########################################################
 
+
+
+
+
+#########################################################
+# Function  : OSCheckContainerID                        #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# index       index to list with data-containers        #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# 1           Directory is not writeable or existing    # 
+# 0           Directory exists and is writeable         #
+#                                                       # 
+#########################################################
+def OSCheckContainerID(index)
+
+    global data_container
+
+    if (os.path.exists(data_container[index]):
+        print  
+        return 0        
+    else 
+        return 1
+#########################################################
 
 
 

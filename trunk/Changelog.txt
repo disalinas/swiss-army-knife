@@ -122,8 +122,10 @@
 - I ripped my first bluray ... over my gui .. but it crashed 
   xbmc after exit ... 
 
-
-
+----------------------------------
+05/07/10 Hans Weber CVS : R90  
+----------------------------------
+- More code and more functions 
 
 
 

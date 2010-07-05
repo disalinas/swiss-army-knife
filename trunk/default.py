@@ -90,6 +90,7 @@ if system[0] == 'Linux':
    from Linux import OSGetProgressVal 
    from Linux import OSGetStagesCounter
    from Linux import OSGetpids
+   from Linux import OSCheckContainerID
 else:
    sys.exit
 
@@ -306,6 +307,7 @@ class GUIMain01Class(xbmcgui.Window):
 #########################################################
 ####################### MAIN ############################
 #########################################################
+
 if __name__ == '__main__':
    
    global configuration 
@@ -324,10 +326,28 @@ if __name__ == '__main__':
    enable_burning = configuration[15]
    enable_customer = configuration[14]
  
+   # Check that directory exists and could be written 
+   # Bluray-directory is only teste if the functions are enabled
+
+   if (enable_bluray):
+       if (OSCheckContainerID(2)):
+           GUIInfo(__language__(33307))
+           return 1  
+     
+   if (OSCheckContainerID(1)):
+       GUIInfo(__language__(33306))
+       return 1       
+
+   if (OSCheckContainerID(0)):
+       GUIInfo(__language__(33305))
+       return 1
+
+
    GUIlog ("create main-menu")
    menu01 = GUIMain01Class()
 
    GUIlog ("addon-ended")   
+
 #########################################################
 #########################################################
 #########################################################
