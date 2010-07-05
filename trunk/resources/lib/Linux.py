@@ -48,6 +48,7 @@ __language__ = __settings__.getLocalizedString
 
 configLinux = [] 
 temp_files = []
+data_container = []
 exec_bluray = []
 exec_dvd = []
 verbose = 'false'
@@ -60,9 +61,10 @@ verbose = 'false'
 # Function : OSlog                                      #
 #########################################################
 # Parameter                                             #
-# msg          String to be shown                       # 
+#                                                       #
+# msg        String to be shown                         # 
 #                                                       # 
-# Returns      none 0                                   #
+# Returns    0                                          #
 #########################################################
 def OSlog(msg):
     xbmc.output("[%s]: [OSlog]  %s\n" % ("swiss-army-knife",str(msg))) 
@@ -71,19 +73,24 @@ def OSlog(msg):
 
 
 
+
+
+
 #########################################################
 # Function : OSConfiguration                            #
 #########################################################
 # Parameter                                             #
-# index           Configurations-settings to load       # 
+#                                                       #
+# index      Howmany index the configurations should    #
+#            have                                       #
 #                                                       # 
-# Returns                                               #
-# List with all configurations-settings                 #
+# Returns    List with all configurations-settings      #
 #########################################################
 def OSConfiguration(index):
 
     config = []
     __settings__
+    global data_container
     global configLinux
     global verbose 
     global temp_files 
@@ -115,6 +122,13 @@ def OSConfiguration(index):
  
     verbose = config[17]
 
+    # On startup we need to check that all data-containers are writeable
+ 
+    data_container.append(config[3])
+    data_container.append(config[4])
+    data_container.append(config[5])
+
+
     # config[19] until config[29] are reserved for future configurations-settings
 
     # All used internal files are stored inside after here ...
@@ -134,7 +148,7 @@ def OSConfiguration(index):
     config[42] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS' 
     config[43] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI'
   
-    # With a list the deletetion of multiple files is very easy ;-) 
+    # With a list the delete of multiple files is very easy ;-) 
 
     temp_files.append(config[30])
     temp_files.append(config[31]) 
@@ -146,6 +160,7 @@ def OSConfiguration(index):
     temp_files.append(config[37])
     temp_files.append(config[41])
     temp_files.append(config[42]) 
+    temp_files.append(config[43]) 
 
     # By now we have a modul global list with all the settings ;-)
 
@@ -168,7 +183,8 @@ def OSConfiguration(index):
         OSlog("Configuration 15 reading : " + config[15])
         OSlog("Configuration 16 reading : " + config[16])
         OSlog("Configuration 17 reading : " + config[17])
-      
+        OSlog("Configuration 18 reading : " + config[18])       
+
         OSlog("Configuration 30 reading : " + config[30])
         OSlog("Configuration 31 reading : " + config[31])
         OSlog("Configuration 32 reading : " + config[32])
@@ -181,7 +197,7 @@ def OSConfiguration(index):
         OSlog("Configuration 40 reading : " + config[40])
         OSlog("Configuration 41 reading : " + config[41])
         OSlog("Configuration 42 reading : " + config[42])
-
+        OSlog("Configuration 43 reading : " + config[43]) 
 
     configLinux = config 
 
