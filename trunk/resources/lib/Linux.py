@@ -665,8 +665,10 @@ def OSCheckContainerID(index)
     global data_container
 
     if (os.path.exists(data_container[index]):
-        print  
-        return 0        
+        if (os.access(data_container[index],os.W_OK) == False):
+           return 1 
+        else: 
+           return 0        
     else 
         return 1
 #########################################################

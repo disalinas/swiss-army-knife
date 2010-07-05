@@ -92,7 +92,7 @@ if system[0] == 'Linux':
    from Linux import OSGetpids
    from Linux import OSCheckContainerID
 else:
-   sys.exit
+   sys.exit 1
 
 #########################################################
 
@@ -347,6 +347,8 @@ if __name__ == '__main__':
    menu01 = GUIMain01Class()
 
    GUIlog ("addon-ended")   
+   
+   return 0 
 
 #########################################################
 #########################################################
