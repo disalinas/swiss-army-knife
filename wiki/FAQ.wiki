@@ -20,6 +20,7 @@
 
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/blueray
+/home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/dvd
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/log
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/progress
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/tmp
