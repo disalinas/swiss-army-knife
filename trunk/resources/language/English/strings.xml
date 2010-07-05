@@ -90,7 +90,7 @@
 
         <string id="33201">info-box</string>
         <string id="33202">Please select bluray-track to export</string>
-        <string id="33203">Bluray transcoding startet </string>
+        <string id="33203">Bluray transcoding startet successfull</string>
         <string id="33204">Bluray transcoding could not be stated</string> 
         <string id="33205">I'am a coder not a wizard ... this comes later</string>      
      
@@ -102,6 +102,8 @@
         <string id="33302">File swiss-army-knife/media/state could not be openend</string>
         <string id="33303">Bluray-functions are disabled.</string>
         <string id="33304">Bluray-chapters could not be read</string>
-
-
+        <string id="33305">ISO-directory not found or writeable !</string>
+        <string id="33306">DVD-directory not found or writeable !</string> 
+        <string id="33307">Bluray-directory not found or writeable !</string>
+ 
 </strings>
