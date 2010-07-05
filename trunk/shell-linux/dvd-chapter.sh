@@ -12,9 +12,10 @@
 # $1 device                                               #
 # description :                                           #
 # Reads all chapters from inserted dvd                    #
-# - contray to the bluray-funtion there 2 lists           #
+# - contray to the bluray-funtion there multiple lists    #
 # - 1. List contains all video-tracks                     #
-# - 2. List contains all audio-tracks                     #
+# - 2. Every track has a own audio-list                   #
+# - 3. Every track has a own subtitle-list                #
 ###########################################################
 
 SCRIPTDIR="$HOME/.xbmc/addons/swiss-army-knife/shell-linux"
@@ -55,7 +56,7 @@ lsdvd
 volname
 awk
 cut
-nohup
+sed
 tr
 tail
 EOF`
@@ -105,7 +106,7 @@ echo -----------------------------------------
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f1 >  ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f2 >  ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdm
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f3 >  ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvds
-lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $6}' | sed  's/,/ /g' > ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdc
+lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $6}' | sed  's/,//g' > ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdc
 
 chapter=$(lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | wc -l)
 
@@ -115,12 +116,13 @@ echo ---------------------
 
 
 echo ------------------
-echo Generate Tracklist
+echo Generate tracklist
 echo ------------------
 
 
 index=0
 track=0
+
 while read HOUR
 do
   index=`expr $index + 1`
@@ -129,19 +131,54 @@ do
   SEC=$(head -$index ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvds | tail -1)
   CAP=$(head -$index ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdc | tail -1)
 
-
   if [ $track -lt 10 ] ; then
      echo track:[0$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP]
+     echo track:[0$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP] >> ~/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_TRACKS
   fi
   if [ $track -gt 9 ] ; then
      echo track:[$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP]
+     echo track:[$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP] >>  ~/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_TRACKS
   fi
   track=`expr $track + 1`
 done < ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
 
 
+echo ----------------------------
+echo Generate $chapter audiolists
+echo ----------------------------
 
 
+
+aindex=0
+atrack=0
+
+while read HOUR
+do
+  aindex=`expr $aindex + 1`
+
+  #   echo $atrack $aindex
+
+  TMP=$(lsdvd -a -t $aindex 2>/dev/null | grep Audio: > ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap)
+  AUDIOS=$(cat ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap | wc -l)
+
+  if [ $atrack -lt 10 ] ; then
+      echo track [0$atrack] has $AUDIOS audio-languages
+  fi
+
+  if [ $atrack -gt 9 ] ; then
+      echo track [$atrack] has $AUDIOS audio-languages
+  fi
+
+  atrack=`expr $atrack + 1`
+
+  cat ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap > ~/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_A$atrack
+
+done < ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
+
+
+echo --------------
+echo all jobs done
+echo --------------
 
 exit 0
 
