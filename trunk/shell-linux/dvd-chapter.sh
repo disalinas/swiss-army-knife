@@ -148,13 +148,13 @@ echo Generate $chapter audiolists
 echo ----------------------------
 
 
-
 aindex=0
 atrack=0
 
 while read HOUR
 do
   aindex=`expr $aindex + 1`
+
 
   #   echo $atrack $aindex
 
@@ -175,6 +175,38 @@ do
 
 done < ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
 
+
+
+
+echo -------------------------------
+echo Generate $chapter subtitlelists
+echo -------------------------------
+
+aindex=0
+atrack=0
+
+while read HOUR
+do
+  aindex=`expr $aindex + 1`
+
+  #   echo $atrack $aindex
+
+  TMP=$(lsdvd -s -t $aindex 2>/dev/null | grep Subtitle: > ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap)
+  STITLES=$(cat ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap | wc -l)
+
+  if [ $atrack -lt 10 ] ; then
+      echo track [0$atrack] has $STITLES subtitles
+  fi
+
+  if [ $atrack -gt 9 ] ; then
+      echo track [$atrack] has $STITLES subtitles
+  fi
+
+  atrack=`expr $atrack + 1`
+
+  cat ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap > ~/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_S$atrack
+
+done < ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
 
 echo --------------
 echo all jobs done

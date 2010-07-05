@@ -12,7 +12,7 @@
 # $1 device                                               #
 # $2 directory for rip                                    #
 # $3 export-name                                          #
-# $4 chapter to extract                                   #
+# $4 chapter to extract (starting with index 1 !!!!! )    #
 # $5 audio channel to extract                             #
 #                                                         #
 # optional $6,7 -a secound-audio language (0-x)   -a 2    #
