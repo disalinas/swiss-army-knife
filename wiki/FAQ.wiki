@@ -85,6 +85,12 @@
 ===                            ==== 
   * No. But I can only provide debian packages for handbrake and makekmkv.
   * If you would send me the 2 packages in a other format (rpm as exmaple) I can store them inside the script. If you would also send me a new setup.sh for your Linux would be great.(I guess you have to send 32 and 64 Bit releases...)
-
+===   ===
+===   === 
+===Could the provided shell-scripts be replaced with own scripts ?==
+-----------------------------------------------------------------------------------------
+===                            ==== 
+  * Yes. You can replace the shell-scripts with allmost all that is running on linux.
+  * You have to use the API of this addon to be compatible.
 
  
