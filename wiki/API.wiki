@@ -154,3 +154,34 @@ TRACK : [7] DURATION : [0:03:40] CHAPTERS : [0]
 TRACK : [8] DURATION : [0:03:23] CHAPTERS : [0]
 TRACK : [9] DURATION : [0:05:51] CHAPTERS : [0]
 }}}
+
+
+
+
+==== =====
+==== =====
+==== =====
+= dvd pi-functions for all shell-scripts=
+==== =====
+==== =====
+==== =====
+------------------------------------------------------------------------------------------
+=== File .xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_VOLUME ===
+------------------------------------------------------------------------------------------
+ * Contains the volume name of dvd
+ * All spaces or non asci chars should be removed inside the script.
+ * Example (DVD_VOLUME)
+{{{
+STARGATE
+}}}
+==== =====
+==== =====
+==== =====
+------------------------------------------------------------------------------------------
+=== File .xbmc/userdata/addon_data/script-video-ripper/bluray/DVD_TRACKS ===
+------------------------------------------------------------------------------------------
+ * Contains the list of all tracks witch could be later selected inside the gui.
+   * The shell-script musst produce this list or the selection list will not show up.
+ * Example (DVD_TRACKS)
+{{{
+}}}
