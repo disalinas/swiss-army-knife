@@ -147,7 +147,7 @@ apt-get install lynx build-essential libc6-dev libssl-dev libgl1-mesa-dev libqt4
 
 echo 
 echo ----------------------------------------------------------------
-echo "Important-Note for the comming command !"
+echo "Important-Note for the next command !"
 echo "The command create a ssh-key and will ask for a password. Leave it empty !!!!!!!!"
 echo ----------------------------------------------------------------
 echo 
@@ -159,8 +159,9 @@ if [ $RETVAL -eq 0 ] ; then
 
    echo  
    echo ---------------------------------------------------------------- 
-   echo "Important-Note for the comming command !"
-   echo "The command will ask for a password.This password is the current user $1"
+   echo "Important-Note for the next command !"
+   echo "The command will ask for a password.This password is for the user $1"
+   echo "and not the current root-password"
    echo "If you don't give the password,the ssh-key that was created can not be transmitted."
    echo ----------------------------------------------------------------
    sudo -u $1 ssh-copy-id -i /home/$1/.ssh/id_rsa.pub $1@localhost
