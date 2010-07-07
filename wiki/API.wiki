@@ -178,10 +178,11 @@ STARGATE
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/bluray/DVD_TRACKS ===
+=== File .xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_TRACKS ===
 ------------------------------------------------------------------------------------------
  * Contains the list of all tracks witch could be later selected inside the gui.
    * The shell-script musst produce this list or the selection list will not show up.
  * Example (DVD_TRACKS)
 {{{
+
 }}}
