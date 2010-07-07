@@ -161,7 +161,7 @@ TRACK : [9] DURATION : [0:05:51] CHAPTERS : [0]
 ==== =====
 ==== =====
 ==== =====
-= dvd pi-functions for all shell-scripts=
+= dvd api-functions for all shell-scripts=
 ==== =====
 ==== =====
 ==== =====
