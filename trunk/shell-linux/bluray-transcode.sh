@@ -52,6 +52,9 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo "[p4] Track to extract 0-X"
   echo "                            "
   echo "bluray-transcode.sh was called with wrong arguments" > $OUTPUT_ERROR
+  echo
+  echo ----------------------- script rc=1 -----------------------------
+  echo -----------------------------------------------------------------
   exit $E_BADARGS
 fi
 
@@ -70,12 +73,14 @@ for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
    which ${REQUIRED_TOOL} >/dev/null 2>&1
    if [ $? -eq 1 ]; then
-        echo ----------------------------------------------------------------------------
         echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate."
         echo "Please install \"${REQUIRED_TOOL}\"."
         echo ----------------------------------------------------------------------------
         echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate." > $OUTPUT_ERROR
         echo "Please install \"${REQUIRED_TOOL}\"." > $OUTPUT_ERROR
+        echo
+        echo ----------------------- script rc=2 -----------------------------
+        echo -----------------------------------------------------------------
         exit $E_TOOLNOTF
    fi
 done

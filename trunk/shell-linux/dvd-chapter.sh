@@ -20,10 +20,14 @@
 
 SCRIPTDIR="$HOME/.xbmc/addons/swiss-army-knife/shell-linux"
 
-
-echo -----------------------------------------------------------------
+echo
+echo --------------------------------------------------------------------
+SCRIPT=$(basename $0)
+echo "script  :" $SCRIPT
+cat version
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
-echo -----------------------------------------------------------------
+echo --------------------------------------------------------------------
+
 
 # Define the counting commands we expect inside the script
 
@@ -45,6 +49,9 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo "[p1] device"
   echo "                            "
   echo "dvd-chapter.sh was called with wrong arguments" > $OUTPUT_ERROR
+  echo
+  echo ----------------------- script rc=1 -----------------------------
+  echo -----------------------------------------------------------------
   exit $E_BADARGS
 fi
 
@@ -68,40 +75,25 @@ for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
    which ${REQUIRED_TOOL} >/dev/null 2>&1
    if [ $? -eq 1 ]; then
-        echo ----------------------------------------------------------------------------
         echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate."
         echo "Please install \"${REQUIRED_TOOL}\"."
         echo ----------------------------------------------------------------------------
         echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate." > $OUTPUT_ERROR
         echo "Please install \"${REQUIRED_TOOL}\"." > $OUTPUT_ERROR
+        echo
+        echo ----------------------- script rc=2 -----------------------------
+        echo -----------------------------------------------------------------
         exit $E_TOOLNOTF
    fi
 done
 
-echo ----------------
-echo Clean temp files
-echo ----------------
 
 rm $HOME/.xbmc/userdata/addon_data/script-video-ripper/dvd/* >/dev/null 2>&1
 
 
-echo ---------------
-echo Toolchain found
-echo ---------------
-
-
-echo -----------------------------------------
-echo get dvd volume-name
-echo -----------------------------------------
-
 VOLNAME=$(volname $1 | tr -dc ‘[:alnum:]‘)
 
-
-echo -----------------------------------------
-echo Volume-Name of dvd:[$VOLNAME]
 echo $VOLNAME > ~/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_VOLUME
-echo -----------------------------------------
-
 
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f1 >  ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f2 >  ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdm
@@ -109,15 +101,6 @@ lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f3 >  ~/.xb
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $6}' | sed  's/,//g' > ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdc
 
 chapter=$(lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | wc -l)
-
-echo ----------------------
-echo found $chapter Titles
-echo ---------------------
-
-
-echo ------------------
-echo Generate tracklist
-echo ------------------
 
 
 index=0
@@ -132,20 +115,13 @@ do
   CAP=$(head -$index ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdc | tail -1)
 
   if [ $track -lt 10 ] ; then
-     echo track:[0$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP]
      echo track:[0$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP] >> ~/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_TRACKS
   fi
   if [ $track -gt 9 ] ; then
-     echo track:[$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP]
      echo track:[$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP] >>  ~/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_TRACKS
   fi
   track=`expr $track + 1`
 done < ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
-
-
-echo ----------------------------
-echo Generate $chapter audiolists
-echo ----------------------------
 
 
 aindex=0
@@ -156,18 +132,18 @@ do
   aindex=`expr $aindex + 1`
 
 
-  #   echo $atrack $aindex
+  # echo $atrack $aindex
 
   TMP=$(lsdvd -a -t $aindex 2>/dev/null | grep Audio: > ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap)
   AUDIOS=$(cat ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap | wc -l)
 
-  if [ $atrack -lt 10 ] ; then
-      echo track [0$atrack] has $AUDIOS audio-languages
-  fi
+  # if [ $atrack -lt 10 ] ; then
+  #    echo track [0$atrack] has $AUDIOS audio-languages
+  # fi
 
-  if [ $atrack -gt 9 ] ; then
-      echo track [$atrack] has $AUDIOS audio-languages
-  fi
+  # if [ $atrack -gt 9 ] ; then
+  #    echo track [$atrack] has $AUDIOS audio-languages
+  # fi
 
   atrack=`expr $atrack + 1`
 
@@ -175,12 +151,6 @@ do
 
 done < ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
 
-
-
-
-echo -------------------------------
-echo Generate $chapter subtitlelists
-echo -------------------------------
 
 aindex=0
 atrack=0
@@ -194,13 +164,13 @@ do
   TMP=$(lsdvd -s -t $aindex 2>/dev/null | grep Subtitle: > ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap)
   STITLES=$(cat ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/chap | wc -l)
 
-  if [ $atrack -lt 10 ] ; then
-      echo track [0$atrack] has $STITLES subtitles
-  fi
+  # if [ $atrack -lt 10 ] ; then
+  #    echo track [0$atrack] has $STITLES subtitles
+  # fi
 
-  if [ $atrack -gt 9 ] ; then
-      echo track [$atrack] has $STITLES subtitles
-  fi
+  # if [ $atrack -gt 9 ] ; then
+  #    echo track [$atrack] has $STITLES subtitles
+  # fi
 
   atrack=`expr $atrack + 1`
 
@@ -208,9 +178,9 @@ do
 
 done < ~/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvdh
 
-echo --------------
-echo all jobs done
-echo --------------
+echo
+echo ----------------------- script rc=0 -----------------------------
+echo -----------------------------------------------------------------
 
 exit 0
 
