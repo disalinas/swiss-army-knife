@@ -13,7 +13,7 @@
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
 # DATE    : 06-27-10                                    #
-# STATE   : Alpha 1                                     #
+# STATE   : Alpha 2                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -660,16 +660,16 @@ def OSGetpids():
 # 0           Directory exists and is writeable         #
 #                                                       # 
 #########################################################
-def OSCheckContainerID(index)
+def OSCheckContainerID(index):
 
     global data_container
 
-    if (os.path.exists(data_container[index]):
+    if (os.path.exists(data_container[index])):
         if (os.access(data_container[index],os.W_OK) == False):
            return 1 
         else: 
            return 0        
-    else 
+    else: 
         return 1
 #########################################################
 
