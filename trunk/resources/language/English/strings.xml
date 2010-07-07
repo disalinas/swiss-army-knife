@@ -82,7 +82,8 @@
         <string id="32173">Jobs    :</string>
         <string id="32174">Current :</string>
         <string id="32175">Done    : </string>      
-        <string id="32175">Back</string>
+        <string id="32176">Back</string>
+        <string id="32177">There are no active jobs</string>
 
         <!--               --> 
         <!-- Info          -->
@@ -105,5 +106,6 @@
         <string id="33305">ISO-directory not found or writeable !</string>
         <string id="33306">DVD-directory not found or writeable !</string> 
         <string id="33307">Bluray-directory not found or writeable !</string>
- 
-</strings>
+        <string id="33308">Devive is locked !(active job) </string>
+
+ </strings>

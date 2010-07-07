@@ -39,15 +39,15 @@ import os, sys, thread, stat, time, string, re
 
 ####################### GLOBAL DATA #####################
 
-__settings__ = xbmcaddon.Addon(id='script-video-ripper')
-__language__ = __settings__.getLocalizedString
+__settings__       = xbmcaddon.Addon(id='script-video-ripper')
+__language__       = __settings__.getLocalizedString
 
-configLinux = [] 
-temp_files = []
-data_container = []
-exec_bluray = []
-exec_dvd = []
-verbose = 'false'
+__configLinux__    = [] 
+__temp_files__     = []
+__data_container__ = []
+__exec_bluray__    = []
+__exec_dvd__       = []
+__verbose__        = 'false'
 
 #########################################################
 
@@ -85,11 +85,6 @@ def OSlog(msg):
 def OSConfiguration(index):
 
     config = []
-    __settings__
-    global data_container
-    global configLinux
-    global verbose 
-    global temp_files 
 
     for i in range(0,index):
 	config.append("empty")
@@ -116,16 +111,18 @@ def OSConfiguration(index):
     config[17] = __settings__.getSetting("id-verbose")
     config[18] = __settings__.getSetting("id-dvd-subt")
  
-    verbose = config[17]
+
+    # Modul-global variable to detect if debug-log is active
+ 
+    __verbose__ = config[17]
 
     # On startup we need to check that all data-containers are writeable
- 
-    data_container.append(config[3])
-    data_container.append(config[4])
-    data_container.append(config[5])
+
+    __data_container__.append(config[3])
+    __data_container__.append(config[4])
+    __data_container__.append(config[5])
 
 
-    # config[19] until config[29] are reserved for future configurations-settings
 
     # All used internal files are stored inside after here ...
 
@@ -148,23 +145,23 @@ def OSConfiguration(index):
 
     # With a list the delete of multiple files is very easy ;-) 
 
-    temp_files.append(config[30])
-    temp_files.append(config[31]) 
-    temp_files.append(config[32])
-    temp_files.append(config[33])
-    temp_files.append(config[34])
-    temp_files.append(config[35])
-    temp_files.append(config[36])
-    temp_files.append(config[37])
-    temp_files.append(config[41])
-    temp_files.append(config[42]) 
-    temp_files.append(config[43]) 
-    temp_files.append(config[44])
+    __temp_files__.append(config[30])
+    __temp_files__.append(config[31]) 
+    __temp_files__.append(config[32])
+    __temp_files__.append(config[33])
+    __temp_files__.append(config[34])
+    __temp_files__.append(config[35])
+    __temp_files__.append(config[36])
+    __temp_files__.append(config[37])
+    __temp_files__.append(config[41])
+    __temp_files__.append(config[42]) 
+    __temp_files__.append(config[43]) 
+    __temp_files__.append(config[44])
 
 
-    # By now we have a modul global list with all the settings ;-)
+    # Do log all settings inside xbmc.log 
 
-    if (verbose == 'true'):
+    if (__verbose__ == 'true'):
         OSlog("Configuration 00 reading : " + config[0])
         OSlog("Configuration 01 reading : " + config[1])
         OSlog("Configuration 02 reading : " + config[2]) 
@@ -200,8 +197,10 @@ def OSConfiguration(index):
         OSlog("Configuration 43 reading : " + config[43]) 
         OSlog("Configuration 44 reading : " + config[44])
 
+    
+    # Store configuration inside modul global list
 
-    configLinux = config 
+    __configLinux__ = config 
 
     return config
 #########################################################
@@ -230,27 +229,31 @@ def OSConfiguration(index):
 #########################################################
 def OSRun(command,backg,busys):    
 
-    global configLinux
-    global verbose 
-
-    if (verbose == 'true'):
+    if (__verbose__ == 'true'):
         OSlog ("OSRun start")
+
     if (busys):
         xbmc.executebuiltin("ActivateWindow(busydialog)")  
     sys.platform.startswith('linux')
-    commandssh = "ssh " + configLinux[6] + " " + configLinux[40] + command + " "  
+
+    commandssh = "ssh " + __configLinux__[6] + " " + __configLinux__[40] + command + " "
+
     if (backg):
         commandssh = commandssh + " > /dev/null 2>&1 &"
 
-    # We do send a copy of the command to ssh-log  configLinux[38] 
+    # We do send a copy of the command to ssh-log
 
-    if (verbose == 'true'):
+    if (__verbose__ == 'true'):
         OSlog("Command to run :" + commandssh)
+
     status = os.system("%s" % (commandssh))
+
     if (busys):
         xbmc.executebuiltin("Dialog.Close(busydialog)")
-    if (verbose == 'true'):
+
+    if (__verbose__ == 'true'):
         OSlog ("OSRun end")   
+
     return status
 #########################################################
 
@@ -271,26 +274,23 @@ def OSRun(command,backg,busys):
 #########################################################
 def OSCheckMedia(Media):
 
-    global configLinux
-    global verbose 
 
-    # Erase  all temporary files 
+    # Erase  all temporary files stored inside list
  
     OSCleanTemp()      
 
     # Execution of shell-script br0.sh inside shell-linux  
 
-    if (verbose == 'true'):
+    if (__verbose__ == 'true'):
         OSlog("state.sh command ready to start")
 
     if (Media == 'BLURAY'):
-        OSRun("br0.sh " +  configLinux[2],True,False)
+        OSRun("br0.sh " +  __configLinux__[2],True,False)
     if (Media == 'DVD-ROM'):     
-        OSRun("br0.sh " +  configLinux[1],True,False)
+        OSRun("br0.sh " +  __configLinux__[1],True,False)
 
-    if (verbose == 'true'):
+    if (__verbose__ == 'true'):
         OSlog("state.sh command executed")
-
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")   
 
@@ -302,7 +302,7 @@ def OSCheckMedia(Media):
     WCycles = 3 
     Waitexit = True 
     while (Waitexit):  
-           if (os.path.exists(configLinux[30])):  
+           if (os.path.exists(__configLinux__[30])):  
                if (verbose == 'true'):
                    OSlog("state-files exist ...")
                Waitexit = False 
@@ -310,7 +310,7 @@ def OSCheckMedia(Media):
                WCycles = WCycles + 1
                time.sleep(1)
            if (WCycles >= 10):
-               if (verbose == 'true'):
+               if (__verbose__ == 'true'):
                    OSlog("Timeout 10 secounds reached for track-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)") 
                return 2   
@@ -319,8 +319,8 @@ def OSCheckMedia(Media):
 
     # We shoud now have the file with the state 
  
-    if (os.path.exists(configLinux[30])):   
-        f = open(configLinux[30],'r')
+    if (os.path.exists(__configLinux__[30])):   
+        f = open(__configLinux__[30],'r')
         media = f.readline()
         media = media.strip()
         OSlog("Media detected")  
@@ -346,19 +346,17 @@ def OSCheckMedia(Media):
 #########################################################
 def OSChapterBluray():
 
-    global configLinux
-    global verbose 
 
     tracklist = []
 
     # Execution of shell-script br1.sh inside shell-linux 
 
-    if (verbose == 'true'):
+    if (__verbose__ == 'true'):
         OSlog("bluray-chapter.sh command ready to start")
 
     OSRun("br1.sh " +  configLinux[2],True,False)
 
-    if (verbose == 'true'): 
+    if (__verbose__ == 'true'): 
         OSlog("bluray-chapter.sh command executed") 
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
@@ -372,8 +370,8 @@ def OSChapterBluray():
     WCycles = 20 
     Waitexit = True 
     while (Waitexit):  
-           if (os.path.exists(configLinux[42])):  
-               if (verbose == 'true'):
+           if (os.path.exists(__configLinux__[42])):  
+               if (__verbose__ == 'true'):
                    OSlog("track-files exist ...")
                Waitexit = False 
            else:
@@ -388,13 +386,13 @@ def OSChapterBluray():
  
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     
-    if (verbose == 'true'):
+    if (__verbose__ == 'true'):
         OSlog("track-files exist . Create list for GUI")
    
     # We should have the file with the state 
  
-    if (os.path.exists(configLinux[42])):   
-        trackfile = open(configLinux[42],'r')
+    if (os.path.exists(__configLinux__[42])):   
+        trackfile = open(__configLinux__[42],'r')
         for line in trackfile.readlines():
                 line = line.strip()
                 tracklist.append(line)
@@ -418,14 +416,12 @@ def OSChapterBluray():
 #########################################################
 def OSCleanTemp():
 
-    global temp_files 
-
     xbmc.executebuiltin("ActivateWindow(busydialog)")    
 
     # We have global list that contains all temp. files
     # as it looks easy do delete all file inside the list
 
-    for item in temp_files:
+    for item in __temp_files__:
          if (os.path.exists(item)):
              os.remove(item)
 
@@ -452,19 +448,15 @@ def OSCleanTemp():
 #########################################################
 def OSBlurayExecuteList():
 
-    global temp_files 
-    global exec_bluray
-    global configLinux
- 
     GUIList = [] 
     tmp = []
 
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")    
 
-    if (os.path.exists(configLinux[43])): 
+    if (os.path.exists(__configLinux__[43])): 
 
-       GUIFile = open(configLinux[43],'r')
+       GUIFile = open(__configLinux_[43],'r')
        for line in GUIFile.readlines():
            line = line.strip()
            tmp.append(line)
@@ -472,27 +464,27 @@ def OSBlurayExecuteList():
 
        # We prepare the arguments for bluray-transcode.sh 
 
-       exec_bluray.append(tmp[0])
-       exec_bluray.append(configLinux[5])
-       exec_bluray.append(tmp[3])
-       exec_bluray.append(tmp[1])
+       __exec_bluray__.append(tmp[0])
+       __exec_bluray__.append(configLinux[5])
+       __exec_bluray__.append(tmp[3])
+       __exec_bluray__.append(tmp[1])
 
 
        # Add device 
-       GUIList.append(__language__(32151) + tmp[0])
+       GUIList.append(__language__(32151) +__tmp__[0])
 
 
        # Add track
-       GUIList.append(__language__(32152) + tmp[1])
+       GUIList.append(__language__(32152) + __tmp__[1])
 
        # Add audio 
        GUIList.append(__language__(32153))
 
        # Add length
-       GUIList.append(__language__(32154) + tmp[2])
+       GUIList.append(__language__(32154) + __tmp__[2])
  
        # Add name including extension mkv
-       GUIList.append(__language__(32155) + tmp[3] + ".mkv")
+       GUIList.append(__language__(32155) + __tmp__[3] + ".mkv")
     
        # Add accept and cancel button 
        GUIList.append(__language__(32156))
@@ -524,18 +516,18 @@ def OSBlurayExecuteList():
 #########################################################
 def OSBlurayTranscode():
 
-    global exec_bluray
-
     xbmc.executebuiltin("ActivateWindow(busydialog)")    
 
     # Execution of shell-script br2.sh inside shell-linux 
 
-    if (verbose == 'true'):
+    if (__verbose__ == 'true'):
         OSlog("bluray-transcode.sh command ready to start")
 
-    OSRun("br2.sh " +  exec_bluray[0] + " " + exec_bluray[1] + " " + exec_bluray[2] + " " + exec_bluray[3],True,False)
 
-    if (verbose == 'true'): 
+    OSRun("br2.sh " +  __exec_bluray__[0] + " " + __exec_bluray__[1] + " " + exec_bluray__[2] + " " + __exec_bluray__[3],True,False)
+
+
+    if (__verbose__ == 'true'): 
         OSlog("bluray-transcode.sh command executed")     
  
     # Now we do loop until the PID-file exists
@@ -545,7 +537,7 @@ def OSBlurayTranscode():
     WCycles = 20 
     Waitexit = True 
     while (Waitexit):  
-           if (os.path.exists(configLinux[32])):  
+           if (os.path.exists(__configLinux__[32])):  
                if (verbose == 'true'):
                    OSlog("pid-file exist ...")
                Waitexit = False 
@@ -560,10 +552,10 @@ def OSBlurayTranscode():
         
     # Clean exec-array 
  
-    del exec_bluray[3]
-    del exec_bluray[2]
-    del exec_bluray[1]
-    del exec_bluray[0]
+    del __exec_bluray__[3]
+    del __exec_bluray__[2]
+    del __exec_bluray__[1]
+    del __exec_bluray__[0]
     
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     return 1
@@ -585,10 +577,8 @@ def OSBlurayTranscode():
 #########################################################
 def OSGetProgressVal():
 
-    global configLinux
-
-    if (os.path.exists(configLinux[31])):
-        ProgressFile = open(configLinux[31],'r')
+    if (os.path.exists(__configLinux__[31])):
+        ProgressFile = open(__configLinux__[31],'r')
         line =  ProgressFile.readline()
         ProgressFile.close
         line = line.strip() 
@@ -613,10 +603,9 @@ def OSGetProgressVal():
 #########################################################
 def OSGetStagesCounter():
 
-    global configLinux
 
-    if (os.path.exists(configLinux[35])):
-        ProgressFile = open(configLinux[35],'r')
+    if (os.path.exists(__configLinux__[35])):
+        ProgressFile = open(__configLinux__[35],'r')
         line =  ProgressFile.readline()
         ProgressFile.close
         line = line.strip() 
@@ -662,10 +651,8 @@ def OSGetpids():
 #########################################################
 def OSCheckContainerID(index):
 
-    global data_container
-
-    if (os.path.exists(data_container[index])):
-        if (os.access(data_container[index],os.W_OK) == False):
+    if (os.path.exists(__data_container__[index])):
+        if (os.access(__data_container__[index],os.W_OK) == False):
            return 1 
         else: 
            return 0        
