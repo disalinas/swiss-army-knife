@@ -19,10 +19,12 @@
 SCRIPTDIR="$HOME/.xbmc/addons/swiss-army-knife/shell-linux"
 
 echo
-echo -----------------------------------------------------------------
+echo --------------------------------------------------------------------
+SCRIPT=$(basename $0)
+echo "script  :" $SCRIPT
+cat version
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
-echo -----------------------------------------------------------------
-echo
+echo --------------------------------------------------------------------
 
 # Define the counting commands we expect inside the script
 
@@ -40,9 +42,9 @@ GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI"
 
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: state.sh p1"
+  echo "Usage  : state.sh p1"
   echo "                            "
-  echo "[p1] device"
+  echo "[p1] device to check.example /dev/sr0 or /dev/sr1"
   echo "                            "
   echo "state.sh was called with wrong arguments" > $OUTPUT_ERROR
   exit $E_BADARGS
@@ -72,12 +74,6 @@ do
    fi
 done
 
-echo
-echo ---------------
-echo Toolchain found
-echo ---------------
-echo
-
 
 OUTPUT=$(dvd+rw-mediainfo $1 > $MEDIA_TYPE 2>/dev/null)
 RETVAL1=$?
@@ -94,13 +90,11 @@ if [ $RETVAL1 -eq 0 ] ; then
 
        cat $MEDIA_TYPE | head -3 | tail -1 | awk '{print $4}' > $MEDIA_RETURN
 
-       echo
-       echo -------------------------
-       echo DVD found inside $1
-       echo -------------------------
-       echo
-
        # If the filesystem of the inserted dvd is incorrect we should not copy the dvd with dd
+
+       echo
+       echo ----------------------- script rc=0 -----------------------------
+       echo -----------------------------------------------------------------
 
        exit 0
    fi
@@ -123,23 +117,26 @@ if [ $RETVAL1 -eq 0 ] ; then
 
    if [ $RETVAL3 -eq 0 ] ; then
 
-      echo
-      echo -----------------------------
-      echo BLURAY found inside $1
-      echo -----------------------------
-      echo
-
       echo 'BLURAY'  > $MEDIA_RETURN
 
       # No we prepare the GUI-List for execution ...
-      # We allready have all values ... 
-        
+      # We allready have all values ...
+
       echo $1 > $GUI_RETURN
+
+      echo
+      echo ----------------------- script rc=0 -----------------------------
+      echo -----------------------------------------------------------------
 
       exit 0
    fi
 
    # The ripper script do only support dvd and bluray .....
+
+
+   echo
+   echo ----------------------- script rc=1 -----------------------------
+   echo -----------------------------------------------------------------
 
    exit 1
 fi
