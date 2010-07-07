@@ -16,11 +16,15 @@
 
 SCRIPTDIR="$HOME/.xbmc/addons/swiss-army-knife/shell-linux"
 
+
 echo
-echo -----------------------------------------------------------------
+echo --------------------------------------------------------------------
+SCRIPT=$(basename $0)
+echo "script  :" $SCRIPT
+cat version
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
-echo -----------------------------------------------------------------
-echo
+echo --------------------------------------------------------------------
+
 
 # Define the counting commands we expect inside the script
 
@@ -36,10 +40,13 @@ E_SSHKEY=4
 if [ $# -ne $EXPECTED_ARGS ] ; then
   echo "Usage: setup.sh p1"
   echo "                                      "
-  echo " p1 usernmae                          "
+  echo " [p1] usernmae                          "
+  echo 
   echo "setup.sh was called without arguments"
   echo "                                     "
-  echo "setup.sh username"
+  echo
+  echo ----------------------- script rc=1 -----------------------------
+  echo -----------------------------------------------------------------
   exit $E_BADARGS
 fi
 
@@ -58,8 +65,13 @@ for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
    which ${REQUIRED_TOOL} >/dev/null 2>&1
    if [ $? -eq 1 ]; then
-        echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate."
-        echo "       Please install \"${REQUIRED_TOOL}\"."
+      echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate."
+      echo "Please install \"${REQUIRED_TOOL}\"."
+      echo ----------------------------------------------------------------------------
+      echo
+      echo ----------------------- script rc=2 -----------------------------
+      echo -----------------------------------------------------------------
+      exit $E_TOOLNOTF
    fi
 done
 
@@ -68,11 +80,12 @@ done
 
 if [ "$UID" -ne 0 ] ; then
    echo "you must be root to run this script !" 
-   echo "sudo ./livecd.sh"
+   echo "sudo ./setup.sh"
    echo
+   echo ----------------------- script rc=3 -----------------------------
+   echo -----------------------------------------------------------------
    exit $E_NOROOT
 fi
-
 
 
 # Check to see if all data-directory exists ...
@@ -131,20 +144,38 @@ apt-get install liba52-0.7.4 libfaac0 libmp3lame0 libmp4v2-0 libogg0 libsamplera
 
 apt-get install lynx build-essential libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev libbz2-1.0 libgcc1 libstdc++6 zlib1g
 
-echo "Important-Note : "
-echo "When asked for password leave it empty"
+
+echo 
+echo ----------------------------------------------------------------
+echo "Important-Note for the comming command !"
+echo "The command create a ssh-key and will ask for a password. Leave it empty !!!!!!!!"
+echo ----------------------------------------------------------------
+echo 
+
 sudo -u $1 ssh-keygen -t rsa
 
 RETVAL=$?
 if [ $RETVAL -eq 0 ] ; then
-   echo "Important-Note : "
-   echo "When asked for password enter password for $1"
+
+   echo  
+   echo ---------------------------------------------------------------- 
+   echo "Important-Note for the comming command !"
+   echo "The command will ask for a password.This password is the current user $1"
+   echo "If you don't give the password,the ssh-key that was created can not be transmitted."
+   echo ----------------------------------------------------------------
    sudo -u $1 ssh-copy-id -i /home/$1/.ssh/id_rsa.pub $1@localhost
+   echo
+   echo ----------------------- script rc=0 -----------------------------
+   echo -----------------------------------------------------------------
    exit 0
 fi
 
 # Ok we have error with the creation of the key
-echo "creation of the ssh-key failed ..."
+
+
+echo
+echo ----------------------- script rc=4 -----------------------------
+echo -----------------------------------------------------------------
 exit $E_SSHKEY
 
 
