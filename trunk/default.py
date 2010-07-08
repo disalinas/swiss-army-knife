@@ -202,6 +202,39 @@ def GUIInfo(Info):
 
 
 #########################################################
+# Function  : GUIJobWinClass                            #
+#########################################################
+# Parameter : XBMC-Window Class                         #
+#                                                       #
+# xbmcgui.Window                                        # 
+#                                                       # 
+# Returns   : none                                      #
+#########################################################
+class GUIJobWinClass(xbmcgui.Window):
+
+      def __init__(self):
+
+          exit = True
+ 
+          while (exit): 
+             dialog = xbmcgui.Dialog()
+             choice  = dialog.select(__language__(32091) , [__language__(32170), __language__(32171), __language__(32172),__language__(32173)])
+             if (choice == 0):   # Progress-Bar
+                GUIProgressbar("Progress current stage")        
+             if (choice == 1):   # Kill
+                GUIInfo(__language__(33205))         
+             if (choice == 2):   # Info
+                GUIInfo(__language__(33205))    
+             if (choice == 4):   # Exit
+                 exit = False
+          self.close()
+#########################################################
+
+
+
+
+
+#########################################################
 # Function  : GUIMain01Class                            #
 #########################################################
 # Parameter : XBMC-Window Class                         #
@@ -219,7 +252,7 @@ class GUIMain01Class(xbmcgui.Window):
        exit_script = True 
        while (exit_script): 
              dialog = xbmcgui.Dialog()
-             choice  = dialog.select(__language__(32000) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
+             choice  = dialog.select(__language__(32090) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
 
              if (choice == 0):
 
@@ -283,7 +316,8 @@ class GUIMain01Class(xbmcgui.Window):
                  if (__jobs__ == False):
                      GUIInfo(__language__(32177))
                  else:
-                     GUIProgressbar("Progress transcoding bluray")        
+                     JobWindow = GUIJobWindClass()
+                     del JobWindow        
 
              if (choice == 4): 
                  GUIlog('menu exit activated')

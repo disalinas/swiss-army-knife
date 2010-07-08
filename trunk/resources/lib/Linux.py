@@ -84,6 +84,13 @@ def OSlog(msg):
 #########################################################
 def OSConfiguration(index):
 
+    global __configLinux__ 
+    global __temp_files__    
+    global __data_container__
+    global __exec_bluray__
+    global __exec_dvd__ 
+    global __verbose__
+
     config = []
 
     for i in range(0,index):
@@ -229,6 +236,9 @@ def OSConfiguration(index):
 #########################################################
 def OSRun(command,backg,busys):    
 
+    global __configLinux__ 
+    global __verbose__
+
     if (__verbose__ == 'true'):
         OSlog ("OSRun start")
 
@@ -274,6 +284,8 @@ def OSRun(command,backg,busys):
 #########################################################
 def OSCheckMedia(Media):
 
+    global __configLinux__ 
+    global __verbose__
 
     # Erase  all temporary files stored inside list
  
@@ -303,7 +315,7 @@ def OSCheckMedia(Media):
     Waitexit = True 
     while (Waitexit):  
            if (os.path.exists(__configLinux__[30])):  
-               if (verbose == 'true'):
+               if (__verbose__ == 'true'):
                    OSlog("state-files exist ...")
                Waitexit = False 
            else:
@@ -346,6 +358,8 @@ def OSCheckMedia(Media):
 #########################################################
 def OSChapterBluray():
 
+    global __configLinux__ 
+    global __verbose__
 
     tracklist = []
 
@@ -415,6 +429,9 @@ def OSChapterBluray():
 # none                                                  #
 #########################################################
 def OSCleanTemp():
+ 
+    global __temp_files__  
+    global __verbose__  
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")    
 
@@ -447,6 +464,10 @@ def OSCleanTemp():
 # list of blueray summary prio to execution             #
 #########################################################
 def OSBlurayExecuteList():
+
+    global __configLinux__ 
+    global __exec_bluray__
+    global __verbose__
 
     GUIList = [] 
     tmp = []
@@ -516,6 +537,10 @@ def OSBlurayExecuteList():
 #########################################################
 def OSBlurayTranscode():
 
+    global __configLinux__ 
+    global __exec_bluray__
+    global __verbose__
+
     xbmc.executebuiltin("ActivateWindow(busydialog)")    
 
     # Execution of shell-script br2.sh inside shell-linux 
@@ -577,6 +602,9 @@ def OSBlurayTranscode():
 #########################################################
 def OSGetProgressVal():
 
+    global __configLinux__ 
+    global __verbose__
+
     if (os.path.exists(__configLinux__[31])):
         ProgressFile = open(__configLinux__[31],'r')
         line =  ProgressFile.readline()
@@ -603,6 +631,8 @@ def OSGetProgressVal():
 #########################################################
 def OSGetStagesCounter():
 
+    global __configLinux__ 
+    global __verbose__
 
     if (os.path.exists(__configLinux__[35])):
         ProgressFile = open(__configLinux__[35],'r')
@@ -628,7 +658,12 @@ def OSGetStagesCounter():
 # none          File could not be opened                # 
 #########################################################
 def OSGetpids():
-    print   
+
+    global __configLinux__ 
+    global __verbose__
+
+    print
+   
     return 
 #########################################################
 
@@ -650,6 +685,9 @@ def OSGetpids():
 #                                                       # 
 #########################################################
 def OSCheckContainerID(index):
+
+    global __data_container__  
+    global __verbose__
 
     if (os.path.exists(__data_container__[index])):
         if (os.access(__data_container__[index],os.W_OK) == False):

@@ -127,6 +127,11 @@
 ----------------------------------
 - More code and more functions 
 
+----------------------------------
+08/07/10 Hans Weber CVS : 
+----------------------------------
+- Removed global definitions 2 days ago .... put them back 
+- Code-cleaning
 
 
    

@@ -174,6 +174,7 @@ if [ $# -eq 5 ]; then
          echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
          if [ $PASS2 -eq 100 ] ; then
              sleep 2
+             echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
              echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
              echo
              echo processing data done
@@ -242,6 +243,7 @@ if [ $# -eq 7 ]; then
             echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS2 -eq 100 ] ; then
                sleep 2
+               echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
                echo
                echo processing data done
@@ -350,6 +352,7 @@ if [ $# -eq 7 ]; then
             echo $PASS3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS3 -eq 100 ] ; then
                sleep 2
+               echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
                echo
                echo processing data done
@@ -441,7 +444,7 @@ if [ $# -eq 9 ]; then
           if [ $PASS2 -eq 99 ] ; then
              sleep 5
              echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
-             sleep 1
+             sleep 2
              echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
              echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
           fi
@@ -450,6 +453,7 @@ if [ $# -eq 9 ]; then
           echo $PASS3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
           if [ $PASS3 -eq 100 ] ; then
              sleep 2
+             echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
              echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
              echo
              echo processing data done

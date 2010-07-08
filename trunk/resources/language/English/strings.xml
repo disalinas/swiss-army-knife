@@ -34,6 +34,16 @@
         <string id="32070">Default subtitle (dvd)</string>   
   
 
+
+        <!--              --> 
+        <!-- Window-Names -->
+        <!--              --> 
+
+        <string id="32090">Mainmenu Swiss-Army-Knife</string> 
+        <string id="32091">Job-Window</string> 
+        
+
+
         <!--           --> 
         <!-- Main-Menu -->
         <!--           --> 
@@ -76,13 +86,12 @@
         <!-- Joblist Window -->
         <!--                -->
         
-        <string id="32170">Window current jobs</string>
+        <string id="32170">Progress-bar</string>
         <string id="32171">Kill job </string>
-        <string id="32172">Progressbar</string>
-        <string id="32173">Jobs    :</string>
-        <string id="32174">Current :</string>
-        <string id="32175">Done    : </string>      
-        <string id="32176">Back</string>
+        <string id="32172">Info</string>     
+        <string id="32173">Back</string>
+
+
         <string id="32177">There are no active jobs</string>
 
         <!--               --> 
