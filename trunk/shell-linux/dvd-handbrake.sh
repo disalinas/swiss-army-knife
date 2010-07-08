@@ -36,6 +36,7 @@ echo --------------------------------------------------------------------
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/handbrake-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB"
+JOBERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB.ERROR"
 
 # Define the counting commands we expect inside the script
 
@@ -135,6 +136,7 @@ if [ $# -eq 5 ]; then
 
     echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
     ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+    PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
 
     echo processing data
 
@@ -165,6 +167,8 @@ if [ $# -eq 5 ]; then
              break
          fi
       fi
+      PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+      sleep 3  
     done
 fi
 
@@ -193,7 +197,7 @@ if [ $# -eq 7 ]; then
 
        echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
        ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
-
+       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
 
        echo processing data
 
@@ -223,6 +227,7 @@ if [ $# -eq 7 ]; then
                break
             fi
          fi
+         PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
          sleep 3
        done
     fi
@@ -249,7 +254,8 @@ if [ $# -eq 7 ]; then
 
        echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
        ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
-
+       PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
+ 
        echo processing subtitle
 
        while [ 1=1 ];
@@ -271,6 +277,7 @@ if [ $# -eq 7 ]; then
                break
             fi
          fi
+         PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
          sleep 3
        done
 
@@ -281,7 +288,7 @@ if [ $# -eq 7 ]; then
 
        echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
        ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
-
+       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
 
        sleep 10
 
@@ -312,6 +319,7 @@ if [ $# -eq 7 ]; then
                break
             fi
          fi
+         PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
          sleep 3
        done
     fi
@@ -340,6 +348,7 @@ if [ $# -eq 9 ]; then
 
      echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
      ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+     PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')       
 
      echo processing subtitle
 
@@ -362,6 +371,7 @@ if [ $# -eq 9 ]; then
              break
           fi
        fi
+       PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
        sleep 3
      done
 
@@ -371,7 +381,7 @@ if [ $# -eq 9 ]; then
 
      echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
      ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
-
+     PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
      sleep 10
 
      echo processing data
@@ -401,6 +411,7 @@ if [ $# -eq 9 ]; then
              break
           fi
        fi
+       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
        sleep 3
      done
 fi

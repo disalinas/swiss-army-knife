@@ -70,7 +70,7 @@ __enable_bluray__ = 'false'
 __enable_network__ = 'false'
 __enable_burning__ = 'false'
 __enable_customer__ = 'false'
-__jobs__ = 0
+__jobs__ = False
 
 
 CWD = os.getcwd().rstrip(";")
@@ -213,9 +213,9 @@ def GUIInfo(Info):
 class GUIMain01Class(xbmcgui.Window):
 
       def __init__(self):
-
-       __jobs__ = 0
-
+        
+       global __jobs__
+ 
        exit_script = True 
        while (exit_script): 
              dialog = xbmcgui.Dialog()
@@ -267,7 +267,7 @@ class GUIMain01Class(xbmcgui.Window):
                                       # bluray .... until we let do it finish or we cancel the job 
 
                                       GUIInfo(__language__(33203))
-                                      __jobs__ = __jobs__ + 1
+                                      __jobs__ = True
                              else:
                                   GUIInfo(__language__(33304))
                      else:        
@@ -280,7 +280,7 @@ class GUIMain01Class(xbmcgui.Window):
              if (choice == 2): 
                  GUIInfo(__language__(33205))         
              if (choice == 3): 
-                 if ( __jobs__ == 0 ):
+                 if (__jobs__ == False):
                      GUIInfo(__language__(32177))
                  else:
                      GUIProgressbar("Progress transcoding bluray")        
@@ -322,6 +322,10 @@ if __name__ == '__main__':
 
    if (OSCheckContainerID(0)):
        GUIInfo(__language__(33305))
+
+
+   __jobs__ = False
+
 
    GUIlog ("create main-menu")
    menu01 = GUIMain01Class()
