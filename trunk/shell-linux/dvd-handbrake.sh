@@ -60,8 +60,21 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo "                                            "
   echo "p6,7  second audio-track   -a 3 [0-X]"
   echo "p8,9  subtitle             -s 0 [0-X]"
+  echo 
   echo "dvd-handbrake.sh was called with wrong arguments"
   echo
+  echo example :
+  echo 
+  echo ./dvd-handbrake /dev/sr0 /dvdrip/dvd stargate 1 0 -a 1 -s 0
+  echo 
+  echo would use device /dev/sr0 
+  echo store the file insie /dvdrip/dvd 
+  echo the filename inside the directory will be stargate.mkv 
+  echo Track 1 will be extracted
+  echo Audio-track 0 will be extracted 
+  echo Audio-track 1 will be extracted 
+  echo Subtitle-track 0 will be extracted 
+  echo 
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------
   exit $E_BADARGS
@@ -167,7 +180,15 @@ if [ $# -eq 5 ]; then
              break
          fi
       fi
+
       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+      if [ -z "$PID"  ] ; then 
+         echo 
+         echo error during processing data 
+         touch $JOBERROR   
+         break 
+      fi   
+
       sleep 3  
     done
 fi
@@ -227,7 +248,15 @@ if [ $# -eq 7 ]; then
                break
             fi
          fi
+
          PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+         if [ -z "$PID"  ] ; then 
+            echo 
+            echo error during processing data 
+            touch $JOBERROR   
+            break 
+         fi   
+
          sleep 3
        done
     fi
@@ -277,7 +306,15 @@ if [ $# -eq 7 ]; then
                break
             fi
          fi
+
          PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
+         if [ -z "$PID"  ] ; then 
+            echo 
+            echo error during processing subtitle  
+            touch $JOBERROR   
+            break 
+         fi   
+
          sleep 3
        done
 
@@ -319,7 +356,15 @@ if [ $# -eq 7 ]; then
                break
             fi
          fi
+
          PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+         if [ -z "$PID"  ] ; then 
+            echo 
+            echo error during processing data 
+            touch $JOBERROR   
+            break 
+         fi   
+
          sleep 3
        done
     fi
@@ -411,7 +456,15 @@ if [ $# -eq 9 ]; then
              break
           fi
        fi
+
        PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+       if [ -z "$PID"  ] ; then 
+          echo 
+          echo error during processing data 
+          touch $JOBERROR   
+          break 
+       fi   
+
        sleep 3
      done
 fi
