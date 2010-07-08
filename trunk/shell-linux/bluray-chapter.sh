@@ -145,7 +145,7 @@ do
     TITLE=~/.xbmc/userdata/addon_data/script-video-ripper/bluray/br$Tindex.000
     duration=$(cat $TITLE | grep duration | awk '{print $2}')
     chaps=$(cat $TITLE | grep chaptercount | awk '{print $2}')
-    echo track:[$Tindex] length:[$duration] chapters:[$chaps]
+    # echo track:[$Tindex] length:[$duration] chapters:[$chaps]
 
     # We need a list to prepare for the GUI with other options
 
