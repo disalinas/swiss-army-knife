@@ -35,6 +35,7 @@ echo --------------------------------------------------------------------
 
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/handbrake-error.log"
+JOBFILE="$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB"
 
 # Define the counting commands we expect inside the script
 
@@ -119,6 +120,7 @@ done
 if [ $# -eq 5 ]; then
     AUDIO1=$(($5 +  1))
 
+    echo $1 > $JOBFILE  
     echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
     echo "1 Pass 1/2 for transcoding" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
     echo "2 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
@@ -175,6 +177,7 @@ if [ $# -eq 7 ]; then
        AUDIO1=$(($5 +  1))
        AUDIO2=$(($7 +  1))
 
+       echo $1 > $JOBFILE 
        echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
        echo "1 Pass 1/2 for transcoding" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
        echo "2 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
@@ -231,6 +234,7 @@ if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-s ]] ; then
        AUDIO1=$(($5 + 1))
 
+       echo $1 > $JOBFILE 
        echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
 
        echo "1 copy subtitle" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
@@ -321,6 +325,7 @@ if [ $# -eq 9 ]; then
      AUDIO1=$(($5 +  1))
      AUDIO2=$(($7 +  1))
 
+     echo $1 > $JOBFILE 
      echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
 
      echo "1 copy subtitle" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
@@ -399,6 +404,11 @@ if [ $# -eq 9 ]; then
        sleep 3
      done
 fi
+
+
+# Delete jobfile 
+
+rm $JOBFILE > /dev/null 2>&1
 
 
 echo

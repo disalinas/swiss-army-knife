@@ -30,6 +30,7 @@ echo --------------------------------------------------------------------
 
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/iso-error.log"
+JOBFILE="$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB"
 
 # Define the counting commands we expect inside the script
 
@@ -84,6 +85,10 @@ done
 # saved iso-file 
 
 
+
+# Delete jobfile
+
+rm $JOBFILE > /dev/null 2>&1
 
 
 echo

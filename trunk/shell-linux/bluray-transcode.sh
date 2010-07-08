@@ -41,7 +41,7 @@ E_BADARGS=1
 E_TOOLNOTF=2
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/bluray-error.log"
-
+JOBFILE="$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB"
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: bluray-transcode.sh p1 p2 p3 p4"
@@ -107,10 +107,11 @@ fi
 nohup makemkvcon --messages=/dev/null --progress=bluray.progress mkv $PARA $4 $2 > /dev/null 2>&1  &
 
 sleep 40
-
+echo $1 > $JOBFILE
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
 echo "1 transcode bluray to mkv" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
+
 if [ $4 -lt '10' ] ; then
    echo $2/title0$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 fi
@@ -126,8 +127,11 @@ fi
 echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
 ps axu | grep makemkvcon | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
 
+echo processing data
+
 while [ 1=1 ];
 do
+   echo -n .
    progress=$(cat bluray.progress | tail -1 | awk '{print $4}'| sed "s/[^0-9]//g")
    echo $progress > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
    sleep 2
@@ -136,7 +140,10 @@ do
        rm bluray.progress > /dev/null 2>&1
        echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
        break
+       echo
+       echo processing data done
    fi
+   sleep 2
 done
 
 if [ $4 -lt '10' ] ; then
@@ -146,6 +153,10 @@ fi
 if [ $4 -gt '10' ] ; then
    mv $2/title$4.mkv $2/$3.mkv
 fi
+
+# Delete jobfile 
+
+rm $JOBFILE > /dev/null 2>&1
 
 echo
 echo ----------------------- script rc=0 -----------------------------
