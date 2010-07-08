@@ -225,7 +225,7 @@ class GUIJobWinClass(xbmcgui.Window):
                 GUIInfo(__language__(33205))         
              if (choice == 2):   # Info
                 GUIInfo(__language__(33205))    
-             if (choice == 4):   # Exit
+             if (choice == 3):   # Exit
                  exit = False
           self.close()
 #########################################################
@@ -316,7 +316,7 @@ class GUIMain01Class(xbmcgui.Window):
                  if (__jobs__ == False):
                      GUIInfo(__language__(32177))
                  else:
-                     JobWindow = GUIJobWindClass()
+                     JobWindow = GUIJobWinClass()
                      del JobWindow        
 
              if (choice == 4): 

@@ -16,7 +16,6 @@
 
 SCRIPTDIR="$HOME/.xbmc/addons/swiss-army-knife/shell-linux"
 
-
 echo
 echo --------------------------------------------------------------------
 SCRIPT=$(basename $0)
@@ -123,11 +122,10 @@ fi
 makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
 ) > /dev/null 2>&1
 
-
-# makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
-# nohup "makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1"  2 > /dev/null
-
-sleep 42.0
+echo
+echo "INFO generating track-list ... please be patient."
+echo
+sleep 40.0
 
 lynx --dump  http://127.0.0.1:51000/web/titles > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/brmain.000
 max=`expr $chapter - 1`
@@ -154,6 +152,10 @@ Tindex=0
 
 if [ -e ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP ] ; then
    rm ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP > /dev/null 2>&1
+fi
+
+if [ -e ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS ] ; then
+   rm ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS  > /dev/null 2>&1
 fi
 
 echo
