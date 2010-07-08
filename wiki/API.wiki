@@ -9,6 +9,20 @@
   * You could replace a internal shell-scipt with your own. 
   * As long you are using this functions to report-back to the gui-part, you can replace the linux-shell-scripts with anything you like. You could use a local installed Python / Perl or anything other that is executeable.
 
+
+
+==== =====
+==== =====
+==== =====
+------------------------------------------------------------------------------------------
+=== File .xbmc/userdata/addon_data/script-video-ripper/JOB ===
+------------------------------------------------------------------------------------------
+ * As long a transcode or ripping function is running this file do exist
+ * Valid values : /dev/sr0 or a file-name
+ * Example (state)
+{{{
+/dev/sr0
+}}}
 ==== =====
 ==== =====
 ==== =====
@@ -16,7 +30,7 @@
 === File .xbmc/userdata/addon_data/script-video-ripper/media/state ===
 ------------------------------------------------------------------------------------------
  * Contains a detailed state about the inserted disk 
- * Valid values : BLURAY DVD-ROM
+ * Valid values : BLURAY or DVD-ROM
  * Example (state)
 {{{
 BLURAY
