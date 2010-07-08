@@ -14,7 +14,7 @@
 #           - Integration of user-functions             #
 # VERSION : 0.6C                                        #
 # DATE    : 07-07-10                                    #
-# STATE   : Alpha 2                                     #
+# STATE   : Alpha 3                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #

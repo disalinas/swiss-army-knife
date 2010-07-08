@@ -12,8 +12,8 @@
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
-# DATE    : 06-27-10                                    #
-# STATE   : Alpha 2                                     #
+# DATE    : 07-08-10                                    #
+# STATE   : Alpha 3                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -321,9 +321,9 @@ def OSCheckMedia(Media):
            else:
                WCycles = WCycles + 1
                time.sleep(1)
-           if (WCycles >= 10):
+           if (WCycles >= 15):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout 10 secounds reached for track-file  ...")
+                   OSlog("Timeout 15 secounds reached for track-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)") 
                return 2   
 
@@ -368,7 +368,7 @@ def OSChapterBluray():
     if (__verbose__ == 'true'):
         OSlog("bluray-chapter.sh command ready to start")
 
-    OSRun("br1.sh " +  configLinux[2],True,False)
+    OSRun("br1.sh " +  __configLinux__[2],True,False)
 
     if (__verbose__ == 'true'): 
         OSlog("bluray-chapter.sh command executed") 
@@ -477,7 +477,7 @@ def OSBlurayExecuteList():
 
     if (os.path.exists(__configLinux__[43])): 
 
-       GUIFile = open(__configLinux_[43],'r')
+       GUIFile = open(__configLinux__[43],'r')
        for line in GUIFile.readlines():
            line = line.strip()
            tmp.append(line)
@@ -486,26 +486,26 @@ def OSBlurayExecuteList():
        # We prepare the arguments for bluray-transcode.sh 
 
        __exec_bluray__.append(tmp[0])
-       __exec_bluray__.append(configLinux[5])
+       __exec_bluray__.append(__configLinux__[5])
        __exec_bluray__.append(tmp[3])
        __exec_bluray__.append(tmp[1])
 
 
        # Add device 
-       GUIList.append(__language__(32151) +__tmp__[0])
+       GUIList.append(__language__(32151) + tmp[0])
 
 
        # Add track
-       GUIList.append(__language__(32152) + __tmp__[1])
+       GUIList.append(__language__(32152) + tmp[1])
 
        # Add audio 
        GUIList.append(__language__(32153))
 
        # Add length
-       GUIList.append(__language__(32154) + __tmp__[2])
+       GUIList.append(__language__(32154) + tmp[2])
  
        # Add name including extension mkv
-       GUIList.append(__language__(32155) + __tmp__[3] + ".mkv")
+       GUIList.append(__language__(32155) + tmp[3] + ".mkv")
     
        # Add accept and cancel button 
        GUIList.append(__language__(32156))
@@ -549,7 +549,7 @@ def OSBlurayTranscode():
         OSlog("bluray-transcode.sh command ready to start")
 
 
-    OSRun("br2.sh " +  __exec_bluray__[0] + " " + __exec_bluray__[1] + " " + exec_bluray__[2] + " " + __exec_bluray__[3],True,False)
+    OSRun("br2.sh " +  __exec_bluray__[0] + " " + __exec_bluray__[1] + " " + __exec_bluray__[2] + " " + __exec_bluray__[3],True,False)
 
 
     if (__verbose__ == 'true'): 
@@ -563,14 +563,14 @@ def OSBlurayTranscode():
     Waitexit = True 
     while (Waitexit):  
            if (os.path.exists(__configLinux__[32])):  
-               if (verbose == 'true'):
+               if (__verbose__ == 'true'):
                    OSlog("pid-file exist ...")
                Waitexit = False 
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 50):
-               if (verbose == 'true'):
+               if (__verbose__ == 'true'):
                    OSlog("Timeout 50 secounds reached for pid-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 0       

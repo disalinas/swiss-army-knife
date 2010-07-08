@@ -114,9 +114,20 @@ if [ $# -eq 0 ]; then
   exit $E_NOCHAPERS
 fi
 
-nohup makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
 
-sleep 40.0
+
+# We don like noise about terminated jobs
+# But now it works like I would .......
+
+(
+makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
+) > /dev/null 2>&1
+
+
+# makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
+# nohup "makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1"  2 > /dev/null
+
+sleep 42.0
 
 lynx --dump  http://127.0.0.1:51000/web/titles > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/brmain.000
 max=`expr $chapter - 1`
@@ -140,14 +151,19 @@ echo $VOLNAME > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME
 
 Tindex=0
 
+
+if [ -e ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP ] ; then
+   rm ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP > /dev/null 2>&1
+fi
+
+echo
 while [ $chapter -gt $Tindex ]
 do
     TITLE=~/.xbmc/userdata/addon_data/script-video-ripper/bluray/br$Tindex.000
     duration=$(cat $TITLE | grep duration | awk '{print $2}')
     chaps=$(cat $TITLE | grep chaptercount | awk '{print $2}')
-    # echo track:[$Tindex] length:[$duration] chapters:[$chaps]
 
-    # We need a list to prepare for the GUI with other options
+    echo INFO track-index:[$Tindex] length:[$duration] chapters:[$chaps]
 
     echo $duration $Tindex >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP
 
@@ -155,9 +171,15 @@ do
     Tindex=`expr $Tindex + 1`
 done
 
+
 LONGTRACK=$(cat $HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP | sort -r | head -1 | awk '{print $2}')
 LONGDURATION=$(cat $HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_HELP | sort -r | head -1 | awk '{print $1}')
 
+echo
+echo "INFO [track:[$LONGTRACK]  duration:[$LONGDURATION]]"
+echo "INFO [volname:[$VOLNAME]]"
+echo
+echo $1 > ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
 echo $LONGTRACK >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
 echo $LONGDURATION >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI
 echo $VOLNAME >> ~/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI

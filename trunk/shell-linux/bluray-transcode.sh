@@ -103,10 +103,12 @@ if [ -e bluray.progress ] ; then
    rm bluray.progress > /dev/null 2>&1 
 fi
 
+(
+makemkvcon --messages=/dev/null --progress=bluray.progress mkv $PARA $4 $2 > /dev/null 2>&1  &
+) > /dev/null 2>&1
 
-nohup makemkvcon --messages=/dev/null --progress=bluray.progress mkv $PARA $4 $2 > /dev/null 2>&1  &
+sleep 30
 
-sleep 40
 echo $1 > $JOBFILE
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
 echo "1 transcode bluray to mkv" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
@@ -127,7 +129,10 @@ fi
 echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
 ps axu | grep makemkvcon | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
 
-echo processing data
+
+echo
+echo INFO processing data
+echo
 
 while [ 1=1 ];
 do
@@ -139,10 +144,13 @@ do
    if [ $progress -eq "100"  ] ; then
        rm bluray.progress > /dev/null 2>&1
        echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
-       break
        echo
-       echo processing data done
+       echo
+       echo INFO processing data done
+       echo
+       break
    fi
+
    sleep 2
 done
 
@@ -154,11 +162,10 @@ if [ $4 -gt '10' ] ; then
    mv $2/title$4.mkv $2/$3.mkv
 fi
 
-# Delete jobfile 
+# Delete jobfile
 
 rm $JOBFILE > /dev/null 2>&1
 
-echo
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 

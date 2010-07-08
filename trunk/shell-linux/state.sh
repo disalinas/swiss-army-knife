@@ -98,6 +98,9 @@ if [ $RETVAL1 -eq 0 ] ; then
        # If the filesystem of the inserted dvd is incorrect we should not copy the dvd with dd
 
        echo
+       echo "INFO [media:[DVD-ROM]]"
+       echo
+
        echo ----------------------- script rc=0 -----------------------------
        echo -----------------------------------------------------------------
 
@@ -127,9 +130,10 @@ if [ $RETVAL1 -eq 0 ] ; then
       # No we prepare the GUI-List for execution ...
       # We allready have all values ...
 
-      echo $1 > $GUI_RETURN
-
       echo
+      echo "INFO [media:[BLURAY]]"
+      echo
+
       echo ----------------------- script rc=0 -----------------------------
       echo -----------------------------------------------------------------
 
@@ -138,8 +142,11 @@ if [ $RETVAL1 -eq 0 ] ; then
 
    # The ripper script do only support dvd and bluray .....
 
-
    echo
+   echo "INFO [media:[!unknown!]]"
+   echo
+
+
    echo ----------------------- script rc=1 -----------------------------
    echo -----------------------------------------------------------------
 
