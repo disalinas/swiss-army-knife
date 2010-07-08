@@ -75,6 +75,17 @@ if [ $4 -eq 0 ]; then
 fi
 
 
+if [ $# -eq 9 ]; then
+    if [[ "$6" =~ ^-s ]] ; then
+     echo "with 9 parameters the subtitle -s must be the last  !"
+     echo
+     echo ----------------------- script rc=1 -----------------------------
+     echo -----------------------------------------------------------------
+     exit $E_BADARGS
+    fi 
+fi
+
+
 # Define the commands we will be using inside the script ...
 
 REQUIRED_TOOLS=`cat << EOF
