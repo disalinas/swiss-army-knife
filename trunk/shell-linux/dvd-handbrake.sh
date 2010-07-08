@@ -360,9 +360,44 @@ if [ $# -eq 9 ]; then
        sleep 3
      done
 
-     HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-     -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile" -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,dpl2 -E ac3,acc
+     nohup HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+     -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile" \
+     -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,dpl2 -E ac3,acc &
 
+     echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+     ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+
+     sleep 10
+
+     echo processing data
+
+     while [ 1=1 ];
+     do
+       echo -n .
+       PASS2=$(strings nohup.out | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+       PASS3=$(strings nohup.out | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+       if [ -n "$PASS2" ] ; then
+          echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
+          if [ $PASS2 -eq 99 ] ; then
+             sleep 5
+             echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+             sleep 1
+             echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+             echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
+          fi
+       fi
+       if [ -n "$PASS3" ] ; then
+          echo $PASS3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+          if [ $PASS3 -eq 100 ] ; then
+             sleep 2
+             echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
+             echo
+             echo processing data done
+             break
+          fi
+       fi
+       sleep 3
+     done
 fi
 
 

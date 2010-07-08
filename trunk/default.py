@@ -37,6 +37,7 @@ __date__ 		= "27-06-2010"
 __version__ 		= "0.6C-ALPHA-2"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
+ 
 
 xbmc.output(__script__ + " Version: " + __version__  + "\n")
 
@@ -69,6 +70,8 @@ __enable_bluray__ = 'false'
 __enable_network__ = 'false'
 __enable_burning__ = 'false'
 __enable_customer__ = 'false'
+__jobs__ = 0
+
 
 CWD = os.getcwd().rstrip(";")
 sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
@@ -209,8 +212,9 @@ def GUIInfo(Info):
 #########################################################
 class GUIMain01Class(xbmcgui.Window):
 
-
       def __init__(self):
+
+       __jobs__ = 0
 
        exit_script = True 
        while (exit_script): 
@@ -263,6 +267,7 @@ class GUIMain01Class(xbmcgui.Window):
                                       # bluray .... until we let do it finish or we cancel the job 
 
                                       GUIInfo(__language__(33203))
+                                      __jobs__ = __jobs__ + 1
                              else:
                                   GUIInfo(__language__(33304))
                      else:        
@@ -275,7 +280,11 @@ class GUIMain01Class(xbmcgui.Window):
              if (choice == 2): 
                  GUIInfo(__language__(33205))         
              if (choice == 3): 
-                 GUIProgressbar("Progress transcoding bluray")        
+                 if ( __jobs__ == 0 ):
+                     GUIInfo(__language__(32177))
+                 else:
+                     GUIProgressbar("Progress transcoding bluray")        
+
              if (choice == 4): 
                  GUIlog('menu exit activated')
                  exit_script = False
