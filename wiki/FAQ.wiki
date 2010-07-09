@@ -98,6 +98,7 @@
 ===                            ==== 
   * I only accept svn diff patches against the current trank.
   * If your diff contains binary exectuable files the full source-code of this included files  must be within the  diff-file or the patch will not be integrated.
+  * Only GPL code is accepted. 
 === ===
 === ===
 ===The addon speaks only English. Could my own native language be added ?===
