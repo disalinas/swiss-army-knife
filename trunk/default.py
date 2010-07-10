@@ -14,7 +14,7 @@
 #           - Integration of user-functions             #
 # VERSION : 0.6C                                        #
 # DATE    : 07-07-10                                    #
-# STATE   : Alpha 3                                     #
+# STATE   : Alpha 4                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -33,8 +33,8 @@ __author__ 		= "linuxluemmel.ch@gmail.com"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "27-06-2010"
-__version__ 		= "0.6C-ALPHA-2"
+__date__ 		= "10-07-2010"
+__version__ 		= "0.6C-ALPHA-4"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
  
@@ -95,6 +95,9 @@ if system[0] == 'Linux':
    from Linux import OSGetStagesCounter
    from Linux import OSGetpids
    from Linux import OSCheckContainerID
+   from Linux import OSCheckLock 
+   from Linux import OSKillProc
+   from Linux import OSGetJobState
 else:
 
    # only Linux is supported by now ...
@@ -136,6 +139,7 @@ def GUIlog(msg):
 #########################################################
 def GUIProgressbar(InfoText):
 
+    progress = OSGetProgressVal()
     dp = xbmcgui.DialogProgress()
     dp.create(InfoText)
 
@@ -149,7 +153,7 @@ def GUIProgressbar(InfoText):
            if dp.iscanceled():
               dp.close() 
               exit = False 
-           time.sleep(3)
+           time.sleep(1)
     return  
 #########################################################
 
@@ -214,18 +218,26 @@ class GUIJobWinClass(xbmcgui.Window):
 
       def __init__(self):
 
+          global __jobs__ 
           exit = True
  
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32091) , [__language__(32170), __language__(32171), __language__(32172),__language__(32173)])
-             if (choice == 0):   # Progress-Bar
-                GUIProgressbar("Progress current stage")        
-             if (choice == 1):   # Kill
-                GUIInfo(__language__(33205))         
-             if (choice == 2):   # Info
+             if (choice == 0):  
+                GUIProgressbar("Progress current stage")
+        
+             if (choice == 1):  
+                 state = OSKillProc()
+                 if (state == 0):
+                     GUIInfo(__language__(33206))     
+                     __jobs__ = False
+                     exit = False
+                 if (state == 1):
+                     GUIInfo(__language__(33310))     
+             if (choice == 2):  
                 GUIInfo(__language__(33205))    
-             if (choice == 3):   # Exit
+             if (choice == 3):   
                  exit = False
           self.close()
 #########################################################
@@ -247,84 +259,77 @@ class GUIMain01Class(xbmcgui.Window):
 
       def __init__(self):
         
-       global __jobs__
+          global __jobs__
  
-       exit_script = True 
-       while (exit_script): 
-             dialog = xbmcgui.Dialog()
-             choice  = dialog.select(__language__(32090) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
+          # Retrive JobsState 
 
-             if (choice == 0):
+          job_state = OSGetJobState()
+          if (job_state == 1):
+              __jobs__ = True
+          if (job_state == 0):
+              __jobs__ = False
+         
+          exit_script = True 
+          while (exit_script): 
+                 dialog = xbmcgui.Dialog()
+                 choice  = dialog.select(__language__(32090) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
 
-                 # Transcode bluray to mkv 
-                 # The longest track of the bluray will be converted 
-                 # The directory on witch the converted mkv is saved is defined inside settings
-                 # The volname of the bluray-disc will be used as mkv-name 
-                 # There is nothinhg to do for the user as to press the button ....
-                 # Be aware that it could need long time to only start the transcode-process
-                 # I need tester now ... 
- 
-                 if (__enable_bluray__ == 'true'):
-                     GUIlog('menu bluray to mkv activated')
-                     dvd_info = xbmc.getDVDState()
-                     if (dvd_info == 4):
-                         BluState = OSCheckMedia("BLURAY")
-                         if (BluState == 2):
-                             GUIInfo(__language__(33302)) 
-                         if (BluState == 1):
-                             GUIInfo(__language__(33301))
-                         if (BluState == 0):
-                             tracklist = []
-                             tracklist = OSChapterBluray() 
-                             if (tracklist[0] != 'none'):
-                                  executeList = []      
-                                  executeList = OSBlurayExecuteList()
-                              
-                                  # We could now show the executor-list and a track-list
-                                  # but we dont show the lists.
+                 if (choice == 0):
+                     Lock = OSCheckLock(__configuration__[2])
+                     if (__enable_bluray__ == 'true'):
+                         if (Lock == 0):
+                             GUIlog('menu bluray to mkv activated')
+                             dvd_info = xbmc.getDVDState()
+                             if (dvd_info == 4):
+                                 BluState = OSCheckMedia("BLURAY")
+                                 if (BluState == 2):
+                                     GUIInfo(__language__(33302)) 
+                                 if (BluState == 1):
+                                     GUIInfo(__language__(33301))
+                                 if (BluState == 0):
+                                     tracklist = []
+                                     tracklist = OSChapterBluray() 
+                                     if (tracklist[0] != 'none'):
+                                         executeList = []      
+                                         executeList = OSBlurayExecuteList()
 
+                                         # execute = GUISelectList(__language__(32150),executeList)
+                                         # tracklist = GUISelectList(__language__(33202),trackist)
 
-                                  # execute = GUISelectList(__language__(32150),executeList)
-                                  # tracklist = GUISelectList(__language__(33202),trackist)
-
-                                  # Allomost ready to transcode
-                                  # Here we are ... ready to transcode ....
-
-                                  execstate =  OSBlurayTranscode() 
-                                  
-                                  if (execstate == 0):
-                                      GUIInfo(__language__(33204))
-                                  if (execstate == 1):
-                          
-                                      # Now we should have a nice background job with the inserted 
-                                      # bluray .... until we let do it finish or we cancel the job 
-
-                                      GUIInfo(__language__(33203))
-                                      __jobs__ = True
+                                         execstate =  OSBlurayTranscode() 
+                                         if (execstate == 0):
+                                             GUIInfo(__language__(33204))
+                                         if (execstate == 1):
+                                             GUIInfo(__language__(33203))
+                                             __jobs__ = True
+                                     else:
+                                          GUIInfo(__language__(33304))
                              else:
-                                  GUIInfo(__language__(33304))
-                     else:        
-                         GUIInfo(__language__(33000))
-                 else:
-                      GUIInfo(__language__(33303))
+                                  GUIInfo(__language__(33309))
+                         else:        
+                             GUIInfo(__language__(33308))   
+                     else:
+                         GUIInfo(__language__(33303))    
 
-             if (choice == 1):  
-                 GUIInfo(__language__(33205))              
-             if (choice == 2): 
-                 GUIInfo(__language__(33205))         
-             if (choice == 3): 
-                 if (__jobs__ == False):
-                     GUIInfo(__language__(32177))
-                 else:
-                     JobWindow = GUIJobWinClass()
-                     del JobWindow        
 
-             if (choice == 4): 
-                 GUIlog('menu exit activated')
-                 exit_script = False
+                 if (choice == 1):  
+                     GUIInfo(__language__(33205))              
+                 if (choice == 2): 
+                     GUIInfo(__language__(33205))         
+                 if (choice == 3): 
+                     if (__jobs__ == False):
+                        GUIInfo(__language__(32177))
+                     else:
+                        JobWindow = GUIJobWinClass()
+                        del JobWindow        
+                 if (choice == 4): 
+                     GUIlog('menu exit activated')
+                     exit_script = False
 
-       self.close()
+          self.close()
 #########################################################
+
+
 
 
 #########################################################
@@ -356,10 +361,6 @@ if __name__ == '__main__':
 
    if (OSCheckContainerID(0)):
        GUIInfo(__language__(33305))
-
-
-   __jobs__ = False
-
 
    GUIlog ("create main-menu")
    menu01 = GUIMain01Class()

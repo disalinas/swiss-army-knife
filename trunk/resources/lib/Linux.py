@@ -13,7 +13,7 @@
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
 # DATE    : 07-08-10                                    #
-# STATE   : Alpha 3                                     #
+# STATE   : Alpha 4                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -148,6 +148,8 @@ def OSConfiguration(index):
     config[42] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS' 
     config[43] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI'
     config[44] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_VOLUME'
+    config[45] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/JOB'
+
   
 
     # With a list the delete of multiple files is very easy ;-) 
@@ -164,6 +166,7 @@ def OSConfiguration(index):
     __temp_files__.append(config[42]) 
     __temp_files__.append(config[43]) 
     __temp_files__.append(config[44])
+    __temp_files__.append(config[45])
 
 
     # Do log all settings inside xbmc.log 
@@ -287,9 +290,14 @@ def OSCheckMedia(Media):
     global __configLinux__ 
     global __verbose__
 
-    # Erase  all temporary files stored inside list
- 
-    OSCleanTemp()      
+    # Erase  all temporary files stored inside list but only if 
+    # there is no active job 
+
+    if (os.path.exists(__configLinux__[45])):
+        if (os.path.exists(__configLinux__[30])):
+            os.remove(__configLinux__[30])
+    else:  
+        OSCleanTemp()      
 
     # Execution of shell-script br0.sh inside shell-linux  
 
@@ -441,7 +449,8 @@ def OSCleanTemp():
     for item in __temp_files__:
          if (os.path.exists(item)):
              os.remove(item)
-
+             if (__verbose__):
+                 OSlog("file delete : " + item)
     time.sleep(1)
     xbmc.executebuiltin("Dialog.Close(busydialog)")
   
@@ -700,3 +709,137 @@ def OSCheckContainerID(index):
 
 
 
+
+
+
+#########################################################
+# Function  : OSCheckLock                               #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# Lockcheck   device or file to test for a lock         #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# 1           Lock is set on device or file             # 
+# 0           Lock is free                              #
+#                                                       # 
+#########################################################
+def OSCheckLock(Lockcheck):
+
+    global __configLinux__
+    global __verbose__
+
+    if (os.path.exists(__configLinux__[45])):
+        Lockfile  = open(__configLinux__[45],'r')
+        Lock = Lockfile.readline()
+        Lockfile.close
+        Lock = Lock.strip()
+        if (Lock == Lockcheck):
+            return 1
+        else:
+            return 0
+    else:
+        return 0
+#########################################################
+
+
+
+
+
+
+#########################################################
+# Function  : OSKillProc                                #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   : none                                      # 
+#                                                       #
+# 1           Error                                     # 
+# 0           successfull                               #
+#                                                       # 
+#########################################################
+def OSKillProc():
+
+    global __configLinux__
+    global __verbose__
+
+    if (os.path.exists(__configLinux__[45])):
+        if (os.path.exists(__configLinux__[32])):
+
+            pid_list = []
+            file_list = []
+
+            PidFile = open(__configLinux__[32],'r')
+
+            for line in PidFile.readlines():
+                line = int(line.strip())
+                pid_list.append(line)
+            PidFile.close()
+
+            # Reverse order because we kill from botton to top
+
+            pid_list.reverse()
+            
+            # Kill the processes 
+
+            for pid in pid_list: 
+                try:
+                   if (__verbose__):
+                        OSlog("send signal 9 to pid : " + str(pid))
+                   os.kill(pid,9)
+                except OSError, err:
+                  return (1)
+
+            # remove files from job
+ 
+            if (os.path.exists(__configLinux__[35])):
+                ProcessFile = open(__configLinux__[35],'r')
+                for line in ProcessFile.readlines():
+                    line = line.strip()
+                    if (__verbose__):
+                        OSlog("file added to delete-command : " + line)
+                    file_list.append(line)
+                PidFile.close()
+
+                for FileDel in file_list:
+                    if (os.path.exists(FileDel)):
+                        os.remove(FileDel) 
+       
+            # Clean-up
+
+            OSCleanTemp()
+
+            return (0) 
+        else:
+            return (1) 
+    else:
+        return (1)
+#########################################################
+
+
+
+
+
+
+#########################################################
+# Function  : OSGetJobState                             #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# 1           A job is running in background            # 
+# 0           no job found                              #
+#                                                       # 
+#########################################################
+def OSGetJobState():
+
+    global __configLinux__
+    global __verbose__
+
+    if (os.path.exists(__configLinux__[45])):
+        return 1
+    else:
+        return 0
+#########################################################

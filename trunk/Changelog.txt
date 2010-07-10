@@ -133,5 +133,10 @@
 - Removed global definitions 2 days ago .... put them back 
 - Code-cleaning
 
+----------------------------------
+10/07/10 Hans Weber CVS : 
+----------------------------------
+- Added LockCheck 
+- Addes OSKillProc
 
    

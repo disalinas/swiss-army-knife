@@ -101,9 +101,10 @@
         <string id="33201">info-box</string>
         <string id="33202">Please select bluray-track to export</string>
         <string id="33203">Bluray transcoding startet successfull</string>
-        <string id="33204">Bluray transcoding could not be stated</string> 
-        <string id="33205">I'am a coder not a wizard ... this comes later</string>      
-     
+        <string id="33204">Bluray transcoding could not be started</string> 
+        <string id="33205">I'am a coder not a wizard ... this comes later</string>
+        <string id="33206">Job canceld by user</string>              
+
         <!--               --> 
         <!-- Error         -->
         <!--               -->
@@ -115,6 +116,8 @@
         <string id="33305">ISO-directory not found or writeable !</string>
         <string id="33306">DVD-directory not found or writeable !</string> 
         <string id="33307">Bluray-directory not found or writeable !</string>
-        <string id="33308">Devive is locked !(active job) </string>
+        <string id="33308">Devive is locked by a active job !</string>
+        <string id="33309">Devive is not ready !</string>
+        <string id="33310">Job could no be killed</string>      
 
  </strings>
