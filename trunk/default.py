@@ -321,11 +321,11 @@ class GUIMain01Class(xbmcgui.Window):
                          dvd_info = xbmc.getDVDState()
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
-                             if (DVDtate == 2):
+                             if (DVDState == 2):
                                  GUIInfo(__language__(33302)) 
                              if (DVDState == 1):
                                  GUIInfo(__language__(33311))
-                             if (BluState == 0):
+                             if (DVDState == 0):
                                  tracklist = []
                                  tracklist = OSChapterDVD()
                                  GUIInfo("It works until Tracklist") 
