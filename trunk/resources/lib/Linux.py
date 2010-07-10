@@ -13,7 +13,7 @@
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
 # DATE    : 07-08-10                                    #
-# STATE   : Alpha 4                                     #
+# STATE   : Alpha 5                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -129,8 +129,26 @@ def OSConfiguration(index):
     __data_container__.append(config[4])
     __data_container__.append(config[5])
 
+    # We need to write a few files on startup inside the addon-dirctory 
+    # DVD_LANG1
+    # DVD_LANG2
+    # DVD_SUB1
 
+    if (config[7] != 'none'):
+        sys.platform.startswith('linux')
+        command ="echo -n " + config[7] + " > $HOME/.xbmc/userdata/addon_data/script-video-ripper/DVD_LANG1" 
+        status = os.system("%s" % (command))
+        
+    if (config[8] != 'none'):
+        sys.platform.startswith('linux')
+        command = "echo -n " + config[8] + " > $HOME/.xbmc/userdata/addon_data/script-video-ripper/DVD_LANG2" 
+        status = os.system("%s" % (command))
 
+    if (config[18] != 'none'):
+        sys.platform.startswith('linux')
+        command = "echo -n " + config[18] + " > $HOME/.xbmc/userdata/addon_data/script-video-ripper/DVD_SUB" 
+        status = os.system("%s" % (command))
+ 
     # All used internal files are stored inside after here ...
 
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/state' 
@@ -149,9 +167,9 @@ def OSConfiguration(index):
     config[43] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI'
     config[44] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_VOLUME'
     config[45] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/JOB'
+    config[46] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_TRACKS'
 
   
-
     # With a list the delete of multiple files is very easy ;-) 
 
     __temp_files__.append(config[30])
@@ -167,6 +185,7 @@ def OSConfiguration(index):
     __temp_files__.append(config[43]) 
     __temp_files__.append(config[44])
     __temp_files__.append(config[45])
+    __temp_files__.append(config[46])
 
 
     # Do log all settings inside xbmc.log 
@@ -307,7 +326,7 @@ def OSCheckMedia(Media):
     if (Media == 'BLURAY'):
         OSRun("br0.sh " +  __configLinux__[2],True,False)
     if (Media == 'DVD-ROM'):     
-        OSRun("br0.sh " +  __configLinux__[1],True,False)
+        OSRun("dvd0.sh " +  __configLinux__[1],True,False)
 
     if (__verbose__ == 'true'):
         OSlog("state.sh command executed")
@@ -777,7 +796,7 @@ def OSKillProc():
                 pid_list.append(line)
             PidFile.close()
 
-            # Reverse order because we kill from botton to top
+            # Reverse order because we kill from botton to the top
 
             pid_list.reverse()
             
@@ -843,3 +862,81 @@ def OSGetJobState():
     else:
         return 0
 #########################################################
+
+
+
+
+
+#########################################################
+# Function : OSChapterDVD                               #
+#########################################################
+# Parameter                                             #
+# none                                                  #
+# Returns                                               #
+# list of tracks or list 'none' 0                       #
+#########################################################
+def OSChapterDVD():
+
+    global __configLinux__ 
+    global __verbose__
+
+    tracklist = []
+
+    # Execution of shell-script br1.sh inside shell-linux 
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-chapter.sh command ready to start")
+
+    OSRun("dvd1.sh " +  __configLinux__[1],True,False)
+
+    if (__verbose__ == 'true'): 
+        OSlog("dvd-chapter.sh command executed") 
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # We must wait until the file with the track-information could be read 
+    # Without the list of track we can not select inside the list .....
+    # If someone knows a bettey way to get this list faster ... send me pm .-)
+
+    time.sleep(20) 
+   
+    WCycles = 10 
+    Waitexit = True 
+    while (Waitexit):  
+           if (os.path.exists(__configLinux__[46])):  
+               if (__verbose__ == 'true'):
+                   OSlog("track-files exist ...")
+               Waitexit = False 
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 20):
+               if (verbose == 'true'):
+                   OSlog("Timeout 90 secounds reached for track-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               tracklist.append('none') 
+               return tracklist       
+ 
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    
+    if (__verbose__ == 'true'):
+        OSlog("track-files exist . Create list for GUI")
+   
+    # We should have the file with the state 
+ 
+    if (os.path.exists(__configLinux__[42])):   
+        trackfile = open(__configLinux__[42],'r')
+        for line in trackfile.readlines():
+                line = line.strip()
+                tracklist.append(line)
+        trackfile.close       
+        return tracklist
+    else:
+        tracklist.append('none') 
+        return tracklist       
+#########################################################
+
+
+
+
+

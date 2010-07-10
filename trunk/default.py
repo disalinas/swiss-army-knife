@@ -14,7 +14,7 @@
 #           - Integration of user-functions             #
 # VERSION : 0.6C                                        #
 # DATE    : 07-07-10                                    #
-# STATE   : Alpha 4                                     #
+# STATE   : Alpha 5                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -34,7 +34,7 @@ __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "10-07-2010"
-__version__ 		= "0.6C-ALPHA-4"
+__version__ 		= "0.6C-ALPHA-5"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
  
@@ -83,7 +83,8 @@ sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
 ##########################################################
 
 system = os.uname()
-if system[0] == 'Linux': 
+if system[0] == 'Linux':
+ 
    from Linux import OSConfiguration
    from Linux import OSRun
    from Linux import OSCheckMedia
@@ -98,6 +99,8 @@ if system[0] == 'Linux':
    from Linux import OSCheckLock 
    from Linux import OSKillProc
    from Linux import OSGetJobState
+   from Linux import OSChapterDVD
+ 
 else:
 
    # only Linux is supported by now ...
@@ -313,7 +316,25 @@ class GUIMain01Class(xbmcgui.Window):
 
 
                  if (choice == 1):  
-                     GUIInfo(__language__(33205))              
+                     Lock = OSCheckLock(__configuration__[2])
+                     if (Lock == 0):
+                         dvd_info = xbmc.getDVDState()
+                         if (dvd_info == 4):
+                             DVDState = OSCheckMedia("DVD-ROM")
+                             if (DVDtate == 2):
+                                 GUIInfo(__language__(33302)) 
+                             if (DVDState == 1):
+                                 GUIInfo(__language__(33311))
+                             if (BluState == 0):
+                                 tracklist = []
+                                 tracklist = OSChapterDVD()
+                                 GUIInfo("It works until Tracklist") 
+                         else:
+                             GUIInfo(__language__(33309))
+                     else:
+                         GUIInfo(__language__(33308))    
+
+            
                  if (choice == 2): 
                      GUIInfo(__language__(33205))         
                  if (choice == 3): 
