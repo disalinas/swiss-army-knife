@@ -110,16 +110,16 @@ makemkvcon --messages=/dev/null --progress=bluray.progress mkv $PARA $4 $2 > /de
 sleep 30
 
 echo $1 > $JOBFILE
-echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
-echo "1 transcode bluray to mkv" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
-echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
+echo -n 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
+echo -n  "1 transcode bluray to mkv" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+echo -n 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
 
 if [ $4 -lt '10' ] ; then
-   echo $2/title0$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
+   echo -n $2/title0$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 fi
 
 if [ $4 -gt '10' ] ; then
-   echo $2/title$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
+   echo -n $2/title$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 fi
 
 # We send back 2 pid

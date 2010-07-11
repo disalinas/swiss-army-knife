@@ -79,7 +79,8 @@
         <string id="32154">Length : </string>
         <string id="32155">Name   : </string>      
         <string id="32156">Accept</string>
-        <string id="32157">Cancel</string> 
+        <string id="32157">Cancel</string>
+        <string id="32158">Audio  : [audio1 audio2 subtitle] </string> 
 
 
         <!--                --> 
@@ -105,7 +106,9 @@
         <string id="33205">I'am a coder not a wizard ... this comes later</string>
         <string id="33206">Job canceld by user</string>
         <string id="33207">Please select DVD-track to export</string> 
-              
+        <string id="33208">DVD transcoding startet successfull</string>
+        <string id="33209">DVD transcoding could not be started</string> 
+
 
         <!--               --> 
         <!-- Error         -->
@@ -122,5 +125,6 @@
         <string id="33309">Devive is not ready !</string>
         <string id="33310">Job could no be killed</string>  
         <string id="33311">Inserted disc is not a DVD-Disc</string>    
+        <string id="33312">DVD-chapters could not be read</string>       
 
  </strings>

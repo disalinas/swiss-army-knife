@@ -13,7 +13,7 @@ cat version
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo --------------------------------------------------------------------
 
-./state.sh $1 >>$LOG 2>&1 $
+./state.sh $1 >>$LOG 2>&1 &
 
 echo
 echo ----------------------- script rc=0 -----------------------------

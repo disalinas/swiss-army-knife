@@ -145,7 +145,7 @@ if [ $2 -eq "1" ] ; then
      if [ -e  ~/.xbmc/userdata/addon_data/script-video-ripper/DVD_LANG1 ] ; then
          LANG1=$(cat  ~/.xbmc/userdata/addon_data/script-video-ripper/DVD_LANG1)
          echo INFO default language 1 [$LANG1]
-         LANG1_SELECT=$(lsdvd -a -t $AUTO_SELECT_TRACK 2>/dev/null |  grep -n " $LANG1 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
+         LANG1_SELECT=$(lsdvd -a -t $AUTO_SELECT_TRACK 2>/dev/null | grep "Language" | grep -m 1 -n " $LANG1 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
          if [ -z "$LANG1_SELECT" ] ; then
             echo INFO default language 1 [$LANG1] not found inside track [$AUTO_SELECT_TRACK]
             echo INFO default language 1 [$LANG1] not found inside track [$AUTO_SELECT_TRACK] > $OUTPUT_ERROR
@@ -163,7 +163,7 @@ if [ $2 -eq "1" ] ; then
      if [ -e  ~/.xbmc/userdata/addon_data/script-video-ripper/DVD_LANG2 ] ; then
          LANG2=$(cat  ~/.xbmc/userdata/addon_data/script-video-ripper/DVD_LANG2)
          echo INFO default language 2 [$LANG2]
-         LANG2_SELECT=$(lsdvd -a -t $AUTO_SELECT_TRACK 2>/dev/null |  grep -n " $LANG2 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
+         LANG2_SELECT=$(lsdvd -a -t $AUTO_SELECT_TRACK 2>/dev/null | grep "Language" | grep -m 1 -n " $LANG2 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
          if [ -z "$LANG2_SELECT" ] ; then
             echo INFO default language 1 [$LANG2] not found inside track [$AUTO_SELECT_TRACK]
             echo INFO default language 1 [$LANG2] not found inside track [$AUTO_SELECT_TRACK] > $OUTPUT_ERROR
@@ -197,6 +197,8 @@ if [ $2 -eq "1" ] ; then
      fi
 
      echo $1 > $GUI_RETURN
+     echo $VOLNAME >> $GUI_RETURN
+     echo $AUTO_SELECT_TRACK >> $GUI_RETURN
 
      if [ -n "$LANG1_SELECT" ] ; then
         echo "INFO default lang-1 :" index=$LANG1_SELECT
@@ -216,18 +218,17 @@ if [ $2 -eq "1" ] ; then
         echo none >> $GUI_RETURN
      fi
 
+     # Warning : do not send <LF> after the last parameter 
+     # or the python reads a line to much ...
+
      if [ -n "$SUB1_SELECT" ] ; then
         echo "INFO default sub    :" index=$SUB1_SELECT
-        echo $SUB1_SELECT >> $GUI_RETURN
+        echo -n $SUB1_SELECT >> $GUI_RETURN
      fi
 
      if [ -z "$SUB1_SELECT" ] ; then
-        echo none >> $GUI_RETURN
+        echo -n none >> $GUI_RETURN
      fi
-
-     echo ----------------------------------------------
-     cat $GUI_RETURN
-     echo ----------------------------------------------
 
      echo
      echo ----------------------- script rc=0 -----------------------------

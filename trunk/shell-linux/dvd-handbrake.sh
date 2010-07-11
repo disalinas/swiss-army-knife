@@ -33,10 +33,10 @@ cat version
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo --------------------------------------------------------------------
 
-
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/handbrake-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB"
 JOBERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB.ERROR"
+OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvd-transcode.log"
 
 # Define the counting commands we expect inside the script
 
@@ -60,21 +60,21 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo "                                            "
   echo "p6,7  second audio-track   -a 3 [0-X]"
   echo "p8,9  subtitle             -s 0 [0-X]"
-  echo 
+  echo
   echo "dvd-handbrake.sh was called with wrong arguments"
   echo
   echo example :
-  echo 
+  echo
   echo ./dvd-handbrake /dev/sr0 /dvdrip/dvd stargate 1 0 -a 1 -s 0
-  echo 
-  echo would use device /dev/sr0 
-  echo store the file insie /dvdrip/dvd 
-  echo the filename inside the directory will be stargate.mkv 
+  echo
+  echo would use device /dev/sr0
+  echo store the file insie /dvdrip/dvd
+  echo the filename inside the directory will be stargate.mkv
   echo Track 1 will be extracted
-  echo Audio-track 0 will be extracted 
-  echo Audio-track 1 will be extracted 
+  echo Audio-track 0 will be extracted
+  echo Audio-track 1 will be extracted
   echo Subtitle-track 0 will be extracted 
-  echo 
+  echo
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------
   exit $E_BADARGS
@@ -97,7 +97,7 @@ if [ $# -eq 9 ]; then
      echo ----------------------- script rc=1 -----------------------------
      echo -----------------------------------------------------------------
      exit $E_BADARGS
-    fi 
+    fi
 fi
 
 
@@ -112,6 +112,18 @@ sleep
 mencoder
 nohup
 EOF`
+
+# clean-up
+
+
+if [ -e "$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB.ERROR" ] ; then
+    rm "$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB.ERROR" > /dev/null 2>&1
+fi
+
+if [ -e "$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB" ] ; then
+    rm "$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB" > /dev/null 2>&1
+fi
+
 
 
 # Check if all commands are found on your system ...
@@ -131,19 +143,36 @@ do
    fi
 done
 
+
+
+
+
+####################################################################################
+#                                                                                  #
+#                       transcode job with 1 audio-track                           #
+#                                                                                  #
+####################################################################################
 if [ $# -eq 5 ]; then
     AUDIO1=$(($5 +  1))
 
-    echo $1 > $JOBFILE  
+    echo $1 > $JOBFILE
     echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
     echo "1 Pass 1/2 for transcoding" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
     echo "2 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
     echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
     echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 
-    nohup HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-    -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile"  \
-    -a $AUDIO1 -E ac3 &
+    echo
+    echo INFO starting HandBrakeCLI
+
+    (
+     HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+     -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:t$
+     -a $AUDIO1 -E ac3 &
+    ) > $OUT_TRANS 2>&1 &
+
+    echo INFO HandBrakeCLI command executed
+    echo
 
     sleep 10
 
@@ -151,46 +180,51 @@ if [ $# -eq 5 ]; then
     ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
     PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
 
-    echo processing data
+    echo
+    echo INFO processing data pass 1 of 2
+    echo
 
-    while [ 1=1 ];
+    LOOP=1
+    while [ $LOOP -eq '1'  ];
     do
       echo -n .
-      PASS1=$(strings nohup.out | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-      PASS2=$(strings nohup.out | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+      PASS1=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+      PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
       if [ -n "$PASS1" ] ; then
-         #  echo stage 1 [$PASS1] % completed
          echo $PASS1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
          if [ $PASS1 -eq 99 ] ; then
-            sleep 5
+
+            echo
+            echo
+            echo INFO processing data pass 1 of 2 done
+            echo
+
+            echo
+            echo INFO processing data pass 2 of 2
+            echo
+
+            sleep  5
             echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             sleep 1
             echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
          fi
       fi
+
       if [ -n "$PASS2" ] ; then
-         # echo stage 2 [$PASS2] % completed
          echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
-         if [ $PASS2 -eq 100 ] ; then
-             sleep 2
+         if [ $PASS2 -eq 98 ] ; then
+             sleep 15
              echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
              echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
              echo
-             echo processing data done
-             break
+             echo
+             echo INFO processing data pass 2 of 2 done
+             echo
+             LOOP=0
          fi
       fi
-
-      PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
-      if [ -z "$PID"  ] ; then 
-         echo 
-         echo error during processing data 
-         touch $JOBERROR   
-         break 
-      fi   
-
-      sleep 3  
+      sleep 0.7
     done
 fi
 
@@ -198,22 +232,37 @@ fi
 
 
 
+####################################################################################
+#                                                                                  #
+#                       transcode job with 2 audio-track                           #
+#                                                                                  #
+####################################################################################
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-a ]] ; then
        AUDIO1=$(($5 +  1))
        AUDIO2=$(($7 +  1))
 
-       echo $1 > $JOBFILE 
+       echo $1 > $JOBFILE
        echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
        echo "1 Pass 1/2 for transcoding" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
        echo "2 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
        echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
        echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 
-       nohup HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile" \
+
+       echo
+       echo INFO starting HandBrakeCLI
+
+       (
+       HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs$
        -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 \
        -R auto,auto -6 auto,auto -E ac3,acc &
+       ) > $OUT_TRANS 2>&1 &
+
+
+       echo INFO HandBrakeCLI command executed
+       echo
 
        sleep 10
 
@@ -221,18 +270,31 @@ if [ $# -eq 7 ]; then
        ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
        PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
 
-       echo processing data
+       echo
+       echo INFO processing data pass 1 of 2
+       echo
 
-       while [ 1=1 ];
+       LOOP=1
+       while [ $LOOP -eq '1'  ];
        do
          echo -n .
-         PASS1=$(strings nohup.out | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         PASS2=$(strings nohup.out | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+         PASS1=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+         PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
          if [ -n "$PASS1" ] ; then
             echo $PASS1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS1 -eq 99 ] ; then
                sleep 5
                echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+
+               echo
+               echo
+               echo INFO processing data pass 1 of 2 done
+               echo
+
+               echo
+               echo INFO processing data pass 2 of 2
+               echo
+
                sleep 1
                echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
@@ -241,36 +303,36 @@ if [ $# -eq 7 ]; then
 
          if [ -n "$PASS2" ] ; then
             echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
-            if [ $PASS2 -eq 100 ] ; then
-               sleep 2
+            if [ $PASS2 -eq 98 ] ; then
+               sleep 15
                echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
                echo
-               echo processing data done
-               break
+               echo
+               echo INFO processing data pass 2 of 2 done
+               echo
+               LOOP=0
             fi
          fi
-
-         PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
-         if [ -z "$PID"  ] ; then 
-            echo 
-            echo error during processing data 
-            touch $JOBERROR   
-            break 
-         fi   
-
-         sleep 3
+         sleep 0.7
        done
     fi
 fi
 
 
 
+
+
+####################################################################################
+#                                                                                  #
+#                       transcode job with 1 audio-track and 1 subtitle            #
+#                                                                                  #
+####################################################################################
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-s ]] ; then
        AUDIO1=$(($5 + 1))
 
-       echo $1 > $JOBFILE 
+       echo $1 > $JOBFILE
        echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
 
        echo "1 copy subtitle" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
@@ -279,96 +341,115 @@ if [ $# -eq 7 ]; then
 
        echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
 
-       nohup  mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $7 -vobsubout $2/$3 &
 
-       sleep 10
+       echo
+       echo INFO starting mencoder
+
+       (
+        mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $7 -vobsubout $2/$3 &
+       ) > $OUT_TRANS 2>&1 &
+
+       echo INFO mencoder command executed
+       echo
+
+       sleep 1
+
+       echo
+       echo INFO processing data pass 1 of 3
+       echo
+
 
        echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
        ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
        PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
- 
-       echo processing subtitle
 
-       while [ 1=1 ];
+
+       LOOP=1
+       while [ $LOOP -eq '1'  ];
        do
          echo -n .
-         TMP=$(strings nohup.out | grep % | tail -1 | awk 'BEGIN{ RS="("; FS=")"} {print  $1}' | tr ' ' ',' | cut -d ',' -f2 | grep %)
+         TMP=$(strings $OUT_TRANS | grep % | tail -1 | awk 'BEGIN{ RS="("; FS=")"} {print  $1}' | tr ' ' ',' | cut -d ',' -f2 | grep %)
          PASS1=$(echo $TMP | tr '%' ' ')
          if [ -n "$PASS1" ] ; then
             echo $PASS1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS1 -eq 99 ] ; then
-               sleep 10
+               sleep 5
                echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                sleep 2
                echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
                echo
-               echo processing subtitle done
                echo
-               break
+               echo INFO processing data pass 1 of 3 done
+               echo
+               LOOP=0
             fi
          fi
-
-         PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
-         if [ -z "$PID"  ] ; then 
-            echo 
-            echo error during processing subtitle  
-            touch $JOBERROR   
-            break 
-         fi   
-
-         sleep 3
+         sleep 0.3
        done
 
+       echo
+       echo INFO starting HandBrakeCLI
 
-       nohup HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile" \
-        -a $AUDIO1 -E ac3 &
+       (
+       HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=$
+       -a $AUDIO1 -E ac3 &
+       ) > $OUT_TRANS 2>&1 &
 
-       echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
-       ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
-       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+       echo INFO HandBrakeCLI command executed
+       echo
 
        sleep 10
 
-       echo processing data
+       echo
+       echo INFO processing data pass 2 of 3
+       echo
 
-       while [ 1=1 ];
+       echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+       ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+
+       LOOP=1
+       while [ $LOOP -eq '1'  ];
        do
          echo -n .
-         PASS2=$(strings nohup.out | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         PASS3=$(strings nohup.out | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+         PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+         PASS3=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
          if [ -n "$PASS2" ] ; then
-            echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
-            if [ $PASS2 -eq 99 ] ; then
+            echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+            if [ $PASS2 -eq 98 ] ; then
                sleep 5
                echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                sleep 1
+               echo
+               echo
+               echo INFO processing data pass 2 of 3 done
+               echo
+               echo
+               echo INFO processing data pass 3 of 3
+               echo
+
                echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
             fi
          fi
          if [ -n "$PASS3" ] ; then
             echo $PASS3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
-            if [ $PASS3 -eq 100 ] ; then
-               sleep 2
+            if [ $PASS3 -eq 98 ] ; then
+               sleep 3
+               echo
+               echo
+               echo INFO processing data pass 3 of 3 done
+               echo
                echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
                echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
                echo
                echo processing data done
-               break
+               LOOP=0
             fi
          fi
-
-         PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
-         if [ -z "$PID"  ] ; then 
-            echo 
-            echo error during processing data 
-            touch $JOBERROR   
-            break 
-         fi   
-
-         sleep 3
+         sleep 0.7
        done
     fi
 fi
@@ -376,7 +457,11 @@ fi
 
 
 
-
+####################################################################################
+#                                                                                  #
+#                       transcode job with 2 audio-track and 1 subtitle            #
+#                                                                                  #
+####################################################################################
 if [ $# -eq 9 ]; then
      AUDIO1=$(($5 +  1))
      AUDIO2=$(($7 +  1))
@@ -390,91 +475,115 @@ if [ $# -eq 9 ]; then
 
      echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
 
-     nohup mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $9 -vobsubout $2/$3 &
+     echo
+     echo INFO starting mencoder
 
-     sleep 10
+     (
+      mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $9 -vobsubout $2/$3 &
+     ) > $OUT_TRANS 2>&1 &
+
+     echo INFO mencoder command executed
+     echo
+
+     sleep 1
+
+     echo
+     echo INFO processing data pass 1 of 3
+     echo
 
      echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
      ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
-     PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')       
+     PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
 
-     echo processing subtitle
-
-     while [ 1=1 ];
+     LOOP=1
+     while [ $LOOP -eq '1'  ];
      do
        echo -n .
-       TMP=$(strings nohup.out | grep % | tail -1 | awk 'BEGIN{ RS="("; FS=")"} {print  $1}' | tr ' ' ',' | cut -d ',' -f2 | grep %)
+       TMP=$(strings $OUT_TRANS | grep % | tail -1 | awk 'BEGIN{ RS="("; FS=")"} {print  $1}' | tr ' ' ',' | cut -d ',' -f2 | grep %)
        PASS1=$(echo $TMP | tr '%' ' ')
        if [ -n "$PASS1" ] ; then
           echo $PASS1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
-          if [ $PASS1 -eq 99 ] ; then
+          if [ $PASS1 -eq 98 ] ; then
              sleep 10
              echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
              sleep 2
              echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
              echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
              echo
-             echo processing subtitle done
              echo
-             break
+             echo INFO processing data pass 1 of 3 done
+             echo
+             LOOP=0
           fi
        fi
-       PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
-       sleep 3
+       sleep .3
      done
 
-     nohup HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-     -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:trellis=1:no-fast-pskip=1:no-dct-decimate=1:direct=auto:cqm="dvd-handbrake-profile" \
+     echo
+     echo INFO starting HandBrakeCLI
+
+     (
+     HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+     -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:t$
      -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,dpl2 -E ac3,acc &
+     ) > $OUT_TRANS 2>&1 &
+
+     echo INFO HandBrakeCLI command executed
+     echo
 
      echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
      ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
      PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+
      sleep 10
 
-     echo processing data
+     echo
+     echo INFO processing data pass 2 of 3
+     echo
 
-     while [ 1=1 ];
+     LOOP=1
+     while [ $LOOP -eq '1'  ];
      do
        echo -n .
-       PASS2=$(strings nohup.out | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-       PASS3=$(strings nohup.out | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+       PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+       PASS3=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
        if [ -n "$PASS2" ] ; then
           echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
           if [ $PASS2 -eq 99 ] ; then
-             sleep 5
-             echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
-             sleep 2
-             echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
-             echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
+               sleep 5
+               echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+               sleep 1
+               echo
+               echo
+               echo INFO processing data pass 2 of 3 done
+               echo
+               echo
+               echo INFO processing data pass 3 of 3
+               echo
+               echo 0 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+               echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
           fi
        fi
        if [ -n "$PASS3" ] ; then
           echo $PASS3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
-          if [ $PASS3 -eq 100 ] ; then
-             sleep 2
-             echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
-             echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
-             echo
-             echo processing data done
-             break
+          if [ $PASS3 -eq 98 ] ; then
+               sleep 3
+               echo
+               echo
+               echo INFO processing data pass 3 of 3 done
+               echo
+               echo 100 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
+               echo DONE > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-done
+               echo
+               echo processing data done
+               LOOP=0
           fi
        fi
-
-       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
-       if [ -z "$PID"  ] ; then 
-          echo 
-          echo error during processing data 
-          touch $JOBERROR   
-          break 
-       fi   
-
-       sleep 3
+       sleep 0.7
      done
 fi
 
-
-# Delete jobfile 
+# Delete jobfile
 
 rm $JOBFILE > /dev/null 2>&1
 

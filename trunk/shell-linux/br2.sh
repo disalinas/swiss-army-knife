@@ -13,7 +13,7 @@ cat version
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo --------------------------------------------------------------------
 
-./bluray-transcode.sh $1 $2 $3 $4  >>$LOG 2>&1 $
+./bluray-transcode.sh $1 $2 $3 $4  >>$LOG 2>&1 &
 
 echo
 echo ----------------------- script rc=0 -----------------------------

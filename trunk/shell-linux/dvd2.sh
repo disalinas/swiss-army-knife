@@ -1,5 +1,5 @@
 ###########################################################
-# scriptname : dvd1.sh                                    #
+# scriptname : dvd2.sh                                    #
 ###########################################################
 
 SCRIPTDIR="$HOME/.xbmc/addons/swiss-army-knife/shell-linux"
@@ -13,7 +13,29 @@ cat version
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo --------------------------------------------------------------------
 
-./dvd-chapter.sh $1 1 >>$LOG 2>&1 &
+if [ $# -eq 5 ] ; then
+   echo
+   echo 5 arguments to dvd-handbrake.sh
+   echo $1 $2 $3 $4 $5
+   echo
+   ./dvd-handbrake.sh $1 $2 $3 $4 $5 >>$LOG 2>&1 &
+fi
+
+if [ $# -eq 7 ] ; then
+    echo
+    echo 7 arguments to dvd-handbrake.sh
+    echo $1 $2 $3 $4 $5 $6 $7
+    echo
+    ./dvd-handbrake.sh $1 $2 $3 $4 $5 $6 $7 >>$LOG 2>&1 &
+fi
+
+if [ $# -eq 9 ] ; then
+   echo
+   echo 9 arguments to dvd-handbrake.sh
+   echo $1 $2 $3 $4 $5 $6 $7 $8 $9
+   echo
+    ./dvd-handbrake.sh $1 $2 $3 $4 $5 $6 $7 $8 $9 >>$LOG 2>&1 &
+fi
 
 echo
 echo ----------------------- script rc=0 -----------------------------

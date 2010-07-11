@@ -14,7 +14,7 @@
 #           - Integration of user-functions             #
 # VERSION : 0.6C                                        #
 # DATE    : 07-07-10                                    #
-# STATE   : Alpha 5                                     #
+# STATE   : Alpha 6                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -34,7 +34,7 @@ __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "10-07-2010"
-__version__ 		= "0.6C-ALPHA-5"
+__version__ 		= "0.6C-ALPHA-6"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
  
@@ -100,7 +100,8 @@ if system[0] == 'Linux':
    from Linux import OSKillProc
    from Linux import OSGetJobState
    from Linux import OSChapterDVD
- 
+   from Linux import OSDVDExecuteList     
+   from Linux import OSDVDTranscode
 else:
 
    # only Linux is supported by now ...
@@ -328,7 +329,18 @@ class GUIMain01Class(xbmcgui.Window):
                              if (DVDState == 0):
                                  tracklist = []
                                  tracklist = OSChapterDVD()
-                                 GUIInfo("It works until Tracklist") 
+                                 if (tracklist[0] != 'none'):
+                                     executeList = []
+                                     executeList = OSDVDExecuteList()   
+                                     # execute = GUISelectList(__language__(32150),executeList)
+                                     execstate =  OSDVDTranscode() 
+                                     if (execstate == 0):
+                                         GUIInfo(__language__(33209))
+                                     if (execstate == 1):
+                                         GUIInfo(__language__(33208))
+                                         __jobs__ = True
+                                 else:
+                                     GUIInfo(__language__(33312)) 
                          else:
                              GUIInfo(__language__(33309))
                      else:
@@ -359,7 +371,8 @@ class GUIMain01Class(xbmcgui.Window):
 
 if __name__ == '__main__':
    
-
+   xbmc.executebuiltin("ActivateWindow(busydialog)")
+    
    GUIlog ("addon-startet")
 
    GUIlog ("loading-configuration")
@@ -384,6 +397,11 @@ if __name__ == '__main__':
        GUIInfo(__language__(33305))
 
    GUIlog ("create main-menu")
+
+   time.sleep(1)
+ 
+   xbmc.executebuiltin("Dialog.Close(busydialog)")
+
    menu01 = GUIMain01Class()
    del menu01
 

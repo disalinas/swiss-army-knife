@@ -13,7 +13,7 @@
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
 # DATE    : 07-08-10                                    #
-# STATE   : Alpha 5                                     #
+# STATE   : Alpha 6                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -129,10 +129,14 @@ def OSConfiguration(index):
     __data_container__.append(config[4])
     __data_container__.append(config[5])
 
-    # We need to write a few files on startup inside the addon-dirctory 
+    # We need to write a few files on startup inside the addon-dirctory
+ 
     # DVD_LANG1
     # DVD_LANG2
-    # DVD_SUB1
+    # DVD_SUB
+ 
+    # Over these files we know inside the shell-scripts witch languages and 
+    # subtitles we would like to transcode 
 
     if (config[7] != 'none'):
         sys.platform.startswith('linux')
@@ -143,10 +147,16 @@ def OSConfiguration(index):
         sys.platform.startswith('linux')
         command = "echo -n " + config[8] + " > $HOME/.xbmc/userdata/addon_data/script-video-ripper/DVD_LANG2" 
         status = os.system("%s" % (command))
-
+    else: 
+        command = "rm " + "$HOME/.xbmc/userdata/addon_data/script-video-ripper/DVD_LANG2 > /dev/null 2>&1" 
+        status = os.system("%s" % (command))
+         
     if (config[18] != 'none'):
         sys.platform.startswith('linux')
         command = "echo -n " + config[18] + " > $HOME/.xbmc/userdata/addon_data/script-video-ripper/DVD_SUB" 
+        status = os.system("%s" % (command))
+    else:
+        command = "rm " + "$HOME/.xbmc/userdata/addon_data/script-video-ripper/DVD_SUB > /dev/null 2>&1" 
         status = os.system("%s" % (command))
  
     # All used internal files are stored inside after here ...
@@ -168,7 +178,7 @@ def OSConfiguration(index):
     config[44] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_VOLUME'
     config[45] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/JOB'
     config[46] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_TRACKS'
-
+    config[47] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/DVD_GUI' 
   
     # With a list the delete of multiple files is very easy ;-) 
 
@@ -180,6 +190,7 @@ def OSConfiguration(index):
     __temp_files__.append(config[35])
     __temp_files__.append(config[36])
     __temp_files__.append(config[37])
+    __temp_files__.append(config[38])
     __temp_files__.append(config[41])
     __temp_files__.append(config[42]) 
     __temp_files__.append(config[43]) 
@@ -225,8 +236,10 @@ def OSConfiguration(index):
         OSlog("Configuration 42 reading : " + config[42])
         OSlog("Configuration 43 reading : " + config[43]) 
         OSlog("Configuration 44 reading : " + config[44])
+        OSlog("Configuration 45 reading : " + config[45])
+        OSlog("Configuration 46 reading : " + config[46])
+        OSlog("Configuration 47 reading : " + config[47])    
 
-    
     # Store configuration inside modul global list
 
     __configLinux__ = config 
@@ -274,9 +287,16 @@ def OSRun(command,backg,busys):
         commandssh = commandssh + " > /dev/null 2>&1 &"
 
     # We do send a copy of the command to ssh-log
+    # in the case something goes wrong ... 
 
+    command ="echo " + commandssh + " >> " + __configLinux__[38]
+    status = os.system("%s" % (command))
+ 
     if (__verbose__ == 'true'):
         OSlog("Command to run :" + commandssh)
+
+    # No we execute the command  ...
+    # over ssh
 
     status = os.system("%s" % (commandssh))
 
@@ -603,12 +623,12 @@ def OSBlurayTranscode():
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 0       
         
-    # Clean exec-array 
- 
-    del __exec_bluray__[3]
-    del __exec_bluray__[2]
-    del __exec_bluray__[1]
-    del __exec_bluray__[0]
+    # Clean exec-array bluray
+
+    parameters = len(__exec_bluray__)
+
+    for index in range((parameters - 1),0):
+        del  __exec_bluray__[index]
     
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     return 1
@@ -887,7 +907,7 @@ def OSChapterDVD():
     if (__verbose__ == 'true'):
         OSlog("dvd-chapter.sh command ready to start")
 
-    OSRun("dvd1.sh " +  __configLinux__[1],True,False)
+    OSRun("dvd1.sh " +  __configLinux__[1] + " 1 ",True,False)
 
     if (__verbose__ == 'true'): 
         OSlog("dvd-chapter.sh command executed") 
@@ -924,8 +944,8 @@ def OSChapterDVD():
    
     # We should have the file with the state 
  
-    if (os.path.exists(__configLinux__[42])):   
-        trackfile = open(__configLinux__[42],'r')
+    if (os.path.exists(__configLinux__[46])):   
+        trackfile = open(__configLinux__[46],'r')
         for line in trackfile.readlines():
                 line = line.strip()
                 tracklist.append(line)
@@ -940,3 +960,184 @@ def OSChapterDVD():
 
 
 
+
+
+#########################################################
+# Function : OSDVDTranscode                             #
+#########################################################
+# Parameter                                             #
+# none                                                  #
+# Returns                                               #
+# 0               Transcode-process not startet         #
+# 1               Transcode-process startet             #
+#########################################################
+def OSDVDTranscode():
+
+    global __configLinux__ 
+    global __exec_dvd__
+    global __verbose__
+
+
+    # Inside the bluray part we have fixed counting for the 
+    # parameters ... 
+
+    parameters = len(__exec_dvd__) 
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")    
+
+    # Execution of shell-script dvd2.sh inside shell-linux 
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-handbrake.sh command ready to start")
+
+    # Prepare command string 
+ 
+    dvd_command = ""
+    x = 0
+    for number in __exec_dvd__: 
+        dvd_command = dvd_command + " " + __exec_dvd__[x]
+        if (__verbose__ == 'true'):
+            OSlog("dvd-handbrake.sh Transcode para: [" + str(x) +  "]  " + __exec_dvd__[x])
+        x = x + 1 
+
+    if (__verbose__ == 'true'):
+        OSlog("final :" + dvd_command)   
+
+    OSRun("dvd2.sh " + dvd_command,True,False)
+
+    if (__verbose__ == 'true'): 
+        OSlog("dvd-handbrake.sh command executed")     
+ 
+    # Now we do loop until the PID-file exists
+
+    time.sleep(35) 
+   
+    WCycles = 15 
+    Waitexit = True 
+    while (Waitexit):  
+           if (os.path.exists(__configLinux__[32])):  
+               if (__verbose__ == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False 
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 20):
+               if (__verbose__ == 'true'):
+                   OSlog("Timeout reached for dvd-pid-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0       
+      
+    # Clean exec-array dvd
+ 
+    for index in range((parameters - 1),0):
+        del  __exec_dvd__[index]
+   
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+#########################################################
+
+
+
+
+
+
+
+#########################################################
+# Function : OSDVDExecuteList                           #
+#########################################################
+# Parameter                                             #
+# none                                                  #
+# Returns                                               #
+# list of blueray summary prio to execution             #
+#########################################################
+def OSDVDExecuteList():
+
+    global __configLinux__ 
+    global __exec_dvd__
+    global __verbose__
+
+    GUIList = [] 
+    tmp = []
+
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")    
+
+    if (os.path.exists(__configLinux__[47])): 
+
+       GUIFile = open(__configLinux__[47],'r')
+       for line in GUIFile.readlines():
+           line = line.strip()
+           tmp.append(line)
+       GUIFile.close
+
+       # We prepare the arguments for dvd-handbrake.sh 
+
+       # Device  
+       __exec_dvd__.append(tmp[0])
+
+       # DVD transcode directory
+       __exec_dvd__.append(__configLinux__[4])
+
+       # name 
+       __exec_dvd__.append(tmp[1])
+
+       # track 
+       __exec_dvd__.append(tmp[2])
+
+       # default language 
+       __exec_dvd__.append(tmp[3])
+
+       if (tmp[4] != 'none'):
+          if (__verbose__ == 'true'):
+             OSlog("dvd-handbrake.sh Transcode parameter add : " + "-a " + tmp[4])
+          __exec_dvd__.append("-a " + tmp[4])
+
+       if (tmp[5] != 'none'):
+          if (__verbose__ == 'true'):
+             OSlog("dvd-handbrake.sh Transcode parameter add : " + "-s " + tmp[5])
+          __exec_dvd__.append("-s " + tmp[5])
+
+
+       # If there is someone who knows a better trick to
+       # get the indexes, please give me a pm 
+
+       x = 0 
+       parameters = 0 
+       for number in __exec_dvd__:
+           if (__verbose__ == 'true'):
+               OSlog("dvd-handbrake.sh para: [" + str(x) +  "]  " + __exec_dvd__[x])
+               x = x + 1      
+           parameters = parameters + 1
+           
+
+       if (__verbose__ == 'true'): 
+           OSlog("dvd-handbrake.sh is using : " + str(parameters) + " parameters")      
+
+       # Add device 
+       GUIList.append(__language__(32151) + tmp[0])
+
+       # Add track
+       GUIList.append(__language__(32152) + tmp[2])
+       # Add audio 
+       GUIList.append(__language__(32158) + __configLinux__[7] + ' ' + __configLinux__[8] + ' ' +  __configLinux__[18])
+
+       # Add name including extension mkv
+       GUIList.append(__language__(32155) + tmp[1] + ".mkv")
+    
+       # Add accept and cancel button 
+       GUIList.append(__language__(32156))
+       GUIList.append(__language__(32157))
+        
+       time.sleep(1)
+       xbmc.executebuiltin("Dialog.Close(busydialog)")
+       return GUIList
+
+    else:
+
+       time.sleep(1)
+       xbmc.executebuiltin("Dialog.Close(busydialog)")
+       GUIList.append("none")
+       return GUIList
+
+#########################################################
