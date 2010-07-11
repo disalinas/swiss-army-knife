@@ -24,15 +24,13 @@
 
 
 
+
 ####################### IMPORTS #########################
 
 import xbmc, xbmcgui,xbmcaddon
 import os, sys, thread, stat, time, string, re
 
 #########################################################
-
-
-
 
 
 
@@ -53,14 +51,16 @@ __verbose__        = 'false'
 
 
 
+
+
 #########################################################
-# Function : OSlog                                      #
+# Function  : OSIlog                                    #
 #########################################################
-# Parameter                                             #
+# Parameter :                                           #
 #                                                       #
-# msg        String to be shown                         # 
+# msg         String to be shown inside GUI             # 
 #                                                       # 
-# Returns    0                                          #
+# Returns   : none                                      #
 #########################################################
 def OSlog(msg):
     xbmc.output("[%s]: [OSlog]  %s\n" % ("swiss-army-knife",str(msg))) 
@@ -71,16 +71,17 @@ def OSlog(msg):
 
 
 
-
 #########################################################
-# Function : OSConfiguration                            #
+# Function  : OSConfiguration                           #
 #########################################################
-# Parameter                                             #
+# Parameter :                                           #
 #                                                       #
-# index      Howmany index the configurations should    #
-#            have                                       #
+# index       index howmay config-entrys are used       # 
 #                                                       # 
-# Returns    List with all configurations-settings      #
+# Returns   :                                           #
+#                                                       #
+# config      List with all configurations settings     #
+#                                                       # 
 #########################################################
 def OSConfiguration(index):
 
@@ -250,24 +251,23 @@ def OSConfiguration(index):
 
 
 
-
-
 #########################################################
-# Function : OSRun                                      #
+# Function  : OSRun                                     #
 #########################################################
-# Parameter                                             #
-# command       command to execute over ssh             # 
-# backg         Boolean : If true the command is        #
-#               put into background.                    # 
-#               Warning :                               #
-#               DO ONLY SET THIS VALUE TO FALSE IF YOU  #
-#               DO ONLY A JOB WIHTOUT ANY HEAVY IO      #
-#               THE ADDON WILL WAIT UNTIL COMMAND IS    #
-#               FINISHED.DO SET TO FALSE ON OWN RISK    #      
-# busys         Boolean : Show busy-dialog during the   # 
-#               execution of the command                #
-# Returns                                               #
-# State of os.system call                               #
+# Parameter :                                           #
+#                                                       #
+# command     command to execute over ssh               #
+# backg       boolean :                                 #
+#             - true  command is put into background &  #
+#             - false command is not startet in         #
+#               background (very dangerous .... )       #
+# busys       boolean :                                 #
+#             - show busy-dialog during the operation   #        
+#                                                       # 
+# Returns   :                                           #
+#                                                       #
+#             rc-val from os.system call                #
+#                                                       #
 #########################################################
 def OSRun(command,backg,busys):    
 
@@ -314,15 +314,18 @@ def OSRun(command,backg,busys):
 
 
 #########################################################
-# Function : OSCheckMedia                               #
+# Function  : OSCheckMedia                              #
 #########################################################
-# Parameter                                             #
-# Media         Contains BLURAY or DVD-ROM              #
+# Parameter :                                           #
 #                                                       #
-# Returns                                               #
-# 0             Checkedi Media is inside device         #
-# 1             No Media found inside device            #
-# 2             state file not exist                    #
+# Media       String with "BLURAY" or "DVD-ROM          #     
+#                                                       # 
+# Returns   :                                           #
+#                                                       #
+# 0           Checked media is inside drive             #
+# 1           No media found inside drive               #
+# 2           State file do not exist                   #
+#                                                       #
 #########################################################
 def OSCheckMedia(Media):
 
@@ -396,12 +399,14 @@ def OSCheckMedia(Media):
 
 
 #########################################################
-# Function : OSChapterBluray                            #
+# Function  : OSChapterBluray                           #
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               #
-# list of tracks or list 'none' 0                       #
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# tracklist   contains tracks or only "none"            #
+#                                                       #
 #########################################################
 def OSChapterBluray():
 
@@ -468,12 +473,11 @@ def OSChapterBluray():
 
 
 #########################################################
-# Function : OSCleanTemp                                #
+# Function  : OSCleanTemp                               #
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               #
-# none                                                  #
+# Parameter : none                                      #
+#                                                       #
+# Returns   : none                                      #
 #########################################################
 def OSCleanTemp():
  
@@ -501,15 +505,15 @@ def OSCleanTemp():
 
 
 
-
-
 #########################################################
-# Function : OSBlurayExecuteList                        #
+# Function  : OSBlurayExecuteLis                        #
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               #
-# list of blueray summary prio to execution             #
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# GUIList     List of all parameters for transcoding    #
+#                                                       #
 #########################################################
 def OSBlurayExecuteList():
 
@@ -574,14 +578,18 @@ def OSBlurayExecuteList():
 
 
 
+
+
 #########################################################
-# Function : OSBlurayTranscode                          #
+# Function  : OSBlurayTranscode                         #
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               #
-# 0               Transcode-process not startet         #
-# 1               Transcode-process startet             #
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           Transcode process not started             #
+# 1           Transcode process started                 #
+#                                                       #
 #########################################################
 def OSBlurayTranscode():
 

@@ -14,7 +14,7 @@
 #           - Integration of user-functions             #
 # VERSION : 0.6C                                        #
 # DATE    : 07-07-10                                    #
-# STATE   : Alpha 6                                     #
+# STATE   : Alpha 7                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -25,7 +25,10 @@
 
 
 
-####################### CONSTANTS ########################
+
+
+
+####################### CONSTANTS #######################
 
 __script__ 		= "Swiss-Army-Knife"
 __scriptID__ 		= "script-video-ripper"
@@ -34,26 +37,26 @@ __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "10-07-2010"
-__version__ 		= "0.6C-ALPHA-6"
+__version__ 		= "0.6C-ALPHA-7"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
  
 
 xbmc.output(__script__ + " Version: " + __version__  + "\n")
 
-##########################################################
+#########################################################
 
 
 
 
 
-####################### IMPORTS ##########################
+####################### IMPORTS #########################
 
 import xbmc, xbmcgui,xbmcaddon
 import os, sys, thread, stat, time, string, re
 import urllib, urlparse, urllib2, xml.dom.minidom
 
-##########################################################
+#########################################################
 
 
 
