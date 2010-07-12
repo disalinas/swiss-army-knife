@@ -41,14 +41,15 @@ EXPECTED_ARGS=3
 # Error-codes
 
 E_BADARGS=1
+E_BADB=2
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-iso.sh p1 p2 p3"
-  echo 
+  echo
   echo "[p1] device or complet path to ripfile"
   echo "[p2] directory for rip"
   echo "[p3] Name of iso (excluding iso)"
-  echo 
+  echo
   echo "dvd-iso.sh was called with wrong arguments"
   echo
   echo ----------------------- script rc=1 -----------------------------
@@ -61,7 +62,9 @@ fi
 # Define the commands we will be using inside the script ...
 
 REQUIRED_TOOLS=`cat << EOF
-ddrescue
+isoinfo
+dd
+awk
 nohup
 EOF`
 
@@ -83,28 +86,60 @@ do
    fi
 done
 
+# For the GUI-progress-bar we need the exact size in bytes for the saved iso-file
+
+
+# Get Blocksize
+
+blocksize=`isoinfo -d -i $1  | grep "^Logical block size is:" | cut -d " " -f 5`
+if test "$blocksize" = ""; then
+   echo catdevice FATAL ERROR: Blank blocksize > $OUTPUT_ERROR
+   exit $E_BADB
+fi
+
+
+# Get Blockcount
+
+blockcount=`isoinfo -d -i $1 | grep "^Volume size is:" | cut -d " " -f 4`
+if test "$blockcount" = ""; then
+   echo catdevice FATAL ERROR: Blank blockcount > $OUTPUT_ERROR
+   exit $E_BADB
+fi
+
+
+SIZE1=$(($blocksize * $blockcount))
+echo
+echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
+
+# break css by force ;-)
 
 lsdvd -a $1 1>/dev/null 2>61
 
-echo
 echo INFO starting ddrescue
 
-ddrescue -n --block-size=2048 $1 $2/$3.iso
+(
+dd bs=2048 if=$1 of=$2/$3.iso &
+) > $OUT_TRANS 2>&1 &
 
+sleep 10
 
-# > $OUT_TRANS 2>&1 &
-
-echo INFO ddrescue command executed
+echo INFO processing data
 echo
 
-sleep 5
-
-# For the GUI-progress-bar we need the exact size in bytes for the 
-# saved iso-file 
-
-
-
-
+LOOP=1
+while [ $LOOP -eq '1'  ];
+do
+  echo -n .
+  SIZE2=$(ls -la $2/$3.iso | awk '{print $5}')
+  if [ $SIZE1 == $SIZE2 ] ; then
+     echo
+     echo
+     echo INFO processing data
+     echo
+     LOOP=0
+  fi
+  sleep 4
+done
 
 # Delete jobfile
 
