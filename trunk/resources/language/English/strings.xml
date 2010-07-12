@@ -26,8 +26,8 @@
         <string id="32062">Enable bluray-functions</string>
         <string id="32063">Enable network-ripping-functions</string>
         <string id="32064">Enable burning-functions</string>
-        <string id="32065">Enable customer-functions</string>
-        <string id="32066">Command to execute</string>
+        <string id="32065">Password protect Expert-Mode</string>
+        <string id="32066">Password</string>
         <string id="32067">Default size single-layer dvd</string>  
         <string id="32068">Default netcat start-port (6 ports)</string>
         <string id="32069">Verbose debug</string>
@@ -41,32 +41,35 @@
 
         <string id="32090">Mainmenu Swiss-Army-Knife</string> 
         <string id="32091">Job-Window</string> 
-        
+        <string id="32092">Mainmenu Expert-Mode</string>          
 
-
-        <!--           --> 
+        <!--           -->
         <!-- Main-Menu -->
         <!--           --> 
                 
         <string id="32100">Transcode BluRay to mkv</string>
         <string id="32101">Transcode DVD</string>
-        <string id="32102">Advanced-Menu</string>
-        <string id="32103">Job-List</string>
-        <string id="32104">Exit</string>
+        <string id="32102">Ripp DVD to ISO</string>       
+        <string id="32103">Expert-Mode</string>
+        <string id="32104">Job-List</string>
+        <string id="32105">Exit</string>
 
 
         <!--               --> 
         <!-- Advanced-Menu -->
         <!--               -->
 
-        <string id="32120">ISO-Rip (dvd)</string>
-        <string id="32121">Transcode (dvd)</string>
-        <string id="32122">Burn (dvd)</string>
-        <string id="32123">Network Master (dvd)</string>
-        <string id="32124">Network Slave (dvd)</string>      
-        <string id="32125">Check-Software</string>
-        <string id="32126">Info</string>
-        <string id="32127">Back to MainScreen</string>
+        <string id="32120">TEST-1 </string>
+        <string id="32121">TEST-2</string>
+        <string id="32122">TEST-3</string>
+        <string id="32123">TEST-4</string>
+        <string id="32124">TEST-5</string>      
+        <string id="32125">TEST-6</string>
+        <string id="32126">TEST-7</string>
+        <string id="32127">TEST-8</string>
+        <string id="32128">Info</string>
+        <string id="32129">Back to mainmenu</string>
+
 
         <!--                      --> 
         <!-- Execution Box Bluray -->
@@ -108,8 +111,16 @@
         <string id="33207">Please select DVD-track to export</string> 
         <string id="33208">DVD transcoding startet successfull</string>
         <string id="33209">DVD transcoding could not be started</string> 
-
-
+        <string id="33210">DVD iso copy startet successfull</string>
+        <string id="33211">DVD iso copy could not be started</string> 
+        <string id="33212">Please enter password for Expert-Mode</string> 
+        <string id="33213">The password was not correct</string>  
+        <string id="33214">INFO:</string>  
+        <string id="33215">WARNING:</string>
+        <string id="33216">ERROR:</string>
+        <string id="33217"> </string>
+  
+ 
         <!--               --> 
         <!-- Error         -->
         <!--               -->

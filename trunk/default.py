@@ -13,8 +13,8 @@
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
 # VERSION : 0.6C                                        #
-# DATE    : 07-07-10                                    #
-# STATE   : Alpha 7                                     #
+# DATE    : 07-12-10                                    #
+# STATE   : Alpha 8                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -32,12 +32,14 @@
 
 __script__ 		= "Swiss-Army-Knife"
 __scriptID__ 		= "script-video-ripper"
-__author__ 		= "linuxluemmel.ch@gmail.com"
+__authorEmail__  	= "linuxluemmel.ch@gmail.com"
+__author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "10-07-2010"
-__version__ 		= "0.6C-ALPHA-7"
+__date__ 		= "07-12-2010"
+__version__ 		= "0.6C-ALPHA-8"
+__code_name__           = "Bill and Teds bogus journey"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
  
@@ -73,6 +75,8 @@ __enable_bluray__ = 'false'
 __enable_network__ = 'false'
 __enable_burning__ = 'false'
 __enable_customer__ = 'false'
+__enable_pw_mode__ = 'false'
+__pw__ = ''
 __jobs__ = False
 
 
@@ -195,17 +199,58 @@ def GUISelectList(InfoText,SelectList):
 #########################################################
 # Parameter :                                           #
 #                                                       #
+# Selector    integer                                   # 
+#                                                       #
+# 0           Info                                      #
+# 1           Warning                                   #
+# 2           Error                                     #
+# 3           No text                                   #
+#                                                       #
 # Info        String to be shown inside Dialog-Box      #
 #                                                       # 
 # Returns   : none                                      #
 #########################################################
-def GUIInfo(Info):
+def GUIInfo(Selector,Info):
     dialog = xbmcgui.Dialog()
 
-    title = __language__(33201)
+    title = __language__(33214 + Selector)
     selected = dialog.ok(title,Info)
 
     return 0
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : GUIExpertWinClass                         #
+#########################################################
+# Parameter : XBMC-Window Class                         #
+#                                                       #
+# xbmcgui.Window                                        # 
+#                                                       # 
+# Returns   : none                                      #
+#########################################################
+class GUIExpertWinClass(xbmcgui.Window):
+
+      def __init__(self):
+
+          global __jobs__ 
+          exit = True
+
+          menu = []       
+          for i in range(32120,32130):
+	      menu.append(__language__(i))
+          while (exit): 
+             dialog = xbmcgui.Dialog()
+             choice  = dialog.select(__language__(32092) ,menu)
+             if (choice == 8): 
+                 message = "Author  :  " + __author__ + "\nVersion :  " + __version__ 
+                 GUIInfo(3,message)   
+             if (choice == 9):   
+                 exit = False
+          self.close()
 #########################################################
 
 
@@ -227,13 +272,15 @@ class GUIJobWinClass(xbmcgui.Window):
 
           global __jobs__ 
           exit = True
- 
+
+          menu = []     
+          for i in range(32170,32175):
+	      menu.append(__language__(i))
           while (exit): 
              dialog = xbmcgui.Dialog()
-             choice  = dialog.select(__language__(32091) , [__language__(32170), __language__(32171), __language__(32172),__language__(32173)])
+             choice  = dialog.select(__language__(32091) ,menu)
              if (choice == 0):  
-                GUIProgressbar("Progress current stage")
-        
+                GUIProgressbar("Progress current stage")       
              if (choice == 1):  
                  state = OSKillProc()
                  if (state == 0):
@@ -268,19 +315,22 @@ class GUIMain01Class(xbmcgui.Window):
         
           global __jobs__
  
-          # Retrive JobsState 
+          # Retrive JobsState to act inside the addon ....
 
           job_state = OSGetJobState()
           if (job_state == 1):
               __jobs__ = True
           if (job_state == 0):
               __jobs__ = False
-         
+
+          menu = []      
+          for i in range(32100,32106):
+	      menu.append(__language__(i))
+
           exit_script = True 
           while (exit_script): 
                  dialog = xbmcgui.Dialog()
-                 choice  = dialog.select(__language__(32090) , [__language__(32100), __language__(32101), __language__(32102),__language__(32103),__language__(32104) ])
-
+                 choice  = dialog.select(__language__(32090) ,menu)
                  if (choice == 0):
                      Lock = OSCheckLock(__configuration__[2])
                      if (__enable_bluray__ == 'true'):
@@ -305,19 +355,18 @@ class GUIMain01Class(xbmcgui.Window):
 
                                          execstate =  OSBlurayTranscode() 
                                          if (execstate == 0):
-                                             GUIInfo(__language__(33204))
+                                             GUIInfo(2,__language__(33204))
                                          if (execstate == 1):
-                                             GUIInfo(__language__(33203))
+                                             GUIInfo(0,__language__(33203))
                                              __jobs__ = True
                                      else:
-                                          GUIInfo(__language__(33304))
+                                          GUIInfo(0,__language__(33304))
                              else:
-                                  GUIInfo(__language__(33309))
+                                  GUIInfo(0,__language__(33309))
                          else:        
-                             GUIInfo(__language__(33308))   
+                             GUIInfo(0,__language__(33308))   
                      else:
-                         GUIInfo(__language__(33303))    
-
+                         GUIInfo(0,__language__(33303))    
 
                  if (choice == 1):  
                      Lock = OSCheckLock(__configuration__[2])
@@ -338,30 +387,46 @@ class GUIMain01Class(xbmcgui.Window):
                                      # execute = GUISelectList(__language__(32150),executeList)
                                      execstate =  OSDVDTranscode() 
                                      if (execstate == 0):
-                                         GUIInfo(__language__(33209))
+                                         GUIInfo(2,__language__(33209))
                                      if (execstate == 1):
-                                         GUIInfo(__language__(33208))
+                                         GUIInfo(0,__language__(33208))
                                          __jobs__ = True
                                  else:
-                                     GUIInfo(__language__(33312)) 
+                                     GUIInfo(0,__language__(33312)) 
                          else:
-                             GUIInfo(__language__(33309))
+                             GUIInfo(0,__language__(33309))
                      else:
-                         GUIInfo(__language__(33308))    
+                         GUIInfo(0,__language__(33308))    
 
-            
                  if (choice == 2): 
-                     GUIInfo(__language__(33205))         
+                     GUIInfo(0,__language__(33205)) 
+
                  if (choice == 3): 
+                     if ( __enable_pw_mode__ == 'true'):
+                         kb = xbmc.Keyboard('default', 'heading', True)
+                         kb.setDefault()
+                         kb.setHeading(__language__(33212))
+                         kb.setHiddenInput(True)
+                         kb.doModal()
+                         if (kb.isConfirmed()):
+                             password = kb.getText()
+                             if (password == __pw__ ):
+                                 ExpertWindow = GUIExpertWinClass()
+                                 del ExpertWindow
+                             else: 
+                                 GUIInfo(2,__language__(33213))    
+                     else:
+                          ExpertWindow = GUIExpertWinClass()
+                          del ExpertWindow         
+                 if (choice == 4): 
                      if (__jobs__ == False):
-                        GUIInfo(__language__(32177))
+                        GUIInfo(0,__language__(32177))
                      else:
                         JobWindow = GUIJobWinClass()
                         del JobWindow        
-                 if (choice == 4): 
+                 if (choice == 5): 
                      GUIlog('menu exit activated')
                      exit_script = False
-
           self.close()
 #########################################################
 
@@ -385,19 +450,21 @@ if __name__ == '__main__':
    __enable_network__  = __configuration__[11]
    __enable_burning__  = __configuration__[15]
    __enable_customer__ = __configuration__[14]
+   __enable_pw_mode__  = __configuration__[19]
+   __pw__              = __configuration__[20]
  
    # Check that directory exists and could be written 
    # Bluray-directory is only included if the functions are enabled
 
    if (__enable_bluray__ == "true"):
        if (OSCheckContainerID(2)):
-           GUIInfo(__language__(33307)) 
+           GUIInfo(1,__language__(33307)) 
      
    if (OSCheckContainerID(1)):
-       GUIInfo(__language__(33306))
+       GUIInfo(1,__language__(33306))
 
    if (OSCheckContainerID(0)):
-       GUIInfo(__language__(33305))
+       GUIInfo(1,__language__(33305))
 
    GUIlog ("create main-menu")
 

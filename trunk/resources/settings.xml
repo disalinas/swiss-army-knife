@@ -28,8 +28,10 @@
         <setting id="id-show-bluray" type="bool" label="32062" default="true"/>
         <setting id="id-show-network" type="bool" label="32063" default="false"/>
         <setting id="id-show-burning" type="bool" label="32064" default="false"/> 
-        <setting id="id-show-customer" type="bool" label="32065" default="false"/> 
-        <setting id="id-customer1" type="text"label="32066" default=""/> 
+        <setting id="id-expert" type="bool" label="32065" default="true"/> 
+        <setting id="id-password" type="text"label="32066" default="1234"/> 
+        <setting id="separator" type="lsep" label="32053"/>
+        <setting id="id-customer" type="bool" label="32065" default="false"/> 
         <setting id="separator" type="lsep" label="32053"/>
         <setting id="id-burn" type="text" label="32067" default="4706074624"/>
         <setting id="id-netcat" type="text" label="32068" default="4000"/>

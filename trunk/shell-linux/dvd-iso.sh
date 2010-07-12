@@ -31,6 +31,8 @@ echo --------------------------------------------------------------------
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/iso-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script-video-ripper/JOB"
+OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script-video-ripper/tmp/dvd-dd.log"
+
 
 # Define the counting commands we expect inside the script
 
@@ -59,7 +61,7 @@ fi
 # Define the commands we will be using inside the script ...
 
 REQUIRED_TOOLS=`cat << EOF
-dd
+ddrescue
 nohup
 EOF`
 
@@ -81,8 +83,26 @@ do
    fi
 done
 
+
+lsdvd -a $1 1>/dev/null 2>61
+
+echo
+echo INFO starting ddrescue
+
+ddrescue -n --block-size=2048 $1 $2/$3.iso
+
+
+# > $OUT_TRANS 2>&1 &
+
+echo INFO ddrescue command executed
+echo
+
+sleep 5
+
 # For the GUI-progress-bar we need the exact size in bytes for the 
 # saved iso-file 
+
+
 
 
 

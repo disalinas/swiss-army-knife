@@ -13,7 +13,7 @@
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
 # DATE    : 07-08-10                                    #
-# STATE   : Alpha 6                                     #
+# STATE   : Alpha 8                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -113,11 +113,13 @@ def OSConfiguration(index):
     config[11] = __settings__.getSetting("id-show-network") 
     config[12] = __settings__.getSetting("id-show-burning") 
     config[13] = __settings__.getSetting("id-show-customer") 
-    config[14] = __settings__.getSetting("id-customer1") 
+    config[14] = __settings__.getSetting("id-customer") 
     config[15] = __settings__.getSetting("id-burn") 
     config[16] = __settings__.getSetting("id-netcat")
     config[17] = __settings__.getSetting("id-verbose")
     config[18] = __settings__.getSetting("id-dvd-subt")
+    config[19] = __settings__.getSetting("id-expert")
+    config[20] = __settings__.getSetting("id-password")
  
 
     # Modul-global variable to detect if debug-log is active
@@ -158,8 +160,8 @@ def OSConfiguration(index):
         status = os.system("%s" % (command))
     else:
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script-video-ripper/DVD_SUB > /dev/null 2>&1" 
-        status = os.system("%s" % (command))
- 
+        status = os.system("%s" % (command)) 
+
     # All used internal files are stored inside after here ...
 
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/state' 
@@ -289,7 +291,7 @@ def OSRun(command,backg,busys):
     # We do send a copy of the command to ssh-log
     # in the case something goes wrong ... 
 
-    command ="echo " + commandssh + " >> " + __configLinux__[38]
+    command ="echo '" + commandssh + " >> " + __configLinux__[38] + "'"
     status = os.system("%s" % (command))
  
     if (__verbose__ == 'true'):
@@ -647,14 +649,16 @@ def OSBlurayTranscode():
 
 
 #########################################################
-# Function : OSGetProgressVal                           #
+# Function  : OSGetProgressVal                          #
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               # 
-# 0-100         Current progress                        #
-# 101           No value for progess to watch           #
-# -1            File could not be opened                # 
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0-100       Progress current process                  #
+# 101         No value for process to watch             #
+# -1          File for processsing could not be opened  #
+#                                                       #
 #########################################################
 def OSGetProgressVal():
 
@@ -671,6 +675,7 @@ def OSGetProgressVal():
     else: 
         return -1 
 #########################################################
+
 
 
 
