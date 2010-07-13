@@ -86,6 +86,11 @@ do
    fi
 done
 
+if [ -e $2/$3.iso ] ; then
+   rm $2/$3.iso > /dev/null 2>&1
+fi
+
+
 # For the GUI-progress-bar we need the exact size in bytes for the saved iso-file
 
 
@@ -113,7 +118,7 @@ echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
 
 # break css by force ;-)
 
-lsdvd -a $1 1>/dev/null 2>61
+lsdvd -a $1 1>/dev/null 2>&1
 
 echo INFO starting ddrescue
 
@@ -121,20 +126,32 @@ echo INFO starting ddrescue
 dd bs=2048 if=$1 of=$2/$3.iso &
 ) > $OUT_TRANS 2>&1 &
 
-sleep 10
+sleep 3
+
+echo $1 > $JOBFILE
+echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
+echo "copy dvd to iso" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
+echo -n $2/$3.iso > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
+echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
+ps axu | grep "dd bs=2048" | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
 
 echo INFO processing data
 echo
+
+T1=$(bc -l <<< "scale=0; ($SIZE1 / 100)")
 
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
   echo -n .
   SIZE2=$(ls -la $2/$3.iso | awk '{print $5}')
+  PROGRESS=$(bc -l <<< "scale=0; ($SIZE2 / $T1)")
+  echo $PROGRESS > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
   if [ $SIZE1 == $SIZE2 ] ; then
      echo
      echo
-     echo INFO processing data
+     echo INFO processing data done
      echo
      LOOP=0
   fi
@@ -150,5 +167,5 @@ echo
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 
-exit
+exit 0
 

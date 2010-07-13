@@ -12,7 +12,7 @@
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
-# DATE    : 07-08-10                                    #
+# DATE    : 07-13-10                                    #
 # STATE   : Alpha 8                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -112,7 +112,9 @@ def OSConfiguration(index):
     config[10] = __settings__.getSetting("id-show-bluray") 
     config[11] = __settings__.getSetting("id-show-network") 
     config[12] = __settings__.getSetting("id-show-burning") 
-    config[13] = __settings__.getSetting("id-show-customer") 
+    
+    # config [13] reserved for future use    
+ 
     config[14] = __settings__.getSetting("id-customer") 
     config[15] = __settings__.getSetting("id-burn") 
     config[16] = __settings__.getSetting("id-netcat")
@@ -276,22 +278,23 @@ def OSRun(command,backg,busys):
     global __configLinux__ 
     global __verbose__
 
-    if (__verbose__ == 'true'):
-        OSlog ("OSRun start")
-
     if (busys):
         xbmc.executebuiltin("ActivateWindow(busydialog)")  
     sys.platform.startswith('linux')
+
+
+    sshlog ="echo \"" + command + "\" >> " + __configLinux__[38]
+    tatus = os.system("%s" % (sshlog))
+    if (__verbose__ == 'true'):
+        OSlog("Command to log inside ssh:" + sshlog)
+        OSlog ("OSRun start")
+
 
     commandssh = "ssh " + __configLinux__[6] + " " + __configLinux__[40] + command + " "
 
     if (backg):
         commandssh = commandssh + " > /dev/null 2>&1 &"
-
-    # We do send a copy of the command to ssh-log
-    # in the case something goes wrong ... 
-
-    command ="echo '" + commandssh + " >> " + __configLinux__[38] + "'"
+ 
     status = os.system("%s" % (command))
  
     if (__verbose__ == 'true'):
@@ -642,6 +645,7 @@ def OSBlurayTranscode():
     
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     return 1
+
 #########################################################
 
 
@@ -674,21 +678,23 @@ def OSGetProgressVal():
         return rvalue 
     else: 
         return -1 
-#########################################################
-
-
-
-
-
 
 #########################################################
-# Function : OSGetStagesCounter                         #
+
+
+
+
+
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               # 
-# 1-X           Current progress-counter                #
-# -1            File could not be opened                # 
+# Function  : OSGetStagesCounter                        #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 1-X         Current stage in progress                 #
+# -1          File could not be opened                  #
+#                                                       #
 #########################################################
 def OSGetStagesCounter():
 
@@ -703,29 +709,43 @@ def OSGetStagesCounter():
         rvalue = int(line)
         return rvalue 
     else: 
-        return -1 
+        return -1
+ 
 #########################################################
 
 
 
 
+
 #########################################################
-# Function : OSGetpids                                  #
+# Function  : OSGetpids                                 #
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               # 
-# List          List with all process-pid for killing   #
-# none          File could not be opened                # 
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# pidList     contains a list with all PID's from the   #
+#             current process or "none"                 #
+#                                                       #
 #########################################################
 def OSGetpids():
 
     global __configLinux__ 
     global __verbose__
 
-    print
+    pidList = []  
    
-    return 
+    if (os.path.exists(__configLinux__[32])):
+            PidFile = open(__configLinux__[32],'r')
+            for line in PidFile.readlines():
+                line = int(line.strip())
+                pidList.append(line)
+            PidFile.close()
+            return pidList 
+    else:
+         pidList.append("none")
+         return pidList 
+
 #########################################################
 
 
@@ -757,6 +777,7 @@ def OSCheckContainerID(index):
            return 0        
     else: 
         return 1
+
 #########################################################
 
 
@@ -793,6 +814,7 @@ def OSCheckLock(Lockcheck):
             return 0
     else:
         return 0
+
 #########################################################
 
 
@@ -805,7 +827,7 @@ def OSCheckLock(Lockcheck):
 #########################################################
 # Parameter : none                                      #
 #                                                       #
-# Returns   : none                                      # 
+# Returns   :                                           # 
 #                                                       #
 # 1           Error                                     # 
 # 0           successfull                               #
@@ -867,6 +889,7 @@ def OSKillProc():
             return (1) 
     else:
         return (1)
+
 #########################################################
 
 
@@ -894,19 +917,24 @@ def OSGetJobState():
         return 1
     else:
         return 0
-#########################################################
-
-
-
-
 
 #########################################################
-# Function : OSChapterDVD                               #
+
+
+
+
+
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               #
-# list of tracks or list 'none' 0                       #
+# Function  : OSChapterDVD                              #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# tracklist   contains all tracks from the dvd          # 
+#             If tracklist could not be read the list   #
+#             only contains "none"                      #
+#                                                       # 
 #########################################################
 def OSChapterDVD():
 
@@ -966,7 +994,8 @@ def OSChapterDVD():
         return tracklist
     else:
         tracklist.append('none') 
-        return tracklist       
+        return tracklist   
+    
 #########################################################
 
 
@@ -976,23 +1005,21 @@ def OSChapterDVD():
 
 
 #########################################################
-# Function : OSDVDTranscode                             #
+# Function  : OSDVDTranscode                            #
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               #
-# 0               Transcode-process not startet         #
-# 1               Transcode-process startet             #
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# 0           Transcode-process not startet             # 
+# 1           Transcode-process startet                 #
+#                                                       # 
 #########################################################
 def OSDVDTranscode():
 
     global __configLinux__ 
     global __exec_dvd__
     global __verbose__
-
-
-    # Inside the bluray part we have fixed counting for the 
-    # parameters ... 
 
     parameters = len(__exec_dvd__) 
 
@@ -1048,21 +1075,23 @@ def OSDVDTranscode():
    
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     return 1
-#########################################################
-
-
-
-
-
-
 
 #########################################################
-# Function : OSDVDExecuteList                           #
+
+
+
+
+
 #########################################################
-# Parameter                                             #
-# none                                                  #
-# Returns                                               #
-# list of blueray summary prio to execution             #
+# Function  : OSDVDExecuteList                          #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# GUIList     List with all parameters prior to the     #
+#             execution from the GUI                    #   
+#                                                       # 
 #########################################################
 def OSDVDExecuteList():
 
@@ -1152,5 +1181,186 @@ def OSDVDExecuteList():
        xbmc.executebuiltin("Dialog.Close(busydialog)")
        GUIList.append("none")
        return GUIList
+
+#########################################################
+
+
+
+
+
+
+#########################################################
+# Function  : OSDVDcopyToIso                            #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# 0           ISO-Copy-process not startet              # 
+# 1           ISO-Copy-process startet                  #
+#                                                       # 
+#########################################################
+def OSDVDcopyToIso():
+
+    global __configLinux__ 
+    global __exec_dvd__
+    global __verbose__
+ 
+    parameters = len(__exec_dvd__)  
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")    
+
+    # Execution of shell-script dvd3.sh inside shell-linux 
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-handbrake.sh command ready to start")
+
+    # Prepare command string 
+ 
+    dvd_command = ""
+    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2] 
+
+    if (__verbose__ == 'true'):
+        OSlog("final :" + dvd_command)   
+
+    OSRun("dvd3.sh " + dvd_command,True,False)
+
+    if (__verbose__ == 'true'): 
+        OSlog("dvd-handbrake.sh command executed")     
+ 
+    # Now we do loop until the PID-file exists
+
+    time.sleep(8) 
+   
+    WCycles = 5 
+    Waitexit = True 
+    while (Waitexit):  
+           if (os.path.exists(__configLinux__[32])):  
+               if (__verbose__ == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False 
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 20):
+               if (__verbose__ == 'true'):
+                   OSlog("Timeout reached for dvd-iso-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0       
+      
+    # Clean exec-array dvd
+ 
+    for index in range((parameters - 1),0):
+        del  __exec_dvd__[index]
+   
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSRemoveLock                              #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# 1           Lock was removed                          # 
+# 0           Lock was not set and therefor not deleted #
+#                                                       # 
+#########################################################
+def OSRemoveLock(Lockcheck):
+
+    global __configLinux__
+    global __verbose__
+
+    if (os.path.exists(__configLinux__[45])):
+        os.remove(__configLinux__[45])
+        if (__verbose__):
+            OSlog("lock-file delete : " + __configLinux__[45])
+        return 1
+    else:
+        return 0
+
+#########################################################
+
+
+
+
+
+
+
+#########################################################
+# Function  : OSGetStageText                            #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# msg         Text that will be shwon inside the        #
+#             progress-windows                          #
+#                                                       #
+#########################################################
+def OSGetStageText():
+
+    global __configLinux__ 
+    global __verbose__
+
+    msg = ""
+
+    # get Stages counter .....
+
+    if (os.path.exists(__configLinux__[35])):
+        StageCounter = open(__configLinux__[35],'r')
+        line = StageCounter.readline()
+        line.strip()
+        Stages = int(line)
+        StageCounter.close()
+
+        # Get Stages-Descirption  
+
+        stagesdescription = []
+        if (os.path.exists(__configLinux__[36])):
+
+            if (Stages == 1):
+                StageDesc = open(__configLinux__[36],'r')
+                line = StageDesc.readline()
+                line.strip()
+                stagesdescription.append(line)
+                StageDesc.close()
+
+            if (Stages >= 2):
+                StageDesc = open(__configLinux__[36],'r') 
+                for index in range(0,(Stages - 1)):
+                    line = StageDesc.readline()
+                    stagesdescription.append(line)
+                StageDesc.close()
+
+            # Get Current-Stage 
+
+            if (os.path.exists(__configLinux__[37])):
+                StageCurrent = open(__configLinux__[37],'r')
+                line = StageCurrent.readline()
+                line.strip()
+                StageCurrent.close()
+                StageCurr = int (line)
+
+                # we should have all info the text inside the progress-bar windows                
+                msg = __language__(32174) + str(StageCurr) + " / " + str(Stages) + " " + stagesdescription[(StageCurr - 1)]
+                
+                if (__verbose__):
+                    OSlog("Progress-bar text : " + msg)
+ 
+                return msg
+            else:
+                return msg   
+        else:
+            return msg
+    else: 
+        return msg 
 
 #########################################################

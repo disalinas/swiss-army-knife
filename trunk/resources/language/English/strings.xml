@@ -31,8 +31,8 @@
         <string id="32067">Default size single-layer dvd</string>  
         <string id="32068">Default netcat start-port (6 ports)</string>
         <string id="32069">Verbose debug</string>
-        <string id="32070">Default subtitle (dvd)</string>   
-  
+        <string id="32070">Default subtitle (dvd)</string> 
+        <string id="32071">Enable customer-shell-scripts</string>   
 
 
         <!--              --> 
@@ -51,7 +51,7 @@
         <string id="32101">Transcode DVD</string>
         <string id="32102">Ripp DVD to ISO</string>       
         <string id="32103">Expert-Mode</string>
-        <string id="32104">Job-List</string>
+        <string id="32104">Job-List / Lock-file</string>
         <string id="32105">Exit</string>
 
 
@@ -68,22 +68,9 @@
         <string id="32126">TEST-7</string>
         <string id="32127">TEST-8</string>
         <string id="32128">Info</string>
-        <string id="32129">Back to mainmenu</string>
+        <string id="32129">Back</string>
 
 
-        <!--                      --> 
-        <!-- Execution Box Bluray -->
-        <!--                      -->
-        
-        <string id="32150">Do you wish to accept this settings ?</string>
-        <string id="32151">Device : </string>
-        <string id="32152">Track  : </string>
-        <string id="32153">Audio  : [all audio]</string>
-        <string id="32154">Length : </string>
-        <string id="32155">Name   : </string>      
-        <string id="32156">Accept</string>
-        <string id="32157">Cancel</string>
-        <string id="32158">Audio  : [audio1 audio2 subtitle] </string> 
 
 
         <!--                --> 
@@ -92,8 +79,11 @@
         
         <string id="32170">Progress-bar</string>
         <string id="32171">Kill job </string>
-        <string id="32172">Info</string>     
+        <string id="32172">Remove lock-file</string>     
         <string id="32173">Back</string>
+        <string id="32174">Stage : </string>
+  
+
 
 
         <string id="32177">There are no active jobs</string>

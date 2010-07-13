@@ -157,8 +157,8 @@ if [ $# -eq 5 ]; then
 
     echo $1 > $JOBFILE
     echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
-    echo "1 Pass 1/2 for transcoding" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
-    echo "2 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+    echo "transcoding pass 1" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+    echo "transcoding pass 2" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
     echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
     echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 
@@ -244,8 +244,8 @@ if [ $# -eq 7 ]; then
 
        echo $1 > $JOBFILE
        echo 2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
-       echo "1 Pass 1/2 for transcoding" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
-       echo "2 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+       echo "transcoding pass 1" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+       echo "transcoding pass 2" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
        echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
        echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 
@@ -335,9 +335,9 @@ if [ $# -eq 7 ]; then
        echo $1 > $JOBFILE
        echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
 
-       echo "1 copy subtitle" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
-       echo "2 Pass 1/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
-       echo "3 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+       echo "copy subtitle" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+       echo "transcoding pass 1" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+       echo "transcoding pass 2" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
 
        echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
 
@@ -362,7 +362,6 @@ if [ $# -eq 7 ]; then
        echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
        ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
        PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
-
 
        LOOP=1
        while [ $LOOP -eq '1'  ];
@@ -469,9 +468,9 @@ if [ $# -eq 9 ]; then
      echo $1 > $JOBFILE 
      echo 3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
 
-     echo "1 copy subtitle" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
-     echo "2 Pass 1/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
-     echo "3 Pass 2/2 for transcoding" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+     echo "copy subtitle" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+     echo "transcoding pass 1" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+     echo "transcoding pass 2" >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
 
      echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
 

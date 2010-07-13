@@ -12,8 +12,8 @@
 #           - transcode bluray to matroska container    #
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
-# VERSION : 0.6C                                        #
-# DATE    : 07-12-10                                    #
+# VERSION : 0.6C-A8                                     #
+# DATE    : 07-13-10                                    #
 # STATE   : Alpha 8                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -109,6 +109,9 @@ if system[0] == 'Linux':
    from Linux import OSChapterDVD
    from Linux import OSDVDExecuteList     
    from Linux import OSDVDTranscode
+   from Linux import OSDVDcopyToIso
+   from Linux import OSRemoveLock
+   from Linux import OSGetStageText
 else:
 
    # only Linux is supported by now ...
@@ -133,6 +136,7 @@ else:
 def GUIlog(msg):
     xbmc.output("[%s]: [GUIlog] %s\n" % ("swiss-army-knife",str(msg))) 
     return (0)
+
 #########################################################
 
 
@@ -160,12 +164,13 @@ def GUIProgressbar(InfoText):
            if (progress == 100):
                dp.close() 
                exit = False 
-           dp.update(progress,"")
+           dp.update(progress,OSGetStageText())
            if dp.iscanceled():
               dp.close() 
               exit = False 
            time.sleep(1)
     return  
+
 #########################################################
 
 
@@ -186,8 +191,8 @@ def GUISelectList(InfoText,SelectList):
 
     dialog = xbmcgui.Dialog()
     choice  = dialog.select(InfoText,SelectList)
-
     return choice
+
 #########################################################
 
 
@@ -215,8 +220,8 @@ def GUIInfo(Selector,Info):
 
     title = __language__(33214 + Selector)
     selected = dialog.ok(title,Info)
-
     return 0
+
 #########################################################
 
 
@@ -251,6 +256,7 @@ class GUIExpertWinClass(xbmcgui.Window):
              if (choice == 9):   
                  exit = False
           self.close()
+
 #########################################################
 
 
@@ -274,7 +280,7 @@ class GUIJobWinClass(xbmcgui.Window):
           exit = True
 
           menu = []     
-          for i in range(32170,32175):
+          for i in range(32170,32174):
 	      menu.append(__language__(i))
           while (exit): 
              dialog = xbmcgui.Dialog()
@@ -284,16 +290,17 @@ class GUIJobWinClass(xbmcgui.Window):
              if (choice == 1):  
                  state = OSKillProc()
                  if (state == 0):
-                     GUIInfo(__language__(33206))     
+                     GUIInfo(0,__language__(33206))     
                      __jobs__ = False
                      exit = False
                  if (state == 1):
-                     GUIInfo(__language__(33310))     
+                     GUIInfo(0,__language__(33310))     
              if (choice == 2):  
-                GUIInfo(__language__(33205))    
+                 removal = OSRemoveLock()  
              if (choice == 3):   
                  exit = False
           self.close()
+
 #########################################################
 
 
@@ -399,7 +406,34 @@ class GUIMain01Class(xbmcgui.Window):
                          GUIInfo(0,__language__(33308))    
 
                  if (choice == 2): 
-                     GUIInfo(0,__language__(33205)) 
+                     Lock = OSCheckLock(__configuration__[2])
+                     if (Lock == 0):
+                         dvd_info = xbmc.getDVDState()
+                         if (dvd_info == 4):
+                             DVDState = OSCheckMedia("DVD-ROM")
+                             if (DVDState == 2):
+                                 GUIInfo(__language__(33302)) 
+                             if (DVDState == 1):
+                                 GUIInfo(__language__(33311))
+                             if (DVDState == 0):
+                                 tracklist = []
+                                 tracklist = OSChapterDVD()
+                                 if (tracklist[0] != 'none'):
+                                     executeList = []
+                                     executeList = OSDVDExecuteList()   
+                                     execstate = OSDVDcopyToIso() 
+                                     if (execstate == 0):
+                                         GUIInfo(2,__language__(33211))
+                                     if (execstate == 1):
+                                         GUIInfo(0,__language__(33210))
+                                         __jobs__ = True
+                                 else:
+                                     GUIInfo(0,__language__(33312)) 
+                         else:
+                             GUIInfo(0,__language__(33309))
+                     else:
+                         GUIInfo(0,__language__(33308))    
+
 
                  if (choice == 3): 
                      if ( __enable_pw_mode__ == 'true'):
@@ -428,6 +462,7 @@ class GUIMain01Class(xbmcgui.Window):
                      GUIlog('menu exit activated')
                      exit_script = False
           self.close()
+
 #########################################################
 
 

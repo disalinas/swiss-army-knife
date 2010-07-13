@@ -1,6 +1,6 @@
------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 Date : 07.12.2010 | Release : 0.6C-A8   | Author  : H.Weber | CVS:134 
------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 
 Changes:
 
@@ -16,5 +16,27 @@ Bugfixes:
 
 - automatic track selection inside dvd-chapter.sh had a failure (fixed)
 
------------------------------------------------------------------------
------------------------------------------------------------------------ 
+---------------------------------------------------------------------------------------------------
+Date : 07.13.2010 | Release : 0.6C-A8   | Author  : H.Weber | CVS:136
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Added correct progress indicator for dvd-iso.sh.
+- Added code to run dvd-iso.sh from main-menu.
+- Addes shell-linux/dvd3.sh to svn. 
+- A lot of code cleaning.
+- Added entry "Remove lock-file" inside job-window.
+- Added stage-text inside progress-window.
+- settings fixed.
+
+Bugfixes:
+
+- sleep time to wait for dd was to high (fixed).
+- log for ssh-command was empty (fixed). 
+- fixe parameter error on line 290+297 default.py (fixed).
+- Job-windows dialog contains one entry to much (fixed).
+- removed the stage-nummber from the stages-descriptions. 
+- to add echo -n for the description of stages was a bad thing(fixed)
+---------------------------------------------------------------------------------------------------
+
