@@ -1,4 +1,20 @@
+-----------------------------------------------------------------------
+Date : 07.12.2010 | Release : 0.6C-A8   | Author  : H.Weber | CVS:134 
+-----------------------------------------------------------------------
 
--------------------------------------------------------------
-Date : 07.12.2010 | Release : 0.6C-A8   |   Author  : H.Weber 
--------------------------------------------------------------
+Changes:
+
+- Include dvd-iso.sh with dd to copy a dvd to a iso file.
+- Rewritten most of the code.
+- Show the detailed stages-descriptions inside the progress-bar.
+- Soon the release 0.6C-ALPHA-8 could be tested .
+- Integrate the busy-dialog during startup of addon.
+- A lot of code cleaning.
+- Added text README.Linux
+
+Bugfixes:
+
+- automatic track selection inside dvd-chapter.sh had a failure (fixed)
+
+-----------------------------------------------------------------------
+----------------------------------------------------------------------- 

@@ -1,20 +1,87 @@
-Readme for xbmc addon swiss-army-knife 
---------------------------------------
+Readme.Linux for xbmc addon swiss-army-knife  
+--------------------------------------------
 
 1.0 Welcome to my first addon swiss-army-knife
 
-As you may know until now we had a few things inside xbmc
+As you may know until now, we had a few things inside xbmc like
  
 * Scripts
 * Addons for Video 
 * Addons for Music
 and many more 
 
+Up release xbmc 10.5 or higher anything is called a addon.
+I used the switchto to the new addon-system  to complete rewrite the 
+code from my previous script called "luemmels-dvd-ripper". 
 
-2.0 What Software will be installed ? 
 
-3.0 Where is the livcd.sh shell-script gone ? 
+2.) Requierements for this addon 
 
-4.) Have fun ;-)
+- a Ubuntu 10.04 LTS system
+- a SVN build of XBMC ( I do use svn build from july 2010)
+- a DVD-drive and optional a bluray if you would like to transcode BD-disk
+
+
+3.0 What Software will be installed ? 
+
+The list is to long but you can have a look inside the file 
+shell-linux/setup.sh 
+
+4.0 Where is the livcd.sh shell-script gone ? 
+
+The replacement is called setup.sh and is inside the shell-linux 
+directory.
+
+5.) Installation 
+
+At first you have to extract the addon-zip inside the right place.
+
+~/.xbmc/addons
+
+Change to the shell-linux directory inside tha addon.
+
+cd ~/.xbmc/addons/swiss-arym-knife/shell-linux
+
+Run the following command as user root :
+
+./setup.sh xbmc 
+
+This shell-scripts do install all software for the addon 
+excluded 2 debian files witch has to be installed by you.
+
+- it creates all directorys for ripping and transcoding 
+- it will prepare the ssh-server and client to login without 
+  any password.
+ 
+Now change to the following directory :
+
+cd ~/.xbmc/addons/swiss-arym-knife/linux
+
+Inside the directory you find debian files for handbrake and makemkvcon
+for 32 bit and 64 bit.
+
+Install both of the provided debian-files for your system (32 or 64).
+
+dpkg -i packetname 1
+dpkg -i packetname 2
+ 
+This debian-filea are only tested on Ubuntu 10.04 LTS.If you don't use 
+a debian based system or your system is to old, you have to compile 
+this 2 packages for yourself. The full-source of the 2 packages  is included
+to build your own packages.
+
+If you don't trust my 2 packages you have to build also your own packages.
+In a later release I may do include the installing of the 2 packages inside
+the the setup.sh script, but by now YOU MUST THEM INSTALL WITH DPKG !!!!
+
+
+
+
+
+
+
+
+ 
+
 
 
