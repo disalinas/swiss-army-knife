@@ -65,8 +65,9 @@ Changes:
 
 Bugfixes:
 
-
-
+- After a sucessful process the directory progress will be erased.
+  This change was made inside all shell-scripts.
+ 
 ---------------------------------------------------------------------------------------------------
 
 

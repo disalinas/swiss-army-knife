@@ -162,6 +162,13 @@ fi
 
 rm $JOBFILE > /dev/null 2>&1
 
+
+
+# Delete all progress-files 
+
+sleep 1
+rm ~/.xbmc/userdata/addon_data/script-video-ripper/progress/* > /dev/null 2>&1
+
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 

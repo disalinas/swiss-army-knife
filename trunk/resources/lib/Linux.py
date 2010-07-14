@@ -175,7 +175,7 @@ def OSConfiguration(index):
     config[36] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions'
     config[37] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current'
     config[38] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/log/ssh-log'
-
+    config[39] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/log/ssh-test'
     config[40] = os.getenv("HOME") + '/.xbmc/addons/swiss-army-knife/shell-linux/' 
     config[41] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME' 
     config[42] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS' 
@@ -196,6 +196,7 @@ def OSConfiguration(index):
     __temp_files__.append(config[36])
     __temp_files__.append(config[37])
     __temp_files__.append(config[38])
+    __temp_files__.append(config[39])
     __temp_files__.append(config[41])
     __temp_files__.append(config[42]) 
     __temp_files__.append(config[43]) 
