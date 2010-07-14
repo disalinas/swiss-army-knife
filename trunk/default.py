@@ -12,7 +12,7 @@
 #           - transcode bluray to matroska container    #
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
-# VERSION : 0.6C-A8                                     #
+# VERSION : 0.6C-A9                                     #
 # DATE    : 07-13-10                                    #
 # STATE   : Alpha 8                                     #
 # LICENCE : GPL 3.0                                     #
@@ -37,8 +37,8 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "07-12-2010"
-__version__ 		= "0.6C-ALPHA-8"
+__date__ 		= "07-14-2010"
+__version__ 		= "0.6C-ALPHA-9"
 __code_name__           = "Bill and Teds bogus journey"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
@@ -347,9 +347,9 @@ class GUIMain01Class(xbmcgui.Window):
                              if (dvd_info == 4):
                                  BluState = OSCheckMedia("BLURAY")
                                  if (BluState == 2):
-                                     GUIInfo(__language__(33302)) 
+                                     GUIInfo(0,__language__(33302)) 
                                  if (BluState == 1):
-                                     GUIInfo(__language__(33301))
+                                     GUIInfo(0,__language__(33301))
                                  if (BluState == 0):
                                      tracklist = []
                                      tracklist = OSChapterBluray() 
@@ -382,9 +382,9 @@ class GUIMain01Class(xbmcgui.Window):
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
                              if (DVDState == 2):
-                                 GUIInfo(__language__(33302)) 
+                                 GUIInfo(0,__language__(33302)) 
                              if (DVDState == 1):
-                                 GUIInfo(__language__(33311))
+                                 GUIInfo(0,__language__(33311))
                              if (DVDState == 0):
                                  tracklist = []
                                  tracklist = OSChapterDVD()
@@ -412,9 +412,9 @@ class GUIMain01Class(xbmcgui.Window):
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
                              if (DVDState == 2):
-                                 GUIInfo(__language__(33302)) 
+                                 GUIInfo(0,__language__(33302)) 
                              if (DVDState == 1):
-                                 GUIInfo(__language__(33311))
+                                 GUIInfo(0,__language__(33311))
                              if (DVDState == 0):
                                  tracklist = []
                                  tracklist = OSChapterDVD()

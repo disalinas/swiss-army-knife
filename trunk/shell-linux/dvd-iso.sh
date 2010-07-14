@@ -130,7 +130,7 @@ sleep 3
 
 echo $1 > $JOBFILE
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
-echo "copy dvd to iso" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+echo 32154 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
 echo -n $2/$3.iso > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid

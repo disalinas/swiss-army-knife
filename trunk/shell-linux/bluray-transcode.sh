@@ -111,7 +111,7 @@ sleep 30
 
 echo $1 > $JOBFILE
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter
-echo "transcode bluray to mkv" > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
+echo 32150 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions
 echo 1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/stages-current
 
 if [ $4 -lt '10' ] ; then
@@ -121,10 +121,6 @@ fi
 if [ $4 -gt '10' ] ; then
    echo -n $2/title$4.mkv > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-files
 fi
-
-# We send back 2 pid
-# bash-pid
-# makemkvcon
 
 echo $$ > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid
 ps axu | grep makemkvcon | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid

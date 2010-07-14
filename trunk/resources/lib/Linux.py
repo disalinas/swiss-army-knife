@@ -12,7 +12,7 @@
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
-# DATE    : 07-13-10                                    #
+# DATE    : 07-14-10                                    #
 # STATE   : Alpha 8                                     #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -1273,7 +1273,7 @@ def OSDVDcopyToIso():
 # 0           Lock was not set and therefor not deleted #
 #                                                       # 
 #########################################################
-def OSRemoveLock(Lockcheck):
+def OSRemoveLock():
 
     global __configLinux__
     global __verbose__
@@ -1333,11 +1333,17 @@ def OSGetStageText():
                 stagesdescription.append(line)
                 StageDesc.close()
 
+            # Until version 0.6C A8 we had read direct the text from 
+            # the shell-scripts but this behavior has one little failure.
+            # The submitted strings from the scripts are not translated if
+            # you plan to run this addon with other language than english.
+
             if (Stages >= 2):
                 StageDesc = open(__configLinux__[36],'r') 
                 for index in range(0,(Stages - 1)):
                     line = StageDesc.readline()
-                    stagesdescription.append(line)
+                    Translation_Index = int(line) 
+                    stagesdescription.append(TranslationIndex)
                 StageDesc.close()
 
             # Get Current-Stage 
@@ -1349,8 +1355,11 @@ def OSGetStageText():
                 StageCurrent.close()
                 StageCurr = int (line)
 
+                index = int(stagesdescription[(StageCurr - 1)])
+                progress_message = __language__(index)
+
                 # we should have all info the text inside the progress-bar windows                
-                msg = __language__(32174) + str(StageCurr) + " / " + str(Stages) + " " + stagesdescription[(StageCurr - 1)]
+                msg = __language__(32174) + str(StageCurr) + " / " + str(Stages) + " " + progress_message
                 
                 if (__verbose__):
                     OSlog("Progress-bar text : " + msg)

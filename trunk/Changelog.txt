@@ -39,4 +39,20 @@ Bugfixes:
 - removed the stage-nummber from the stages-descriptions. 
 - to add echo -n for the description of stages was a bad thing(fixed)
 ---------------------------------------------------------------------------------------------------
+Date : 07.14.2010 | Release : 0.6C-A9   | Author  : H.Weber | CVS:137
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Added correct progress indicator for dvd-iso.sh.
+- I hate to make documenations updates wiki 
+- All strings from the shell-scripts that are displayed inside 
+  the gui are now inside the settings.
+
+Bugfixes:
+
+- typo devive -> device (fixed).
+- error inside OSRemoveLock by startup (fixed).
+- GUIInfo had a few refrences with the old parameter-count 1
+---------------------------------------------------------------------------------------------------
 

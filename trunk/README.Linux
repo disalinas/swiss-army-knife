@@ -10,9 +10,31 @@ As you may know until now, we had a few things inside xbmc like
 * Addons for Music
 and many more 
 
-Up release xbmc 10.5 or higher anything is called a addon.
-I used the switchto to the new addon-system  to complete rewrite the 
-code from my previous script called "luemmels-dvd-ripper". 
+After the release xbmc version 10.5 or higher anything is called a addon.
+I used the switch to to the new addon-system  to make complete rewrite  of  
+the old code from my previous script called "luemmels-dvd-ripper".
+My old script was running .... but had a few down-sides...
+
+- it was very huge ...
+- No support for blurays. 
+- all code for os and gui was in a single file.
+- it was hard to debug ..... and maintain.
+- I had no subversion controll for the script.
+
+By this new addon I changed a few things.
+
+1.) There are 3 strict seperated parts ( GUI / OS / shell-script)
+2.) The code looks nicer .-)
+3.) The code is easyer to maintain.   
+4.) Subversion is now a important part of my work during the development of this 
+    addon .... (and saved my ass one time ;-)   )
+
+1.1 What are the functions this addon provides ? 
+
+* create a exact iso copy of a dvd.
+* convert dvd to a h264 container. 
+* convert bluray to a mkv container.
+* In later release I plan to use this features over the network. 
 
 
 2.) Requierements for this addon 
@@ -44,7 +66,12 @@ cd ~/.xbmc/addons/swiss-arym-knife/shell-linux
 
 Run the following command as user root :
 
-./setup.sh xbmc 
+
+./setup.sh xbmc
+
+If your user name for the linux-system is something other than 
+xbmc, replace xbmc with your own username.(hint -> whoami[enter])
+   
 
 This shell-scripts do install all software for the addon 
 excluded 2 debian files witch has to be installed by you.
@@ -74,10 +101,26 @@ If you don't trust my 2 packages you have to build also your own packages.
 In a later release I may do include the installing of the 2 packages inside
 the the setup.sh script, but by now YOU MUST THEM INSTALL WITH DPKG !!!!
 
+The next step to running this addon is to complete the setup with valid 
+settings over xbmc. Open the xbmc addon-manager and enable the addon, if you 
+did not allready.
+Do change the settings to your needs like ...
 
+* the place where to store your iso copys
+* the directory to store the dvd transcoding files
+* the directory to store the bluray mkv files 
+* the user for the ssh communication
+* Enable or disable some functions
 
+and many more .....
+ 
+6.O Using the addon and have fun 
 
+Lucern, Switzerland 
+07.14.2010 
+linuxluemmel.ch@gmail.ch alias Hans Weber 
 
+ 
 
 
 

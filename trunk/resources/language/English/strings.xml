@@ -70,6 +70,25 @@
         <string id="32128">Info</string>
         <string id="32129">Back</string>
 
+        <!--                    --> 
+        <!-- Progress-bar text  -->
+        <!--                    -->
+        <!-- They are only used --> 
+        <!-- inside the scripts --> 
+        
+        <string id="32150">transcode bluray to mkv</string>
+        <string id="32151">copy subtitle</string>
+        <string id="32152">transcoding pass 1</string>
+        <string id="32153">transcoding pass 2</string>
+        <string id="32154">copy dvd to iso-file</string>
+
+
+
+ 
+
+
+
+
 
 
 
@@ -122,8 +141,8 @@
         <string id="33305">ISO-directory not found or writeable !</string>
         <string id="33306">DVD-directory not found or writeable !</string> 
         <string id="33307">Bluray-directory not found or writeable !</string>
-        <string id="33308">Devive is locked by a active job !</string>
-        <string id="33309">Devive is not ready !</string>
+        <string id="33308">Device is locked by a active job !</string>
+        <string id="33309">Device is not ready !</string>
         <string id="33310">Job could no be killed</string>  
         <string id="33311">Inserted disc is not a DVD-Disc</string>    
         <string id="33312">DVD-chapters could not be read</string>       
