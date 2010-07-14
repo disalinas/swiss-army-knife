@@ -29,7 +29,7 @@
  * Following rip-containers are created.
 
  * /dvdrip/iso          
- * /dvdrip/h264          
+ * /dvdrip/dvd         
  * dvdrip/blueray       
 
  * medibuntu is added to your /etc/apt/sources.list and the following software is installed
@@ -91,23 +91,24 @@
 -----------------------------------------------------------------------------------------
 ===                            ==== 
   * Yes. You can replace the shell-scripts with allmost all that is running on linux.
-  * You have to use the API of this addon to be compatible.
+  * You have to use the API of this addon to be compatible with the GUI-part .
 
 ===I would like to improve the addon with patches. What should I do ?===
 -----------------------------------------------------------------------------------------
 ===                            ==== 
   * I only accept svn diff patches against the current trank.
-  * If your diff contains binary exectuable files the full source-code of this included files  must be within the  diff-file or the patch will not be integrated.
-  * Only GPL code is accepted. 
+  * If your diff contains binary exectuable files the full source-code of this binarys must be within the  diff-file or the patch will not be integrated.
+  * Only GPL licenced code will be accepted. Any none GPL code or binary will not be accpeted !
 === ===
 === ===
 ===The addon speaks only English. Could my own native language be added ?===
 -----------------------------------------------------------------------------------------
 ===                            ==== 
   * send me a diff-file 
-
+  * *But until my addon reached beta-level .... do not send anything ...  *
 
 Please do not send diffs or patches to my personal email linuxluemmel.ch@gmail.com 
+because I use this email on cell-phone.
 
 Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)      
 
