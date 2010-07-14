@@ -13,7 +13,7 @@
 #           os that should exexcute this addon.         #
 # VERSION : 0.6C                                        #
 # DATE    : 07-14-10                                    #
-# STATE   : Alpha 8                                     #
+# STATE   : Alpha 10                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -1213,7 +1213,7 @@ def OSDVDcopyToIso():
     # Execution of shell-script dvd3.sh inside shell-linux 
 
     if (__verbose__ == 'true'):
-        OSlog("dvd-handbrake.sh command ready to start")
+        OSlog("dvd3.sh command ready to start")
 
     # Prepare command string 
  
@@ -1278,6 +1278,29 @@ def OSRemoveLock():
     global __configLinux__
     global __verbose__
 
+    # In the case the provided pid over the file process-ids
+    # are running we should display a BIG-Warning or even not 
+    # kill the lock-file.
+
+    PidList = []
+ 
+    PidList = OSGetpids()
+
+    # The Lock-file should only removed in the case
+    # a process died unexpected ...
+
+    if (PidList != 'none' ):
+        x = 0 
+        for item in PidList:
+            OSlog("PID-list:" + str(item)) 
+            try: 
+                os.kill(item,0)
+                running = True
+            except OSError, err:
+                running = False    
+            if (running):
+                return 0
+
     if (os.path.exists(__configLinux__[45])):
         os.remove(__configLinux__[45])
         if (__verbose__):
@@ -1337,6 +1360,7 @@ def OSGetStageText():
             # the shell-scripts but this behavior has one little failure.
             # The submitted strings from the scripts are not translated if
             # you plan to run this addon with other language than english.
+            # Now the strings reside in strings.xml and can be translated.
 
             if (Stages >= 2):
                 StageDesc = open(__configLinux__[36],'r') 
@@ -1358,7 +1382,9 @@ def OSGetStageText():
                 index = int(stagesdescription[(StageCurr - 1)])
                 progress_message = __language__(index)
 
-                # we should have all info the text inside the progress-bar windows                
+                # we should have all info for the text inside the progress-bar windows
+                # and we dont have to edit the shell-scripts to update the messages (strings.xml)   
+             
                 msg = __language__(32174) + str(StageCurr) + " / " + str(Stages) + " " + progress_message
                 
                 if (__verbose__):

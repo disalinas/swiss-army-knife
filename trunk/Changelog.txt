@@ -55,4 +55,34 @@ Bugfixes:
 - error inside OSRemoveLock by startup (fixed).
 - GUIInfo had a few refrences with the old parameter-count 1
 ---------------------------------------------------------------------------------------------------
+Date : 07.14.2010 | Release : 0.6C-A10   | Author  : H.Weber | CVS:138
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Changed logic behind the job-window because the lock-file deletion.
+- Addes ssh-command test.
+
+Bugfixes:
+
+
+
+---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

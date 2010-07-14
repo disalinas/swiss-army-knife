@@ -65,8 +65,8 @@
         <string id="32123">TEST-4</string>
         <string id="32124">TEST-5</string>      
         <string id="32125">TEST-6</string>
-        <string id="32126">TEST-7</string>
-        <string id="32127">TEST-8</string>
+        <string id="32126">Test for update</string>
+        <string id="32127">Test ssh connection</string>
         <string id="32128">Info</string>
         <string id="32129">Back</string>
 
@@ -128,7 +128,10 @@
         <string id="33215">WARNING:</string>
         <string id="33216">ERROR:</string>
         <string id="33217"> </string>
-  
+        <string id="33218">ssh-test connection was successfull</string>
+        <string id="33218">ssh-test connection failed</string>
+        
+        
  
         <!--               --> 
         <!-- Error         -->

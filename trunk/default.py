@@ -14,7 +14,7 @@
 #           - Integration of user-functions             #
 # VERSION : 0.6C-A9                                     #
 # DATE    : 07-13-10                                    #
-# STATE   : Alpha 8                                     #
+# STATE   : Alpha 10                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -38,8 +38,8 @@ __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "07-14-2010"
-__version__ 		= "0.6C-ALPHA-9"
-__code_name__           = "Bill and Teds bogus journey"
+__version__ 		= "0.6C-ALPHA-10"
+__code_name__           = "Stars Wars Episode 1"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
  
@@ -286,15 +286,21 @@ class GUIJobWinClass(xbmcgui.Window):
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32091) ,menu)
              if (choice == 0):  
-                GUIProgressbar("Progress current stage")       
-             if (choice == 1):  
-                 state = OSKillProc()
-                 if (state == 0):
-                     GUIInfo(0,__language__(33206))     
-                     __jobs__ = False
-                     exit = False
-                 if (state == 1):
-                     GUIInfo(0,__language__(33310))     
+                 if (__jobs__ == False):
+                     GUIInfo(0,__language__(32177))
+                 else:
+                     GUIProgressbar("Progress current process")       
+             if (choice == 1): 
+                 if (__jobs__ == False):
+                     GUIInfo(0,__language__(32177))
+                 else:
+                     state = OSKillProc()
+                     if (state == 0):
+                         GUIInfo(0,__language__(33206))     
+                         __jobs__ = False
+                         exit = False
+                     if (state == 1):
+                         GUIInfo(0,__language__(33310))     
              if (choice == 2):  
                  removal = OSRemoveLock()  
              if (choice == 3):   
@@ -453,11 +459,8 @@ class GUIMain01Class(xbmcgui.Window):
                           ExpertWindow = GUIExpertWinClass()
                           del ExpertWindow         
                  if (choice == 4): 
-                     if (__jobs__ == False):
-                        GUIInfo(0,__language__(32177))
-                     else:
-                        JobWindow = GUIJobWinClass()
-                        del JobWindow        
+                     JobWindow = GUIJobWinClass()
+                     del JobWindow        
                  if (choice == 5): 
                      GUIlog('menu exit activated')
                      exit_script = False
