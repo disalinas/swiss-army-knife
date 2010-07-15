@@ -59,13 +59,13 @@
         <!-- Advanced-Menu -->
         <!--               -->
 
-        <string id="32120">TEST-1 </string>
+        <string id="32120">Transcode BluRay to mkv (confirmend)</string>
         <string id="32121">TEST-2</string>
         <string id="32122">TEST-3</string>
         <string id="32123">TEST-4</string>
         <string id="32124">TEST-5</string>      
         <string id="32125">TEST-6</string>
-        <string id="32126">Test for update</string>
+        <string id="32126">TEST-1</string>
         <string id="32127">Test ssh connection</string>
         <string id="32128">Info</string>
         <string id="32129">Back</string>

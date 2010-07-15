@@ -61,7 +61,8 @@ Date : 07.14.2010 | Release : 0.6C-A10   | Author  : H.Weber | CVS:138
 Changes:
 
 - Changed logic behind the job-window because the lock-file deletion.
-- Addes ssh-command test.
+- Added ssh-command test inside expert-mode.
+- Addes transcode bluray confirmend inside exper-mode.
 
 Bugfixes:
 

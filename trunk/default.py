@@ -39,7 +39,7 @@ __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "07-14-2010"
 __version__ 		= "0.6C-ALPHA-10"
-__code_name__           = "Stars Wars Episode 1"
+__code_name__           = "Stars Wars Episode 2"
 __XBMC_Revision__ 	= "31504"
 __index_config__        = 50 
  
@@ -251,6 +251,36 @@ class GUIExpertWinClass(xbmcgui.Window):
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32092) ,menu)
+
+             if (choice == 0):
+                 Lock = OSCheckLock(__configuration__[2])
+                 if (__enable_bluray__ == 'true'):
+                     if (Lock == 0):
+                         GUIlog('menu bluray to mkv activated')
+                         dvd_info = xbmc.getDVDState()
+                         if (dvd_info == 4):
+                             BluState = OSCheckMedia("BLURAY")
+                             if (BluState == 2):
+                                     GUIInfo(0,__language__(33302)) 
+                             if (BluState == 1):
+                                     GUIInfo(0,__language__(33301))
+                             if (BluState == 0):
+                                 tracklist = []
+                                 tracklist = OSChapterBluray() 
+                                 if (tracklist[0] != 'none'):
+                                     tracklist = GUISelectList(__language__(33202),trackist)
+
+                                     # We go next here 
+
+                                 else:
+                                     GUIInfo(0,__language__(33304))
+                         else:
+                             GUIInfo(0,__language__(33309))
+                     else:        
+                         GUIInfo(0,__language__(33308))   
+                 else:
+                    GUIInfo(0,__language__(33303))    
+
              if (choice == 7):
                  state_ssh = OSCheckSSH()
                  if (state_ssh == 0):
@@ -370,10 +400,6 @@ class GUIMain01Class(xbmcgui.Window):
                                      if (tracklist[0] != 'none'):
                                          executeList = []      
                                          executeList = OSBlurayExecuteList()
-
-                                         # execute = GUISelectList(__language__(32150),executeList)
-                                         # tracklist = GUISelectList(__language__(33202),trackist)
-
                                          execstate =  OSBlurayTranscode() 
                                          if (execstate == 0):
                                              GUIInfo(2,__language__(33204))
