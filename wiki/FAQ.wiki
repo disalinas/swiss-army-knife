@@ -30,7 +30,7 @@
 
  * /dvdrip/iso          
  * /dvdrip/dvd         
- * dvdrip/blueray       
+ * dvdrip/bluray       
 
  * medibuntu is added to your /etc/apt/sources.list and the following software is installed
   
