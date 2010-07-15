@@ -116,6 +116,12 @@ Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)
 -----------------------------------------------------------------------------------------
 ===                            ==== 
   * No . As long makemkv remains beta there will allways be a key to onbtain here (http://www.makemkv.com/forum2/viewtopic.php?f=5&t=1053)
+=== ===
+===What is the default password for the Expert-Mode ?===
+-----------------------------------------------------------------------------------------
+===                            ==== 
+  * 1234
+
 
 
 
