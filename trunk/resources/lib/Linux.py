@@ -1400,3 +1400,33 @@ def OSGetStageText():
         return msg 
 
 #########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSCheckSSH                                #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# 1           Test failed    l                          # 
+# 0           Test successfull                          #
+#                                                       # 
+#########################################################
+def OSCheckSSH():
+
+    global __configLinux__
+    global __verbose__
+
+    OSRun( "echo 1 > " + __configLinux__[39],False,False) 
+
+    if (os.path.exists(__configLinux__[39])): 
+        return 0
+    else:
+        return 1 
+
+#########################################################
+

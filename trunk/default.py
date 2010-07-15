@@ -112,6 +112,7 @@ if system[0] == 'Linux':
    from Linux import OSDVDcopyToIso
    from Linux import OSRemoveLock
    from Linux import OSGetStageText
+   from Linux import OSCheckSSH
 else:
 
    # only Linux is supported by now ...
@@ -250,6 +251,13 @@ class GUIExpertWinClass(xbmcgui.Window):
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32092) ,menu)
+             if (choice == 7):
+                 state_ssh = OSCheckSSH()
+                 if (state_ssh == 0):
+                     GUIInfo(0,__language__(33218))   
+                 else:
+                     GUIInfo(2,__language__(33219)) 
+
              if (choice == 8): 
                  message = "Author  :  " + __author__ + "\nVersion :  " + __version__ 
                  GUIInfo(3,message)   
