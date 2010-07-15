@@ -23,6 +23,8 @@
 {{{
 /dev/sr0
 }}}
+
+Note : This file is used as a lock. 
 ==== =====
 ==== =====
 ==== =====
