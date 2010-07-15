@@ -19,7 +19,7 @@
  * Following user directorys are created if you run the script with *./setup.sh xbmc*.
 
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper
- * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/blueray
+ * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/bluray
 /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/dvd
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/log
  * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/progress
@@ -121,7 +121,10 @@ Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)
 -----------------------------------------------------------------------------------------
 ===                            ==== 
   * 1234
-
+===If I transcode a DVD do I have AC3 sound ?=
+-----------------------------------------------------------------------------------------
+===                            ==== 
+  * Yes , but only for the primary audio-language.The secound audio-language is downmixed to be faster with the transcoding.
 
 
 
