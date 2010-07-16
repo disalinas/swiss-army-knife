@@ -127,5 +127,16 @@ Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)
   * Yes , but only for the primary audio-language.The secound audio-language is downmixed to be faster with the transcoding.
 
 
+===I found a error. What should I do ?=
+-----------------------------------------------------------------------------------------
+===                            ==== 
+  * read the xbmc.log and make a copy for the error-ticket.
+  * Create a error-ticket. (http://code.google.com/p/swiss-army-knife/issues/list
+  * Tickets without a valid xbmc.log (and may other logs from the log-directory) wonna be set to invalid.
+
+  
+
+
+
 
  
