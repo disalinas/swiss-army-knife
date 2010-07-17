@@ -12,7 +12,7 @@
 #           - transcode bluray to matroska container    #
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
-# VERSION : 0.6C-A9                                     #
+# VERSION : 0.6C-A10                                    #
 # DATE    : 07-13-10                                    #
 # STATE   : Alpha 10                                    #
 # LICENCE : GPL 3.0                                     #
@@ -92,28 +92,32 @@ sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
 system = os.uname()
 if system[0] == 'Linux':
  
-   from Linux import OSConfiguration
-   from Linux import OSRun
-   from Linux import OSCheckMedia
-   from Linux import OSChapterBluray
-   from Linux import OSCleanTemp
-   from Linux import OSBlurayExecuteList 
-   from Linux import OSBlurayTranscode
-   from Linux import OSGetProgressVal 
-   from Linux import OSGetStagesCounter
-   from Linux import OSGetpids
-   from Linux import OSCheckContainerID
-   from Linux import OSCheckLock 
-   from Linux import OSKillProc
-   from Linux import OSGetJobState
-   from Linux import OSChapterDVD
-   from Linux import OSDVDExecuteList     
-   from Linux import OSDVDTranscode
-   from Linux import OSDVDcopyToIso
-   from Linux import OSRemoveLock
-   from Linux import OSGetStageText
-   from Linux import OSCheckSSH
-   from Linux import OSCheckAccess
+#   from Linux import OSConfiguration
+#   from Linux import OSRun
+#   from Linux import OSCheckMedia
+#   from Linux import OSChapterBluray
+#   from Linux import OSCleanTemp
+#   from Linux import OSBlurayExecuteList 
+#   from Linux import OSBlurayTranscode
+#   from Linux import OSGetProgressVal 
+#   from Linux import OSGetStagesCounter
+#   from Linux import OSGetpids
+#   from Linux import OSCheckContainerID
+#   from Linux import OSCheckLock 
+#   from Linux import OSKillProc
+#   from Linux import OSGetJobState
+#   from Linux import OSChapterDVD
+#   from Linux import OSDVDExecuteList     
+#   from Linux import OSDVDTranscode
+#   from Linux import OSDVDcopyToIso
+#   from Linux import OSRemoveLock
+#   from Linux import OSGetStageText
+#   from Linux import OSCheckSSH
+#   from Linux import OSCheckAccess
+#   from Linux import OSBlurayVolume
+#   from linux import OSBluAdd
+   
+   from linux import * 
 else:
 
    # only Linux is supported by now ...
@@ -124,6 +128,41 @@ else:
 
 
 
+
+#########################################################
+# Function  : GUIEditExportName                         #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# name        sugested name for export                  #
+#                                                       # 
+# Returns   :                                           #
+#                                                       #
+# name        name of export excluding any extension    #
+#                                                       #
+#########################################################
+def GUIEditExportName(name):
+
+    exit = True 
+    while (exit):
+          kb = xbmc.Keyboard('default', 'heading', True)
+          kb.setDefault(name)
+          kb.setHeading(__language__(33223))
+          kb.setHiddenInput(False)
+          kb.doModal()
+          if (kb.isConfirmed()):
+              name_confirmed  = kb.getText()
+              name_correct = name_confirmed.count(' ')
+              if (name_correct):
+                 GUIInfo(2,__language__(33224)) 
+              else: 
+                   name = name_confirmed
+                   exit = False
+          else:
+              GUIInfo(2,__language__(33225)) 
+    return(name)
+   
+#########################################################
 
 
 
@@ -148,13 +187,13 @@ def GUISelectDir():
               directory_2 =  directory_1[1:-1]
               path_correct = directory_2.count(' ')
               if (path_correct):
-                 GUIInfo(2,__language__(33221)) 
+                  GUIInfo(2,__language__(33221)) 
               else: 
-                 state = OSCheckAccess(directory_2)
-                 if (state == 0):
-                     exit = False
-                 else:
-                     GUIInfo(2,__language__(33222)) 
+                  state = OSCheckAccess(directory_2)
+                  if (state == 0):
+                      exit = False
+                  else:
+                      GUIInfo(2,__language__(33222)) 
     return(directory_2)
    
 #########################################################
@@ -310,9 +349,23 @@ class GUIExpertWinClass(xbmcgui.Window):
                                  tracklist = []
                                  tracklist = OSChapterBluray() 
                                  if (tracklist[0] != 'none'):
+                                     executeList = []      
 
+                                     executeList = OSBlurayExecuteList(False)
                                      track = GUISelectList(__language__(33202),tracklist)
                                      savedir = GUISelectDir() 
+                                     volname = OSBlurayVolume()
+                                     volname = GUIEditExportName(volname)
+
+                                     blurayparameters = [__configuration__[2],savedir,volname,str(track)]
+                                     OSBluAdd(blurayparameters)
+                   
+                                     execstate =  OSBlurayTranscode() 
+                                     if (execstate == 0):
+                                         GUIInfo(2,__language__(33204))
+                                     if (execstate == 1):
+                                         GUIInfo(0,__language__(33203))
+                                         __jobs__ = True
 
                                  else:
                                      GUIInfo(0,__language__(33304))
@@ -441,7 +494,7 @@ class GUIMain01Class(xbmcgui.Window):
                                      tracklist = OSChapterBluray() 
                                      if (tracklist[0] != 'none'):
                                          executeList = []      
-                                         executeList = OSBlurayExecuteList()
+                                         executeList = OSBlurayExecuteList(True)
                                          execstate =  OSBlurayTranscode() 
                                          if (execstate == 0):
                                              GUIInfo(2,__language__(33204))

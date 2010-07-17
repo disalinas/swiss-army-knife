@@ -27,7 +27,9 @@ By this new addon I changed a few things.
 2.) The code looks nicer .-)
 3.) The code is easyer to maintain.   
 4.) Subversion is now a important part of my work during the development of this 
-    addon .... (and saved my ass one time ;-)   )
+    addon .... (and saved my ass one time ;-))
+5.) For someone who wants to port the addon to windows or mac the work is easyer. 
+
 
 1.1 What are the functions this addon provides ? 
 

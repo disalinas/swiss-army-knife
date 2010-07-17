@@ -38,6 +38,8 @@ E_VOLUMEERROR=4
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script-video-ripper/log/bluray-error.log"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script-video-ripper/media/BR_GUI"
+OUTPUT="$HOME/.xbmc/userdata/addon_data/script-video-ripper/tmp/bluray-chapter"
+
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: bluray-chapter.sh p1"
@@ -57,6 +59,7 @@ fi
 REQUIRED_TOOLS=`cat << EOF
 awk
 lynx
+netstat
 nohup
 grep
 sed
@@ -114,18 +117,31 @@ if [ $# -eq 0 ]; then
 fi
 
 
-
-# We don like noise about terminated jobs
+# We do not like noise about terminated jobs
 # But now it works like I would .......
 
 (
 makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
-) > /dev/null 2>&1
+) > $OUTPUT 2>&1
 
 echo
 echo "INFO generating track-list ... please be patient."
 echo
-sleep 40.0
+
+
+# Wait until webserver is ready
+
+LOOP=1
+while [ $LOOP -eq '1'  ];
+do
+    SUCCESS=$(netstat -lt | grep 51000)
+    if [ -n "$SUCCESS" ] ; then
+        echo
+        echo INFO webserver on port 51000 ready
+        echo
+        LOOP=0
+    fi
+done
 
 lynx --dump  http://127.0.0.1:51000/web/titles > ~/.xbmc/userdata/addon_data/script-video-ripper/bluray/brmain.000
 max=`expr $chapter - 1`

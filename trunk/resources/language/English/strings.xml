@@ -14,11 +14,11 @@
         <string id="32050">Script Devices</string> 
         <string id="32051">Default dvd-device</string>
         <string id="32052">Default bluray-device</string>   
-        <string id="32053">Used Directorys</string> 
+        <string id="32053">Used directorys</string> 
         <string id="32054">default iso-rip-directory</string> 
         <string id="32055">default dvd-transcode-directory</string> 
         <string id="32056">default bluray mkv-directory</string>
-        <string id="32057">Various Settings</string> 
+        <string id="32057">Various settings</string> 
         <string id="32058">Default ssh-command</string> 
         <string id="32059">Default 1. audio language (dvd)</string> 
         <string id="32060">Default 2. audio language (dvd)</string> 
@@ -101,10 +101,8 @@
         <string id="32172">Remove lock-file</string>     
         <string id="32173">Back</string>
         <string id="32174">Stage : </string>
-  
-
-
-
+        <string id="32175"> </string>
+        <string id="32176"> </string>
         <string id="32177">There are no active jobs</string>
 
         <!--               --> 
@@ -130,10 +128,13 @@
         <string id="33217"> </string>
         <string id="33218">ssh-test connection was successfull</string>
         <string id="33219">ssh-test connection failed</string>
-        <string id="33220">Please select direcory</string>
+        <string id="33220">Please select directory to save </string>
         <string id="33221">Direcory-name contains spaces</string>
         <string id="33222">Selected direcory is not writeable</string>
- 
+        <string id="33223">Export-name without extension</string>
+        <string id="33224">Export-name contain not valid chars</string> 
+        <string id="33225">You must confirm a name</string>    
+     
         <!--               -->
         <!-- Error         -->
         <!--               -->

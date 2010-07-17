@@ -55,7 +55,7 @@ Bugfixes:
 - error inside OSRemoveLock by startup (fixed).
 - GUIInfo had a few refrences with the old parameter-count 1
 ---------------------------------------------------------------------------------------------------
-Date : 07.14.2010 | Release : 0.6C-A10   | Author  : H.Weber | CVS:138
+Date : 07.14.2010 | Release : 0.6C-A10   | Author  : H.Weber | CVS:138-153
 ---------------------------------------------------------------------------------------------------
 
 Changes:
@@ -64,12 +64,18 @@ Changes:
 - Added ssh-command test inside expert-mode.
 - Addes transcode bluray confirmend inside exper-mode.
 - Added tracklist for bluray
-- Addes selection for destination-directory
+- Added selection for destination-directory
+- Added edit export-name
+- Send back modified bluray paramters to OS-Part
+- Added a parameter to OSBlurayExecuteList
 
 Bugfixes:
 
 - After a sucessful process the directory progress will be erased.
   This change was made inside all shell-scripts.
+- Fixed type-error inside OSRemoveLock (fixed)
+- By a few runs with bluray-chapter.sh I had sometimes not the 
+  correct tracklist from bluray. (fixed)
  
 ---------------------------------------------------------------------------------------------------
 

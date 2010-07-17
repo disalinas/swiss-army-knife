@@ -512,16 +512,19 @@ def OSCleanTemp():
 
 
 #########################################################
-# Function  : OSBlurayExecuteLis                        #
+# Function  : OSBlurayExecuteList                       #
 #########################################################
 # Parameter : none                                      #
+#                                                       #
+# auto_mode   Boolean : if true do set the parameters   #
+#             for the execution                         # 
 #                                                       #
 # Returns   :                                           #
 #                                                       #
 # GUIList     List of all parameters for transcoding    #
 #                                                       #
 #########################################################
-def OSBlurayExecuteList():
+def OSBlurayExecuteList(auto_mode):
 
     global __configLinux__ 
     global __exec_bluray__
@@ -543,15 +546,18 @@ def OSBlurayExecuteList():
 
        # We prepare the arguments for bluray-transcode.sh 
 
-       __exec_bluray__.append(tmp[0])
-       __exec_bluray__.append(__configLinux__[5])
-       __exec_bluray__.append(tmp[3])
-       __exec_bluray__.append(tmp[1])
 
+       if (auto_mode == True):
+           OSlog ("Bluray-paramter set for automode")  
+           __exec_bluray__.append(tmp[0])
+           __exec_bluray__.append(__configLinux__[5])
+           __exec_bluray__.append(tmp[3])
+           __exec_bluray__.append(tmp[1])
+       else:
+           OSlog ("Bluray-paramter not set for automode")   
 
        # Add device 
        GUIList.append(__language__(32151) + tmp[0])
-
 
        # Add track
        GUIList.append(__language__(32152) + tmp[1])
@@ -562,8 +568,9 @@ def OSBlurayExecuteList():
        # Add length
        GUIList.append(__language__(32154) + tmp[2])
  
-       # Add name including extension mkv
-       GUIList.append(__language__(32155) + tmp[3] + ".mkv")
+       # Add name excluding extension mkv
+
+       GUIList.append(__language__(32155) + tmp[3])
     
        # Add accept and cancel button 
        GUIList.append(__language__(32156))
@@ -578,6 +585,15 @@ def OSBlurayExecuteList():
        time.sleep(1)
        xbmc.executebuiltin("Dialog.Close(busydialog)")
        GUIList.append("none")
+
+
+       # Array-Index :
+       # [0] bluray-device 
+       # [1] track 
+       # [2] audio 
+       # [3] length 
+       # [4] name of mkv excluding extenstion mkv
+
        return GUIList
 
 #########################################################
@@ -609,9 +625,12 @@ def OSBlurayTranscode():
 
     if (__verbose__ == 'true'):
         OSlog("bluray-transcode.sh command ready to start")
+        OSlog ("Bluray-paramter [0] : " + __exec_bluray__[0])  
+        OSlog ("Bluray-paramter [1] : " + __exec_bluray__[1]) 
+        OSlog ("Bluray-paramter [2] : " + __exec_bluray__[2])
+        OSlog ("Bluray-paramter [3] : " + str(__exec_bluray__[3]))      
 
-
-    OSRun("br2.sh " +  __exec_bluray__[0] + " " + __exec_bluray__[1] + " " + __exec_bluray__[2] + " " + __exec_bluray__[3],True,False)
+    OSRun("br2.sh " +  __exec_bluray__[0] + " " + __exec_bluray__[1] + " " + __exec_bluray__[2] + " " +  __exec_bluray__[3],True,False)
 
 
     if (__verbose__ == 'true'): 
@@ -1295,7 +1314,8 @@ def OSRemoveLock():
         for item in PidList:
             OSlog("PID-list:" + str(item)) 
             try: 
-                os.kill(item,0)
+                pid = int(item)
+                os.kill(pid,0)
                 running = True
             except OSError, err:
                 running = False    
@@ -1463,3 +1483,57 @@ def OSCheckAccess(dir):
 
 #########################################################
 
+
+
+
+
+#########################################################
+# Function  : OSBlurayVolume                            #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# Volname     Volname of the inserted bluray            #
+#                                                       #
+#########################################################
+def OSBlurayVolume():
+
+    global __configLinux__ 
+    global __exec_bluray__
+    global __verbose__
+
+    if (os.path.exists(__configLinux__[41])): 
+        BluRayVOl  = open(__configLinux__[41],'r')
+        name = BluRayVOl.readline()
+        name.strip()
+        BluRayVOl.close()       
+        return (name)
+    else:
+         return("unknown")
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSBluAdd                                  #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# list        list with all parameters for execution    #
+#                                                       #
+# Returns   : none                                      #
+#                                                       #
+#########################################################
+def OSBluAdd(list):
+ 
+    global __exec_bluray__
+ 
+    __exec_bluray__ = list
+
+    return 0 
+
+#########################################################
