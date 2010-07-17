@@ -60,9 +60,9 @@
         <!--               -->
 
         <string id="32120">Transcode BluRay to mkv (confirmend)</string>
-        <string id="32121"> </string>
-        <string id="32122"> </string>
-        <string id="32123"> </string>
+        <string id="32121">Transcode DVD (confirmed)</string>
+        <string id="32122">Ripp DVD to ISO (confirmed)</string>
+        <string id="32123">Rescue-copy DVD to iso (confirmed)</string>
         <string id="32124"> </string>      
         <string id="32125"> </string>
         <string id="32126"> </string>

@@ -441,20 +441,23 @@ def OSChapterBluray():
    
     WCycles = 20 
     Waitexit = True 
+    OSlog("Waiting until track-files exist ... WCycles:=" + str(WCycles))
     while (Waitexit):  
            if (os.path.exists(__configLinux__[42])):  
                if (__verbose__ == 'true'):
-                   OSlog("track-files exist ...")
+                   OSlog("track-files exist ... WCycles:=" + str(WCycles))
                Waitexit = False 
            else:
-               WCycles = WCycles + 3
+               WCycles = WCycles + 1
                time.sleep(3)
+           time.sleep(1)
            if (WCycles >= 90):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout 90 secounds reached for track-file  ...")
+                   OSlog("Timeout 90 secounds reached for track-file  ...WCycles:=" + str(WCycles))
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                tracklist.append('none') 
-               return tracklist       
+               return tracklist     
+        
  
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     
@@ -638,7 +641,7 @@ def OSBlurayTranscode():
  
     # Now we do loop until the PID-file exists
 
-    time.sleep(30) 
+    time.sleep(20) 
    
     WCycles = 20 
     Waitexit = True 
@@ -648,8 +651,8 @@ def OSBlurayTranscode():
                    OSlog("pid-file exist ...")
                Waitexit = False 
            else:
-               WCycles = WCycles + 3
-               time.sleep(3)
+               WCycles = WCycles + 1
+           time.sleep(1)
            if (WCycles >= 50):
                if (__verbose__ == 'true'):
                    OSlog("Timeout 50 secounds reached for pid-file  ...")
@@ -1309,7 +1312,7 @@ def OSRemoveLock():
     # The Lock-file should only removed in the case
     # a process died unexpected ...
 
-    if (PidList != 'none' ):
+    if (PidList[0] != 'none' ):
         x = 0 
         for item in PidList:
             OSlog("PID-list:" + str(item)) 
@@ -1321,6 +1324,8 @@ def OSRemoveLock():
                 running = False    
             if (running):
                 return 0
+    else:
+        return 0  
 
     if (os.path.exists(__configLinux__[45])):
         os.remove(__configLinux__[45])
