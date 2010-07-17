@@ -437,7 +437,7 @@ def OSChapterBluray():
     # Without the list of track we can not select inside the list .....
     # If someone knows a bettey way to get this list faster ... send me pm .-)
 
-    time.sleep(20) 
+    time.sleep(35) 
    
     WCycles = 20 
     Waitexit = True 
@@ -450,7 +450,7 @@ def OSChapterBluray():
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 90):
-               if (verbose == 'true'):
+               if (__verbose__ == 'true'):
                    OSlog("Timeout 90 secounds reached for track-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                tracklist.append('none') 
