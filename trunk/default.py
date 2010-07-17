@@ -113,6 +113,7 @@ if system[0] == 'Linux':
    from Linux import OSRemoveLock
    from Linux import OSGetStageText
    from Linux import OSCheckSSH
+   from Linux import OSCheckAccess
 else:
 
    # only Linux is supported by now ...
@@ -120,6 +121,46 @@ else:
    sys.exit 
 
 #########################################################
+
+
+
+
+
+
+
+#########################################################
+# Function  : GUISelectDir                              #
+#########################################################
+# Parameter : none                                      #
+#                                                       # 
+# Returns   :                                           #
+#                                                       #
+# Selected directory / without spaces / writeable       #
+#                                                       #
+#########################################################
+def GUISelectDir():
+
+    exit = True 
+    while (exit):
+          dialog = xbmcgui.Dialog()
+          directory_1 = dialog.browse(0,__language__(33220), 'files', '', True, False, '//')
+          if (directory_1 != '//'):               
+              directory_2 =  directory_1[1:-1]
+              path_correct = directory_2.count(' ')
+              if (path_correct):
+                 GUIInfo(2,__language__(33221)) 
+              else: 
+                 state = OSCheckAccess(directory_2)
+                 if (state == 0):
+                     exit = False
+                 else:
+                     GUIInfo(2,__language__(33222)) 
+    return(directory_2)
+   
+#########################################################
+
+
+
 
 
 
@@ -135,6 +176,7 @@ else:
 # Returns   : none                                      #
 #########################################################
 def GUIlog(msg):
+
     xbmc.output("[%s]: [GUIlog] %s\n" % ("swiss-army-knife",str(msg))) 
     return (0)
 
@@ -217,8 +259,8 @@ def GUISelectList(InfoText,SelectList):
 # Returns   : none                                      #
 #########################################################
 def GUIInfo(Selector,Info):
-    dialog = xbmcgui.Dialog()
 
+    dialog = xbmcgui.Dialog()
     title = __language__(33214 + Selector)
     selected = dialog.ok(title,Info)
     return 0
@@ -268,9 +310,9 @@ class GUIExpertWinClass(xbmcgui.Window):
                                  tracklist = []
                                  tracklist = OSChapterBluray() 
                                  if (tracklist[0] != 'none'):
-                                     tracklist = GUISelectList(__language__(33202),trackist)
 
-                                     # We go next here 
+                                     track = GUISelectList(__language__(33202),tracklist)
+                                     savedir = GUISelectDir() 
 
                                  else:
                                      GUIInfo(0,__language__(33304))

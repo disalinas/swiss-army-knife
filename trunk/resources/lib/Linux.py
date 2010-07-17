@@ -1430,3 +1430,36 @@ def OSCheckSSH():
 
 #########################################################
 
+
+
+
+
+
+
+#########################################################
+# Function  : OSCheckAccess                             #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# dir         directory to check for read / write       #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# 1           Directory is not writeable                # 
+# 0           Directory exists and is writeable         #
+#                                                       # 
+#########################################################
+def OSCheckAccess(dir):
+
+    global __verbose__
+
+    if (os.path.exists(dir)):
+        if (os.access(dir,os.W_OK) == False):
+           return 1 
+        else: 
+           return 0        
+    else: 
+        return 1
+
+#########################################################
+

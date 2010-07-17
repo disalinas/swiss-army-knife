@@ -63,6 +63,8 @@ Changes:
 - Changed logic behind the job-window because the lock-file deletion.
 - Added ssh-command test inside expert-mode.
 - Addes transcode bluray confirmend inside exper-mode.
+- Added tracklist for bluray
+- Addes selection for destination-directory
 
 Bugfixes:
 
