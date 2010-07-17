@@ -125,7 +125,7 @@ apt-get install mencoder
 
 # dd
 
-apt-get install netcat original-awk dvdauthor mkisofs
+apt-get install netcat original-awk dvdauthor mkisofs gddrescue
 
 
 # growisofs

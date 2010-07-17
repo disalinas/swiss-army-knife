@@ -83,6 +83,9 @@ Date : 07.17.2010 | Release : 0.6C-A10   | Author  : H.Weber | CVS:154-
 
 Changes:
 
+- Added Transcode inside expert-mode.
+- Added ISO copy inside expert-mode.
+- Added Rescue-copy inside expert-mode. 
 
 Bugfixes:
 

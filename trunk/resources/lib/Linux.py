@@ -1108,7 +1108,10 @@ def OSDVDTranscode():
 #########################################################
 # Function  : OSDVDExecuteList                          #
 #########################################################
-# Parameter : none                                      #
+# Parameter :                                           #
+#                                                       #
+# auto_mode   Boolean : if true do set the parameters   #
+#             for the execution                         # 
 #                                                       #
 # Returns   :                                           # 
 #                                                       #
@@ -1116,7 +1119,7 @@ def OSDVDTranscode():
 #             execution from the GUI                    #   
 #                                                       # 
 #########################################################
-def OSDVDExecuteList():
+def OSDVDExecuteList(auto_mode):
 
     global __configLinux__ 
     global __exec_dvd__
@@ -1136,37 +1139,35 @@ def OSDVDExecuteList():
            tmp.append(line)
        GUIFile.close
 
-       # We prepare the arguments for dvd-handbrake.sh 
+       if (auto_mode == True):
 
-       # Device  
-       __exec_dvd__.append(tmp[0])
+           # We prepare the arguments for dvd-handbrake.sh 
 
-       # DVD transcode directory
-       __exec_dvd__.append(__configLinux__[4])
+           # Device  
+           __exec_dvd__.append(tmp[0])
 
-       # name 
-       __exec_dvd__.append(tmp[1])
+           # DVD transcode directory
+           __exec_dvd__.append(__configLinux__[4])
 
-       # track 
-       __exec_dvd__.append(tmp[2])
+           # name 
+           __exec_dvd__.append(tmp[1])
 
-       # default language 
-       __exec_dvd__.append(tmp[3])
+           # track 
+           __exec_dvd__.append(tmp[2])
 
-       if (tmp[4] != 'none'):
-          if (__verbose__ == 'true'):
-             OSlog("dvd-handbrake.sh Transcode parameter add : " + "-a " + tmp[4])
-          __exec_dvd__.append("-a " + tmp[4])
+           # default language 
+           __exec_dvd__.append(tmp[3])
 
-       if (tmp[5] != 'none'):
-          if (__verbose__ == 'true'):
-             OSlog("dvd-handbrake.sh Transcode parameter add : " + "-s " + tmp[5])
-          __exec_dvd__.append("-s " + tmp[5])
+           if (tmp[4] != 'none'):
+               if (__verbose__ == 'true'):
+                   OSlog("dvd-handbrake.sh Transcode parameter add : " + "-a " + tmp[4])
+                   __exec_dvd__.append("-a " + tmp[4])
 
-
-       # If there is someone who knows a better trick to
-       # get the indexes, please give me a pm 
-
+           if (tmp[5] != 'none'):
+               if (__verbose__ == 'true'):
+                   OSlog("dvd-handbrake.sh Transcode parameter add : " + "-s " + tmp[5])
+                   __exec_dvd__.append("-s " + tmp[5])
+ 
        x = 0 
        parameters = 0 
        for number in __exec_dvd__:
@@ -1175,7 +1176,6 @@ def OSDVDExecuteList():
                x = x + 1      
            parameters = parameters + 1
            
-
        if (__verbose__ == 'true'): 
            OSlog("dvd-handbrake.sh is using : " + str(parameters) + " parameters")      
 

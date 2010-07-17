@@ -376,6 +376,30 @@ class GUIExpertWinClass(xbmcgui.Window):
                  else:
                     GUIInfo(0,__language__(33303))    
 
+             if (choice == 1):
+                 Lock = OSCheckLock(__configuration__[2])
+                 if (Lock == 0):
+                     dvd_info = xbmc.getDVDState()
+                     if (dvd_info == 4):
+                         DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 2):
+                             GUIInfo(0,__language__(33302)) 
+                         if (DVDState == 1):
+                             GUIInfo(0,__language__(33311))
+                         if (DVDState == 0):
+                             tracklist = []
+                             tracklist = OSChapterDVD()
+                             if (tracklist[0] != 'none'):
+                                 executeList = []
+                                 executeList = OSDVDExecuteList(False)   
+                                 track = GUISelectList(__language__(33207),tracklist)
+                             else:
+                                 GUIInfo(0,__language__(33312)) 
+                     else:
+                         GUIInfo(0,__language__(33309))
+                 else:
+                     GUIInfo(0,__language__(33308))    
+
              if (choice == 7):
                  state_ssh = OSCheckSSH()
                  if (state_ssh == 0):
@@ -525,8 +549,7 @@ class GUIMain01Class(xbmcgui.Window):
                                  tracklist = OSChapterDVD()
                                  if (tracklist[0] != 'none'):
                                      executeList = []
-                                     executeList = OSDVDExecuteList()   
-                                     # execute = GUISelectList(__language__(32150),executeList)
+                                     executeList = OSDVDExecuteList(True)   
                                      execstate =  OSDVDTranscode() 
                                      if (execstate == 0):
                                          GUIInfo(2,__language__(33209))
