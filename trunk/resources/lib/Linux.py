@@ -184,6 +184,8 @@ def OSConfiguration(index):
     config[45] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/JOB'
     config[46] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_TRACKS'
     config[47] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/DVD_GUI' 
+    config[48] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/ADVD' 
+    config[49] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script-video-ripper/media/SDVD' 
   
     # With a list the delete of multiple files is very easy ;-) 
 
@@ -203,6 +205,11 @@ def OSConfiguration(index):
     __temp_files__.append(config[44])
     __temp_files__.append(config[45])
     __temp_files__.append(config[46])
+    __temp_files__.append(config[47])
+    __temp_files__.append(config[48])
+    __temp_files__.append(config[49])
+
+
 
 
     # Do log all settings inside xbmc.log 
@@ -244,7 +251,9 @@ def OSConfiguration(index):
         OSlog("Configuration 44 reading : " + config[44])
         OSlog("Configuration 45 reading : " + config[45])
         OSlog("Configuration 46 reading : " + config[46])
-        OSlog("Configuration 47 reading : " + config[47])    
+        OSlog("Configuration 47 reading : " + config[47]) 
+        OSlog("Configuration 48 reading : " + config[48])
+        OSlog("Configuration 49 reading : " + config[49])           
 
     # Store configuration inside modul global list
 
@@ -1301,12 +1310,8 @@ def OSRemoveLock():
     global __configLinux__
     global __verbose__
 
-    # In the case the provided pid over the file process-ids
-    # are running we should display a BIG-Warning or even not 
-    # kill the lock-file.
 
-    PidList = []
- 
+    PidList = [] 
     PidList = OSGetpids()
 
     # The Lock-file should only removed in the case
@@ -1381,12 +1386,6 @@ def OSGetStageText():
                 line.strip()
                 stagesdescription.append(line)
                 StageDesc.close()
-
-            # Until version 0.6C A8 we had read direct the text from 
-            # the shell-scripts but this behavior has one little failure.
-            # The submitted strings from the scripts are not translated if
-            # you plan to run this addon with other language than english.
-            # Now the strings reside in strings.xml and can be translated.
 
             if (Stages >= 2):
                 StageDesc = open(__configLinux__[36],'r') 
@@ -1515,7 +1514,7 @@ def OSBlurayVolume():
         BluRayVOl.close()       
         return (name)
     else:
-         return("unknown")
+        return("unknown")
 
 #########################################################
 
@@ -1540,5 +1539,132 @@ def OSBluAdd(list):
     __exec_bluray__ = list
 
     return 0 
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSDVDAudioTrack                           #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# track	      track-number to get audio (1-X)           #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# audio       list with tracks or none                  # 
+#                                                       # 
+#########################################################
+def OSDVDAudioTrack(track):
+
+    global __configLinux__ 
+    global __verbose__
+
+    audio = []
+
+    OSlog("dvd4.sh command ready to start")
+    OSlog("dvd4.sh para1=[" + __configLinux__[1] + "] para2=[" + str(track) + "]")
+
+    OSRun("dvd4.sh " +  __configLinux__[1]  + " " + str(track),True,True)
+    time.sleep(2)
+    if (os.path.exists(__configLinux__[48])): 
+        ListF = open(__configLinux__[48],'r')
+        OSlog("Here I do pass in my code and the for loop should run ")
+        for line in ListF.readlines():
+            line = line.strip()
+            audio.append(line)
+            OSlog("OSReadList data to add :" + line)
+        OSlog("For loop passed")  
+        OSlog("OSReadList file-close")
+        ListF.close()
+
+        index = len(audio)
+        if (index == 0):
+            OSlog("audio list is empty !!!!!!")
+            audio.append('none')
+            return (audio)
+        else:
+            return (audio)   
+    else:
+        OSlog("dvd-audio tracks could not be read !! :" + __configLinux__[48])
+        audio.append('none')
+        return (audio)
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSDVDSubTrack                             #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# track	      track-number to get audio (1-X)           #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# subs        list with tracks or none                  # 
+#                                                       # 
+#########################################################
+def OSDVDSubTrack(track):
+
+    global __configLinux__ 
+    global __verbose__
+
+    subs = []
+
+    if (os.path.exists(__configLinux__[49])): 
+        SubFile = open(__configLinux__[49],'r')
+        for line in SubFile.readline():
+            line = line.strip()
+            subs.append(line)
+        SubFile.close()
+        return subs 
+    else:
+        subs.append('none')
+        return subs
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSReadList                                #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# file        file to read                              #
+#                                                       #
+# Returns   :                                           # 
+#                                                       #
+# data        list with all etrys from file or 'none'   # 
+#                                                       # 
+#########################################################
+def OSReadList(file):
+
+    data = []
+
+    OSlog("OSReadList check file-exists :" + file)
+
+    if (os.path.exists(file)): 
+        OSlog("OSReadList file-exists :" + file)
+        ListF = open(file,'r')
+        for line in ListF.readline():
+            line = line.strip()
+            data.append(line)
+            OSlog("OSReadList data to add :" + line)
+        OSlog("OSReadList file-close :" + file)
+        ListF.close()  
+        return (data) 
+    else:
+        data.append('none')
+        return (data)
 
 #########################################################

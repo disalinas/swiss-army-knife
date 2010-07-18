@@ -133,8 +133,11 @@
         <string id="33222">Selected direcory is not writeable</string>
         <string id="33223">Export-name without extension</string>
         <string id="33224">Export-name contain not valid chars</string> 
-        <string id="33225">You must confirm a name</string>    
-     
+        <string id="33225">You must confirm a name</string> 
+        <string id="33226">Please select 1. audio-language</string>
+        <string id="33227">Would you like to add a 2. audio-language ?</string> 
+        <string id="33228">Would you like to use subtitles ?</string>   
+    
         <!--               -->
         <!-- Error         -->
         <!--               -->
@@ -150,6 +153,8 @@
         <string id="33309">Device is not ready !</string>
         <string id="33310">Job could no be killed</string>  
         <string id="33311">Inserted disc is not a DVD-Disc</string>    
-        <string id="33312">DVD-chapters could not be read</string>       
+        <string id="33312">DVD-chapters could not be read</string>  
+        <string id="33313">Problem with generated audio-tracklist</string> 
+        <string id="33314">Problem with generated subtitle-tracklist</string>    
 
  </strings>

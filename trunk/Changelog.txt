@@ -86,11 +86,13 @@ Changes:
 - Added Transcode inside expert-mode.
 - Added ISO copy inside expert-mode.
 - Added Rescue-copy inside expert-mode. 
+- Added shell-script dvd-atrack.sh
 
 Bugfixes:
 
 - Secound error inside OSRemoveLock. (fixed)
 - Timeout Value for Bluray fixed.
+- problem with reading track list audio and subtitle (fixed)
 
 ---------------------------------------------------------------------------------------------------
 

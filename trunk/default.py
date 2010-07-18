@@ -391,8 +391,41 @@ class GUIExpertWinClass(xbmcgui.Window):
                              tracklist = OSChapterDVD()
                              if (tracklist[0] != 'none'):
                                  executeList = []
-                                 executeList = OSDVDExecuteList(False)   
+                                 audio1 = []
+                                 audio2 = []
+                                 sub = []   
+                                 executeList = OSDVDExecuteList(False)
+                                    
                                  track = GUISelectList(__language__(33207),tracklist)
+                                 track = track + 1
+
+                                 GUIlog("Ready to start dvd4.sh")
+                                 audio1 = OSDVDAudioTrack(track)
+                                 GUIlog("dvd4.sh executed")
+
+                                 if (audio1[0] != 'none'):
+                                     aselect1 = GUISelectList(__language__(33226),audio1)
+
+                                     dialog = xbmcgui.Dialog()
+                                     title = __language__(33217)
+                                     question = __language__(33227)
+                                     selected = dialog.yesno(title, question)
+                                     if (selected):
+                                         audio2 = OSDVDGetAudioTrack(track)
+                                     dialog = xbmcgui.Dialog()
+                                     title = __language__(33217)
+                                     question = __language__(33228)
+                                     selected = dialog.yesno(title, question)
+                                     if (selected):
+                                         sub = OSDVDGetSubTrack(track)
+                                         if (sub[0] != 'none'):
+                                             print ready  
+                                         else:
+                                             GUIInfo(2,__language__(33314)) 
+                                     else: 
+                                          print ready 
+                                 else:
+                                     GUIInfo(2,__language__(33313)) 
                              else:
                                  GUIInfo(0,__language__(33312)) 
                      else:
