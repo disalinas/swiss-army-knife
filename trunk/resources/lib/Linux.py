@@ -294,7 +294,8 @@ def OSRun(command,backg,busys):
 
 
     sshlog ="echo \"" + command + "\" >> " + __configLinux__[38]
-    tatus = os.system("%s" % (sshlog))
+    status = os.system("%s" % (sshlog))
+
     if (__verbose__ == 'true'):
         OSlog("Command to log inside ssh:" + sshlog)
         OSlog ("OSRun start")
@@ -1569,15 +1570,13 @@ def OSDVDAudioTrack(track):
     OSlog("dvd4.sh para1=[" + __configLinux__[1] + "] para2=[" + str(track) + "]")
 
     OSRun("dvd4.sh " +  __configLinux__[1]  + " " + str(track),True,True)
-    time.sleep(2)
+    time.sleep(4)
     if (os.path.exists(__configLinux__[48])): 
         ListF = open(__configLinux__[48],'r')
-        OSlog("Here I do pass in my code and the for loop should run ")
         for line in ListF.readlines():
             line = line.strip()
             audio.append(line)
             OSlog("OSReadList data to add :" + line)
-        OSlog("For loop passed")  
         OSlog("OSReadList file-close")
         ListF.close()
 
@@ -1608,7 +1607,7 @@ def OSDVDAudioTrack(track):
 #                                                       #
 # Returns   :                                           # 
 #                                                       #
-# subs        list with tracks or none                  # 
+# sub         list with tracks or none                  # 
 #                                                       # 
 #########################################################
 def OSDVDSubTrack(track):
@@ -1616,17 +1615,26 @@ def OSDVDSubTrack(track):
     global __configLinux__ 
     global __verbose__
 
-    subs = []
+    sub = []
 
     if (os.path.exists(__configLinux__[49])): 
         SubFile = open(__configLinux__[49],'r')
-        for line in SubFile.readline():
+        for line in SubFile.readlines():
             line = line.strip()
-            subs.append(line)
+            sub.append(line)
+            OSlog("OSReadList data to add :" + line)
+        OSlog("OSReadList file-close")
         SubFile.close()
-        return subs 
+
+        index = len(sub)
+        if (index == 0):
+            OSlog("subtitle list is empty !!!!!!")
+            sub.append('none')
+            return (sub)
+        else:
+            return (sub)   
     else:
-        subs.append('none')
+        sub.append('none')
         return subs
 
 #########################################################
@@ -1635,36 +1643,4 @@ def OSDVDSubTrack(track):
 
 
 
-#########################################################
-# Function  : OSReadList                                #
-#########################################################
-# Parameter :                                           #
-#                                                       #
-# file        file to read                              #
-#                                                       #
-# Returns   :                                           # 
-#                                                       #
-# data        list with all etrys from file or 'none'   # 
-#                                                       # 
-#########################################################
-def OSReadList(file):
-
-    data = []
-
-    OSlog("OSReadList check file-exists :" + file)
-
-    if (os.path.exists(file)): 
-        OSlog("OSReadList file-exists :" + file)
-        ListF = open(file,'r')
-        for line in ListF.readline():
-            line = line.strip()
-            data.append(line)
-            OSlog("OSReadList data to add :" + line)
-        OSlog("OSReadList file-close :" + file)
-        ListF.close()  
-        return (data) 
-    else:
-        data.append('none')
-        return (data)
-
-#########################################################
+#

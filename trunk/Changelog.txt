@@ -87,12 +87,15 @@ Changes:
 - Added ISO copy inside expert-mode.
 - Added Rescue-copy inside expert-mode. 
 - Added shell-script dvd-atrack.sh
+- Addes shell-script dvd-rescue.sh 
 
 Bugfixes:
 
 - Secound error inside OSRemoveLock. (fixed)
 - Timeout Value for Bluray fixed.
 - problem with reading track list audio and subtitle (fixed)
+- Testing addon against Dharma-freezed code.
+- fixed a few small errors on the way to ALPHA-10 
 
 ---------------------------------------------------------------------------------------------------
 

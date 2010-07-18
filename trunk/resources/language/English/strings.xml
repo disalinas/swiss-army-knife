@@ -82,16 +82,6 @@
         <string id="32153">transcoding pass 2</string>
         <string id="32154">copy dvd to iso-file</string>
 
-
-
- 
-
-
-
-
-
-
-
         <!--                --> 
         <!-- Joblist Window -->
         <!--                -->
@@ -132,11 +122,13 @@
         <string id="33221">Direcory-name contains spaces</string>
         <string id="33222">Selected direcory is not writeable</string>
         <string id="33223">Export-name without extension</string>
-        <string id="33224">Export-name contain not valid chars</string> 
+        <string id="33224">Export-name contains not valid chars</string> 
         <string id="33225">You must confirm a name</string> 
-        <string id="33226">Please select 1. audio-language</string>
-        <string id="33227">Would you like to add a 2. audio-language ?</string> 
-        <string id="33228">Would you like to use subtitles ?</string>   
+        <string id="33226">Please select primary audio-language</string>
+        <string id="33227">Would you like to add a secound audio-language ?</string> 
+        <string id="33228">Would you like to use subtitles ?</string>  
+        <string id="33229">Please select secoundary audio-language</string> 
+        <string id="33230">Please select subtitle-track to use</string> 
     
         <!--               -->
         <!-- Error         -->

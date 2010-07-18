@@ -40,7 +40,7 @@ __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "07-14-2010"
 __version__ 		= "0.6C-ALPHA-10"
 __code_name__           = "Stars Wars Episode 2"
-__XBMC_Revision__ 	= "31504"
+__XBMC_Revision__ 	= "31953"
 __index_config__        = 50 
  
 
@@ -91,36 +91,13 @@ sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
 
 system = os.uname()
 if system[0] == 'Linux':
- 
-#   from Linux import OSConfiguration
-#   from Linux import OSRun
-#   from Linux import OSCheckMedia
-#   from Linux import OSChapterBluray
-#   from Linux import OSCleanTemp
-#   from Linux import OSBlurayExecuteList 
-#   from Linux import OSBlurayTranscode
-#   from Linux import OSGetProgressVal 
-#   from Linux import OSGetStagesCounter
-#   from Linux import OSGetpids
-#   from Linux import OSCheckContainerID
-#   from Linux import OSCheckLock 
-#   from Linux import OSKillProc
-#   from Linux import OSGetJobState
-#   from Linux import OSChapterDVD
-#   from Linux import OSDVDExecuteList     
-#   from Linux import OSDVDTranscode
-#   from Linux import OSDVDcopyToIso
-#   from Linux import OSRemoveLock
-#   from Linux import OSGetStageText
-#   from Linux import OSCheckSSH
-#   from Linux import OSCheckAccess
-#   from Linux import OSBlurayVolume
-#   from linux import OSBluAdd
    
-   from linux import * 
+   from linux import *
+ 
 else:
 
    # only Linux is supported by now ...
+   # help is welcome .. 
 
    sys.exit 
 
@@ -377,6 +354,9 @@ class GUIExpertWinClass(xbmcgui.Window):
                     GUIInfo(0,__language__(33303))    
 
              if (choice == 1):
+
+                 selected_done = False
+ 
                  Lock = OSCheckLock(__configuration__[2])
                  if (Lock == 0):
                      dvd_info = xbmc.getDVDState()
@@ -411,19 +391,22 @@ class GUIExpertWinClass(xbmcgui.Window):
                                      question = __language__(33227)
                                      selected = dialog.yesno(title, question)
                                      if (selected):
-                                         audio2 = OSDVDGetAudioTrack(track)
+                                         audio2 = audio1  
+                                         aselect2 = GUISelectList(__language__(33229),audio2)
                                      dialog = xbmcgui.Dialog()
                                      title = __language__(33217)
                                      question = __language__(33228)
                                      selected = dialog.yesno(title, question)
                                      if (selected):
-                                         sub = OSDVDGetSubTrack(track)
+                                         sub = OSDVDSubTrack(track)   
                                          if (sub[0] != 'none'):
-                                             print ready  
+                                             sselect1 = GUISelectList(__language__(33230),sub)
+                                             selected_done = True 
                                          else:
                                              GUIInfo(2,__language__(33314)) 
                                      else: 
-                                          print ready 
+                                          selected_done = True 
+                                     selected_done = True  
                                  else:
                                      GUIInfo(2,__language__(33313)) 
                              else:
@@ -432,6 +415,11 @@ class GUIExpertWinClass(xbmcgui.Window):
                          GUIInfo(0,__language__(33309))
                  else:
                      GUIInfo(0,__language__(33308))    
+
+                 # We have all parameters
+
+                 if (selected_done == True):
+                     selected_done = False
 
              if (choice == 7):
                  state_ssh = OSCheckSSH()
@@ -611,7 +599,7 @@ class GUIMain01Class(xbmcgui.Window):
                                  tracklist = OSChapterDVD()
                                  if (tracklist[0] != 'none'):
                                      executeList = []
-                                     executeList = OSDVDExecuteList()   
+                                     executeList = OSDVDExecuteList(True)   
                                      execstate = OSDVDcopyToIso() 
                                      if (execstate == 0):
                                          GUIInfo(2,__language__(33211))

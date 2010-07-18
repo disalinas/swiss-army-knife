@@ -120,7 +120,7 @@ echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
 
 lsdvd -a $1 1>/dev/null 2>&1
 
-echo INFO starting ddrescue
+echo INFO starting dd
 
 (
 dd bs=2048 if=$1 of=$2/$3.iso &

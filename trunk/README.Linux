@@ -42,7 +42,7 @@ By this new addon I changed a few things.
 2.) Requierements for this addon 
 
 - a Ubuntu 10.04 LTS system
-- a SVN build of XBMC ( I do use svn build from july 2010)
+- a SVN build of XBMC (at least SVN 31953)
 - a DVD-drive and optional a bluray if you would like to transcode BD-disk
 
 
