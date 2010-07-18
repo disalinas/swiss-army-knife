@@ -46,6 +46,8 @@ __data_container__ = []
 __exec_bluray__    = []
 __exec_dvd__       = []
 __verbose__        = 'false'
+__stage_percent__  = 0
+__stage_last__     = False
 
 #########################################################
 
@@ -701,6 +703,7 @@ def OSGetProgressVal():
 
     global __configLinux__ 
     global __verbose__
+    global __stage_percent__
 
     if (os.path.exists(__configLinux__[31])):
         ProgressFile = open(__configLinux__[31],'r')
@@ -708,6 +711,7 @@ def OSGetProgressVal():
         ProgressFile.close
         line = line.strip() 
         rvalue = int(line)
+        __stage_percent__ = rvalue          
         return rvalue 
     else: 
         return -1 
@@ -992,7 +996,7 @@ def OSChapterDVD():
     # Without the list of track we can not select inside the list .....
     # If someone knows a bettey way to get this list faster ... send me pm .-)
 
-    time.sleep(20) 
+    time.sleep(15) 
    
     WCycles = 10 
     Waitexit = True 
@@ -1083,7 +1087,7 @@ def OSDVDTranscode():
  
     # Now we do loop until the PID-file exists
 
-    time.sleep(35) 
+    time.sleep(15) 
    
     WCycles = 15 
     Waitexit = True 
@@ -1364,6 +1368,8 @@ def OSGetStageText():
 
     global __configLinux__ 
     global __verbose__
+    global __stage_percent__
+    global __stage_last__
 
     msg = ""
 
@@ -1374,6 +1380,9 @@ def OSGetStageText():
         line = StageCounter.readline()
         line.strip()
         Stages = int(line)
+        
+        if (__verbose__):
+            OSlog("OSGetStageText Stages:" + str(Stages))
         StageCounter.close()
 
         # Get Stages-Descirption  
@@ -1381,20 +1390,13 @@ def OSGetStageText():
         stagesdescription = []
         if (os.path.exists(__configLinux__[36])):
 
-            if (Stages == 1):
-                StageDesc = open(__configLinux__[36],'r')
-                line = StageDesc.readline()
-                line.strip()
+            DescFileID = open(__configLinux__[36],'r')
+            for line in DescFileID.readlines():
+                line = line.strip()
                 stagesdescription.append(line)
-                StageDesc.close()
-
-            if (Stages >= 2):
-                StageDesc = open(__configLinux__[36],'r') 
-                for index in range(0,(Stages - 1)):
-                    line = StageDesc.readline()
-                    Translation_Index = int(line) 
-                    stagesdescription.append(TranslationIndex)
-                StageDesc.close()
+                if (__verbose__): 
+                    OSlog("OSGetStageText-ID found and added :" + line)
+            DescFileID.close()       
 
             # Get Current-Stage 
 
@@ -1404,14 +1406,29 @@ def OSGetStageText():
                 line.strip()
                 StageCurrent.close()
                 StageCurr = int (line)
+             
+                if (__verbose__):
+                    CountDesc = len(stagesdescription)
+                    OSlog("OSGetStageText StageCurr:" + str(StageCurr))
+                    OSlog("OSGetStageText CountDesc:" + str(CountDesc))
 
-                index = int(stagesdescription[(StageCurr - 1)])
+                    for index in range(0,(Stages - 1 )):
+                        OSlog("OSGetStageText Description-index :" +  str(stagesdescription[index]))  
+                 
+                index = int(stagesdescription[(StageCurr -1)])
+
                 progress_message = __language__(index)
 
                 # we should have all info for the text inside the progress-bar windows
                 # and we dont have to edit the shell-scripts to update the messages (strings.xml)   
              
                 msg = __language__(32174) + str(StageCurr) + " / " + str(Stages) + " " + progress_message
+
+            
+                if (StageCurr == Stages):
+                    __stage_last__ = True 
+                else:
+                    __stage_last__ = False
                 
                 if (__verbose__):
                     OSlog("Progress-bar text : " + msg)
@@ -1437,7 +1454,7 @@ def OSGetStageText():
 #                                                       #
 # Returns   :                                           # 
 #                                                       #
-# 1           Test failed    l                          # 
+# 1           Test failed                               # 
 # 0           Test successfull                          #
 #                                                       # 
 #########################################################
@@ -1643,4 +1660,77 @@ def OSDVDSubTrack(track):
 
 
 
-#
+#########################################################
+# Function  : OSDVDVolume                               #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# Volname     Volname of the inserted bluray            #
+#                                                       #
+#########################################################
+def OSDVDVolume():
+
+    global __configLinux__ 
+    global __exec_bluray__
+    global __verbose__
+
+    if (os.path.exists(__configLinux__[44])): 
+        DVDVOl  = open(__configLinux__[44],'r')
+        name = DVDVOl.readline()
+        name.strip()
+        DVDVOl.close()       
+        return (name)
+    else:
+        return("unknown")
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSDVDAdd                                  #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# list        list with all parameters for execution    #
+#                                                       #
+# Returns   : none                                      #
+#                                                       #
+#########################################################
+def OSDVDAdd(list):
+ 
+    global __exec_dvd__
+ 
+    __exec_dvd__ = list
+
+    return 0 
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSDetectLastStage                         #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# Bool 	      State of current stage true or false      #	
+#                                                       #
+#########################################################
+def OSDetectLastStage():
+ 
+    global __stage_last__ 
+
+    stage = __stage_last__    
+    return (stage)
+
+#########################################################
+

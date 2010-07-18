@@ -51,7 +51,7 @@
         <string id="32101">Transcode DVD</string>
         <string id="32102">Ripp DVD to ISO</string>       
         <string id="32103">Expert-Mode</string>
-        <string id="32104">Job-List / Lock-file</string>
+        <string id="32104">Job-Controll</string>
         <string id="32105">Exit</string>
 
 
@@ -63,9 +63,9 @@
         <string id="32121">Transcode DVD (confirmed)</string>
         <string id="32122">Ripp DVD to ISO (confirmed)</string>
         <string id="32123">Rescue-copy DVD to iso (confirmed)</string>
-        <string id="32124"> </string>      
-        <string id="32125"> </string>
-        <string id="32126"> </string>
+        <string id="32124">Reserved transcode & burning</string>      
+        <string id="32125">Reserved network</string>
+        <string id="32126">Filemanager</string>
         <string id="32127">Test ssh connection</string>
         <string id="32128">Info</string>
         <string id="32129">Back</string>
@@ -81,6 +81,7 @@
         <string id="32152">transcoding pass 1</string>
         <string id="32153">transcoding pass 2</string>
         <string id="32154">copy dvd to iso-file</string>
+        <string id="32155">resque-copy dvd to iso-file</string>
 
         <!--                --> 
         <!-- Joblist Window -->

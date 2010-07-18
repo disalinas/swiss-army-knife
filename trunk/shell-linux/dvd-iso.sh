@@ -11,7 +11,7 @@
 # parameters :                                            #
 # $1 device                                               #
 # $2 directory for rip                                    #
-# $3 iso-name (excluding extension iso                    #
+# $3 iso-name (excluding extension iso)                   #
 #                                                         #
 # description :                                           #
 # generates a iso file of a dvd                           #

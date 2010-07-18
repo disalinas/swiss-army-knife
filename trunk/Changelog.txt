@@ -87,7 +87,11 @@ Changes:
 - Added ISO copy inside expert-mode.
 - Added Rescue-copy inside expert-mode. 
 - Added shell-script dvd-atrack.sh
-- Addes shell-script dvd-rescue.sh 
+- Added shell-script dvd-rescue.sh 
+- Added description for shell-script rescue-copy
+- Added global var __verbose__ inside default.py 
+- Send back operation-state fron progress-bar function.
+- Added file-manager into expert-mode.
 
 Bugfixes:
 
@@ -96,6 +100,9 @@ Bugfixes:
 - problem with reading track list audio and subtitle (fixed)
 - Testing addon against Dharma-freezed code.
 - fixed a few small errors on the way to ALPHA-10 
+- fixed a off by one error inside GetStageText.(fixed)
+- If multiples passes are used only inside the 1.pass the % counter
+  inside the progress-bar is visible.
 
 ---------------------------------------------------------------------------------------------------
 

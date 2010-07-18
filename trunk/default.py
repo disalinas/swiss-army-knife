@@ -76,6 +76,7 @@ __enable_network__ = 'false'
 __enable_burning__ = 'false'
 __enable_customer__ = 'false'
 __enable_pw_mode__ = 'false'
+__verbose__        = 'false'
 __pw__ = ''
 __jobs__ = False
 
@@ -209,7 +210,11 @@ def GUIlog(msg):
 #                                                       #
 # InfoText    Text for progress-bar box                 #
 #                                                       # 
-# Returns   : none                                      #
+# Returns   :                                           #
+#                                                       #
+# 0           Progress-bar canceld / Job running        #
+# 1           Job finished                              #
+#                                                       #                    
 #########################################################
 def GUIProgressbar(InfoText):
 
@@ -221,14 +226,23 @@ def GUIProgressbar(InfoText):
     while (exit):
            progress = OSGetProgressVal()
            if (progress == 100):
-               dp.close() 
-               exit = False 
+
+               # We could have multiple passes and therefore 
+               # only in the last pass we do close and send back 
+               # Job is finished ...
+                
+               if (OSDetectLastStage() == True):
+                   dp.close() 
+                   exit = False
+                   retval = 1
+
            dp.update(progress,OSGetStageText())
            if dp.iscanceled():
               dp.close() 
-              exit = False 
+              exit = False
+              retval = 0 
            time.sleep(1)
-    return  
+    return (retval)             
 
 #########################################################
 
@@ -356,8 +370,9 @@ class GUIExpertWinClass(xbmcgui.Window):
              if (choice == 1):
 
                  selected_done = False
+                 append_pars = []
  
-                 Lock = OSCheckLock(__configuration__[2])
+                 Lock = OSCheckLock(__configuration__[1])
                  if (Lock == 0):
                      dvd_info = xbmc.getDVDState()
                      if (dvd_info == 4):
@@ -379,13 +394,21 @@ class GUIExpertWinClass(xbmcgui.Window):
                                  track = GUISelectList(__language__(33207),tracklist)
                                  track = track + 1
 
+                                 # We have a video-track 
+
+                                 append_pars.append(" " + str(track) + " ") 
+
                                  GUIlog("Ready to start dvd4.sh")
                                  audio1 = OSDVDAudioTrack(track)
                                  GUIlog("dvd4.sh executed")
 
                                  if (audio1[0] != 'none'):
                                      aselect1 = GUISelectList(__language__(33226),audio1)
+                                    
+                                     # We have primary-audio language 
 
+                                     append_pars.append(" " + str(aselect1) + " ") 
+ 
                                      dialog = xbmcgui.Dialog()
                                      title = __language__(33217)
                                      question = __language__(33227)
@@ -393,6 +416,11 @@ class GUIExpertWinClass(xbmcgui.Window):
                                      if (selected):
                                          audio2 = audio1  
                                          aselect2 = GUISelectList(__language__(33229),audio2)
+                                       
+                                         # a secoundary language was added
+                               
+                                         append_pars.append(" -a " + str(aselect2) + " ")
+  
                                      dialog = xbmcgui.Dialog()
                                      title = __language__(33217)
                                      question = __language__(33228)
@@ -401,6 +429,10 @@ class GUIExpertWinClass(xbmcgui.Window):
                                          sub = OSDVDSubTrack(track)   
                                          if (sub[0] != 'none'):
                                              sselect1 = GUISelectList(__language__(33230),sub)
+
+                                             # subtitle was added 
+
+                                             append_pars.append(" -s " + str(sselect1) + " ")
                                              selected_done = True 
                                          else:
                                              GUIInfo(2,__language__(33314)) 
@@ -416,10 +448,46 @@ class GUIExpertWinClass(xbmcgui.Window):
                  else:
                      GUIInfo(0,__language__(33308))    
 
-                 # We have all parameters
+                 # We have all parameters execpt the filename and the directory to store 
 
                  if (selected_done == True):
-                     selected_done = False
+
+                     execlist = []
+
+                     savedir = GUISelectDir() 
+                     volname = OSDVDVolume()
+                     volname = GUIEditExportName(volname)                      
+ 
+                     # Update parameters for the OS-Part DVD
+
+                     execlist.append(__configuration__[1])
+                     execlist.append(savedir)
+                     execlist.append(volname)
+                                
+                     attach_index = len(append_pars)
+                     for item in range(0,attach_index):
+                          execlist.append(append_pars[item]) 
+                     
+                     if (__verbose__):   
+                        for item in execlist:
+                            GUIlog('dvd-parmater corrections :' + str(item))                                      
+
+                     OSDVDAdd(execlist)       
+
+                     execstate =  OSDVDTranscode() 
+                     if (execstate == 0):
+                         GUIInfo(2,__language__(33209))
+                     if (execstate == 1):
+                         GUIInfo(0,__language__(33208))
+                         __jobs__ = True
+
+
+             if (choice == 6):
+
+                 print
+ 
+                 # I can activate the window but not the foccus
+                 # xbmc.executebuiltin("ActivateWindow(filemanager)")    
 
              if (choice == 7):
                  state_ssh = OSCheckSSH()
@@ -465,9 +533,11 @@ class GUIJobWinClass(xbmcgui.Window):
              choice  = dialog.select(__language__(32091) ,menu)
              if (choice == 0):  
                  if (__jobs__ == False):
-                     GUIInfo(0,__language__(32177))
+                     state = GUIInfo(0,__language__(32177))
                  else:
-                     GUIProgressbar("Progress current process")       
+                     state =  GUIProgressbar("Progress current process") 
+                     if (state == 1):
+                         __jobs__ = False
              if (choice == 1): 
                  if (__jobs__ == False):
                      GUIInfo(0,__language__(32177))
@@ -556,7 +626,7 @@ class GUIMain01Class(xbmcgui.Window):
                          GUIInfo(0,__language__(33303))    
 
                  if (choice == 1):  
-                     Lock = OSCheckLock(__configuration__[2])
+                     Lock = OSCheckLock(__configuration__[1])
                      if (Lock == 0):
                          dvd_info = xbmc.getDVDState()
                          if (dvd_info == 4):
@@ -585,7 +655,7 @@ class GUIMain01Class(xbmcgui.Window):
                          GUIInfo(0,__language__(33308))    
 
                  if (choice == 2): 
-                     Lock = OSCheckLock(__configuration__[2])
+                     Lock = OSCheckLock(__configuration__[1])
                      if (Lock == 0):
                          dvd_info = xbmc.getDVDState()
                          if (dvd_info == 4):
@@ -635,7 +705,8 @@ class GUIMain01Class(xbmcgui.Window):
                      JobWindow = GUIJobWinClass()
                      del JobWindow        
                  if (choice == 5): 
-                     GUIlog('menu exit activated')
+                     if (__verbose__):
+                         GUIlog('menu exit activated')
                      exit_script = False
           self.close()
 
@@ -661,6 +732,7 @@ if __name__ == '__main__':
    __enable_network__  = __configuration__[11]
    __enable_burning__  = __configuration__[15]
    __enable_customer__ = __configuration__[14]
+   __verbose__         = __configuration__[17]
    __enable_pw_mode__  = __configuration__[19]
    __pw__              = __configuration__[20]
  
