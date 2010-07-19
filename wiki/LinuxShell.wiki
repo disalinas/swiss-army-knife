@@ -10,6 +10,10 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
  * Number of arguments : 1
  * Description : Do detect if a DVD or a Bluray is inside the device (par.1) 
  * Sample : *./state.sh /dev/sr0*
+ * Output :
+{{{
+
+}}}
 == ==
 
 
@@ -17,3 +21,7 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
  * Number of arguments : 1
  * Description : Generate a list of all tracks from a Bluray (par.1) 
  * Sample : *./bluray-chapter.sh /dev/sr0*
+ * Output :
+{{{
+
+}}}
