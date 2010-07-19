@@ -482,12 +482,62 @@ class GUIExpertWinClass(xbmcgui.Window):
                          __jobs__ = True
 
 
-             if (choice == 6):
+             if (choice == 2):
+                 Lock = OSCheckLock(__configuration__[1])
+                 if (Lock == 0):
+                     dvd_info = xbmc.getDVDState()
+                     if (dvd_info == 4):
+                         DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 2):
+                             GUIInfo(0,__language__(33302)) 
+                         if (DVDState == 1):
+                             GUIInfo(0,__language__(33311))
+                         if (DVDState == 0):
+                             tracklist = []
+                             tracklist = OSChapterDVD()
+                             if (tracklist[0] != 'none'):
+                                 executeList = []
+                                 executeList = OSDVDExecuteList(False)   
 
-                 print
+                                 execlist = []
+
+                                 savedir = GUISelectDir() 
+                                 volname = OSDVDVolume()
+                                 volname = GUIEditExportName(volname)                      
  
-                 # I can activate the window but not the foccus
-                 # xbmc.executebuiltin("ActivateWindow(filemanager)")    
+                                 # Update parameters for the OS-Part DVD
+
+                                 execlist.append(__configuration__[1])
+                                 execlist.append(savedir)
+                                 execlist.append(volname)
+
+                                 OSDVDAdd(execlist)      
+ 
+                                 execstate = OSDVDcopyToIso() 
+  
+                                 if (execstate == 0):
+                                     GUIInfo(2,__language__(33211))
+                                 if (execstate == 1):
+                                     GUIInfo(0,__language__(33210))
+                                     __jobs__ = True                                
+                             else:
+                                 GUIInfo(0,__language__(33312)) 
+                     else:
+                         GUIInfo(0,__language__(33309))
+                 else:
+                     GUIInfo(0,__language__(33308))    
+
+             if (choice == 3):
+                 GUIInfo(1,__language__(33205)) 
+
+             if (choice == 4):
+                 GUIInfo(1,__language__(33205)) 
+
+             if (choice == 5):
+                 GUIInfo(1,__language__(33205)) 
+
+             if (choice == 6):
+                 GUIInfo(1,__language__(33205)) 
 
              if (choice == 7):
                  state_ssh = OSCheckSSH()

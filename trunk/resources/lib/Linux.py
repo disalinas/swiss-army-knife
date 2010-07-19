@@ -1380,9 +1380,6 @@ def OSGetStageText():
         line = StageCounter.readline()
         line.strip()
         Stages = int(line)
-        
-        if (__verbose__):
-            OSlog("OSGetStageText Stages:" + str(Stages))
         StageCounter.close()
 
         # Get Stages-Descirption  
@@ -1394,8 +1391,6 @@ def OSGetStageText():
             for line in DescFileID.readlines():
                 line = line.strip()
                 stagesdescription.append(line)
-                if (__verbose__): 
-                    OSlog("OSGetStageText-ID found and added :" + line)
             DescFileID.close()       
 
             # Get Current-Stage 
@@ -1406,14 +1401,6 @@ def OSGetStageText():
                 line.strip()
                 StageCurrent.close()
                 StageCurr = int (line)
-             
-                if (__verbose__):
-                    CountDesc = len(stagesdescription)
-                    OSlog("OSGetStageText StageCurr:" + str(StageCurr))
-                    OSlog("OSGetStageText CountDesc:" + str(CountDesc))
-
-                    for index in range(0,(Stages - 1 )):
-                        OSlog("OSGetStageText Description-index :" +  str(stagesdescription[index]))  
                  
                 index = int(stagesdescription[(StageCurr -1)])
 
@@ -1429,10 +1416,7 @@ def OSGetStageText():
                     __stage_last__ = True 
                 else:
                     __stage_last__ = False
-                
-                if (__verbose__):
-                    OSlog("Progress-bar text : " + msg)
- 
+
                 return msg
             else:
                 return msg   

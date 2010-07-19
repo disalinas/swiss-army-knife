@@ -91,7 +91,7 @@ Changes:
 - Added description for shell-script rescue-copy
 - Added global var __verbose__ inside default.py 
 - Send back operation-state fron progress-bar function.
-- Added file-manager into expert-mode.
+
 
 Bugfixes:
 
@@ -103,6 +103,8 @@ Bugfixes:
 - fixed a off by one error inside GetStageText.(fixed)
 - If multiples passes are used only inside the 1.pass the % counter
   inside the progress-bar is visible.
+- dvd2.sh has to be run during handbrake running.
+  (I removed the & from the command)
 
 ---------------------------------------------------------------------------------------------------
 
