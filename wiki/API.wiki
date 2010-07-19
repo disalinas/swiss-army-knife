@@ -1,4 +1,3 @@
-=API DOCUMENTATION=
 ==== =====
 ==== =====
 ==== =====
@@ -6,11 +5,9 @@
 
   * Are valid for any action -> copy to iso , transcoding or copy 
   * The gui-handling will only work with the above files.
-  * You could replace a internal shell-scipt with your own. 
-  * As long you are using this functions to report-back to the gui-part, you can replace the linux-shell-scripts with anything you like. You could use a local installed Python / Perl or anything other that is executeable.
-
-
-
+  * You could replace a internal shell-scipt with your own, if you like to do this. 
+  * As long you are using this functions to report-back to the gui-part, you can replace the linux-shell-scripts with anything you like. 
+  * You could use a local installed Python or anything other that is executeable.
 ==== =====
 ==== =====
 ==== =====
@@ -19,7 +16,7 @@
 ------------------------------------------------------------------------------------------
  * As long a transcode or ripping function is running this file do exist
  * Valid values : /dev/sr0 or a file-name
- * Example (state)
+ * Example (JOB)
 {{{
 /dev/sr0
 }}}
