@@ -40,7 +40,7 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
  * $3 name of mkv-file without any extension
  * $4 bluraytrack to export
 ----------------------------------------------------------------------------------------
- * Description : Generates a mkf file from a specific track from a bluray.
+ * Description : Generates a mkv file from a specific track from a bluray.
  * Sample : *./bluray-transcode.sh /dev/sr0 /dvdrip/bluray 300 1*
  * Output :
 {{{
