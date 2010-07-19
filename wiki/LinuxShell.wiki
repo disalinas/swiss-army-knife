@@ -1,1 +1,10 @@
 === Commands inside the shell-linux folder ===
+
+Inside the folder shell-linux are several shell-scripts that can be executed over 
+ssh or manually.In the case of a unexpected error I would try to run them in a terminal.
+
+
+
+
+
+
