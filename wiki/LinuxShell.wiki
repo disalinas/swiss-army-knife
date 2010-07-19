@@ -8,9 +8,9 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 === state.sh === 
 ----------------------------------------------------------------------------------------
  * Number of arguments : 1
-=== ===
+----------------------------------------------------------------------------------------
  * $1 device for bluray or dvd /dev/sr0
-=== ===
+----------------------------------------------------------------------------------------
  * Description : Do detect if a DVD or a Bluray is inside the device (par.1) 
  * Sample : *./state.sh /dev/sr0*
  * Output :
@@ -21,9 +21,9 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 === bluray-chapter.sh  ===
 ----------------------------------------------------------------------------------------
  * Number of arguments : 1
-=== ===
+----------------------------------------------------------------------------------------
  * $1 device for bluray /dev/sr0
-=== ===
+----------------------------------------------------------------------------------------
  * Description : Generate a list of all tracks from a Bluray (par.1) 
  * Sample : *./bluray-chapter.sh /dev/sr0*
  * Output :
@@ -34,12 +34,12 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 === bluray-transcode.sh  ===
 ----------------------------------------------------------------------------------------
  * Number of arguments : 4
-=== ===
+----------------------------------------------------------------------------------------
  * $1 device for bluray /dev/sr0
  * $2 directory to store mkv file /dvdrip/bluray
  * $3 name of mkv-file without any extension
  * $4 bluraytrack to export
-=== ===
+----------------------------------------------------------------------------------------
  * Description : Generates a mkf file from a specific track from a bluray.
  * Sample : *./bluray-transcode.sh /dev/sr0 /dvdrip/bluray 300 1*
  * Output :
