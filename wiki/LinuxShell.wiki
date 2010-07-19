@@ -9,7 +9,6 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 == ==
  * Number of arguments : 1
  * Description : Do detect if a DVD or a Bluray is inside the device (par.1) 
- * Return-Value : 0 Media inserted / 1 Media not reconized  
  * Sample : *./state.sh /dev/sr0*
 == ==
 
@@ -17,5 +16,4 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 === bluray-chapter.sh  ===
  * Number of arguments : 1
  * Description : Generate a list of all tracks from a Bluray (par.1) 
- * Return-Value : 0 Media inserted / 1 Media not reconized  
  * Sample : *./bluray-chapter.sh /dev/sr0*
