@@ -193,7 +193,6 @@ if [ $# -eq 5 ]; then
       PASS1=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
       PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
       if [ -n "$PASS1" ] ; then
-         echo $PASS1
          echo $PASS1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
          if [ $PASS1 -eq 99 ] ; then
 
@@ -215,7 +214,6 @@ if [ $# -eq 5 ]; then
       fi
 
       if [ -n "$PASS2" ] ; then
-         echo $PASS2
          echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
          if [ $PASS2 -eq 98 ] ; then
              sleep 15
@@ -286,8 +284,7 @@ if [ $# -eq 7 ]; then
          echo -n .
          PASS1=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
          PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         if [ -n "$PASS1" ] ; then
-            echo $PASS1  
+         if [ -n "$PASS1" ] ; then 
             echo $PASS1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS1 -eq 99 ] ; then
                sleep 5
@@ -309,7 +306,6 @@ if [ $# -eq 7 ]; then
          fi
 
          if [ -n "$PASS2" ] ; then
-            echo $PASS2 
             echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS2 -eq 98 ] ; then
                sleep 15
@@ -378,7 +374,6 @@ if [ $# -eq 7 ]; then
          TMP=$(strings $OUT_TRANS | grep % | tail -1 | awk 'BEGIN{ RS="("; FS=")"} {print  $1}' | tr ' ' ',' | cut -d ',' -f2 | grep %)
          PASS1=$(echo $TMP | tr '%' ' ')
          if [ -n "$PASS1" ] ; then
-            echo $PASS1 
             echo $PASS1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS1 -eq 99 ] ; then
                sleep 5
@@ -424,8 +419,7 @@ if [ $# -eq 7 ]; then
          echo -n .
          PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
          PASS3=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         if [ -n "$PASS2" ] ; then
-            echo $PASS2 
+         if [ -n "$PASS2" ] ; then 
             echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS2 -eq 98 ] ; then
                sleep 5
@@ -444,7 +438,6 @@ if [ $# -eq 7 ]; then
             fi
          fi
          if [ -n "$PASS3" ] ; then
-            echo $PASS3
             echo $PASS3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
             if [ $PASS3 -eq 98 ] ; then
                sleep 3
@@ -512,7 +505,6 @@ if [ $# -eq 9 ]; then
        TMP=$(strings $OUT_TRANS | grep % | tail -1 | awk 'BEGIN{ RS="("; FS=")"} {print  $1}' | tr ' ' ',' | cut -d ',' -f2 | grep %)
        PASS1=$(echo $TMP | tr '%' ' ')
        if [ -n "$PASS1" ] ; then
-          echo $PASS1
           echo $PASS1 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
           if [ $PASS1 -eq 98 ] ; then
              sleep 10
@@ -559,7 +551,6 @@ if [ $# -eq 9 ]; then
        PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
        PASS3=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
        if [ -n "$PASS2" ] ; then
-          echo $PASS2
           echo $PASS2 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress 
           if [ $PASS2 -eq 99 ] ; then
                sleep 5
@@ -577,7 +568,6 @@ if [ $# -eq 9 ]; then
           fi
        fi
        if [ -n "$PASS3" ] ; then
-          echo $PASS3
           echo $PASS3 > ~/.xbmc/userdata/addon_data/script-video-ripper/progress/progress
           if [ $PASS3 -eq 98 ] ; then
                sleep 3
