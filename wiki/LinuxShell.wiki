@@ -4,9 +4,9 @@ Inside the folder shell-linux are several shell-scripts that can be executed ove
 ssh or manually.In the case of a unexpected error I would try to run them in a terminal.
 
 
-
+----------------------------------------------------------------------------------------
 === state.sh === 
-== ==
+----------------------------------------------------------------------------------------
  * Number of arguments : 1
 === ===
  * $1 device for bluray or dvd /dev/sr0
@@ -17,9 +17,9 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 {{{
 
 }}}
-== ==
+----------------------------------------------------------------------------------------
 === bluray-chapter.sh  ===
-=== ===
+----------------------------------------------------------------------------------------
  * Number of arguments : 1
 === ===
  * $1 device for bluray /dev/sr0
@@ -30,9 +30,9 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 {{{
 
 }}}
-== ==
+----------------------------------------------------------------------------------------
 === bluray-transcode.sh  ===
-=== ===
+----------------------------------------------------------------------------------------
  * Number of arguments : 4
 === ===
  * $1 device for bluray /dev/sr0
@@ -46,4 +46,3 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 {{{
 
 }}}
-
