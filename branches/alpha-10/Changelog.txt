@@ -1,0 +1,127 @@
+---------------------------------------------------------------------------------------------------
+Date : 07.12.2010 | Release : 0.6C-A8   | Author  : H.Weber | CVS:134 
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Include dvd-iso.sh with dd to copy a dvd to a iso file.
+- Rewritten most of the code.
+- Show the detailed stages-descriptions inside the progress-bar.
+- Soon the release 0.6C-ALPHA-8 could be tested .
+- Integrate the busy-dialog during startup of addon.
+- A lot of code cleaning.
+- Added text README.Linux
+
+Bugfixes:
+
+- automatic track selection inside dvd-chapter.sh had a failure (fixed)
+
+---------------------------------------------------------------------------------------------------
+Date : 07.13.2010 | Release : 0.6C-A8   | Author  : H.Weber | CVS:136
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Added correct progress indicator for dvd-iso.sh.
+- Added code to run dvd-iso.sh from main-menu.
+- Addes shell-linux/dvd3.sh to svn. 
+- A lot of code cleaning.
+- Added entry "Remove lock-file" inside job-window.
+- Added stage-text inside progress-window.
+- settings fixed.
+
+Bugfixes:
+
+- sleep time to wait for dd was to high (fixed).
+- log for ssh-command was empty (fixed). 
+- fixe parameter error on line 290+297 default.py (fixed).
+- Job-windows dialog contains one entry to much (fixed).
+- removed the stage-nummber from the stages-descriptions. 
+- to add echo -n for the description of stages was a bad thing(fixed)
+---------------------------------------------------------------------------------------------------
+Date : 07.14.2010 | Release : 0.6C-A9   | Author  : H.Weber | CVS:137
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Added correct progress indicator for dvd-iso.sh.
+- I hate to make documenations updates wiki 
+- All strings from the shell-scripts that are displayed inside 
+  the gui are now inside the settings.
+
+Bugfixes:
+
+- typo devive -> device (fixed).
+- error inside OSRemoveLock by startup (fixed).
+- GUIInfo had a few refrences with the old parameter-count 1
+---------------------------------------------------------------------------------------------------
+Date : 07.14.2010 | Release : 0.6C-A10   | Author  : H.Weber | CVS:138-153
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Changed logic behind the job-window because the lock-file deletion.
+- Added ssh-command test inside expert-mode.
+- Addes transcode bluray confirmend inside exper-mode.
+- Added tracklist for bluray
+- Added selection for destination-directory
+- Added edit export-name
+- Send back modified bluray paramters to OS-Part
+- Added a parameter to OSBlurayExecuteList
+
+Bugfixes:
+
+- After a sucessful process the directory progress will be erased.
+  This change was made inside all shell-scripts.
+- Fixed type-error inside OSRemoveLock (fixed)
+- By a few runs with bluray-chapter.sh I had sometimes not the 
+  correct tracklist from bluray. (fixed)
+ 
+---------------------------------------------------------------------------------------------------
+Date : 07.17.2010 | Release : 0.6C-A10   | Author  : H.Weber | CVS:154-177 
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Added Transcode inside expert-mode.
+- Added ISO copy inside expert-mode.
+- Added Rescue-copy inside expert-mode. 
+- Added shell-script dvd-atrack.sh
+- Added shell-script dvd-rescue.sh 
+- Added description for shell-script rescue-copy
+- Added global var __verbose__ inside default.py 
+- Send back operation-state fron progress-bar function.
+
+
+Bugfixes:
+
+- Secound error inside OSRemoveLock. (fixed)
+- Timeout Value for Bluray fixed.
+- problem with reading track list audio and subtitle (fixed)
+- Testing addon against Dharma-freezed code.
+- fixed a few small errors on the way to ALPHA-10 
+- fixed a off by one error inside GetStageText.(fixed)
+- If multiples passes are used only inside the 1.pass the % counter
+  inside the progress-bar is visible.
+- dvd2.sh has to be run during handbrake running.
+  (I removed the & from the command)
+
+---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
