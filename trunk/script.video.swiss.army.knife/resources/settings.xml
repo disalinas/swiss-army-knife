@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting id="info" type="text" label="32000" default="http://code.google.com/p/swiss-army-knife/" enable="false"/>
+	<setting id="first_time_use" type="bool" default="true" visible="false"/>
+
+	<!-- Device Settings -->
+
+	<setting id="separator" type="lsep" label="32050"/>
+        <setting id="id-device-dvd" type="text" label="32051" default="/dev/sr0" />
+        <setting id="id-device-bluray" type="text" label="32052" default="/dev/sr0" />       
+       
+        <!-- Directorys settings -->
+
+        <setting id="separator" type="lsep" label="32053"/> 
+        <setting id="id-iso" type="text" label="32054" default="/dvdrip/iso" />
+        <setting id="id-dvd" type="text" label="32055" default="/dvdrip/dvd" />    
+        <setting id="id-bluray" type="text" label="32056" default="/dvdrip/bluray" />  
+       
+        <!-- Various Settings  -->
+
+        <setting id="separator" type="lsep" label="32057"/> 
+        <setting id="id-command" type="text" label="32058" default="xbmc@localhost"/>
+        <setting id="id-lang1" type="text" label="32059" default="en"/>    
+        <setting id="id-lang2" type="text" label="32060" default="none"/>
+        <setting id="id-dvd-subt" type="text" label="32070" default="none"/>
+        <setting id="id-def-dvd" type="enum" label="32061" values="iso|mpeg2|divx|h264" default="0"/>
+        <setting id="id-show-bluray" type="bool" label="32062" default="true"/>
+        <setting id="id-show-network" type="bool" label="32063" default="false"/>
+        <setting id="id-show-burning" type="bool" label="32064" default="false"/> 
+        <setting id="id-expert" type="bool" label="32065" default="true"/> 
+        <setting id="id-password" type="text"label="32066" default="1234"/> 
+        <setting id="id-customer" type="bool" label="32071" default="false"/> 
+        <setting id="id-burn" type="text" label="32067" default="4706074624"/>
+        <setting id="id-netcat" type="text" label="32068" default="4000"/>
+        <setting id="id-verbose" type="bool" label="32069" default="false"/> 
+</settings>
