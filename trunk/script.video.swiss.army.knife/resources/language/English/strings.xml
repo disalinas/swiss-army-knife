@@ -135,6 +135,8 @@
         <!-- Error         -->
         <!--               -->
         
+
+        <string id="33301">Prior to run this addon setup.sh must be executed</string> 
         <string id="33301">Inserted disc is not a Bluray-Disc</string>
         <string id="33302">File swiss-army-knife/media/state could not be openend</string>
         <string id="33303">Bluray-functions are disabled.</string>
