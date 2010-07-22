@@ -65,8 +65,10 @@ __stage_last__     = False
 # Returns   : none                                      #
 #########################################################
 def OSlog(msg):
+
     xbmc.output("[%s]: [OSlog]  %s\n" % ("swiss-army-knife",str(msg)))
     return (0)
+
 #########################################################
 
 
@@ -168,6 +170,7 @@ def OSConfiguration(index):
 
     # All used internal files are stored inside after here ...
 
+    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
     config[32] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid'
@@ -262,6 +265,7 @@ def OSConfiguration(index):
     __configLinux__ = config
 
     return config
+
 #########################################################
 
 
@@ -325,6 +329,7 @@ def OSRun(command,backg,busys):
         OSlog ("OSRun end")
 
     return status
+
 #########################################################
 
 
@@ -410,6 +415,7 @@ def OSCheckMedia(Media):
             return 0
         else:
             return 1
+
 #########################################################
 
 
@@ -488,6 +494,7 @@ def OSChapterBluray():
     else:
         tracklist.append('none')
         return tracklist
+
 #########################################################
 
 
@@ -1718,3 +1725,28 @@ def OSDetectLastStage():
 
 #########################################################
 
+
+
+
+#########################################################
+# Function  : OSSetupDone                               #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 1           setup.done was executed                   #
+# 0           setup.sh was not executed                 #
+#                                                       #
+#########################################################
+def OSSetupDone():
+
+    global __configLinux__ 
+    global __verbose__
+
+    if (os.path.exists(__configLinux__[29])):
+        return 1
+    else:
+        return 0
+
+#########################################################
