@@ -1,0 +1,61 @@
+
+---------------------------------------------------------------------------------------------------
+Date : 07.17.2010 | Release : 0.6C-A10   | Author  : H.Weber | CVS:154-177 
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Added Transcode inside expert-mode.
+- Added ISO copy inside expert-mode.
+- Added Rescue-copy inside expert-mode. 
+- Added shell-script dvd-atrack.sh
+- Added shell-script dvd-rescue.sh 
+- Added description for shell-script rescue-copy
+- Added global var __verbose__ inside default.py 
+- Send back operation-state fron progress-bar function.
+
+
+Bugfixes:
+
+- Secound error inside OSRemoveLock. (fixed)
+- Timeout Value for Bluray fixed.
+- problem with reading track list audio and subtitle (fixed)
+- Testing addon against Dharma-freezed code.
+- fixed a few small errors on the way to ALPHA-10 
+- fixed a off by one error inside GetStageText.(fixed)
+- If multiples passes are used only inside the 1.pass the % counter
+  inside the progress-bar is visible.
+- dvd2.sh has to be run during handbrake running.
+  (I removed the & from the command)
+
+---------------------------------------------------------------------------------------------------
+Date : 07.17.2010 | Release : 0.6.11    | Author  : H.Weber | CVS:154-177 
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- change script-id.
+- change script-name.
+- change revision-nummer to 0.6.11. 
+- remvoe any old path from code and scripts.
+- removed source-code from addon.
+- removed the debian-files for 32 and 64 Sytems.
+- setup.sh now do install handbrake or makekmkv on request.
+- setup.sh do detect if the software should be install for 32 or 64
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
