@@ -85,7 +85,7 @@ xbmc, replace xbmc with your own username.(hint -> whoami[enter])
    
 
 This shell-scripts do install all software for the addon 
-excluded 2 debian files witch has to be installed by you.
+including  2 debian files.
 
 - it creates all directorys for ripping and transcoding 
 - it will prepare the ssh-server and client to login without 
@@ -123,6 +123,17 @@ http://www.makemkv.com/forum2/viewtopic.php?f=5&t=1053
 * Start makemkv an do the following :
 
 -> Help -> Register -> new code from above link
+
+If the addon find a retired licence-key the addon bluray-functions
+are completly disabled. You must renew your makemmkv-licence key !!!
+ 
+Little Tip: 
+
+-----------------------------------------------------------------
+Do set the computer to a  previous date and do set a new key :-) 
+-----------------------------------------------------------------
+
+
 
 6.O Using the addon and have fun 
 
