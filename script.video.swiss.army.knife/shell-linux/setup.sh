@@ -13,7 +13,7 @@
 # Setup all files and directorys for the addon            #
 ###########################################################
 
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife"
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 echo
 echo ---------------------------------------------------------------------
