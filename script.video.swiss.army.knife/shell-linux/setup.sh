@@ -16,13 +16,13 @@
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 echo
-echo ---------------------------------------------------------------------
+echo ----------------------------------------------------------------------------
 SCRIPT=$(basename $0)
 echo "script    :" $SCRIPT
 cat version
 echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
-echo ---------------------------------------------------------------------
+echo ----------------------------------------------------------------------------
 
 
 # Define the counting commands we expect inside the script

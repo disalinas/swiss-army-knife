@@ -785,30 +785,43 @@ if __name__ == '__main__':
    __verbose__         = __configuration__[17]
    __enable_pw_mode__  = __configuration__[19]
    __pw__              = __configuration__[20]
- 
-   # Check that directory exists and could be written 
-   # Bluray-directory is only included if the functions are enabled
 
-   if (__enable_bluray__ == "true"):
-       if (OSCheckContainerID(2)):
-           GUIInfo(1,__language__(33307)) 
+   # check that setup.sh was run prio to starting 
+ 
+   state = OSSetupDone() 
+   if (state == 0):
+
+       # setup.sh was not executed -> exit addon 
+
+       GUIInfo(0,__language__(33301))
+       xbmc.executebuiltin("Dialog.Close(busydialog)")
+
+   else:
+
+       # Check that directory exists and could be written 
+       # Bluray-directory is only included if the functions are enabled
+
+       if (__enable_bluray__ == "true"):
+          if (OSCheckContainerID(2)):
+             GUIInfo(1,__language__(33307)) 
      
-   if (OSCheckContainerID(1)):
-       GUIInfo(1,__language__(33306))
+       if (OSCheckContainerID(1)):
+           GUIInfo(1,__language__(33306))
 
-   if (OSCheckContainerID(0)):
-       GUIInfo(1,__language__(33305))
+       if (OSCheckContainerID(0)):
+           GUIInfo(1,__language__(33305))
 
-   GUIlog ("create main-menu")
+       GUIlog ("create main-menu")
 
-   time.sleep(1)
+       time.sleep(1)
  
-   xbmc.executebuiltin("Dialog.Close(busydialog)")
+       xbmc.executebuiltin("Dialog.Close(busydialog)")
 
-   menu01 = GUIMain01Class()
-   del menu01
+       menu01 = GUIMain01Class()
+       del menu01
 
-   GUIlog ("addon-ended")   
+       GUIlog ("addon-ended")
+   
    
 #########################################################
 #########################################################

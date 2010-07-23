@@ -151,5 +151,6 @@
         <string id="33312">DVD-chapters could not be read</string>  
         <string id="33313">Problem with generated audio-tracklist</string> 
         <string id="33314">Problem with generated subtitle-tracklist</string>    
+        <string id="33315">Makemkv licence expired. Bluray-functions are disabled </string>      
 
  </strings>
