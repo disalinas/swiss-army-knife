@@ -90,19 +90,8 @@ excluded 2 debian files witch has to be installed by you.
 - it creates all directorys for ripping and transcoding 
 - it will prepare the ssh-server and client to login without 
   any password.
- 
-If you are using a 32 system please download this :
-
-wget http://swiss-army-knife.googlecode.com/files/swiss-army-knife-deb-32.zip
-
-If you are using a 64 system please donwload this :
-
-wget http://swiss-army-knife.googlecode.com/files/swiss-army-knife-deb-64.zip
-
-Install both of the provided debian-files for your system (32 or 64).
-
-dpkg -i packetname 1
-dpkg -i packetname 2
+- Depend on your system handbrake and makemkv are installed
+  (32 or 64 bit)
  
 This debian-filea are only tested on Ubuntu 10.04 LTS.If you don't use 
 a debian based system or your system is to old, you have to compile 
@@ -111,10 +100,6 @@ only on the project-page.
 
 http://swiss-army-knife.googlecode.com/files/swiss-army-knife-src-external.zip
 
-
-If you don't trust my 2 packages you have to build also your own packages.
-In a later release I may do include the installing of the 2 packages inside
-the the setup.sh script, but by now YOU MUST THEM INSTALL WITH DPKG !!!!
 
 The next step to running this addon is to complete the setup with valid 
 settings over xbmc. Open the xbmc addon-manager and enable the addon, if you 
@@ -128,7 +113,17 @@ Do change the settings to your needs like ...
 * Enable or disable some functions
 
 and many more .....
+
+5.1 Licence key for makekmv 
+
+* Get a valid licence key for makemkv 
  
+http://www.makemkv.com/forum2/viewtopic.php?f=5&t=1053
+
+* Start makemkv an do the following :
+
+-> Help -> Register -> new code from above link
+
 6.O Using the addon and have fun 
 
 Lucern, Switzerland 
