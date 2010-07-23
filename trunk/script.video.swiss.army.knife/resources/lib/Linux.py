@@ -170,6 +170,8 @@ def OSConfiguration(index):
 
     # All used internal files are stored inside after here ...
 
+    config[27] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.valid' 
+    config[28] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.invalid'
     config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
@@ -214,51 +216,6 @@ def OSConfiguration(index):
     __temp_files__.append(config[48])
     __temp_files__.append(config[49])
 
-
-
-
-    # Do log all settings inside xbmc.log
-
-    if (__verbose__ == 'true'):
-        OSlog("Configuration 00 reading : " + config[0])
-        OSlog("Configuration 01 reading : " + config[1])
-        OSlog("Configuration 02 reading : " + config[2])
-        OSlog("Configuration 03 reading : " + config[3])
-        OSlog("Configuration 04 reading : " + config[4])
-        OSlog("Configuration 05 reading : " + config[5])
-        OSlog("Configuration 06 reading : " + config[6])
-        OSlog("Configuration 07 reading : " + config[7])
-        OSlog("Configuration 08 reading : " + config[8])
-        OSlog("Configuration 09 reading : " + config[9])
-        OSlog("Configuration 10 reading : " + config[10])
-        OSlog("Configuration 11 reading : " + config[11])
-        OSlog("Configuration 12 reading : " + config[12])
-        OSlog("Configuration 13 reading : " + config[13])
-        OSlog("Configuration 14 reading : " + config[14])
-        OSlog("Configuration 15 reading : " + config[15])
-        OSlog("Configuration 16 reading : " + config[16])
-        OSlog("Configuration 17 reading : " + config[17])
-        OSlog("Configuration 18 reading : " + config[18])
-
-        OSlog("Configuration 30 reading : " + config[30])
-        OSlog("Configuration 31 reading : " + config[31])
-        OSlog("Configuration 32 reading : " + config[32])
-        OSlog("Configuration 33 reading : " + config[33])
-        OSlog("Configuration 34 reading : " + config[34])
-        OSlog("Configuration 35 reading : " + config[35])
-        OSlog("Configuration 36 reading : " + config[36])
-        OSlog("Configuration 37 reading : " + config[37])
-        OSlog("Configuration 38 reading : " + config[38])
-        OSlog("Configuration 40 reading : " + config[40])
-        OSlog("Configuration 41 reading : " + config[41])
-        OSlog("Configuration 42 reading : " + config[42])
-        OSlog("Configuration 43 reading : " + config[43])
-        OSlog("Configuration 44 reading : " + config[44])
-        OSlog("Configuration 45 reading : " + config[45])
-        OSlog("Configuration 46 reading : " + config[46])
-        OSlog("Configuration 47 reading : " + config[47])
-        OSlog("Configuration 48 reading : " + config[48])
-        OSlog("Configuration 49 reading : " + config[49])
 
     # Store configuration inside modul global list
 
@@ -1750,3 +1707,34 @@ def OSSetupDone():
         return 0
 
 #########################################################
+
+
+
+
+
+
+#########################################################
+# Function  : OSCheckLicence                            #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 1           makemkv use a valid licence               #
+# 0           makemkv use a expired licence             #
+#                                                       #
+#########################################################
+def OSCheckLicence():
+
+    global __configLinux__
+    global __verbose__
+
+    OSRun("check-mkv.sh ",False,False)   
+    if (os.path.exists(__configLinux__[27])):
+        return 1
+    else:
+        return 0
+
+#########################################################
+
+

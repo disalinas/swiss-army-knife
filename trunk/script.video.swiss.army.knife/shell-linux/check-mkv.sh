@@ -24,8 +24,8 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
+rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv* > /dev/null 2>&1
 
-#STATE="This application version is too old"
 STATE=$(makemkvcon info | tail -1)
 
 INVALID=$(echo $STATE | grep -c "^This application")
@@ -33,11 +33,13 @@ INVALID=$(echo $STATE | grep -c "^This application")
 if [ $INVALID == "1" ] ; then
    echo
    echo makekmkvcon is using a expired licence-key
+   echo 1 > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.invalid
 fi
 
 if [ $INVALID == "0" ] ; then
    echo
    echo makekmkvcon is using a valid licence-key
+   echo 1 > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.valid
 fi
 
 echo
