@@ -802,9 +802,14 @@ if __name__ == '__main__':
        # Bluray-directory is only included if the functions are enabled
 
        if (__enable_bluray__ == "true"):
-          if (OSCheckContainerID(2)):
-             GUIInfo(1,__language__(33307)) 
-     
+          state = OSCheckLicence()
+          if (state == 1):
+              if (OSCheckContainerID(2)):
+                  GUIInfo(1,__language__(33307))
+          else:
+               __enable_bluray__ = "false"
+               GUIInfo(1,__language__(33315))
+      
        if (OSCheckContainerID(1)):
            GUIInfo(1,__language__(33306))
 
