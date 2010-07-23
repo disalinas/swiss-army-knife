@@ -86,8 +86,24 @@ user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$
  * $4 bluraytrack to export
 ----------------------------------------------------------------------------------------
  * Description : Generates a mkv file from a specific track from a bluray.
- * Sample : *./bluray-transcode.sh /dev/sr0 /dvdrip/bluray 300 1*
+ * Sample : *./bluray-transcode.sh /dev/sr0 /dvdrip/bluray 300tr1 1*
  * Output :
 {{{
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./bluray-transcode.sh /dev/sr0 /dvdrip/bluray 300tr1 1
 
+----------------------------------------------------------------------------
+script    : bluray-transcode.sh
+version   : 0.6.11 [swiss-army-knife addon]
+copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
+changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+----------------------------------------------------------------------------
+
+INFO processing data
+
+......
+
+INFO processing data done
+
+----------------------- script rc=0 -----------------------------
+-----------------------------------------------------------------
 }}}
