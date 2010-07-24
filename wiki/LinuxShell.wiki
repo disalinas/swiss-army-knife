@@ -282,7 +282,7 @@ user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$
  * $3 iso-name without any extension 
 ----------------------------------------------------------------------------------------
  * Description : save a dvd to a local iso file 
- * Sample : *./bluray-chapter.sh /dev/sr0*
+ * Sample : *./dvd-iso.sh /dev/sr0 /dvdrip/iso 300*
  * Output :
 {{{
 user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-iso.sh /dev/sr0 /dvdrip/iso 300 
