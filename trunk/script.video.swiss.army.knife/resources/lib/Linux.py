@@ -1738,3 +1738,73 @@ def OSCheckLicence():
 #########################################################
 
 
+
+
+#########################################################
+# Function  : OSDVDcopyToIsoRescque                     #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           ISO-Copy-process not startet              #
+# 1           ISO-Copy-process startet                  #
+#                                                       #
+#########################################################
+def OSDVDcopyToIsoResque():
+
+    global __configLinux__
+    global __exec_dvd__
+    global __verbose__
+
+    parameters = len(__exec_dvd__)
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # Execution of shell-script dvd3.sh inside shell-linux
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd5.sh command ready to start")
+
+    # Prepare command string
+
+    dvd_command = ""
+    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2]
+
+    if (__verbose__ == 'true'):
+        OSlog("final :" + dvd_command)
+
+    OSRun("dvd5.sh " + dvd_command,True,False)
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-resque.sh command executed")
+
+    # Now we do loop until the PID-file exists
+
+    time.sleep(8)
+
+    WCycles = 5
+    Waitexit = True
+    while (Waitexit):
+           if (os.path.exists(__configLinux__[32])):
+               if (__verbose__ == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 20):
+               if (__verbose__ == 'true'):
+                   OSlog("Timeout reached for dvd-iso-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0
+
+    # Clean exec-array dvd
+
+    for index in range((parameters - 1),0):
+        del  __exec_dvd__[index]
+
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+
+#########################################################

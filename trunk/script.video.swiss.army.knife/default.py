@@ -528,7 +528,49 @@ class GUIExpertWinClass(xbmcgui.Window):
                      GUIInfo(0,__language__(33308))    
 
              if (choice == 3):
-                 GUIInfo(1,__language__(33205)) 
+                 Lock = OSCheckLock(__configuration__[1])
+                 if (Lock == 0):
+                     dvd_info = xbmc.getDVDState()
+                     if (dvd_info == 4):
+                         DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 2):
+                             GUIInfo(0,__language__(33302)) 
+                         if (DVDState == 1):
+                             GUIInfo(0,__language__(33311))
+                         if (DVDState == 0):
+                             tracklist = []
+                             tracklist = OSChapterDVD()
+                             if (tracklist[0] != 'none'):
+                                 executeList = []
+                                 executeList = OSDVDExecuteList(False)   
+
+                                 execlist = []
+
+                                 savedir = GUISelectDir() 
+                                 volname = OSDVDVolume()
+                                 volname = GUIEditExportName(volname)                      
+ 
+                                 # Update parameters for the OS-Part DVD
+
+                                 execlist.append(__configuration__[1])
+                                 execlist.append(savedir)
+                                 execlist.append(volname)
+
+                                 OSDVDAdd(execlist)      
+ 
+                                 execstate = OSDVDcopyToIsoResque() 
+  
+                                 if (execstate == 0):
+                                     GUIInfo(2,__language__(33211))
+                                 if (execstate == 1):
+                                     GUIInfo(0,__language__(33210))
+                                     __jobs__ = True                                
+                             else:
+                                 GUIInfo(0,__language__(33312)) 
+                     else:
+                         GUIInfo(0,__language__(33309))
+                 else:
+                     GUIInfo(0,__language__(33308))
 
              if (choice == 4):
                  GUIInfo(1,__language__(33205)) 
