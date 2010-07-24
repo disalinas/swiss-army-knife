@@ -165,9 +165,10 @@ INFO track-index:[05] length:[00:00:47.160] chapters:[01]
 
 
 INFO automatic selected track from inserted dvd [01]
+INFO default language 1 [en]
+INFO default lang-1 : index=0
 
 ----------------------- script rc=0 -----------------------------
 -----------------------------------------------------------------
 user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
-
 }}}
