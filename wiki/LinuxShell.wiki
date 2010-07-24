@@ -227,7 +227,6 @@ user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$
  * Description : Create a mkv from a DVD-Track 
  * Sample : *./dvd-handbrake.sh /dev/sr0 /dvdrip/dvd 300tr3 3 0 -a 1 -s 0*
  * Output :
-
 {{{
 ser@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-handbrake.sh /dev/sr0 /dvdrip/dvd 300tr3 3 0 -a 1 -s 0
 
