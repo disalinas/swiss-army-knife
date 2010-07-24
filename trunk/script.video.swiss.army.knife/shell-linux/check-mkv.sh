@@ -10,7 +10,7 @@
 # parameters :                                            #
 # $1 user                                                 #
 # description :                                           #
-# test if makekmkv is using a old licence-key             #
+# test if makemkv is using a old licence-key              #
 ###########################################################
 
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
@@ -32,13 +32,13 @@ INVALID=$(echo $STATE | grep -c "^This application")
 
 if [ $INVALID == "1" ] ; then
    echo
-   echo makekmkvcon is using a expired licence-key
+   echo makemkvcon is using a expired licence-key
    echo 1 > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.invalid
 fi
 
 if [ $INVALID == "0" ] ; then
    echo
-   echo makekmkvcon is using a valid licence-key
+   echo makemkvcon is using a valid licence-key
    echo 1 > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.valid
 fi
 
