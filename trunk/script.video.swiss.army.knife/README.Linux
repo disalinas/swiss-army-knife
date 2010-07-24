@@ -130,9 +130,18 @@ are completly disabled. You must renew your makemmkv-licence key !!!
 Little Tip: 
 
 -----------------------------------------------------------------
-Do set the computer to a  previous date and do set a new key :-) 
+Do set the computer to a previous date and do set a new key :-) 
 -----------------------------------------------------------------
 
+
+5.2 What should you do if you have a error ? 
+
+- Be sure to read the logs ...
+- Be sure that the ssh-communication is correct (test ssh-communication) inside 
+  the addon.
+- Check the permissions of the shell-script folder. 
+- Check the permissions of the data-containers. 
+- Have a cool drink ;-)
 
 
 6.O Using the addon and have fun 
