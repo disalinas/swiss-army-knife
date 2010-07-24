@@ -132,11 +132,20 @@ makemkvcon is using a valid licence-key
 -----------------------------------------------------------------
 root@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux# 
 }}}
-
-
-
-
+----------------------------------------------------------------------------------------
+== dvd-chapter.sh  ==
+----------------------------------------------------------------------------------------
+ * Number of arguments : 2
+----------------------------------------------------------------------------------------
+ * $1 device for dvd /dev/sr0
+ * $2 automode 1 or 0 (default 1)
+----------------------------------------------------------------------------------------
+ * Description : Generate a list of all tracks from a DVD (par.1) 
+ * Sample : *./dvd-chapter.sh /dev/sr0 1*
+ * Output :
 {{{
+ser@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-chapter.sh /dev/sr0 1
+
 ----------------------------------------------------------------------------
 script    : dvd-chapter.sh
 version   : 0.6.11 [swiss-army-knife addon]
@@ -160,5 +169,4 @@ INFO default lang-1 : index=0
 ----------------------- script rc=0 -----------------------------
 -----------------------------------------------------------------
 user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
-
 }}}
