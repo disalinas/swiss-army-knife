@@ -212,3 +212,64 @@ Subtitle: 04 Language: de - Deutsch
 user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
 
 }}}
+
+----------------------------------------------------------------------------------------
+== dvd-handbrake.sh  ==
+----------------------------------------------------------------------------------------
+ * Number of arguments : 5 (optional up to 9)
+----------------------------------------------------------------------------------------
+ * $1 device for dvd /dev/sr0
+ * $2 directory to store the generated mkv file
+ * $3 name of the mkv-file without any extension
+ * $4 track from dvd (warning : indexes do start with 1 !!!)
+ * $5 audio-language to extract (index only)
+----------------------------------------------------------------------------------------
+ * Description : Create a mkv from a DVD-Track 
+ * Sample : *./dvd-handbrake.sh /dev/sr0 /dvdrip/dvd 300tr3 3 0 -a 1 -s 0*
+ * Output :
+
+{{{
+ser@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-handbrake.sh /dev/sr0 /dvdrip/dvd 300tr3 3 0 -a 1 -s 0
+
+----------------------------------------------------------------------------
+script    : dvd-handbrake.sh
+version   : 0.6.11 [swiss-army-knife addon]
+copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
+changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+----------------------------------------------------------------------------
+
+INFO starting mencoder
+INFO mencoder command executed
+
+
+INFO processing data pass 1 of 3
+
+........................................................................................................................................................................................................................................................................
+
+INFO processing data pass 1 of 3 done
+
+
+INFO starting HandBrakeCLI
+INFO HandBrakeCLI command executed
+
+
+INFO processing data pass 2 of 3
+
+.....................................................................................
+
+INFO processing data pass 2 of 3 done
+
+
+INFO processing data pass 3 of 3
+
+...............................................................................................................................................................................................................................................................................................................................................................................................
+
+INFO processing data pass 3 of 3 done
+
+
+processing data done
+
+----------------------- script rc=0 -----------------------------
+-----------------------------------------------------------------
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
+}}}
