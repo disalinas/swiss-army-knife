@@ -134,3 +134,40 @@ root@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux#
 
 
 }}}
+
+--------------------------------------------------------------------------------------
+== dvd-chapter.sh  ==
+----------------------------------------------------------------------------------------
+ * Number of arguments : 2
+----------------------------------------------------------------------------------------
+  * $1 device for dvd /dev/sr0
+  * $2 automode set to 1 or 0 (default 1)
+----------------------------------------------------------------------------------------
+ * Description : Generate a list of all tracks from a DVD (par.1) 
+ * Sample : *./dvd-chapter.sh /dev/sr0 1*
+ * Output :
+{{{
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-chapter.sh /dev/sr0 1
+
+----------------------------------------------------------------------------
+script    : dvd-chapter.sh
+version   : 0.6.11 [swiss-army-knife addon]
+copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
+changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+----------------------------------------------------------------------------
+
+INFO track-index:[00] length:[01:51:50.240] chapters:[30]
+INFO track-index:[01] length:[00:00:12.020] chapters:[01]
+INFO track-index:[02] length:[00:06:41.240] chapters:[01]
+INFO track-index:[03] length:[00:00:47.020] chapters:[01]
+INFO track-index:[04] length:[00:04:43.050] chapters:[02]
+INFO track-index:[05] length:[00:00:47.160] chapters:[01]
+
+
+INFO automatic selected track from inserted dvd [01]
+
+----------------------- script rc=0 -----------------------------
+-----------------------------------------------------------------
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
+
+}}}
