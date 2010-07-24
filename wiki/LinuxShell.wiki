@@ -307,3 +307,38 @@ INFO processing data done
 -----------------------------------------------------------------
 user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
 }}}
+----------------------------------------------------------------------------------------
+== dvd-resque.sh  ==
+----------------------------------------------------------------------------------------
+ * Number of arguments : 3
+----------------------------------------------------------------------------------------
+ * $1 device for bluray /dev/sr0
+ * $2 directory to store the iso 
+ * $3 iso-name without any extension 
+----------------------------------------------------------------------------------------
+ * Description : save a dvd to a local iso file even with possible crc-errors 
+ * Sample : *./dvd-resque.sh /dev/sr0 /dvdrip/iso 300*
+ * Output :
+{{{
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-rescue.sh /dev/sr0 /dvdrip/iso 300resque 
+
+----------------------------------------------------------------------------
+script    : dvd-rescue.sh
+version   : 0.6.11 [swiss-army-knife addon]
+copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
+changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+----------------------------------------------------------------------------
+
+INFO expected iso-size in bytes [6332686336]
+INFO starting ddrescue
+INFO processing data
+
+........................................................................................................................................................................................................................................................................................................................................................................................................................................
+
+INFO processing data done
+
+
+----------------------- script rc=0 -----------------------------
+-----------------------------------------------------------------
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
+}}}
