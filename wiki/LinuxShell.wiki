@@ -107,3 +107,30 @@ INFO processing data done
 ----------------------- script rc=0 -----------------------------
 -----------------------------------------------------------------
 }}}
+
+---------------------------------------------------------------------------------------
+== check-mkv.sh  ==
+----------------------------------------------------------------------------------------
+ * Number of arguments : none
+----------------------------------------------------------------------------------------
+ * Description : Do check if makemkv is running with a expired licence-key 
+ * Sample : *./check-mkv.sh*
+ * Output :
+{{{
+root@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux# ./check-mkv.sh 
+
+----------------------------------------------------------------------------
+script    : check-mkv.sh
+version   : 0.6.11 [swiss-army-knife addon]
+copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
+changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+----------------------------------------------------------------------------
+
+makemkvcon is using a valid licence-key
+
+----------------------- script rc=0 -----------------------------
+-----------------------------------------------------------------
+root@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux# 
+
+
+}}}
