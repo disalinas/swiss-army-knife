@@ -42,7 +42,8 @@ Changes:
 - removed the debian-files for 32 and 64 Sytems.
 - setup.sh now do install handbrake or makekmkv on request.
 - setup.sh do detect if the software should be install for 32 or 64
-- Detect old licence-key for makekmkv and show a message inside addon. 
+- Detect old licence-key for makekmkv and show a message inside addon.
+- Testing bluray-part after all changes. 
 
 
 
