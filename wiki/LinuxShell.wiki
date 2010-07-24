@@ -131,11 +131,12 @@ makemkvcon is using a valid licence-key
 ----------------------- script rc=0 -----------------------------
 -----------------------------------------------------------------
 root@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux# 
-
-
 }}}
-user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-chapter.sh /dev/sr0 1
 
+
+
+
+{{{
 ----------------------------------------------------------------------------
 script    : dvd-chapter.sh
 version   : 0.6.11 [swiss-army-knife addon]
