@@ -132,7 +132,7 @@ echo 32154 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/
 echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
 echo -n $2/$3.iso > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
 echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-ps axu | grep "ddrescue -r -1 -b 2048" | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+ps axu | grep "ddrescue" | head -1 |  grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 
 echo INFO processing data
 echo
