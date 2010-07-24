@@ -170,3 +170,45 @@ INFO default lang-1 : index=0
 -----------------------------------------------------------------
 user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
 }}}
+----------------------------------------------------------------------------------------
+== dvd-atracks.sh  ==
+----------------------------------------------------------------------------------------
+ * Number of arguments : 2
+----------------------------------------------------------------------------------------
+ * $1 device for dvd /dev/sr0
+ * $2 track from dvd (warning : indexes do start with 1 !!!)
+----------------------------------------------------------------------------------------
+ * Description : Generate a list of all tracks from a DVD (par.1) 
+ * Sample : *./dvd-atracks.sh /dev/sr0 1*
+ * Output :
+{{{
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-atracks.sh /dev/sr0 1
+
+----------------------------------------------------------------------------
+script    : dvd-atracks.sh
+version   : 0.6.11 [swiss-army-knife addon]
+copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
+changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+----------------------------------------------------------------------------
+
+INFO audio-tracks from dvd-track [1]
+
+Audio: 1 Language: en - English
+Audio: 2 Language: de - Deutsch
+Audio: 3 Language: en - English
+Audio: 4 Language: en - English
+
+
+INFO subtitles-tracks from dvd-track [1]
+
+Subtitle: 01 Language: en - English
+Subtitle: 02 Language: de - Deutsch
+Subtitle: 03 Language: en - English
+Subtitle: 04 Language: de - Deutsch
+
+
+----------------------- script rc=0 -----------------------------
+-----------------------------------------------------------------
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
+
+}}}
