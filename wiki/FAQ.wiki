@@ -5,6 +5,21 @@
  * With linux you have the choice between : ext2,ext3,ext4,xfs and reiserfs. I would choose xfs.
 ===                            ====
 ===                            ====
+===I do not like the the default place /dvdrip to store my videos ?===
+---------------------------------------------------------------------------------------
+===                            ====
+ * By default 3 directorys inside the */* root-fs are created
+ * */dvdrip/iso*
+ * */dvdrip/dvd*
+ * */dvdrip/bluray* 
+== == 
+ * You can replace this 3 directorys to any directory you like to do.
+== ==
+ * No spaces " " inside the direcory-name.
+ * The 3 directorys you have chosen must be writeable with your current xbmc-user.
+ * Change the addon settings to your desired directorys. 
+===                            ====
+===                            ====
 ===Could the rip-containers be placed inside a NAS ?===
 -----------------------------------------------------------------------------------------
 ===                            ====
