@@ -1,7 +1,7 @@
 ==== =====
 ==== =====
 ==== =====
-= Generic api-functions for all shell-scripts=
+=== Generic api-functions for all shell-scripts === 
 
   * Are valid for any action -> copy to iso , transcoding or copy 
   * The gui-handling will only work with the above files.
@@ -12,7 +12,7 @@
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/JOB ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB ===
 ------------------------------------------------------------------------------------------
  * As long a transcode or ripping function is running this file do exist
  * Valid values : /dev/sr0 or a file-name
@@ -26,7 +26,7 @@ Note : This file is used as a lock.
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/media/state ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state ===
 ------------------------------------------------------------------------------------------
  * Contains a detailed state about the inserted disk 
  * Valid values : BLURAY or DVD-ROM
@@ -38,7 +38,7 @@ BLURAY
 ==== ====
 ==== ====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/progress/progress ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress ===
 ------------------------------------------------------------------------------------------
  * Progress from 0-101. This value will be used to display progress-bar inside the gui 
  * Valid Values : 0-101 
@@ -57,7 +57,7 @@ BLURAY
 ==== ====
 ==== ====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/progress/progress-pid ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid ===
 ------------------------------------------------------------------------------------------
  * contains all the pid's that would be needed to kill the current transaction over the gui
  * On or more PIDs that should be killed.If multiple pid are writtem has every a single line.
@@ -69,7 +69,7 @@ BLURAY
 88939
 }}}
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/progress/progress-files ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files ===
 ------------------------------------------------------------------------------------------
  * contains all the files including full path that could be removed in the case th user wishes to abbort.
  * Every file use at least one line.
@@ -79,7 +79,7 @@ BLURAY
 }}}
 
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/progress/progress-done===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done===
 ------------------------------------------------------------------------------------------
  * This file is the trigger for the GUI that all actions are done 
  * Example (progress-done)
@@ -93,7 +93,7 @@ DONE
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/progress/stages-counter ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter ===
 ------------------------------------------------------------------------------------------
  * How may stages the pending process or processes will have ....
  * Valid Values : 1-XX
@@ -109,7 +109,7 @@ DONE
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/progress/stages-descriptions ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions ===
 ------------------------------------------------------------------------------------------
  * Descriptions to stages. This text will be shown inside the gui  
  * Example (stages-descriptions)
@@ -138,7 +138,7 @@ DONE
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/bluray/BR_VOLUME ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/BR_VOLUME ===
 ------------------------------------------------------------------------------------------
  * Contains the volume name of bluray
  * All spaces or non asci chars should be removed inside the script.
@@ -150,7 +150,7 @@ DONE
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/bluray/BR_TRACKS ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/BR_TRACKS ===
 ------------------------------------------------------------------------------------------
  * Contains the list of all tracks witch could be later selected inside the gui.
    * The shell-script musst produce this list or the selection list will not show up.
@@ -179,7 +179,7 @@ TRACK : [9] DURATION : [0:05:51] CHAPTERS : [0]
 ==== =====
 ==== =====
 ------------------------------------------------------------------------------------------
-=== File .xbmc/userdata/addon_data/script-video-ripper/dvd/DVD_VOLUME ===
+=== File .xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_VOLUME ===
 ------------------------------------------------------------------------------------------
  * Contains the volume name of dvd
  * All spaces or non asci chars should be removed inside the script.
