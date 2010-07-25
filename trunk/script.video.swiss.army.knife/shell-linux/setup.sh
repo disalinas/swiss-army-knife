@@ -142,6 +142,10 @@ if [ ! -e /dvdrip/iso ] ; then
    chown -R $1:$1 /dvdrip/iso
 fi
 
+if [ ! -e /dvdrip/dvd ] ; then
+   mkdir /dvdrip/dvd
+   chown -R $1:$1 /dvdrip/dvd
+fi
 
 if [ ! -e /dvdrip/bluray ] ; then
    mkdir /dvdrip/bluray
