@@ -18,19 +18,19 @@
 
  * Following user directorys are created if you run the script with *./setup.sh xbmc*.
 
- * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper
- * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/bluray
-/home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/dvd
- * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/log
- * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/progress
- * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/tmp
- * /home/xbmc/.xbmc/userdata/addon_data/script-video-ripper/media
+ * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife
+ * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray
+ * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
+ * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log
+ * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress
+ * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+ * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
 
  * Following rip-containers are created.
 
  * /dvdrip/iso          
  * /dvdrip/dvd         
- * dvdrip/bluray       
+ * /dvdrip/bluray       
 
  * medibuntu is added to your /etc/apt/sources.list and the following software is installed
   
@@ -41,6 +41,7 @@
  * mkisofs
  * dvd+rw-tools
  * lsdvd
+ * gddresque
  * submux-dvd
  * submux-dvd
  * transcode 
@@ -80,11 +81,10 @@
  * Yes. For this reason I plan to implement a function to enable / disable all bluray functions inside the setting with a radio-button.
 ===                            ====
 ===                            ====
-===Is this script running only on Ubuntu based systems ?==
+===Is this script setup.sh running only on Ubuntu based systems ?==
 -----------------------------------------------------------------------------------------
 ===                            ==== 
-  * No. But I can only provide debian packages for handbrake and makekmkv.
-  * If you would send me the 2 packages in a other format (rpm as exmaple) I can store them inside the script. If you would also send me a new setup.sh for your Linux would be great.(I guess you have to send 32 and 64 Bit releases...)
+  * Yes.But it should be easy to change it for a system other than Ubuntu.
 ===   ===
 ===   === 
 ===Could the provided shell-scripts be replaced with own scripts ?==
@@ -132,11 +132,6 @@ Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)
 ===                            ==== 
   * read the xbmc.log and make a copy for the error-ticket.
   * Create a error-ticket. (http://code.google.com/p/swiss-army-knife/issues/list
-  * Tickets without a valid xbmc.log (and may other logs from the log-directory) wonna be set to invalid.
-
-  
-
-
-
+  * Tickets without a valid xbmc.log (and may other logs from the log-directory) are be set to invalid.
 
  
