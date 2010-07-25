@@ -18,8 +18,17 @@ Changes:
 - Created svn branch 0.6.11 
 
 
+----------------------------------------------------------------------------------------------------
+Date : 07.26.2010 | Release : 0.6.12    | Author  : H.Weber | CVS:217-
+----------------------------------------------------------------------------------------------------
 
+Changes:
 
+- created folder shell-linux/master and shell-linux/slave
+
+Fixes:
+
+- setup.sh did not create directory /dvdrip/dvd (fixed 217)
 
 
 

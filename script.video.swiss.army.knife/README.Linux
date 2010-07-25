@@ -145,17 +145,25 @@ Do not try to remove the makemkv files and reinstall them.
 - Check the permissions of the shell-script folder. 
 - Check the permissions of the data-containers. 
 - Have a cool drink ;-)
+- Have a look into the F.A.Q (http://code.google.com/p/swiss-army-knife/wiki/FAQ)
 - I also recommand to test the shell-functions inside a terminal with your current 
   user.
   
   http://code.google.com/p/swiss-army-knife/wiki/LinuxShell
 
+5.3 Feedback 
+
+http://code.google.com/p/swiss-army-knife/wiki/Feedback
+
+5.4 Bugtracking 
+
+http://code.google.com/p/swiss-army-knife/issues/list
 
 
 6.O Using the addon and have fun 
 
 Lucern, Switzerland 
-07.21.2010 
+07.26.2010 
 linuxluemmel.ch@gmail.ch alias Hans Weber 
 
  
