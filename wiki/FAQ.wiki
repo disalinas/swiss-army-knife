@@ -124,7 +124,7 @@
   * *But until my addon reached beta-level .... do not send anything ...  *
 
 Please do not send diffs or patches to my personal email linuxluemmel.ch@gmail.com 
-because I use this email on personal cell-phone.
+because I use this email on my personal cell-phone.
 
 Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)      
 === ===
@@ -133,8 +133,7 @@ Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)
 ===                            ==== 
   * No . As long makemkv remains beta there will allways be a key to onbtain here (http://www.makemkv.com/forum2/viewtopic.php?f=5&t=1053)
 
-  * If you receive the Message "Licence-key for makemkv expired" You have to replace your 
-current licence-key with a valid-key.
+  * If you receive the Message "Licence-key for makemkv expired" inside the addon You have to replace your current licence-key with a valid-key.
 
 === ===
 ===What is the default password for the Expert-Mode ?===
