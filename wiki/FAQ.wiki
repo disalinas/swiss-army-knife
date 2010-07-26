@@ -29,7 +29,7 @@
 ===Where is the script livecd.sh gone ?==
 -----------------------------------------------------------------------------------------
 ===                            ====
- * inside /linux/setup.sh is a replacement script.This script is for the user root.
+ * inside /linux-shell/setup.sh is a replacement script.This script is for the user root.
 
  * Following user directorys are created if you run the script with *./setup.sh xbmc*.
 
@@ -93,7 +93,8 @@
 ===I only a have dvd-drive. Can I use this addon without a blueray ?==
 -----------------------------------------------------------------------------------------
 ===                            ====
- * Yes. For this reason I plan to implement a function to enable / disable all bluray functions inside the setting with a radio-button.
+ * Yes. Inside the script-settings is a radio-button to enable / disable all bluray functions.
+
 ===                            ====
 ===                            ====
 ===Is this script setup.sh running only on Ubuntu based systems ?==
