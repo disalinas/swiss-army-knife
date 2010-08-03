@@ -8,7 +8,8 @@
 ###########################################################
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
-# $1 master netcat-port to get dd of                      #
+# $1 master-netcat-port 1                                 #
+# $2 master-netcat-port 2                                 #
 #                                                         #
 # description :                                           #
 # save a file over network                                #
@@ -20,7 +21,7 @@ echo
 echo ----------------------------------------------------------------------------
 SCRIPT=$(basename $0)
 echo "script    :" $SCRIPT
-cat version
+cat ../version
 echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
@@ -41,7 +42,7 @@ E_BADB=2
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: master-save.sh p1"
   echo
-  echo "[p1] netcat master port""
+  echo "[p1] netcat master port"
   echo
   echo "master-save.sh was called with wrong arguments"
   echo
@@ -51,7 +52,6 @@ if [ $# -lt $EXPECTED_ARGS ]; then
 fi
 
 
-
 # Define the commands we will be using inside the script ...
 
 REQUIRED_TOOLS=`cat << EOF
@@ -59,6 +59,26 @@ dd
 nc
 EOF`
 
+echo
+echo INFO processing data
+echo
+
+nc -4 -l $1 | dd of=/dvdrip/network/file.transfer &
+
+sleep 10
+
+# We kneed to know from where we are connected
+
+netstat -natup | grep $1
+
+LOOP=1
+while [ $LOOP -eq '1'  ];
+do
+  echo -n .
+  SIZET=$(ls -la /dvdrip/network/file.transfer | awk '{print $5}')
+  echo $SIZET |
+  sleep 10
+done
 
 
 
