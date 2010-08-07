@@ -68,9 +68,9 @@ echo
 
 nc -4 -l $1 | dd of=/dvdrip/network/file.transfer &
 
-echo timeout 180 secounds for slave-connection is starting now
+echo timeout 120 secounds for slave-connection is starting now
 
-sleep 180
+sleep 120
 
 # We kneed to know from where we are connected
 
@@ -82,6 +82,11 @@ if [ $REMOTE_IP == "0.0.0.0" ] ; then
 
    # the timeout-value -w has no effect in mode -l
    # therefore we need to kill with -9
+
+   PID2=$(ps axu | grep "dd of=/dvdrip/network/file.transfer" | grep -v grep |awk '{print $2}')
+   PID1=$(ps axu | grep "nc -4 -l $1" | grep -v grep |awk '{print $2}')
+
+   kill -9 $PID2 $PID1  > /dev/null 2>&1
 
    echo
    echo no connection from a client to port $1 was made.
