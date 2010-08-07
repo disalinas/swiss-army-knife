@@ -37,7 +37,7 @@ EXPECTED_ARGS=1
 # Error-codes
 
 E_BADARGS=1
-E_BADB=2
+E_TIMEOUT=2
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: master-save.sh p1"
@@ -55,7 +55,10 @@ fi
 # Define the commands we will be using inside the script ...
 
 REQUIRED_TOOLS=`cat << EOF
+tr
+awk
 dd
+netstat
 nc
 EOF`
 
@@ -65,21 +68,38 @@ echo
 
 nc -4 -l $1 | dd of=/dvdrip/network/file.transfer &
 
-sleep 10
+echo timeout 180 secounds for slave-connection is starting now
+
+sleep 180
 
 # We kneed to know from where we are connected
 
-netstat -natup | grep $1
+REMOTE_IP=$(netstat -natup | grep $1 | awk '{print $4}' | tr ':' ' ' | awk '{print $1}')
+
+# If we do not have a connection it is time to say goodbye .....
+
+if [ $REMOTE_IP == "0.0.0.0" ] ; then
+
+   # the timeout-value -w has no effect in mode -l
+   # therefore we need to kill with -9
+
+   echo
+   echo no connection from a client to port $1 was made.
+   echo master-script do exit now ...
+   echo
+   echo ----------------------- script rc=2 -----------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TIMEOUT
+fi
 
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
   echo -n .
   SIZET=$(ls -la /dvdrip/network/file.transfer | awk '{print $5}')
-  echo $SIZET |
+  echo $SIZET | nc -4 $REMOTE_IP $2
   sleep 10
 done
-
 
 
 echo
