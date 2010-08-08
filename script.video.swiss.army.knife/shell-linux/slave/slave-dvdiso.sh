@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# scriptname : master-save.sh                             #
+# scriptname : slave-dvdiso.sh                            #
 ###########################################################
 # This script is part of the addon swiss-army-knife for   #
 # xbmc and is licenced under the gpl-licence              #
@@ -10,12 +10,14 @@
 # parameters :                                            #
 # $1 master-netcat-port 1                                 #
 # $2 master-netcat-port 2                                 #
+# $3 dvd-devive to send image over the network            #
+# $4 master ip-adress or dns-name                         #
 #                                                         #
 # description :                                           #
-# save a file over the network to this master             #
+# save a file over the network to a master station        #
 ###########################################################
 
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux/master"
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux/slave"
 
 echo
 echo ----------------------------------------------------------------------------
@@ -26,29 +28,31 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
-OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/master-save.log"
-TMP="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/master-save.tmp"
-SIZE_TRANSFER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/size-transfer-to-client.tmp"
+OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/slave-dvdiso.log"
+SIZE_TRANSFER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/size-transfer-from-server.tmp"
 
 
 # Define the counting commands we expect inside the script
 
-EXPECTED_ARGS=2
+EXPECTED_ARGS=4
 
 # Error-codes
 
 E_BADARGS=1
 E_TIMEOUT=2
 E_TOOLNOTF=3
+E_BADB=4
 
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: master-save.sh p1 p2"
+  echo "Usage: slave-dvdiso.sh p1 p2 p3 p4"
   echo
   echo "[p1] netcat master port 1 dd-operation"
   echo "[p2] netcat master port 2 transfer size"
+  echo "[p3] dvd-device"
+  echo "[p4] master ip-adress or dns-name"
   echo
-  echo "master-save.sh was called with wrong arguments"
+  echo "slave-dvdiso.sh was called with wrong arguments"
   echo
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------
@@ -65,6 +69,7 @@ dd
 netstat
 nc
 sleep
+isoinfo
 EOF`
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
@@ -83,60 +88,74 @@ do
    fi
 done
 
+# break css by force
+
+lsdvd -a $3 >/dev/null 2>&1
+
+blocksize=`isoinfo -d -i $3  | grep "^Logical block size is:" | cut -d " " -f 5`
+if test "$blocksize" = ""; then
+   echo
+   echo catdevice FATAL ERROR: Blank blocksize
+   echo catdevice FATAL ERROR: Blank blocksize > $OUTPUT_ERROR
+   echo
+   echo ----------------------- script rc=4 -----------------------------
+   echo -----------------------------------------------------------------
+   exit $E_BADB
+fi
+
+
+# Get Blockcount
+
+blockcount=`isoinfo -d -i $3 | grep "^Volume size is:" | cut -d " " -f 4`
+if test "$blockcount" = ""; then
+   echo
+   echo catdevice FATAL ERROR: Blank blockcount
+   echo catdevice FATAL ERROR: Blank blockcount > $OUTPUT_ERROR
+   echo
+   echo ----------------------- script rc=4 -----------------------------
+   echo -----------------------------------------------------------------
+   exit $E_BADB
+fi
+
+
+SIZE1=$(($blocksize * $blockcount))
+echo
+echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
+
 echo
 echo INFO processing data
 echo
 
-nc -4 -u -l $1 | dd of=/dvdrip/network/file.transfer > /dev/null 2>&1  &
+dd bs=2048 if=$3 | nc -4 -u $4 $1 > /dev/null 2>&1
 
-echo timeout 120 secounds for slave-connection is starting now
+echo timeout 5 secounds for master-connection is starting now
 
-CONNECT=""
+sleep 5
+
+PID1=$(ps axu | grep "nc -4 u $4 $1" | grep -v grep |awk '{print $2}')
+
+if [ $PID1 == "" ] ; then 
+   echo
+   echo no connection to master port $1 with ip:$4 possible.
+   echo slave-script do exit now ...
+   echo
+   echo ----------------------- script rc=2 -----------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TIMEOUT
+fi
+
+echo
+echo INFO connected to host:$4
+echo
+
+CONNECT=0
 TIMEOUT=1
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
-  # We kneed to know from where we are connected
-
-  REMOTEIP=$(netstat -tunl | grep $1 | awk '{print $4}' | tr ':' ' ' | awk '{print $1}')
-
-  if [ "$REMOTEIP" == "0.0.0.0" ] ; then
-      CONNECT=""
-  else
-      echo -n .
-      PID1=$(ps axu | grep "nc \-4 \-u \-l $1" | grep -v grep | awk '{print $2}')
-      netstat -tunp > $TMP 2>$TMP
-      REMOTEIP=$(cat $TMP  | grep $1 | grep $PID1 | awk '{print $5}' | tr ':' ' ' | awk '{print $1}')
-      SIZET=$(ls -la /dvdrip/network/file.transfer | awk '{print $5}')
-      CONNECT=1
-      echo $SIZET > $SIZE_TRANSFER
-      dd if=$SIZE_TRANSFER | nc -u -4 $REMOTEIP $2
-  fi
-
-  # After 120 secounds and no active connection we have reached timeout
-
-  if [ -z "$CONNECT" ] ; then
-     if [ $TIMEOUT -gt 120 ] ; then
-        if [ -z  $REMOTEIP ] ; then
-
-           PID2=$(ps axu | grep "dd of=/dvdrip/network/file.transfer" | grep -v grep |awk '{print $2}')
-           PID1=$(ps axu | grep "nc \-4 \-u \-l $1" | grep -v grep |awk '{print $2}')
-           kill -9 $PID2 $PID1 > /dev/null 2>&1
-
-           echo
-           echo no connection from a client to port $1 was made.
-           echo master-script do exit now ...
-           echo
-           echo ----------------------- script rc=2 -----------------------------
-           echo -----------------------------------------------------------------
-           exit $E_TIMEOUT
-        fi
-     fi
-  fi
-
+  nc -4 -u -l $2 | dd of=$SIZE_TRANSFER
+  cat $SIZE_TRANSFER
   sleep 1
-  TIMEOUT=`expr $TIMEOUT + 1`
-
 done
 
 echo
