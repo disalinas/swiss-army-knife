@@ -9,7 +9,7 @@
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
 # $1 master-netcat-port 1                                 #
-# $2 master-netcat-port 2                                 #
+# $2 master-netcat-port 5                                 #
 # $3 dvd-devive to send image over the network            #
 # $4 master ip-adress or dns-name                         #
 #                                                         #
@@ -29,8 +29,6 @@ cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/slave-dvdiso.log"
-SIZE_TRANSFER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/size-transfer-from-server.tmp"
-
 
 # Define the counting commands we expect inside the script
 
@@ -122,19 +120,16 @@ SIZE1=$(($blocksize * $blockcount))
 echo
 echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
 
-echo
-echo INFO processing data
-echo
+dd bs=2048 if=$3 | nc -4 -u $4 $1 >/dev/null 2>&1  &
 
-dd bs=2048 if=$3 | nc -4 -u $4 $1 > /dev/null 2>&1
-
+echo
 echo timeout 5 secounds for master-connection is starting now
 
 sleep 5
 
-PID1=$(ps axu | grep "nc -4 u $4 $1" | grep -v grep |awk '{print $2}')
+PID1=$(ps axu | grep "nc \-4 \-u $4 $1" | grep -v grep |awk '{print $2}')
 
-if [ $PID1 == "" ] ; then 
+if [ -z $PID1 ] ; then
    echo
    echo no connection to master port $1 with ip:$4 possible.
    echo slave-script do exit now ...
@@ -147,15 +142,20 @@ fi
 echo
 echo INFO connected to host:$4
 echo
+echo INFO copy data with netcat
+echo
 
 CONNECT=0
 TIMEOUT=1
 LOOP=1
+
+cd "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp"
+
 while [ $LOOP -eq '1'  ];
 do
-  nc -4 -u -l $2 | dd of=$SIZE_TRANSFER
-  cat $SIZE_TRANSFER
-  sleep 1
+  nc -4 -u -l $2 -w 1 > transfer_from_master_to_slave.tmp
+  sleep 20
+  echo -n .
 done
 
 echo
@@ -163,4 +163,6 @@ echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 
 exit 0
+
+
 
