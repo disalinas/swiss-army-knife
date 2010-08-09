@@ -13,6 +13,9 @@
 #                                                         #
 # description :                                           #
 # save a file over the network to this master             #
+#                                                         #
+# port 1          < transfer dd image from slave          #
+# port 2          > send back transferd bytes to client   #
 ###########################################################
 
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux/master"
@@ -90,10 +93,14 @@ echo
 nc -4 -u -l $1 | dd of=/dvdrip/network/file.transfer > /dev/null 2>&1  &
 
 echo timeout 120 secounds for slave-connection is starting now
+echo
 
 CONNECT=""
 TIMEOUT=1
 LOOP=1
+
+cd "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp"
+
 while [ $LOOP -eq '1'  ];
 do
   # We kneed to know from where we are connected
@@ -104,13 +111,23 @@ do
       CONNECT=""
   else
       echo -n .
+
       PID1=$(ps axu | grep "nc \-4 \-u \-l $1" | grep -v grep | awk '{print $2}')
-      netstat -tunp > $TMP 2>$TMP
-      REMOTEIP=$(cat $TMP  | grep $1 | grep $PID1 | awk '{print $5}' | tr ':' ' ' | awk '{print $1}')
-      SIZET=$(ls -la /dvdrip/network/file.transfer | awk '{print $5}')
-      CONNECT=1
-      echo $SIZET > $SIZE_TRANSFER
-      dd if=$SIZE_TRANSFER | nc -u -4 $REMOTEIP $2
+
+      if [-z "PID1" ] ; then
+          echo
+          echo
+          echo INFO processing data done
+          echo
+          LOOP=0
+      else
+          netstat -tunp > $TMP 2>$TMP
+          REMOTEIP=$(cat $TMP  | grep $1 | grep $PID1 | awk '{print $5}' | tr ':' ' ' | awk '{print $1}')
+          SIZET=$(ls -la /dvdrip/network/file.transfer | awk '{print $5}')
+          echo $SIZET > $SIZE_TRANSFER
+          CONNECT=1
+          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $2 -q 1  >/dev/null
+     fi
   fi
 
   # After 120 secounds and no active connection we have reached timeout
@@ -133,8 +150,7 @@ do
         fi
      fi
   fi
-
-  sleep 1
+  sleep 20
   TIMEOUT=`expr $TIMEOUT + 1`
 
 done
