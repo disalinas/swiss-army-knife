@@ -120,6 +120,9 @@ do
           echo INFO processing data done
           echo
           LOOP=0
+          SIZET=$(ls -la /dvdrip/network/file.transfer | awk '{print $5}')
+          echo $SIZET > $SIZE_TRANSFER
+          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $2 -q 1  >/dev/null
       else
           netstat -tunp > $TMP 2>$TMP
           REMOTEIP=$(cat $TMP  | grep $1 | grep $PID1 | awk '{print $5}' | tr ':' ' ' | awk '{print $1}')

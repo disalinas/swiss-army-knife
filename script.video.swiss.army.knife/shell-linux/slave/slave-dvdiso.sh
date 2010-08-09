@@ -15,6 +15,9 @@
 #                                                         #
 # description :                                           #
 # save a file over the network to a master station        #
+#                                                         #
+# port 1          > transfer dd image to master           #
+# port 2          < get transferd bytes from master       #
 ###########################################################
 
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux/slave"
@@ -154,8 +157,16 @@ cd "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp"
 while [ $LOOP -eq '1'  ];
 do
   nc -4 -u -l $2 -w 1 > transfer_from_master_to_slave.tmp
+  SIZE2=$(cat transfer_from_master_to_slave.tmp)
   sleep 20
   echo -n .
+  if [ $SIZE1 == $SIZE2 ] ; then
+     echo
+     echo
+     echo INFO processing data done
+     echo
+     LOOP=0
+  fi
 done
 
 echo
