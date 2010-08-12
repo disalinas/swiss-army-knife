@@ -840,34 +840,46 @@ if __name__ == '__main__':
 
    else:
 
-       # Check that directory exists and could be written 
-       # Bluray-directory is only included if the functions are enabled
+       # if we would have the wrong user for the ssh-command 
+       # we would have a funny mess .... 
 
-       if (__enable_bluray__ == "true"):
-          state = OSCheckLicence()
-          if (state == 1):
-              if (OSCheckContainerID(2)):
-                  GUIInfo(1,__language__(33307))
-          else:
-               __enable_bluray__ = "false"
-               GUIInfo(1,__language__(33315))
+       Userstate = OSCheckUser()
+
+       if (Userstate == 0):
+
+           # As long the ssh-user inside the settings is not 
+           # the same as the current user we do not start ....          
+
+           GUIInfo(0,__language__(33316))
+           xbmc.executebuiltin("Dialog.Close(busydialog)")
+
+       else:
+
+           # Check that directory exists and could be written 
+           # Bluray-directory is only included if the functions are enabled
+
+           if (__enable_bluray__ == "true"):
+               state = OSCheckLicence()
+               if (state == 1):
+                   if (OSCheckContainerID(2)):
+                       GUIInfo(1,__language__(33307))
+               else:
+                   __enable_bluray__ = "false"
+                   GUIInfo(1,__language__(33315))
       
-       if (OSCheckContainerID(1)):
-           GUIInfo(1,__language__(33306))
+           if (OSCheckContainerID(1)):
+               GUIInfo(1,__language__(33306))
 
-       if (OSCheckContainerID(0)):
-           GUIInfo(1,__language__(33305))
+           if (OSCheckContainerID(0)):
+               GUIInfo(1,__language__(33305))
 
-       GUIlog ("create main-menu")
+           GUIlog ("create main-menu")
 
-       time.sleep(1)
- 
-       xbmc.executebuiltin("Dialog.Close(busydialog)")
-
-       menu01 = GUIMain01Class()
-       del menu01
-
-       GUIlog ("addon-ended")
+           time.sleep(1)
+           xbmc.executebuiltin("Dialog.Close(busydialog)")
+           menu01 = GUIMain01Class()
+           del menu01
+           GUIlog ("addon-ended")
    
    
 #########################################################

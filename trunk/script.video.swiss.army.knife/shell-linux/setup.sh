@@ -152,6 +152,17 @@ if [ ! -e /dvdrip/bluray ] ; then
    chown -R $1:$1 /dvdrip/bluray
 fi
 
+if [ ! -e /dvdrip/network ] ; then
+   mkdir /dvdrip/network
+   chown -R $1:$1 /dvdrip/network
+fi
+
+if [ ! -e /dvdrip/vobcopy ] ; then
+   mkdir /dvdrip/vobcopy
+   chown -R $1:$1 /dvdrip/vobcopy
+fi
+
+
 # Update-Source list
 
 if [ ! -e /etc/apt/sources.list.d/medibuntu.list ] ; then
