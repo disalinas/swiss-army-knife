@@ -8,15 +8,18 @@
 ===I do not like the the default place /dvdrip to store my videos ?===
 ---------------------------------------------------------------------------------------
 ===                            ====
- * By default 3 directorys inside the */* root-fs are created
+ * By default 5 directorys inside the */* root-fs are created
  * */dvdrip/iso*
  * */dvdrip/dvd*
- * */dvdrip/bluray* 
+ * */dvdrip/bluray*
+ * */dvdrip/network*
+ * */dvdrip/vobcopy*
+ 
 == == 
- * You can replace this 3 directorys to any directory you like to do.
+ * You can replace this 5 directorys to any directory you like to do.
 == ==
- * No spaces " " inside the direcory-name.
- * The 3 directorys you have chosen must be writeable with your current xbmc-user.
+ * No spaces " " inside the direcory-name are allowed ... 
+ * The 5 directorys you have chosen must be writeable with your current xbmc-user.
  * Change the addon settings to your desired directorys. 
 ===                            ====
 ===                            ====
@@ -46,6 +49,8 @@
  * /dvdrip/iso          
  * /dvdrip/dvd         
  * /dvdrip/bluray       
+ * /dvdrip/network 
+ * /dvdrip/vobcopy
 
  * medibuntu is added to your /etc/apt/sources.list and the following software is installed
   
