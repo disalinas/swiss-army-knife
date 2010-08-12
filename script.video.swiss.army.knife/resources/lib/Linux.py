@@ -170,6 +170,7 @@ def OSConfiguration(index):
 
     # All used internal files are stored inside after here ...
 
+    config[26] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/username'  
     config[27] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.valid' 
     config[28] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.invalid'
     config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done'
@@ -409,7 +410,7 @@ def OSChapterBluray():
     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
     # We must wait until the file with the track-information could be read
-    # Without the list of track we can not select inside the list .....
+    # Without the list of tracks we can not select inside the list .....
     # If someone knows a bettey way to get this list faster ... send me pm .-)
 
     time.sleep(35)
@@ -1808,3 +1809,55 @@ def OSDVDcopyToIsoResque():
     return 1
 
 #########################################################
+
+
+
+
+#########################################################
+# Function  : OSCheckUser                               #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 1           username valid                            #
+# 0           usrname invalid or current username       #
+#             could not be read from the addon-dir      #
+#                                                       #
+#########################################################
+def OSCheckUser():
+
+    global __configLinux__
+    global __verbose__
+
+    # if we would send a ssh-command with the wrong 
+    # user-name our xbmc would became a little hickup and crashing ....
+
+    name = __configLinux__[6]
+
+    sys.platform.startswith('linux')
+    command = "whoami >" +  __configLinux__[26]
+    status = os.system("%s" % (command))
+
+    if (os.path.exists(__configLinux__[26])):
+        UsernameFile = open(__configLinux__[26],'r')
+        CurrentUser = str(UsernameFile.readline())
+        CurrentUser = CurrentUser.strip()   
+        UsernameFile.close()
+        if (__verbose__ == 'true'):
+            OSlog("Current-user      : [" + CurrentUser + "]")
+            OSlog("SSH-user expected : [" + name + "]")
+        index = name.find(CurrentUser)
+        if (index == -1):
+            OSlog("Warning current user and ssh-command mismatch !!!!!")
+            return 0
+        else:  
+            OSlog("current user is listed inside the ssh-command")
+            return 1  
+    else:
+        return 0
+
+
+  
+#########################################################
+

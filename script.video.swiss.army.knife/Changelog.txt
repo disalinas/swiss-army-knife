@@ -24,11 +24,21 @@ Date : 07.26.2010 | Release : 0.6.12    | Author  : H.Weber | CVS:217-
 
 Changes:
 
+
 - created folder shell-linux/master and shell-linux/slave
+- shell-script master-save.sh added 
+- shell-script slave-dvdiso.sh added 
+- setup.sh do create folder /dvdrip/network 
+- Added error-messages "current user is not configured ssh-user"
 
 Fixes:
 
 - setup.sh did not create directory /dvdrip/dvd (fixed 217)
+- Test if the ssh-user inside the settings is correct.
+  If the addon is started with a user that is not inside the settings
+  xbmc get a little hickup and crash .... (fixed 230)
+
+
 
 
 
