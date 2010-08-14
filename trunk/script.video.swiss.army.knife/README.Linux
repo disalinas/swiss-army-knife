@@ -68,7 +68,13 @@ shell-linux/setup.sh
 The replacement is called setup.sh and is inside the shell-linux 
 directory.
 
-5.) Installation 
+
+5.) Upgrade from a previous version 
+
+Please do remove any previous version of the addon including the addon-directory
+inside user-data. As long the addon remains alpha a lot changes do occur.   
+
+6.) Installation 
 
 At first you have to extract the addon-zip inside the right place.
 
@@ -111,13 +117,14 @@ Do change the settings to your needs like ...
 
 * the place where to store your iso copys
 * the directory to store the dvd transcoding files
-* the directory to store the bluray mkv files 
+* the directory to store the bluray mkv files
+* the directory to store vob's  
 * the user for the ssh communication
 * Enable or disable some functions
 
 and many more .....
 
-5.1 Licence key for makekmv 
+6.1 Licence key for makekmv 
 
 * Get a valid licence key for makemkv 
  
@@ -137,7 +144,7 @@ Do set the computer to a previous date and do set a new key :-)
 Do not try to remove the makemkv files and reinstall them.
 
 
-5.2 What should you do if you have a error ? 
+6.2 What should you do if you have a error ? 
 
 - Be sure to read the logs ...
 - Be sure that the ssh-communication is correct (test ssh-communication) inside 
@@ -151,7 +158,7 @@ Do not try to remove the makemkv files and reinstall them.
   
   http://code.google.com/p/swiss-army-knife/wiki/LinuxShell
 
-5.3 Feedback 
+6.3 Feedback 
 
 http://code.google.com/p/swiss-army-knife/wiki/Feedback
 
@@ -160,10 +167,10 @@ http://code.google.com/p/swiss-army-knife/wiki/Feedback
 http://code.google.com/p/swiss-army-knife/issues/list
 
 
-6.O Using the addon and have fun 
+7.O Using the addon and have fun 
 
 Lucern, Switzerland 
-07.26.2010 
+08.14.2010 
 linuxluemmel.ch@gmail.ch alias Hans Weber 
 
  
