@@ -126,6 +126,10 @@ def OSConfiguration(index):
     config[18] = __settings__.getSetting("id-dvd-subt")
     config[19] = __settings__.getSetting("id-expert")
     config[20] = __settings__.getSetting("id-password")
+    config[21] = __settings__.getSetting("id-vobcopy")
+    config[22] = __settings__.getSetting("id-network")
+
+
 
 
     # Modul-global variable to detect if debug-log is active
@@ -137,6 +141,9 @@ def OSConfiguration(index):
     __data_container__.append(config[3])
     __data_container__.append(config[4])
     __data_container__.append(config[5])
+    __data_container__.append(config[21])
+    __data_container__.append(config[22]) 
+
 
     # We need to write a few files on startup inside the addon-dirctory
 
@@ -974,7 +981,7 @@ def OSChapterDVD():
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 20):
-               if (verbose == 'true'):
+               if (__verbose__ == 'true'):
                    OSlog("Timeout 90 secounds reached for track-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                tracklist.append('none')

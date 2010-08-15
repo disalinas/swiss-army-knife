@@ -119,6 +119,7 @@ Do change the settings to your needs like ...
 * the directory to store the dvd transcoding files
 * the directory to store the bluray mkv files
 * the directory to store vob's  
+* the directory to store over the network
 * the user for the ssh communication
 * Enable or disable some functions
 

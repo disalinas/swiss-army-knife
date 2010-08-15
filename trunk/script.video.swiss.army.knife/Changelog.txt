@@ -32,6 +32,7 @@ Changes:
 - Added shell-script "dvd-vcopy.sh" to mirror all vob's from
   a dvd.
 - Added vopcopy and master directory to settings
+- Check vobcopy and network directory for read / write access
 
 Fixes:
 
@@ -39,6 +40,7 @@ Fixes:
 - Test if the ssh-user inside the settings is correct.
   If the addon is started with a user that is not inside the settings
   xbmc get a little hickup and crash .... (fixed 230)
+- Text-ID 33301 was definied twice (fixed 239)
 
 
 

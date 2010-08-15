@@ -828,14 +828,14 @@ if __name__ == '__main__':
    __enable_pw_mode__  = __configuration__[19]
    __pw__              = __configuration__[20]
 
-   # check that setup.sh was run prio to starting 
+   # check that setup.sh was run prior to starting the addon 
  
    state = OSSetupDone() 
    if (state == 0):
 
        # setup.sh was not executed -> exit addon 
 
-       GUIInfo(0,__language__(33301))
+       GUIInfo(0,__language__(33300))
        xbmc.executebuiltin("Dialog.Close(busydialog)")
 
    else:
@@ -872,6 +872,12 @@ if __name__ == '__main__':
 
            if (OSCheckContainerID(0)):
                GUIInfo(1,__language__(33305))
+
+           if (OSCheckContainerID(3)):
+               GUIInfo(1,__language__(33318))
+
+           if (OSCheckContainerID(4)):
+               GUIInfo(1,__language__(33318))
 
            GUIlog ("create main-menu")
 
