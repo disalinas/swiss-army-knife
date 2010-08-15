@@ -13,8 +13,8 @@
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
 # VERSION : 0.6.12                                      #
-# DATE    : 07-26-10                                    #
-# STATE   : Alpha 10                                    #
+# DATE    : 08-15-10                                    #
+# STATE   : Alpha 12                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -37,7 +37,7 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "07-21-2010"
+__date__ 		= "08-15-2010"
 __version__ 		= "0.6.12"
 __code_name__           = "10000 BC"
 __XBMC_Revision__ 	= "31953"
@@ -318,7 +318,7 @@ class GUIExpertWinClass(xbmcgui.Window):
           exit = True
 
           menu = []       
-          for i in range(32120,32130):
+          for i in range(32120,32131):
 	      menu.append(__language__(i))
           while (exit): 
              dialog = xbmcgui.Dialog()
@@ -573,7 +573,46 @@ class GUIExpertWinClass(xbmcgui.Window):
                      GUIInfo(0,__language__(33308))
 
              if (choice == 4):
-                 GUIInfo(1,__language__(33205)) 
+                 Lock = OSCheckLock(__configuration__[1])
+                 if (Lock == 0):
+                     dvd_info = xbmc.getDVDState()
+                     if (dvd_info == 4):
+                         DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 2):
+                             GUIInfo(0,__language__(33302)) 
+                         if (DVDState == 1):
+                             GUIInfo(0,__language__(33311))
+                         if (DVDState == 0):
+                             tracklist = []
+                             tracklist = OSChapterDVD()
+                             if (tracklist[0] != 'none'):
+                                 executeList = []
+                                 executeList = OSDVDExecuteList(False)   
+
+                                 execlist = []
+
+                                 savedir = GUISelectDir() 
+                      
+                                 # Update parameters for the OS-Part DVD
+
+                                 execlist.append(__configuration__[1])
+                                 execlist.append(savedir)
+
+                                 OSDVDAdd(execlist)      
+ 
+                                 execstate = OSDVDvcopy() 
+  
+                                 if (execstate == 0):
+                                     GUIInfo(2,__language__(33232))
+                                 if (execstate == 1):
+                                     GUIInfo(0,__language__(33231))
+                                     __jobs__ = True                                
+                             else:
+                                 GUIInfo(0,__language__(33312)) 
+                     else:
+                         GUIInfo(0,__language__(33309))
+                 else:
+                     GUIInfo(0,__language__(33308))
 
              if (choice == 5):
                  GUIInfo(1,__language__(33205)) 
@@ -582,16 +621,19 @@ class GUIExpertWinClass(xbmcgui.Window):
                  GUIInfo(1,__language__(33205)) 
 
              if (choice == 7):
+                 GUIInfo(1,__language__(33205)) 
+
+             if (choice == 8):
                  state_ssh = OSCheckSSH()
                  if (state_ssh == 0):
                      GUIInfo(0,__language__(33218))   
                  else:
                      GUIInfo(2,__language__(33219)) 
 
-             if (choice == 8): 
+             if (choice == 9): 
                  message = "Author  :  " + __author__ + "\nVersion :  " + __version__ 
                  GUIInfo(3,message)   
-             if (choice == 9):   
+             if (choice == 10):   
                  exit = False
           self.close()
 

@@ -29,7 +29,7 @@
         <string id="32065">Password protect Expert-Mode</string>
         <string id="32066">Password</string>
         <string id="32067">Default size single-layer dvd</string>  
-        <string id="32068">Default netcat start-port (6 ports)</string>
+        <string id="32068">Default netcat start-port (6 udp ports)</string>
         <string id="32069">Verbose debug</string>
         <string id="32070">Default subtitle (dvd)</string> 
         <string id="32071">Enable customer-shell-scripts</string>  
@@ -64,12 +64,13 @@
         <string id="32121">Transcode DVD (confirmed)</string>
         <string id="32122">Ripp DVD to ISO (confirmed)</string>
         <string id="32123">Rescue-copy DVD to iso (confirmed)</string>
-        <string id="32124">Reserved transcode & burning</string>      
-        <string id="32125">Reserved network</string>
-        <string id="32126">Reserved user-scripts</string>
-        <string id="32127">Test ssh connection</string>
-        <string id="32128">Info</string>
-        <string id="32129">Back</string>
+        <string id="32124">Copy vob-files from DVD to hd (confirmed)</string>
+        <string id="32125">Reserved transcode & burning</string>      
+        <string id="32126">Reserved network</string>
+        <string id="32127">Reserved user-scripts</string>
+        <string id="32128">Test ssh connection</string>
+        <string id="32129">Info</string>
+        <string id="32130">Back</string>
 
         <!--                    --> 
         <!-- Progress-bar text  -->
@@ -132,7 +133,9 @@
         <string id="33228">Would you like to use subtitles ?</string>  
         <string id="33229">Please select secoundary audio-language</string> 
         <string id="33230">Please select subtitle-track to use</string> 
-    
+        <string id="33231">DVD vobcopy startet successfull</string>
+        <string id="33232">DVD vobcopy could not be started</string> 
+
         <!--               -->
         <!-- Error         -->
         <!--               -->
