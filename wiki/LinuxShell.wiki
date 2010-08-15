@@ -312,7 +312,7 @@ user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$
 ----------------------------------------------------------------------------------------
  * Number of arguments : 3
 ----------------------------------------------------------------------------------------
- * $1 device for bluray /dev/sr0
+ * $1 device for dvd (example /dev/sr0)
  * $2 directory to store the iso 
  * $3 iso-name without any extension 
 ----------------------------------------------------------------------------------------
@@ -347,7 +347,7 @@ user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$
 ----------------------------------------------------------------------------------------
  * Number of arguments : 2
 ----------------------------------------------------------------------------------------
- * $1 device for bluray /dev/sr0
+ * $1 device for dvd (example /dev/sr0)
  * $2 directory to store the copy of the vobs 
 ----------------------------------------------------------------------------------------
  * Description : save all vobs to a local directory based on the volname of the dvd
