@@ -88,6 +88,9 @@ Run the following command as user root :
 
 ./setup.sh xbmc
 
+As long the eula is not accepted the script do not change any 
+settings of the system.
+
 If your user name for the linux-system is something other than 
 xbmc, replace xbmc with your own username.(hint -> whoami[enter])
    

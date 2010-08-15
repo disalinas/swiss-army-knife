@@ -35,6 +35,7 @@ E_BADARGS=1
 E_TOOLNOTF=2
 E_NOROOT=3
 E_SSHKEY=4
+E_LICENCE_NOT_ACCEPTED=5
 
 if [ $# -ne $EXPECTED_ARGS ] ; then
   echo "Usage: setup.sh p1"
@@ -86,6 +87,29 @@ if [ "$UID" -ne 0 ] ; then
    exit $E_NOROOT
 fi
 
+if [ ! -e EULA-0.6.12 ] ; then
+   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.12
+fi
+
+clear
+cat EULA-0.6.12
+echo
+echo -n "Do you want to accept this enduser-licnce ? (y)"
+read ans
+if [ $ans == "y" ] ; then
+    clear 
+    echo "EULA 0.6.12 accepted"
+    echo
+    echo -n press any key to continue ..
+    read any
+else
+   echo "licence was not accepted !"
+   echo
+   echo ----------------------- script rc=5 -----------------------------
+   echo -----------------------------------------------------------------
+   exit $E_LICENCE_NOT_ACCEPTED
+fi
+
 
 # Check to see if all data-directory exists ...
 
@@ -102,11 +126,6 @@ fi
 if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd ] ; then
    mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
    chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
-fi
-
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmo
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
 fi
 
 if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log ] ; then
@@ -336,10 +355,12 @@ fi
 clear
 echo
 echo -----------------------------------------------------------
-echo create setup.done inside addon-data directory
+echo create setup.done and licence-file inside addon-data directory 
 echo
 echo "0.6.11" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
-chown user:user /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
+chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
+cp EULA-0.6.12 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.12
+chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.12
 echo
 echo -n press any key to continue ..
 read any

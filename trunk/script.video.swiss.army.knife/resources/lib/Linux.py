@@ -12,8 +12,8 @@
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
 # VERSION : 0.6.12                                      #
-# DATE    : 07-21-10                                    #
-# STATE   : Alpha 11                                    #
+# DATE    : 08-15-10                                    #
+# STATE   : Alpha 12                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -479,7 +479,7 @@ def OSCleanTemp():
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
-    # We have global list that contains all temp. files
+    # We have a global list that contains all temp. files
     # as it looks easy do delete all file inside the list
 
     for item in __temp_files__:
@@ -852,6 +852,7 @@ def OSKillProc():
 
             pid_list = []
             file_list = []
+            dir_list = []
 
             PidFile = open(__configLinux__[32],'r')
 
@@ -876,19 +877,30 @@ def OSKillProc():
 
             # remove files from job
 
+            if (__verbose__):
+                OSlog("all processes terminated with kill -9 now we deleting files ...")
+
             if (os.path.exists(__configLinux__[35])):
+
+                # Until version 0.6.12 we had only file-names to remove 
+                # In the case of a vobcopy-process we also need to remove 
+                # a directory  
+
                 ProcessFile = open(__configLinux__[35],'r')
                 for line in ProcessFile.readlines():
                     line = line.strip()
-                    if (__verbose__):
-                        OSlog("file added to delete-command : " + line)
                     file_list.append(line)
                 PidFile.close
 
                 for FileDel in file_list:
                     if (os.path.exists(FileDel)):
-                        os.remove(FileDel)
-
+                        if (os.isfile(FileDel)):
+                            os.remove(FileDel)
+                            OSlog("delete-file : " + FileDel)
+                        else:
+                            os.rmdir(FileDel)                            
+                            OSlog("delete-directory : " + FileDel)  
+                             
             # Clean-up
 
             OSCleanTemp()
@@ -1769,7 +1781,7 @@ def OSDVDcopyToIsoResque():
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
-    # Execution of shell-script dvd3.sh inside shell-linux
+    # Execution of shell-script dvd5.sh inside shell-linux
 
     if (__verbose__ == 'true'):
         OSlog("dvd5.sh command ready to start")
@@ -1864,7 +1876,116 @@ def OSCheckUser():
     else:
         return 0
 
-
-  
 #########################################################
 
+
+
+
+
+
+#########################################################
+# Function  : OSDVDMount                                #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           dvd is not mounted                        #
+# 1           dvd is correctly mounted into the fs      #
+#                                                       #
+#########################################################
+def OSDVDMount():
+
+    global __configLinux__
+    global __exec_bluray__
+    global __verbose__
+ 
+    command = "mount | grep " + __configLinux__[1] + " | awk '{print $3}' >" +  __configLinux__[30]
+    OSRun(command,True,False) 
+    time.sleep(1)
+
+    if (os.path.exists(__configLinux__[30])):
+        MountFile = open(__configLinux__[30],'r')
+        MountState = str(MountFile.readline())
+        MountState = MountState.strip()   
+        MountFile.close()
+        Len = MountState.len()
+        if (Len > 1):
+            return 1
+        else:
+            return 0
+    else:
+         return 0
+#########################################################
+
+
+
+
+#########################################################
+# Function  : OSDVDvcopy                                #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           Vcopy-Copy-process not startet            #
+# 1           Vcopy-Copy-process startet                #
+#                                                       #
+#########################################################
+def OSDVDvcopy():
+
+    global __configLinux__
+    global __exec_dvd__
+    global __verbose__
+
+    parameters = len(__exec_dvd__)
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # Execution of shell-script dvd6.sh inside shell-linux
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd6.sh command ready to start")
+
+    # Prepare command string
+
+    dvd_command = ""
+    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1]
+
+    if (__verbose__ == 'true'):
+        OSlog("final :" + dvd_command)
+
+    OSRun("dvd6.sh " + dvd_command,True,False)
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-vcopy.sh command executed")
+
+    # Now we do loop until the PID-file exists
+
+    time.sleep(8)
+
+    WCycles = 5
+    Waitexit = True
+    while (Waitexit):
+           if (os.path.exists(__configLinux__[32])):
+               if (__verbose__ == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 20):
+               if (__verbose__ == 'true'):
+                   OSlog("Timeout reached for vobcopy-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0
+
+    # Clean exec-array dvd
+
+    for index in range((parameters - 1),0):
+        del  __exec_dvd__[index]
+
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+
+#########################################################

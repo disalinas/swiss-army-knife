@@ -63,7 +63,7 @@ mount
 vobcopy
 tr
 bc
-nohup
+awk
 EOF`
 
 
@@ -120,7 +120,7 @@ echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stag
 echo 32156 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
 echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
 echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-ps axu | grep "vobcopy" | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+ps axu | grep "vobcopy -v -m" | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 
 LOOP=1
 while [ $LOOP -eq '1'  ];
@@ -132,8 +132,9 @@ do
 
   # We neeed to update the file-list on every loop
 
-  LIST=$(ls -al $2/$VOLNAME/VIDEO_TS/* | awk '{print $8}')
-  echo $LIST > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
+  LIST1=$(ls -al $2/$VOLNAME/VIDEO_TS/* | awk '{print $8}')
+  echo $LIST1 | tr  [:blank:] '\n' > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
+  echo $2/$VOLNAME >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
 
   if [ $PROGRESS  == "100" ] ; then
      echo

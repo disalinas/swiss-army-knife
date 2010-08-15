@@ -19,11 +19,10 @@ Changes:
 
 
 ----------------------------------------------------------------------------------------------------
-Date : 07.26.2010 | Release : 0.6.12    | Author  : H.Weber | CVS:217-
+Date : 08.15.2010 | Release : 0.6.12    | Author  : H.Weber | CVS:217-
 ----------------------------------------------------------------------------------------------------
 
 Changes:
-
 
 - created folder shell-linux/master and shell-linux/slave
 - shell-script master-save.sh added 
@@ -33,6 +32,9 @@ Changes:
   a dvd.
 - Added vopcopy and master directory to settings
 - Check vobcopy and network directory for read / write access
+- Include vobcopy option inside expert-mode
+- Include EULA to be shown during execution of setup.sh 
+- Added messages for vobcopy process
 
 Fixes:
 
@@ -43,7 +45,8 @@ Fixes:
 - Text-ID 33301 was definied twice (fixed 239)
 - directory .xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
   was not created during setup (fixed 240)
-
+- wrong permissions for setup.done inside setup.sh (fixed 241)
+- PID-value from dvd-vcopy shell script was not correct
 
 
 
