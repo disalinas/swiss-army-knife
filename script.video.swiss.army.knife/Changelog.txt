@@ -27,9 +27,11 @@ Changes:
 
 - created folder shell-linux/master and shell-linux/slave
 - shell-script master-save.sh added 
-- shell-script slave-dvdiso.sh added 
-- setup.sh do create folder /dvdrip/network 
+- shell-script slave-dvdiso.sh added  
 - Added error-messages "current user is not configured ssh-user"
+- Added shell-script "dvd-vcopy.sh" to mirror all vob's from
+  a dvd.
+- Added vopcopy and master directory to settings
 
 Fixes:
 

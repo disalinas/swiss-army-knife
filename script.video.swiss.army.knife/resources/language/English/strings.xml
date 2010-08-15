@@ -32,8 +32,9 @@
         <string id="32068">Default netcat start-port (6 ports)</string>
         <string id="32069">Verbose debug</string>
         <string id="32070">Default subtitle (dvd)</string> 
-        <string id="32071">Enable customer-shell-scripts</string>   
-
+        <string id="32071">Enable customer-shell-scripts</string>  
+        <string id="32072">Default vobcopy directory</string> 
+        <string id="32073">Default master network directory</string>  
 
         <!--              --> 
         <!-- Window-Names -->
@@ -82,6 +83,7 @@
         <string id="32153">transcoding pass 2</string>
         <string id="32154">copy dvd to iso-file</string>
         <string id="32155">resque-copy dvd to iso-file</string>
+        <string id="32156">copy all vobs to harddisk</string>
 
         <!--                --> 
         <!-- Joblist Window -->
@@ -152,6 +154,7 @@
         <string id="33313">Problem with generated audio-tracklist</string> 
         <string id="33314">Problem with generated subtitle-tracklist</string>    
         <string id="33315">Licence-key for makemkv expired</string>  
-        <string id="33316">Configured ssh-user is not current user</string>     
+        <string id="33316">Configured ssh-user is not current user</string>  
+        <string id="33317">The inserted dvd is not mounted</string>      
 
  </strings>
