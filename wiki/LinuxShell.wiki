@@ -354,5 +354,27 @@ user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$
  * Sample : *./dvd-resque.sh /dev/sr0 /dvdrip/vobcopy*
  * Output :
 {{{
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-vcopy.sh /dev/sr0 /dvdrip/vobcopy
 
+----------------------------------------------------------------------------
+script    : dvd-vcopy.sh
+version   : 0.6.12 [swiss-army-knife addon]
+copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
+changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+----------------------------------------------------------------------------
+
+
+INFO get size of all vob-files[/media/DUNE_KINOFASSUNG/VIDEO_TS]
+INFO volume-name[DUNEKINOFASSUNG]
+INFO starting vobcopy
+
+
+..............................................................................................................................................................................................................
+
+INFO processing data done
+
+
+----------------------- script rc=0 -----------------------------
+-----------------------------------------------------------------
+user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
 }}}
