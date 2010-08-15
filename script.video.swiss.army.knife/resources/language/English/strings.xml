@@ -138,7 +138,7 @@
         <!--               -->
         
 
-        <string id="33301">Prior to run this addon setup.sh must be executed</string> 
+        <string id="33300">Prior to run this addon setup.sh must be executed</string> 
         <string id="33301">Inserted disc is not a Bluray-Disc</string>
         <string id="33302">File swiss-army-knife/media/state could not be openend</string>
         <string id="33303">Bluray-functions are disabled.</string>
@@ -155,6 +155,8 @@
         <string id="33314">Problem with generated subtitle-tracklist</string>    
         <string id="33315">Licence-key for makemkv expired</string>  
         <string id="33316">Configured ssh-user is not current user</string>  
-        <string id="33317">The inserted dvd is not mounted</string>      
+        <string id="33317">The inserted dvd is not mounted</string> 
+        <string id="33318">Vobcopy-directory not found or writeable !</string>
+        <string id="33319">Network master directory not found or writeable !</string>
 
  </strings>
