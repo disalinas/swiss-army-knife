@@ -8,8 +8,8 @@
 ###########################################################
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
-# $1 directory for rip                                    #
-# $2 dvd-device                                           #
+# $1 dvd-device                                           #
+# $2 directory to store vob-copys                         #
 #                                                         #
 # description :                                           #
 # generates a copy of all vob files from a dvd            #
@@ -38,12 +38,13 @@ EXPECTED_ARGS=2
 
 E_BADARGS=1
 E_BADB=2
+E_NOMOUNT=3
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-vcopy.sh p1 p2"
   echo
-  echo "[p1] directory for rip"
-  echo "[p2] dvd-device"
+  echo "[p1] dvd-device"
+  echo "[p2] rip-directory"
   echo
   echo "dvd-vcopy.sh was called with wrong arguments"
   echo
@@ -61,6 +62,7 @@ isoinfo
 mount
 vobcopy
 tr
+bc
 nohup
 EOF`
 
@@ -82,28 +84,73 @@ do
    fi
 done
 
-VOLNAME=$(volname $2 | tr -dc ‘[:alnum:]‘)
+DVDDIR=$(mount | grep $1 | awk '{print $3}')
+
+if [ -z $DVDDIR ] ; then
+   echo ERROR : dvd was not montet and therefore can vobcopy no be startet  > $OUTPUT_ERROR
+   echo ERROR : dvd was not montet and therefore can vobcopy no be startet
+   echo
+   echo
+   exit $E_NOMOUNT
+fi
 
 echo
-echo INFO volume-name[$VOLNAME]
 echo
+echo INFO get size of all vob-files[$DVDDIR/VIDEO_TS]
+
+SIZE1=$(du -b $DVDDIR/VIDEO_TS | tail -1 | awk '{print $1}')
+T1=$(bc -l <<< "scale=0; ($SIZE1 / 100)")
+VOLNAME=$(volname $1 | tr -dc ‘[:alnum:]‘)
+
+rm -rf $2/$VOLNAME >/dev/null 2>&1
+
+echo INFO volume-name[$VOLNAME]
 echo INFO starting vobcopy
 echo
 echo
 
 (
-vobcopy -v -m -o $1 -t $VOLNAME 2>/dev/null
+vobcopy -v -m -o $2 -t $VOLNAME 2>/dev/null
 ) > $OUT_TRANS 2>&1 &
 
+sleep 10
+
+echo $1 > $JOBFILE
+echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
+echo 32156 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
+echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+ps axu | grep "vobcopy" | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
-  # /dvdrip/vobcopy/DUNE_KINOFASSUNG/VIDEO_TS$ du -c -h
-  # cat $OUT_TRANS | tail -1
-  sleep 4
+  echo -n .
+  SIZE2=$(cd /dvdrip/vobcopy/$VOLNAME/VIDEO_TS && du -b | tail -1 | awk '{print $1}')
+  PROGRESS=$(bc -l <<< "scale=0; ($SIZE2 / $T1)")
+  echo $PROGRESS > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+
+  # We neeed to update the file-list on every loop
+
+  LIST=$(ls -al $2/$VOLNAME/VIDEO_TS/* | awk '{print $8}')
+  echo $LIST > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
+
+  if [ $PROGRESS  == "100" ] ; then
+     echo
+     echo
+     echo INFO processing data done
+     echo
+     LOOP=0
+  fi
+  sleep 10
 done
 
+# Delete jobfile
+
+rm $JOBFILE > /dev/null 2>&1
+
+sleep 1
+rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
 
 echo
 echo ----------------------- script rc=0 -----------------------------
