@@ -129,6 +129,11 @@ if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
    chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
 fi
 
+if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp ] ; then
+   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
+   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
+fi
+
 
 # Check to see if the ripp-directorys exists
 

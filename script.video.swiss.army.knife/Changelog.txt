@@ -41,6 +41,8 @@ Fixes:
   If the addon is started with a user that is not inside the settings
   xbmc get a little hickup and crash .... (fixed 230)
 - Text-ID 33301 was definied twice (fixed 239)
+- directory .xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
+  was not created during setup (fixed 240)
 
 
 
