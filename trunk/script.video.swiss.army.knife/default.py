@@ -12,9 +12,9 @@
 #           - transcode bluray to matroska container    #
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
-# VERSION : 0.6.12                                      #
-# DATE    : 08-15-10                                    #
-# STATE   : Alpha 12                                    #
+# VERSION : 0.6.13                                      #
+# DATE    : 08-17-10                                    #
+# STATE   : Alpha 13                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -37,9 +37,9 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "08-15-2010"
-__version__ 		= "0.6.12"
-__code_name__           = "10000 BC"
+__date__ 		= "08-17-2010"
+__version__ 		= "0.6.13"
+__code_name__           = "Das Boot"
 __XBMC_Revision__ 	= "31953"
 __index_config__        = 50 
  

@@ -111,7 +111,8 @@ a debian based system or your system is to old, you have to compile
 this 2 packages for yourself. The full-source of the 2 packages  is provided 
 only on the project-page.
 
-http://swiss-army-knife.googlecode.com/files/swiss-army-knife-src-external.zip
+http://swiss-army-knife.googlecode.com/files/makekmkv_1.5.8.src.tar.gz
+http://swiss-army-knife.googlecode.com/files/Handbrake-0.9.4-src.tar.gz
 
 The next step to running this addon is to complete the setup with valid 
 settings over xbmc. Open the xbmc addon-manager and enable the addon, if you 
@@ -174,7 +175,7 @@ http://code.google.com/p/swiss-army-knife/issues/list
 7.O Using the addon and have fun 
 
 Lucern, Switzerland 
-08.14.2010 
+08.17.2010 
 linuxluemmel.ch@gmail.ch alias Hans Weber 
 
  
