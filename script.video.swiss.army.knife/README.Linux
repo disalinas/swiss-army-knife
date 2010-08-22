@@ -26,7 +26,7 @@ My old script was running .... but had a few down-sides...
 - all code for os and gui was in a single file.
 - it was hard to debug ..... and maintain.
 - I had no subversion controll for the script.
-- I was running on windows and linux. 
+- It was running on windows and linux. 
 
 By this new addon I changed a few things.
 
@@ -102,12 +102,13 @@ including  2 debian files.
   any password.
 - Depend on your system handbrake and makemkv are installed
   (32 or 64 bit).
+- The script do check if handbrake or makemkv are allready installed.
 - Multiple parts of the script do now ask if they should be executed.
 - By this you can later run setup.sh and only execute the needed part 
   again.
  
 This debian-filea are only tested on Ubuntu 10.04 LTS.If you don't use 
-a debian based system or your system is to old, you have to compile 
+a debian based system, or your system is to old, you have to compile 
 this 2 packages for yourself. The full-source of the 2 packages  is provided 
 only on the project-page.
 
