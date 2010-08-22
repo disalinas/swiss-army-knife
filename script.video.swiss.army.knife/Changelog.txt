@@ -56,9 +56,9 @@ Date : 08.17.2010 | Release : 0.6.13    | Author  : H.Weber | CVS:244
 
 Changes:
 
-- Update makemkv to version 1.5.8 
+- Update makemkv to version 1.5.8 (32 and 64 bit)
+- break handbrak and makemkv installation into seperate sections  
 - Do check during setup if handbrake or makemkv is allready installed
-
 
 Fixes:
 
