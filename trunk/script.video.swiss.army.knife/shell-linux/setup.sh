@@ -406,6 +406,7 @@ else
          wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-32.tar.gz
          tar xvzf handbrake-0.9.4-32.tar.gz
          dpkg -i handbrake-cli_lucid1_i386.deb
+         rm handbrake-0.9.4-32.tar.gz 
       else
          clear
          echo
@@ -415,6 +416,7 @@ else
          wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-64.tar.gz
          tar xvzf handbrake-0.9.4-64.tar.gz
          dpkg -i handbrake-cli_lucid1_amd64.deb
+         rm handbrake-0.9.4-64.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -457,6 +459,7 @@ if [ $? -eq 1 ] ; then
          tar xvzf makekmkv-v1.5.8-32.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
          dpkg -i akemkv-v1.5.8-oss_20100818-1_i386.deb
+         rm xvzf makekmkv-v1.5.8-32.tar.gz 
       else
          clear
          echo
@@ -467,6 +470,7 @@ if [ $? -eq 1 ] ; then
          tar xvzf makemkv-1.5.8-64.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
          dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
+         rm makemkv-1.5.8-64.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -506,6 +510,8 @@ else
          tar xvzf makekmkv-v1.5.8-32.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
          dpkg -i akemkv-v1.5.8-oss_20100818-1_i386.deb
+         rm xvzf makekmkv-v1.5.8-32.tar.gz
+
       else
          clear
          echo
@@ -515,7 +521,8 @@ else
          wget http://swiss-army-knife.googlecode.com/files/makemkv-1.5.8-64.tar.gz
          tar xvzf makemkv-1.5.8-64.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
-         dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb   
+         dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
+         rm makemkv-1.5.8-64.tar.gz 
       fi
    fi
    if [ $ans == "n" ] ; then
