@@ -37,29 +37,40 @@ E_NOROOT=3
 E_SSHKEY=4
 E_LICENCE_NOT_ACCEPTED=5
 
+
+
+###########################################################
+#            Check-Arguments to Script                    #
+###########################################################
 if [ $# -ne $EXPECTED_ARGS ] ; then
+  clear 
   echo "Usage: setup.sh p1"
-  echo "                                      "
-  echo " [p1] usernmae                          "
+  echo
+  echo " [p1] username"
   echo
   echo "setup.sh was called without arguments"
-  echo "                                     "
+  echo
   echo
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------
   exit $E_BADARGS
 fi
+###########################################################
 
 
-# Define the commands we will be using inside the script ...
 
+
+###########################################################
+#            Check installed software                     #
+###########################################################
 REQUIRED_TOOLS=`cat << EOF
 echo
 apt-get
+awk
+tar
+gunzip
 wget
 EOF`
-
-# Check if all commands are found on your system ...
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -74,11 +85,16 @@ do
       exit $E_TOOLNOTF
    fi
 done
+###########################################################
 
 
-# Who is running this script ?
 
+
+###########################################################
+#            Who is running the script ?                  #
+###########################################################
 if [ "$UID" -ne 0 ] ; then
+   clear 
    echo "you must be root to run this script !"
    echo "sudo ./setup.sh"
    echo
@@ -86,8 +102,20 @@ if [ "$UID" -ne 0 ] ; then
    echo -----------------------------------------------------------------
    exit $E_NOROOT
 fi
+###########################################################
 
+
+
+
+
+###########################################################
+#            Is licence-file allready local ?             #
+###########################################################
 if [ ! -e EULA-0.6.12 ] ; then
+   clear
+   echo
+   echo download licence file from google-code
+   echo
    wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.12
 fi
 
@@ -109,10 +137,14 @@ else
    echo -----------------------------------------------------------------
    exit $E_LICENCE_NOT_ACCEPTED
 fi
+###########################################################
 
 
-# Check to see if all data-directory exists ...
 
+
+###########################################################
+#            Create directorys                            #
+###########################################################
 if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife ] ; then
    mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
    chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
@@ -153,9 +185,6 @@ if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/t
    chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
 fi
 
-
-# Check to see if the ripp-directorys exists
-
 if [ ! -e /dvdrip ] ; then
    mkdir /dvdrip
    chown -R $1:$1 /dvdrip
@@ -185,10 +214,14 @@ if [ ! -e /dvdrip/vobcopy ] ; then
    mkdir /dvdrip/vobcopy
    chown -R $1:$1 /dvdrip/vobcopy
 fi
+###########################################################
 
 
-# Update-Source list
 
+
+###########################################################
+#            Install Software for all parts               #
+###########################################################
 if [ ! -e /etc/apt/sources.list.d/medibuntu.list ] ; then
    sudo wget http://www.medibuntu.org/sources.list.d/$(lsb_release -cs).list \
    --output-document=/etc/apt/sources.list.d/medibuntu.list && sudo apt-get -q update && \
@@ -201,14 +234,22 @@ apt-get install dvd+rw-tools lsdvd vobcopy
 apt-get install submux-dvd subtitleripper transcode mjpegtools libdvdcss2 openssh-server openssh-client
 apt-get install liba52-0.7.4 libfaac0 libmp3lame0 libmp4v2-0 libogg0 libsamplerate0 libx264-85 libxvidcore4
 apt-get install libbz2-1.0 libgcc1 libstdc++6 zlib1g
+###########################################################
 
-# This sections is only needet in the case bluray-functions are used.
 
+
+
+
+###########################################################
+#            Section Bluray                               #
+###########################################################
 clear
 echo
 echo -----------------------------------------------------------
 echo If you allreaday installed a previous version of this addon
-echo and have used blurays with the addon you can answer no
+echo and have used allready blurays with the addon you can answer no.
+echo This section do only install software to install succcessfull 
+echo makekmkv.The software makemkv itself is not installed.
 echo
 echo -n "Do you want to use bluray-discs inside the addon (y/n)"
 read ans
@@ -227,7 +268,7 @@ if [ $ans == "n" ] ; then
    clear
    echo
    echo -----------------------------------------------------------
-   echo software for bluray-functions is not installed.
+   echo software for installation of the bluray-functions is not installed.
    echo If you later decide to use them then run setup.sh
    echo again.
    echo
@@ -235,13 +276,20 @@ if [ $ans == "n" ] ; then
    read any
    BL=0
 fi
+###########################################################
 
 
+
+
+###########################################################
+#            Section SSH                                  #
+###########################################################
 clear
 echo
 echo -----------------------------------------------------------
 echo If you allreaday installed a previous version of this addon
-echo and have used ssh with the addon you can answer no
+echo and have used ssh with the addon you can answer no.
+echo Inside this section the ssh-system will be configured.
 echo
 echo -n "Do you want to configure ssh for the addon (y/n)"
 read ans
@@ -282,96 +330,240 @@ if [ $ans == "n" ] ; then
    echo -n press any key to continue ..
    read any
 fi
+###########################################################
 
 
-clear
-echo
-echo -----------------------------------------------------------
-echo If you allreaday installed a previous version of this addon
-echo and have used handbrake or makemkv with the addon you can
-echo answer no
-echo
-echo -n "Do you want to install handbrake and the optional makemkv (y/n)"
-read ans
-if [ $ans == "y" ] ; then
-   architecture=`uname -m`
-   if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
-      echo
-      echo download software for 32 bit
-      echo
-      cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-      wget http://swiss-army-knife.googlecode.com/files/swiss-army-knife-deb-32.zip
-      unzip swiss-army-knife-deb-32.zip
-      echo
-      echo install software handbrake
-      echo
-      dpkg -i handbrake-cli_lucid1_i386.deb
-      if [ $BL == "1" ] ; then
-          echo
-          echo install software makemkv
-          echo
-          dpkg -i makemkv-v1.5.6-beta-bin_20100613-1_i386.deb
-          dpkg -i makemkv-v1.5.6-beta-oss_20100613-1_i386.deb
+
+
+
+
+###########################################################
+#            Section Handbrake                            #
+###########################################################
+which HandBrakeCLI >/dev/null 2>&1
+if [ $? -eq 1 ] ; then
+   clear
+   echo The command HandBrakeCLI was not found on your system.
+   echo Should HandBrakeCLI svn3416 be installed ?
+   echo
+   echo -n "Do you want to install HandbrakeCLI (y/n)"
+   read ans
+   if [ $ans == "y" ] ; then
+      architecture=`uname -m`
+      if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
+         clear
+         echo
+         echo download software for 32 bit
+         echo
+         cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-32.tar.gz
+         tar xvzf handbrake-0.9.4-32.tar.gz
+         dpkg -i handbrake-cli_lucid1_i386.deb
+      else
+         clear
+         echo
+         echo download software for 64 bit
+         echo
+         cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-64.tar.gz
+         tar xvzf handbrake-0.9.4-64.tar.gz
+         dpkg -i handbrake-cli_lucid1_amd64.deb
       fi
-      rm swiss-army-knife-deb-32.zip
+   fi
+   if [ $ans == "n" ] ; then
+      clear
+      echo
+      echo -----------------------------------------------------------
+      echo HandbrakeCLI is not installed.
+      echo You can not transcode a dvd as long this tool is not installed.
       echo
       echo -n press any key to continue ..
       read any
-   else
-      echo
-      echo download software for 64 bit
-      echo
-      cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-      wget http://swiss-army-knife.googlecode.com/files/swiss-army-knife-deb-64.zip
-      unzip swiss-army-knife-deb-64.zip
-      echo
-      echo install software handbrake
-      echo
-      dpkg -i handbrake-cli_lucid1_amd64.deb
-      if [ $BL == "1" ] ; then
+   fi
+else
+   HINSTALLED=$(HandBrakeCLI -i /dev/null -o /dev/null 2>&1 | grep ^Hand | head -1 | awk '{print $2}')
+   clear
+   echo The command HandBrakeCLI was found on your system.
+   echo
+   echo The release found on your system is : [$HINSTALLED]
+   echo The script can download and install : [svn3416]
+   echo
+   echo Should HandBrakeCLI [svn3416] be installed over
+   echo the existing release on your system ?
+   echo
+   echo Warning : This may make HandbrakeCLI unusable ...
+   echo
+   echo -n "Do you want to update HandbrakeCLI (y/n)"
+   read ans
+   if [ $ans == "y" ] ; then
+      architecture=`uname -m`
+      if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
+         clear
          echo
-         echo install software makemkv
+         echo download software for 32 bit
          echo
-         dpkg -i makemkv-v1.5.6-beta-bin_20100629-1_amd64.deb
-         dpkg -i makemkv-v1.5.6-beta-oss_20100629-1_amd64.deb
+         cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-32.tar.gz
+         tar xvzf handbrake-0.9.4-32.tar.gz
+         dpkg -i handbrake-cli_lucid1_i386.deb
+      else
+         clear
+         echo
+         echo download software for 64 bit
+         echo
+         cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-64.tar.gz
+         tar xvzf handbrake-0.9.4-64.tar.gz
+         dpkg -i handbrake-cli_lucid1_amd64.deb
       fi
-      rm swiss-army-knife-deb-64.zip
+   fi
+   if [ $ans == "n" ] ; then
+      clear
+      echo
+      echo -----------------------------------------------------------
+      echo HandbrakeCLI is not updated and remains as it is
       echo
       echo -n press any key to continue ..
       read any
    fi
 fi
+###########################################################
 
-if [ $ans == "n" ] ; then
+
+
+
+
+
+###########################################################
+#            Section makemkvcon                           #
+###########################################################
+which makemkvcon >/dev/null 2>&1
+if [ $? -eq 1 ] ; then
    clear
+   echo The command makemkvcon was not found on your system.
+   echo Should makemkv 1.5.8 to be installed ?
+   echo
+   echo -n "Do you want to install makemkv (y/n)"
+   read ans
+   if [ $ans == "y" ] ; then
+      architecture=`uname -m`
+      if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
+         clear
+         echo
+         echo download software for 32 bit
+         echo
+         cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+         wget http://swiss-army-knife.googlecode.com/files/makekmkv-v1.5.8-32.tar.gz
+         tar xvzf makekmkv-v1.5.8-32.tar.gz
+         dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
+         dpkg -i akemkv-v1.5.8-oss_20100818-1_i386.deb
+      else
+         clear
+         echo
+         echo download software for 64 bit
+         echo
+         cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-1.5.8-64.tar.gz
+         tar xvzf makemkv-1.5.8-64.tar.gz
+         dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
+         dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
+      fi
+   fi
+   if [ $ans == "n" ] ; then
+      clear
+      echo
+      echo -----------------------------------------------------------
+      echo makemkv is not installed.
+      echo You can not transcode a bluray as long this tool is not installed.
+      echo
+      echo -n press any key to continue ..
+      read any
+   fi
+else
+   MINSTALLED=$(makemkvcon info /dev/null | head -1 | awk '{print $2}')
+   clear
+   echo The command makemkvcon was found on your system.
+   echo
+   echo The release found on your system is : [$MINSTALLED]
+   echo The script can download and install : [v1.5.8]
+   echo
+   echo Should makemkv [v1.5.8] be installed over
+   echo the existing release on your system ?
+   echo
+   echo Warning : This may make makemkv unusable ...
+   echo
+   echo -n "Do you want to update makemkv (y/n)"
+   read ans
+   if [ $ans == "y" ] ; then
+      architecture=`uname -m`
+      if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
+         clear
+         echo
+         echo download software for 32 bit
+         echo
+         cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+         wget http://swiss-army-knife.googlecode.com/files/makekmkv-v1.5.8-32.tar.gz
+         tar xvzf makekmkv-v1.5.8-32.tar.gz
+         dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
+         dpkg -i akemkv-v1.5.8-oss_20100818-1_i386.deb
+      else
+         clear
+         echo
+         echo download software for 64 bit
+         echo
+         cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-1.5.8-64.tar.gz
+         tar xvzf makemkv-1.5.8-64.tar.gz
+         dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
+         dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb   
+      fi
+   fi
+   if [ $ans == "n" ] ; then
+      clear
+      echo
+      echo -----------------------------------------------------------
+      echo makemkv is not updated and remains as it is.
+      echo
+      echo -n press any key to continue ..
+      read any
+   fi
+fi
+###########################################################
+
+
+###########################################################
+#            Section setup.done                           #
+###########################################################
+clear
+cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
+if [ ! -e setup.done ] ; then
    echo
    echo -----------------------------------------------------------
-   echo handbrake and makekmkv is not installed.
+   echo create setup.done and licence-file inside addon-data directory 
    echo
-   echo -n press any key to continue ..
-   read any
+   echo "0.6.11" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
 fi
 
-clear
-echo
-echo -----------------------------------------------------------
-echo create setup.done and licence-file inside addon-data directory 
-echo
-echo "0.6.11" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
-chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
-cp EULA-0.6.12 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.12
-chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.12
-echo
-echo -n press any key to continue ..
-read any
+if [ ! -e EULA-0.6.12 ] ; then
+   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.12 EULA-0.6.12
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.12
+fi
+
 
 clear
 echo
-echo addon can now be running over xbmc  ......
+echo Addon can now be running over xbmc  ......
 echo
-echo have fun with this addon and I wish you happy ripping
+echo Have fun with this addon and I wish you happy ripping
+echo Feel free to send me a few notes about your expirience with 
+echo this addon on the feedback url.
+echo 
+echo http://code.google.com/p/swiss-army-knife/wiki/Feedback
 echo
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 echo
 echo
+###########################################################
+
