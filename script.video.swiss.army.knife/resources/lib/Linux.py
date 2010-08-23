@@ -12,7 +12,7 @@
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
 # VERSION : 0.6.13                                      #
-# DATE    : 08-17-10                                    #
+# DATE    : 08-23-10                                    #
 # STATE   : Alpha 13                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -80,7 +80,7 @@ def OSlog(msg):
 #########################################################
 # Parameter :                                           #
 #                                                       #
-# index       index howmay config-entrys are used       #
+# index       index how many config-entrys are used     #
 #                                                       #
 # Returns   :                                           #
 #                                                       #
@@ -180,7 +180,7 @@ def OSConfiguration(index):
     config[26] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/username'  
     config[27] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.valid' 
     config[28] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.invalid'
-    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done'
+    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.13-setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
     config[32] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid'
@@ -359,10 +359,11 @@ def OSCheckMedia(Media):
            else:
                WCycles = WCycles + 1
                time.sleep(1)
-           if (WCycles >= 15):
+           if (WCycles >= 20):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout 15 secounds reached for track-file  ...")
-               xbmc.executebuiltin("Dialog.Close(busydialog)")
+                   OSlog("Timeout 20 secounds reached for track-file  ...")
+                   OSlog("increase timeout value on line 362 / Linux.py  ...")
+              xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 2
 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -434,9 +435,10 @@ def OSChapterBluray():
                WCycles = WCycles + 1
                time.sleep(3)
            time.sleep(1)
-           if (WCycles >= 90):
+           if (WCycles >= 100):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout 90 secounds reached for track-file  ...WCycles:=" + str(WCycles))
+                   OSlog("Timeout 100 secounds reached for track-file  ...WCycles:=" + str(WCycles))
+                   OSlog("increase timeout value on line 438 / Linux.py  ...") 
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                tracklist.append('none')
                return tracklist
@@ -1815,7 +1817,8 @@ def OSDVDcopyToIsoResque():
                time.sleep(3)
            if (WCycles >= 20):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout reached for dvd-iso-file  ...")
+                   OSlog("Timeout reached 20 secounds for dvd-iso-file  ...")
+                   OSlog("change value on line 1818 for dvd-iso-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 0
 
@@ -1976,7 +1979,8 @@ def OSDVDvcopy():
                time.sleep(3)
            if (WCycles >= 20):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout reached for vobcopy-file  ...")
+                   OSlog("Timeout reached 20 secounds for vobcopy-file  ...")
+                   OSlog("change timeout on line 1980 for vobcopy-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 0
 

@@ -51,7 +51,7 @@ Fixes:
 
 
 ----------------------------------------------------------------------------------------------------
-Date : 08.17.2010 | Release : 0.6.13    | Author  : H.Weber | CVS:244
+Date : 08.23.2010 | Release : 0.6.13    | Author  : H.Weber | CVS:244-247
 ----------------------------------------------------------------------------------------------------
 
 Changes:
@@ -59,8 +59,12 @@ Changes:
 - Update makemkv to version 1.5.8 (32 and 64 bit)
 - break handbrak and makemkv installation into seperate sections  
 - Do check during setup if handbrake or makemkv is allready installed
+- Increased a few time-out values 
+- create svn branch 0.6.13
 
 Fixes:
+- rename setup.done to 0.X.Y-setup.done that allways after a upgrade
+  the setup file with all directorys and installation is passed.
 
 
 
