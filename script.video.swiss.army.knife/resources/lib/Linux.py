@@ -363,7 +363,7 @@ def OSCheckMedia(Media):
                if (__verbose__ == 'true'):
                    OSlog("Timeout 20 secounds reached for track-file  ...")
                    OSlog("increase timeout value on line 362 / Linux.py  ...")
-              xbmc.executebuiltin("Dialog.Close(busydialog)")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 2
 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
