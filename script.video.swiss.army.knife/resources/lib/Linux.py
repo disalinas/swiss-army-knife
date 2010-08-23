@@ -11,9 +11,9 @@
 # TASKS   : This python code contains only os-dependet  #
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
-# VERSION : 0.6.13                                      #
+# VERSION : 0.6.14                                      #
 # DATE    : 08-23-10                                    #
-# STATE   : Alpha 13                                    #
+# STATE   : Alpha 14                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -154,6 +154,9 @@ def OSConfiguration(index):
     # Over these files we know inside the shell-scripts witch languages and
     # subtitles we would like to transcode
 
+    # Without this files placed inside the addon-directory the shell-scripts 
+    # can not transcode default languages ..
+
     if (config[7] != 'none'):
         sys.platform.startswith('linux')
         command ="echo -n " + config[7] + " > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_LANG1"
@@ -180,6 +183,9 @@ def OSConfiguration(index):
     config[26] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/username'  
     config[27] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.valid' 
     config[28] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.invalid'
+
+    # Every release has a sepeperate setup.done file .....
+
     config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.13-setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
@@ -346,6 +352,7 @@ def OSCheckMedia(Media):
 
     # We must wait until the file with the state-information could be read
     # If someone knows a bettey way to get this list faster ... send me pm .-)
+    # This time-out values is critical and was hardcoded until 0.6.14  
 
     time.sleep(3)
 
@@ -368,7 +375,7 @@ def OSCheckMedia(Media):
 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
 
-    # We shoud now have the file with the state
+    # We should now have the file with the state
 
     if (os.path.exists(__configLinux__[30])):
         f = open(__configLinux__[30],'r')
