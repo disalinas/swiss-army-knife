@@ -126,7 +126,7 @@ echo -n "Do you want to accept this enduser-licnce ? (y)"
 read ans
 if [ $ans == "y" ] ; then
     clear 
-    echo "EULA 0.6.12 accepted"
+    echo "EULA 0.6.13 accepted"
     echo
     echo -n press any key to continue ..
     read any
@@ -543,16 +543,16 @@ fi
 ###########################################################
 clear
 cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
-if [ ! -e setup.done ] ; then
+if [ ! -e 0.6.13-setup.done ] ; then
    echo
    echo -----------------------------------------------------------
    echo create setup.done and licence-file inside addon-data directory 
    echo
-   echo "0.6.11" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.13-setup.done
+   echo "0.6.13" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.13-setup.done
    chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.13-setup.done
 fi
 
-if [ ! -e EULA-0.6.12 ] ; then
+if [ ! -e EULA-0.6.13 ] ; then
    cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.12 EULA-0.6.13
    chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.13
 fi
