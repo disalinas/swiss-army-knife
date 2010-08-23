@@ -121,6 +121,8 @@
   * I only accept svn diff patches against the current trank.
   * If your diff contains binary exectuable files the full source-code of this binarys must be within the  diff-file or the patch will not be integrated.
   * Only GPL licenced code will be accepted. Any none GPL code or binary will not be accpeted !
+  * If you decide to extend the plugin for one of the missing os (windows / mac) please include binarys for 32 and 64 bit systems.
+
 === ===
 === ===
 ===The addon speaks only English. Could my own native language be added ?===
