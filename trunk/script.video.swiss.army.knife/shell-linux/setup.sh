@@ -111,16 +111,16 @@ fi
 ###########################################################
 #            Is licence-file allready local ?             #
 ###########################################################
-if [ ! -e EULA-0.6.12 ] ; then
+if [ ! -e EULA-0.6.13 ] ; then
    clear
    echo
    echo download licence file from google-code
    echo
-   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.12
+   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.13
 fi
 
 clear
-cat EULA-0.6.12
+cat EULA-0.6.13
 echo
 echo -n "Do you want to accept this enduser-licnce ? (y)"
 read ans
@@ -455,11 +455,11 @@ if [ $? -eq 1 ] ; then
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/makekmkv-v1.5.8-32.tar.gz
-         tar xvzf makekmkv-v1.5.8-32.tar.gz
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-v1.5.8-32.tar.gz
+         tar xvzf makemkv-v1.5.8-32.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
-         dpkg -i akemkv-v1.5.8-oss_20100818-1_i386.deb
-         rm xvzf makekmkv-v1.5.8-32.tar.gz 
+         dpkg -i makemkv-v1.5.8-oss_20100818-1_i386.deb
+         rm xvzf makemkv-v1.5.8-32.tar.gz 
       else
          clear
          echo
@@ -506,11 +506,11 @@ else
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/makekmkv-v1.5.8-32.tar.gz
-         tar xvzf makekmkv-v1.5.8-32.tar.gz
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-v1.5.8-32.tar.gz
+         tar xvzf makemkv-v1.5.8-32.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
          dpkg -i akemkv-v1.5.8-oss_20100818-1_i386.deb
-         rm xvzf makekmkv-v1.5.8-32.tar.gz
+         rm xvzf makemkv-v1.5.8-32.tar.gz
 
       else
          clear
@@ -548,13 +548,13 @@ if [ ! -e setup.done ] ; then
    echo -----------------------------------------------------------
    echo create setup.done and licence-file inside addon-data directory 
    echo
-   echo "0.6.11" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/setup.done
+   echo "0.6.11" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.13-setup.done
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.13-setup.done
 fi
 
 if [ ! -e EULA-0.6.12 ] ; then
-   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.12 EULA-0.6.12
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.12
+   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.12 EULA-0.6.13
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.13
 fi
 
 

@@ -13,7 +13,7 @@
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
 # VERSION : 0.6.13                                      #
-# DATE    : 08-17-10                                    #
+# DATE    : 08-23-10                                    #
 # STATE   : Alpha 13                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
