@@ -141,6 +141,19 @@ Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)
 
   * If you receive the Message "Licence-key for makemkv expired" inside the addon You have to replace your current licence-key with a valid-key.
 
+You can set the licence key here :
+{{{
+user@xbmcdev:~$ cd .MakeMKV/
+user@xbmcdev:~/.MakeMKV$ ls -al
+total 16
+drwxr-xr-x  2 root root   26 2010-07-10 18:01 .
+drwxr-xr-x 45 user user 8192 2010-08-23 21:58 ..
+-rw-r--r--  1 root root  187 2010-08-23 20:57 settings.conf
+user@xbmcdev:~/.MakeMKV$ 
+}}}
+
+Inside the file settings.conf the licence key can be updated or deleted.
+
 === ===
 ===What is the default password for the Expert-Mode ?===
 -----------------------------------------------------------------------------------------
