@@ -1,0 +1,76 @@
+---------------------------------------------------------------------------------------------------
+Date : 07.24.2010 | Release : 0.6.11    | Author  : H.Weber | CVS:154-213 
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- change script-id.
+- change script-name.
+- change revision-nummer to 0.6.11. 
+- remvoe any old path from code and scripts.
+- removed source-code from addon.
+- removed the debian-files for 32 and 64 Sytems.
+- setup.sh now do install handbrake or makemkv on request.
+- setup.sh do detect if the software should be install for 32 or 64
+- Detect old licence-key for makemkv and show a message inside addon.
+- Testing bluray-part after all changes. 
+- Added Resque-copy mode
+- Created svn branch 0.6.11 
+
+
+----------------------------------------------------------------------------------------------------
+Date : 08.15.2010 | Release : 0.6.12    | Author  : H.Weber | CVS:217-242
+----------------------------------------------------------------------------------------------------
+
+Changes:
+
+- created folder shell-linux/master and shell-linux/slave
+- shell-script master-save.sh added 
+- shell-script slave-dvdiso.sh added  
+- Added error-messages "current user is not configured ssh-user"
+- Added shell-script "dvd-vcopy.sh" to mirror all vob's from
+  a dvd.
+- Added vopcopy and master directory to settings
+- Check vobcopy and network directory for read / write access
+- Include vobcopy option inside expert-mode
+- Include EULA to be shown during execution of setup.sh 
+- Added messages for vobcopy process
+- Create svn branch 0.6.12
+
+Fixes:
+
+- setup.sh did not create directory /dvdrip/dvd (fixed 217)
+- Test if the ssh-user inside the settings is correct.
+  If the addon is started with a user that is not inside the settings
+  xbmc get a little hickup and crash .... (fixed 230)
+- Text-ID 33301 was definied twice (fixed 239)
+- directory .xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
+  was not created during setup (fixed 240)
+- wrong permissions for setup.done inside setup.sh (fixed 241)
+- PID-value from dvd-vcopy shell script was not correct
+
+
+----------------------------------------------------------------------------------------------------
+Date : 08.23.2010 | Release : 0.6.13    | Author  : H.Weber | CVS:244-247
+----------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Update makemkv to version 1.5.8 (32 and 64 bit)
+- break handbrak and makemkv installation into seperate sections  
+- Do check during setup if handbrake or makemkv is allready installed
+- Increased a few time-out values 
+- create svn branch 0.6.13
+
+Fixes:
+- rename setup.done to 0.X.Y-setup.done that allways after a upgrade
+  the setup file with all directorys and installation is passed.
+
+
+
+
+
+
+
+
+
