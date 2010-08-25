@@ -1,4 +1,4 @@
-=== In the case of a unexpected error please try to execute this commands wihtout ssh over a console. ===
+=== In the case of a unexpected error please try to execute this commands without ssh over a console. ===
 == ==
  * http://code.google.com/p/swiss-army-knife/wiki/LinuxShell
 == ==
