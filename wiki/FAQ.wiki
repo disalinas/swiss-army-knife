@@ -1,3 +1,12 @@
+===I have several of this timeout-errors. What should I do ?===
+---------------------------------------------------------------------------------------
+===                            ====
+ * With the relese 0.6.14 I do add a few settings to be more flexible.
+ * Increase the timeout a few-secounds and test again.
+
+===                            ====
+===                            ====
+
 ===What Linux Filesystem should I use for my rip-containers ?===
 ---------------------------------------------------------------------------------------
 ===                            ====
