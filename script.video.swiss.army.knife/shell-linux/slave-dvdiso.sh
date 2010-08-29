@@ -9,33 +9,39 @@
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
 # $1 master-netcat-port 1                                 #
-# $2 master-netcat-port 5                                 #
-# $3 dvd-devive to send image over the network            #
-# $4 master ip-adress or dns-name                         #
+# $2 master-netcat-port 2                                 #
+# $3 master-netcat-port 3                                 #
+# $4 master-netcat-port 4                                 #
+# $5 dvd-devive to send image over the network            #
+# $6 master ip-adress or dns-name                         #
 #                                                         #
 # description :                                           #
 # save a file over the network to a master station        #
 #                                                         #
 # port 1          > transfer dd image to master           #
 # port 2          < get transferd bytes from master       #
+# port 3          > volname of dvd to master              #
+# port 4          > send cancel to master                 #
 ###########################################################
 
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux/slave"
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 echo
 echo ----------------------------------------------------------------------------
 SCRIPT=$(basename $0)
 echo "script    :" $SCRIPT
-cat ../version
+cat version
 echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/slave-dvdiso.log"
+SLAVE_VOLNAME="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/slave-volname"
+
 
 # Define the counting commands we expect inside the script
 
-EXPECTED_ARGS=4
+EXPECTED_ARGS=6
 
 # Error-codes
 
@@ -46,12 +52,14 @@ E_BADB=4
 
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: slave-dvdiso.sh p1 p2 p3 p4"
+  echo "Usage: slave-dvdiso.sh p1 p2 p3 p4 p5 p6"
   echo
   echo "[p1] netcat master port 1 dd-operation"
   echo "[p2] netcat master port 2 transfer size"
-  echo "[p3] dvd-device"
-  echo "[p4] master ip-adress or dns-name"
+  echo "[p3] netcat master port 3 volname"
+  echo "[p4] netcat master port 4 cancel"
+  echo "[p5] dvd-device"
+  echo "[p6] master ip-adress or dns-name"
   echo
   echo "slave-dvdiso.sh was called with wrong arguments"
   echo
@@ -91,9 +99,14 @@ done
 
 # break css by force
 
-lsdvd -a $3 >/dev/null 2>&1
+lsdvd -a $5 >/dev/null 2>&1
 
-blocksize=`isoinfo -d -i $3  | grep "^Logical block size is:" | cut -d " " -f 5`
+
+# Get volname to transfer this name to the master
+
+VOLNAME=$(volname $5 | tr -dc ‘[:alnum:]‘)
+
+blocksize=`isoinfo -d -i $5  | grep "^Logical block size is:" | cut -d " " -f 5`
 if test "$blocksize" = ""; then
    echo
    echo catdevice FATAL ERROR: Blank blocksize
@@ -107,7 +120,7 @@ fi
 
 # Get Blockcount
 
-blockcount=`isoinfo -d -i $3 | grep "^Volume size is:" | cut -d " " -f 4`
+blockcount=`isoinfo -d -i $5 | grep "^Volume size is:" | cut -d " " -f 4`
 if test "$blockcount" = ""; then
    echo
    echo catdevice FATAL ERROR: Blank blockcount
@@ -122,19 +135,21 @@ fi
 SIZE1=$(($blocksize * $blockcount))
 echo
 echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
+echo INFO volname send to master-ip  [$VOLNAME]
+echo
 
-dd bs=2048 if=$3 | nc -4 -u $4 $1 >/dev/null 2>&1  &
+dd bs=2048 if=$5 | nc -4 -u $6 $1 >/dev/null 2>&1  &
 
 echo
 echo timeout 5 secounds for master-connection is starting now
 
 sleep 5
 
-PID1=$(ps axu | grep "nc \-4 \-u $4 $1" | grep -v grep |awk '{print $2}')
+PID1=$(ps axu | grep "nc \-4 \-u $6 $1" | grep -v grep |awk '{print $2}')
 
 if [ -z $PID1 ] ; then
    echo
-   echo no connection to master port $1 with ip:$4 possible.
+   echo no connection to master port $1 with ip:$6 possible.
    echo slave-script do exit now ...
    echo
    echo ----------------------- script rc=2 -----------------------------
@@ -143,7 +158,7 @@ if [ -z $PID1 ] ; then
 fi
 
 echo
-echo INFO connected to host:$4
+echo INFO connected to host:$6
 echo
 echo INFO copy data with netcat
 echo
@@ -166,6 +181,12 @@ do
      echo INFO processing data done
      echo
      LOOP=0
+
+     # The remote master needs the file name of the dvd
+
+     echo $VOLNAME > $SLAVE_VOLNAME
+     cat $SLAVE_VOLNAME | nc -4 -u $6 $3 -q 1  >/dev/null
+
   fi
 done
 
