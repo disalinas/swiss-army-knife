@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# scriptname : master-save.sh                             #
+# scriptname : master.sh                                  #
 ###########################################################
 # This script is part of the addon swiss-army-knife for   #
 # xbmc and is licenced under the gpl-licence              #
@@ -46,12 +46,12 @@ E_TOOLNOTF=3
 
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: master-save.sh p1 p2"
+  echo "Usage: master.sh p1 p2"
   echo
   echo "[p1] netcat master port 1 dd-operation"
   echo "[p2] netcat master port 2 transfer size"
   echo
-  echo "master-save.sh was called with wrong arguments"
+  echo "master.sh was called with wrong arguments"
   echo
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------

@@ -79,12 +79,14 @@ Changes:
   Timeout t1 : state-file default value 5 secounds 
   Timeout t2 : dvd-chapter file value 10 secounds
   Timeout t3 : bluray-chapter file value 100 secounds
+- add master.sh to svn 
+- add slave-dvdiso.sh to svn
 
 Fixes:
 
 - The bluray.progress file was not added to the filelist to kill a job
 - setup.sh had a wrong entry for EULA-file 
-
+- directory master and slave removed
 
 
 
