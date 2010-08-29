@@ -13,8 +13,8 @@
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
 # VERSION : 0.6.14                                      #
-# DATE    : 08-23-10                                    #
-# STATE   : Alpha 13                                    #
+# DATE    : 08-29-10                                    #
+# STATE   : Alpha 14                                    #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -37,9 +37,9 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "08-23-2010"
+__date__ 		= "08-29-2010"
 __version__ 		= "0.6.14"
-__code_name__           = "Das Boot"
+__code_name__           = "Willow"
 __XBMC_Revision__ 	= "31953"
 __index_config__        = 50 
  
@@ -93,7 +93,7 @@ sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
 system = os.uname()
 if system[0] == 'Linux':
    
-   from linux import *
+   from Linux import *
  
 else:
 

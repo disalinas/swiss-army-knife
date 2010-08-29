@@ -64,19 +64,26 @@ Changes:
 
 Fixes:
 - rename setup.done to 0.X.Y-setup.done that allways after a upgrade
-  the setup file with all directorys and installation is passed.
+  the setup file with all directorys and installations is passed.
 
 
 ----------------------------------------------------------------------------------------------------
-Date : 08.23.2010 | Release : 0.6.14    | Author  : H.Weber | CVS:253-
+Date : 08.29.2010 | Release : 0.6.14    | Author  : H.Weber | CVS:253-261
 ----------------------------------------------------------------------------------------------------
 
 
 Changes:
 
+- Added settings for multiple timeout values that are used inside 
+  python.
+  Timeout t1 : state-file default value 5 secounds 
+  Timeout t2 : dvd-chapter file value 10 secounds
+  Timeout t3 : bluray-chapter file value 100 secounds
 
 Fixes:
 
+- The bluray.progress file was not added to the filelist to kill a job
+- setup.sh had a wrong entry for EULA-file 
 
 
 

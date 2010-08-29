@@ -129,8 +129,12 @@ def OSConfiguration(index):
     config[21] = __settings__.getSetting("id-vobcopy")
     config[22] = __settings__.getSetting("id-network")
 
+    # Timeout values that are definied inside the settings
+    # If you receive a Timeout-Error you should increase the value 
 
-
+    config[23] = __settings__.getSetting("id-t1") 
+    config[24] = __settings__.getSetting("id-t2")
+    config[25] = __settings__.getSetting("id-t3")
 
     # Modul-global variable to detect if debug-log is active
 
@@ -186,7 +190,7 @@ def OSConfiguration(index):
 
     # Every release has a sepeperate setup.done file .....
 
-    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.13-setup.done'
+    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.14-setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
     config[32] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid'
@@ -332,6 +336,7 @@ def OSCheckMedia(Media):
     if (os.path.exists(__configLinux__[45])):
         if (os.path.exists(__configLinux__[30])):
             os.remove(__configLinux__[30])
+            OSlog("state-file do exist prio to loop and will be deleted")
     else:
         OSCleanTemp()
 
@@ -340,6 +345,11 @@ def OSCheckMedia(Media):
     if (__verbose__ == 'true'):
         OSlog("state.sh command ready to start")
 
+
+    if (os.path.exists(__configLinux__[30])):
+       os.remove(__configLinux__[30])
+       OSlog("state-file do exist prio to loop and will be deleted")
+ 
     if (Media == 'BLURAY'):
         OSRun("br0.sh " +  __configLinux__[2],True,False)
     if (Media == 'DVD-ROM'):
@@ -361,15 +371,17 @@ def OSCheckMedia(Media):
     while (Waitexit):
            if (os.path.exists(__configLinux__[30])):
                if (__verbose__ == 'true'):
-                   OSlog("state-files exist ...")
+                   OSlog("state-files exist ...exit loop")
+                   OSlog("WCycles Value :" + str(WCycles))
+                   OSlog("Timeout t1 :" + str(__configLinux__[23]))
                Waitexit = False
            else:
                WCycles = WCycles + 1
                time.sleep(1)
-           if (WCycles >= 20):
+           if (WCycles >= __configLinux__[23]):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout 20 secounds reached for track-file  ...")
-                   OSlog("increase timeout value on line 362 / Linux.py  ...")
+                  OSlog("Timeout t1 reached for track-file  ...")
+                  OSlog("increase timeout value for timeout t1")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 2
 
@@ -428,9 +440,9 @@ def OSChapterBluray():
     # Without the list of tracks we can not select inside the list .....
     # If someone knows a bettey way to get this list faster ... send me pm .-)
 
-    time.sleep(35)
+    time.sleep(30)
 
-    WCycles = 20
+    WCycles = 30
     Waitexit = True
     OSlog("Waiting until track-files exist ... WCycles:=" + str(WCycles))
     while (Waitexit):
@@ -440,16 +452,16 @@ def OSChapterBluray():
                Waitexit = False
            else:
                WCycles = WCycles + 1
-               time.sleep(3)
+               time.sleep(1)
            time.sleep(1)
-           if (WCycles >= 100):
+
+           if (WCycles >= __configLinux__[25]):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout 100 secounds reached for track-file  ...WCycles:=" + str(WCycles))
-                   OSlog("increase timeout value on line 438 / Linux.py  ...") 
+                  OSlog("Timeout t3 reached for bluraytrack-file  ...")
+                  OSlog("increase timeout value for timeout t3")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                tracklist.append('none')
                return tracklist
-
 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
 
@@ -989,9 +1001,9 @@ def OSChapterDVD():
     # Without the list of track we can not select inside the list .....
     # If someone knows a bettey way to get this list faster ... send me pm .-)
 
-    time.sleep(15)
+    time.sleep(3)
 
-    WCycles = 10
+    WCycles = 3
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[46])):
@@ -999,11 +1011,12 @@ def OSChapterDVD():
                    OSlog("track-files exist ...")
                Waitexit = False
            else:
-               WCycles = WCycles + 3
-               time.sleep(3)
-           if (WCycles >= 20):
+               WCycles = WCycles + 1
+               time.sleep(1)
+           if (WCycles >= __configLinux__[24]):
                if (__verbose__ == 'true'):
-                   OSlog("Timeout 90 secounds reached for track-file  ...")
+                   OSlog("Timeout t2 reached for chapter-file")
+                   OSlog("increase timeout value for timeout t2") 
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                tracklist.append('none')
                return tracklist
