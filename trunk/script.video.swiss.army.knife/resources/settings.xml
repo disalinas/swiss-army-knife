@@ -35,4 +35,7 @@
         <setting id="id-burn" type="text" label="32067" default="4706074624"/>
         <setting id="id-netcat" type="text" label="32068" default="4000"/>
         <setting id="id-verbose" type="bool" label="32069" default="false"/> 
+        <setting id="id-t1" type="text" label="32074" default="5"/> 
+        <setting id="id-t2" type="text" label="32075" default="10"/> 
+        <setting id="id-t3" type="text" label="32076" default="100"/>         
 </settings>

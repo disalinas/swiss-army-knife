@@ -35,6 +35,10 @@
         <string id="32071">Enable customer-shell-scripts</string>  
         <string id="32072">Default vobcopy directory</string> 
         <string id="32073">Default master network directory</string>  
+        <string id="32074">Default timeout 1: state-file</string>
+        <string id="32075">Default timeout 2: chapter-dvd</string> 
+        <string id="32076">Default timeout 3: chapter-bluray</string>       
+ 
 
         <!--              --> 
         <!-- Window-Names -->
@@ -143,9 +147,9 @@
 
         <string id="33300">Prior to run this addon setup.sh must be executed</string> 
         <string id="33301">Inserted disc is not a Bluray-Disc</string>
-        <string id="33302">File swiss-army-knife/media/state could not be openend</string>
+        <string id="33302">Timeout t1 to short :  media/state could not be openend</string>
         <string id="33303">Bluray-functions are disabled.</string>
-        <string id="33304">Bluray-chapters could not be read</string>
+        <string id="33304">Timeout t3 to short : blueray-chapters</string>
         <string id="33305">ISO-directory not found or writeable !</string>
         <string id="33306">DVD-directory not found or writeable !</string> 
         <string id="33307">Bluray-directory not found or writeable !</string>
@@ -153,7 +157,7 @@
         <string id="33309">Device is not ready !</string>
         <string id="33310">Job could no be killed</string>  
         <string id="33311">Inserted disc is not a DVD-Disc</string>    
-        <string id="33312">DVD-chapters could not be read</string>  
+        <string id="33312">Timeout t2 to short : chapters dvd</string>  
         <string id="33313">Problem with generated audio-tracklist</string> 
         <string id="33314">Problem with generated subtitle-tracklist</string>    
         <string id="33315">Licence-key for makemkv expired</string>  

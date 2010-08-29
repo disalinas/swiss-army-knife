@@ -74,9 +74,11 @@ directory.
 Please do remove any previous version of the addon including the addon-directory
 inside user-data. As long the addon remains alpha a lot of changes do occur. 
 
-Very-Import as long this Addon is Alpha !
+Very-Import as long this Addon is Alpha !!!!!
 
-ALLWAYS RUN THE SETUP PROGRAMM INSIDE THE LINUX-SHELL FOLDER !!!  
+ALLWAYS RUN THE SETUP PROGRAMM INSIDE THE LINUX-SHELL FOLDER !!!
+ALLWAYS REMOVE THE ADDON-FILES INCLUDING ADDON-DIRECTORY PRIOR 
+TO INSTALL A NEW VERSION OF THIS ADDON.
 
 6.) Installation 
 
@@ -132,6 +134,7 @@ Do change the settings to your needs like ...
 * the directory to store vob's  
 * the directory to store over the network
 * the user for the ssh communication
+* Internal timeout values fo the shell-scripts
 * Enable or disable some functions
 
 and many more .....
@@ -151,12 +154,21 @@ are completly disabled. You must renew your makemmkv-licence key !!!
  
 Little Tip:
 
-Do set the computer to a previous date and do set a new key :-) 
+Do set the computer to a previous date and do set a new key inside the gui :-) 
+or do edit this file ....
 
-Do not try to remove the makemkv files and reinstall them.
+user@xbmcdev:~$ cd .MakeMKV/
+user@xbmcdev:~/.MakeMKV$ ls -al
+total 16
+drwxr-xr-x  2 root root   26 2010-07-10 18:01 .
+drwxr-xr-x 45 user user 8192 2010-08-23 21:58 ..
+-rw-r--r--  1 root root  187 2010-08-23 20:57 settings.conf
+user@xbmcdev:~/.MakeMKV$ 
+
+Pleas do not try to remove the makemkv files and reinstall them.
 
 
-6.2 What should you do if you have a error ? 
+6.2 What should you do if you have found a error ? 
 
 - Be sure to read the logs ...
 - Be sure that the ssh-communication is correct (test ssh-communication) inside 
@@ -182,7 +194,7 @@ http://code.google.com/p/swiss-army-knife/issues/list
 7.O Using the addon and have fun 
 
 Lucern, Switzerland 
-08.17.2010 
+08.29.2010 
 linuxluemmel.ch@gmail.ch alias Hans Weber 
 
  
