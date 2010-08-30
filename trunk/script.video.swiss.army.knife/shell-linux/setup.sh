@@ -119,24 +119,36 @@ if [ ! -e EULA-0.6.14 ] ; then
    wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.14
 fi
 
-clear
-cat EULA-0.6.14
-echo
-echo -n "Do you want to accept this enduser-licnce ? (y)"
-read ans
-if [ $ans == "y" ] ; then
-    clear
-    echo "EULA 0.6.14 accepted"
-    echo
-    echo -n press any key to continue ..
-    read any
-else
-   echo "licence was not accepted !"
+
+if [ -e EULA-0.6.14 ] ; then
+   clear
+   cat EULA-0.6.14
    echo
-   echo ----------------------- script rc=5 -----------------------------
-   echo -----------------------------------------------------------------
-   exit $E_LICENCE_NOT_ACCEPTED
-fi
+   echo -n "Do you want to accept this enduser-licnce ? (y)"
+   read ans
+   if [ $ans == "y" ] ; then
+      clear
+      echo "EULA 0.6.14 accepted"
+      echo
+      echo -n press any key to continue ..
+      read any
+   else
+      echo "licence was not accepted !"
+      echo
+      echo ----------------------- script rc=5 -----------------------------
+      echo -----------------------------------------------------------------
+      exit $E_LICENCE_NOT_ACCEPTED
+   fi
+else 
+   clear 
+   echo The EULA-FILE can no be downloaded and therefore you must 
+   echo use a svn release of this addon.
+   echo You do this at you own risk .....
+   echo the last stable puplic released version was 0.6.13
+   echo 
+   echo -n press any key to continue or ctrl-c to abort..
+   read any   
+fi 
 ###########################################################
 
 
