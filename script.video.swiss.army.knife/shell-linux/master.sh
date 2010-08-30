@@ -9,9 +9,7 @@
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
 # $1 master-netcat-port 1                                 #
-# $2 master-netcat-port 2                                 #
-# $3 master-netcat-port 3                                 #
-# $4 master-netcat-port 4                                 #
+# $2 directory to save incoming files                     #
 #                                                         #
 # description :                                           #
 # save a file over the network to this master             #
@@ -37,10 +35,11 @@ OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/
 TMP="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/master-save.tmp"
 SIZE_TRANSFER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/size-transfer-to-client.tmp"
 NAME_AFTER_TRANSFER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/name-from-slave"
+CANCEL_ALL="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/cancel-from-slave"
 
 # Define the counting commands we expect inside the script
 
-EXPECTED_ARGS=4
+EXPECTED_ARGS=2
 
 # Error-codes
 
@@ -50,12 +49,10 @@ E_TOOLNOTF=3
 
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: master.sh p1 p2 p3 p4"
+  echo "Usage: master.sh p1 p2"
   echo
   echo "[p1] netcat master port 1 dd-operation"
-  echo "[p2] netcat master port 2 transfer size"
-  echo "[p3] name of volume"
-  echo "[p4] cancel rip from slave"
+  echo "[p2] directory to store incoming files"
   echo
   echo "master.sh was called with wrong arguments"
   echo
@@ -92,16 +89,25 @@ do
    fi
 done
 
+
+# Define the ports we are using to communicate over netcat
+
+PORT1=$1
+PORT2=`expr $1 + 1`
+PORT3=`expr $1 + 2`
+PORT4=`expr $1 + 3`
+
+
 echo
 echo INFO processing data
 echo
 
-nc -4 -u -l $1 | dd of=/dvdrip/network/file.transfer > /dev/null 2>&1  &
+nc -4 -u -l $PORT1 | dd of=$2/file.transfer > /dev/null 2>&1  &
 
 echo timeout 120 secounds for slave-connection is starting now
 echo
 
-CONNECT=""
+CONNECT=0
 TIMEOUT=1
 LOOP=1
 
@@ -112,39 +118,39 @@ do
 
   # We kneed to know from where we are connected
 
-  REMOTEIP=$(netstat -tunl | grep $1 | awk '{print $4}' | tr ':' ' ' | awk '{print $1}')
+  REMOTEIP=$(netstat -tunl | grep $PORT1 | awk '{print $4}' | tr ':' ' ' | awk '{print $1}')
 
   if [ "$REMOTEIP" == "0.0.0.0" ] ; then
       CONNECT=0
   else
       echo -n .
-      PID1=$(ps axu | grep "nc \-4 \-u \-l $1" | grep -v grep | awk '{print $2}')
+      PID1=$(ps axu | grep "nc \-4 \-u \-l $PORT1" | grep -v grep | awk '{print $2}')
       if [-z "PID1" ] ; then
           echo
           echo
           echo INFO processing data done
           echo
           LOOP=0
-          SIZET=$(ls -la /dvdrip/network/file.transfer | awk '{print $5}')
+          SIZET=$(ls -la $2/file.transfer | awk '{print $5}')
           echo $SIZET > $SIZE_TRANSFER
-          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $2 -q 1  >/dev/null
+          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $PORT2 -q 1  >/dev/null
 
           # to rename the file we need the volname from the remote side
 
-          nc -4 -u -l $3 -w 1 > $NAME_AFTER_TRANSFER
+          nc -4 -u -l $PORT3 -w 1 > $NAME_AFTER_TRANSFER
           NAME=$(cat $NAME_AFTER_TRANSFER)
 
-          mv /dvdrip/network/file.transfer /dvdrip/network/$NAME
+          mv $2/file.transfer $2/$NAME
 
           # We can exit now
 
       else
           netstat -tunp > $TMP 2>$TMP
-          REMOTEIP=$(cat $TMP  | grep $1 | grep $PID1 | awk '{print $5}' | tr ':' ' ' | awk '{print $1}')
-          SIZET=$(ls -la /dvdrip/network/file.transfer | awk '{print $5}')
+          REMOTEIP=$(cat $TMP  | grep $PORT1 | grep $PID1 | awk '{print $5}' | tr ':' ' ' | awk '{print $1}')
+          SIZET=$(ls -la $2/file.transfer | awk '{print $5}')
           echo $SIZET > $SIZE_TRANSFER
           CONNECT=1
-          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $2 -q 1  >/dev/null
+          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $PORT2 -q 1  >/dev/null
      fi
   fi
 
@@ -153,8 +159,8 @@ do
   if [ $CONNECT -eq 0 ] ; then
      if [ $TIMEOUT -gt 120 ] ; then
 
-           PID2=$(ps axu | grep "dd of=/dvdrip/network/file.transfer" | grep -v grep |awk '{print $2}')
-           PID1=$(ps axu | grep "nc \-4 \-u \-l $1" | grep -v grep |awk '{print $2}')
+           PID2=$(ps axu | grep "dd of=$2/file.transfer" | grep -v grep |awk '{print $2}')
+           PID1=$(ps axu | grep "nc \-4 \-u \-l $PORT1" | grep -v grep |awk '{print $2}')
            kill -9 $PID2 $PID1 > /dev/null 2>&1
 
            echo
@@ -173,6 +179,10 @@ do
 
   TIMEOUT=`expr $TIMEOUT + 1`
 done
+
+# In the case we have started a port4 netcat process we have kill the process.....
+
+
 
 echo
 echo ----------------------- script rc=0 -----------------------------
