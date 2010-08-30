@@ -71,7 +71,7 @@
         <string id="32123">Rescue-copy DVD to iso (confirmed)</string>
         <string id="32124">Copy vob-files from DVD to hd (confirmed)</string>
         <string id="32125">Reserved transcode & burning</string>      
-        <string id="32126">Network-Funtions</string>
+        <string id="32126">Network-Functions</string>
         <string id="32127">Reserved user-scripts</string>
         <string id="32128">Test ssh connection</string>
         <string id="32129">Info</string>
@@ -96,10 +96,11 @@
         <!-- Network       -->
         <!--               -->        
 
-        <string id="32170">Master</string>
-        <string id="32171">Transfer dvd to master</string>
-        <string id="32172">Transfer bluray to master</string>
-        <string id="32173">Back</string>
+        <string id="32170">Start Master</string>
+        <string id="32171">Start Slave [dvd to master]</string>
+        <string id="32172">Start Slave [bluray to master]</string>
+        <string id="32173">Start Slave [copy rip to master]</string>
+        <string id="32174">Back</string>
 
         <!--                --> 
         <!-- Joblist Window -->
@@ -176,5 +177,6 @@
         <string id="33317">The inserted dvd is not mounted</string> 
         <string id="33318">Vobcopy-directory not found or writeable !</string>
         <string id="33319">Network master directory not found or writeable !</string>
+        <string id="33320">Network-functions are disabled.</string>
 
  </strings>

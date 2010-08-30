@@ -300,6 +300,45 @@ def GUIInfo(Selector,Info):
 
 
 
+#########################################################
+# Function  : GUIExpertNetworkClass                     #
+#########################################################
+# Parameter : XBMC-Window Class                         #
+#                                                       #
+# xbmcgui.Window                                        # 
+#                                                       # 
+# Returns   : none                                      #
+#########################################################
+class GUIExpertNetworkClass(xbmcgui.Window):
+
+      def __init__(self):
+
+          global __jobs__ 
+          exit = True
+
+          menu = []       
+          for i in range(32170,32175):
+	      menu.append(__language__(i))
+          while (exit): 
+             dialog = xbmcgui.Dialog()
+             choice  = dialog.select(__language__(32093) ,menu)
+             if (choice == 0):
+                 exit = True
+             if (choice == 1): 
+                 exit = True    
+             if (choice == 2):
+                 exit = True
+             if (choice == 3):
+                 exit = True 
+             if (choice == 4):
+                 exit = False                  
+          self.close()
+
+#########################################################
+
+
+
+
 
 #########################################################
 # Function  : GUIExpertWinClass                         #
@@ -618,8 +657,16 @@ class GUIExpertWinClass(xbmcgui.Window):
                  GUIInfo(1,__language__(33205)) 
 
              if (choice == 6):
-                 GUIInfo(1,__language__(33205)) 
-
+                 
+                 # Network 
+ 
+                 if (__enable_network__ == 'true'):                
+                     NetworkWindow = GUIExpertNetworkClass()
+                     del NetworkWindow 
+                 else:
+                     GUIInfo(0,__language__(33320))                            
+                  
+   
              if (choice == 7):
                  GUIInfo(1,__language__(33205)) 
 
@@ -918,8 +965,12 @@ if __name__ == '__main__':
            if (OSCheckContainerID(3)):
                GUIInfo(1,__language__(33318))
 
-           if (OSCheckContainerID(4)):
-               GUIInfo(1,__language__(33318))
+           # Network container is only tested if the function is enabled ...
+
+           if (__enable_network__ == "true"):         
+               if (OSCheckContainerID(4)):
+                   GUIInfo(1,__language__(33319)) 
+
 
            GUIlog ("create main-menu")
 
