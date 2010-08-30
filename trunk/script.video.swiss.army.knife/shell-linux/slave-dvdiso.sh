@@ -9,11 +9,8 @@
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
 # $1 master-netcat-port 1                                 #
-# $2 master-netcat-port 2                                 #
-# $3 master-netcat-port 3                                 #
-# $4 master-netcat-port 4                                 #
-# $5 dvd-devive to send image over the network            #
-# $6 master ip-adress or dns-name                         #
+# $2 dvd-devive to send image over the network            #
+# $3 master ip-adress or dns-name                         #
 #                                                         #
 # description :                                           #
 # save a file over the network to a master station        #
@@ -41,7 +38,7 @@ SLAVE_VOLNAME="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
 # Define the counting commands we expect inside the script
 
-EXPECTED_ARGS=6
+EXPECTED_ARGS=3
 
 # Error-codes
 
@@ -52,14 +49,11 @@ E_BADB=4
 
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: slave-dvdiso.sh p1 p2 p3 p4 p5 p6"
+  echo "Usage: slave-dvdiso.sh p1 p2 p3"
   echo
   echo "[p1] netcat master port 1 dd-operation"
-  echo "[p2] netcat master port 2 transfer size"
-  echo "[p3] netcat master port 3 volname"
-  echo "[p4] netcat master port 4 cancel"
-  echo "[p5] dvd-device"
-  echo "[p6] master ip-adress or dns-name"
+  echo "[p2] dvd device"
+  echo "[p3] master ip-adress or dns-name"
   echo
   echo "slave-dvdiso.sh was called with wrong arguments"
   echo
@@ -97,16 +91,21 @@ do
    fi
 done
 
+
+PORT1=$1
+PORT2=`expr $1 + 1`
+PORT3=`expr $1 + 2`
+PORT4=`expr $1 + 3`
+
 # break css by force
 
-lsdvd -a $5 >/dev/null 2>&1
-
+lsdvd -a $2 >/dev/null 2>&1
 
 # Get volname to transfer this name to the master
 
-VOLNAME=$(volname $5 | tr -dc ‘[:alnum:]‘)
+VOLNAME=$(volname $2 | tr -dc ‘[:alnum:]‘)
 
-blocksize=`isoinfo -d -i $5  | grep "^Logical block size is:" | cut -d " " -f 5`
+blocksize=`isoinfo -d -i $2  | grep "^Logical block size is:" | cut -d " " -f 5`
 if test "$blocksize" = ""; then
    echo
    echo catdevice FATAL ERROR: Blank blocksize
@@ -120,7 +119,7 @@ fi
 
 # Get Blockcount
 
-blockcount=`isoinfo -d -i $5 | grep "^Volume size is:" | cut -d " " -f 4`
+blockcount=`isoinfo -d -i $2 | grep "^Volume size is:" | cut -d " " -f 4`
 if test "$blockcount" = ""; then
    echo
    echo catdevice FATAL ERROR: Blank blockcount
@@ -138,18 +137,18 @@ echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
 echo INFO volname send to master-ip  [$VOLNAME]
 echo
 
-dd bs=2048 if=$5 | nc -4 -u $6 $1 >/dev/null 2>&1  &
+dd bs=2048 if=$2 | nc -4 -u $3 $PORT1 >/dev/null 2>&1  &
 
 echo
 echo timeout 5 secounds for master-connection is starting now
 
 sleep 5
 
-PID1=$(ps axu | grep "nc \-4 \-u $6 $1" | grep -v grep |awk '{print $2}')
+PID1=$(ps axu | grep "nc \-4 \-u $3 $PORT1" | grep -v grep |awk '{print $2}')
 
 if [ -z $PID1 ] ; then
    echo
-   echo no connection to master port $1 with ip:$6 possible.
+   echo no connection to master port $1 with ip:$3 possible.
    echo slave-script do exit now ...
    echo
    echo ----------------------- script rc=2 -----------------------------
@@ -158,7 +157,7 @@ if [ -z $PID1 ] ; then
 fi
 
 echo
-echo INFO connected to host:$6
+echo INFO connected to host:$3
 echo
 echo INFO copy data with netcat
 echo
@@ -171,9 +170,9 @@ cd "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp"
 
 while [ $LOOP -eq '1'  ];
 do
-  nc -4 -u -l $2 -w 1 > transfer_from_master_to_slave.tmp
+  nc -4 -u -l $PORT2 -w 1 > transfer_from_master_to_slave.tmp
   SIZE2=$(cat transfer_from_master_to_slave.tmp)
-  sleep 20
+  sleep 1
   echo -n .
   if [ $SIZE1 == $SIZE2 ] ; then
      echo
@@ -185,7 +184,7 @@ do
      # The remote master needs the file name of the dvd
 
      echo $VOLNAME > $SLAVE_VOLNAME
-     cat $SLAVE_VOLNAME | nc -4 -u $6 $3 -q 1  >/dev/null
+     cat $SLAVE_VOLNAME | nc -4 -u $PORT3 $ -q 1  >/dev/null
 
   fi
 done
