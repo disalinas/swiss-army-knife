@@ -97,6 +97,11 @@ PORT2=`expr $1 + 1`
 PORT3=`expr $1 + 2`
 PORT4=`expr $1 + 3`
 
+# cleanup
+
+if [ -e $CANCEL_ALL ] ; then
+   rm $CANCEL_ALL >/dev/null 2>&1
+fi
 
 echo
 echo INFO processing data
@@ -107,6 +112,7 @@ nc -4 -u -l $PORT1 | dd of=$2/file.transfer > /dev/null 2>&1  &
 echo timeout 120 secounds for slave-connection is starting now
 echo
 
+CSTART=0
 CONNECT=0
 TIMEOUT=1
 LOOP=1
@@ -125,6 +131,14 @@ do
   else
       echo -n .
       PID1=$(ps axu | grep "nc \-4 \-u \-l $PORT1" | grep -v grep | awk '{print $2}')
+
+      # we only need 1 instance for the remote cancel
+
+      if [ $CSTART -eq 0 ] ; then
+           nc -4 -u -l $PORT4 -w 1 > $CANCEL_ALL
+           CSTART=1
+      fi
+
       if [-z "PID1" ] ; then
           echo
           echo
@@ -178,6 +192,16 @@ do
   # Increment timeout value
 
   TIMEOUT=`expr $TIMEOUT + 1`
+
+  # Test for cancel from  the remote side
+
+  if [ -e $CANCEL_ALL ] ; then
+     echo
+     echo
+     echo INFO processing data canceld from the remote-side
+     echo
+  fi
+
 done
 
 # In the case we have started a port4 netcat process we have kill the process.....
