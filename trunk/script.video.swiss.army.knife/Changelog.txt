@@ -81,6 +81,8 @@ Changes:
   Timeout t3 : bluray-chapter file value 100 secounds
 - add master.sh to svn 
 - add slave-dvdiso.sh to svn
+- Added network menu 
+- Check network container on startup if function is enabled
 
 Fixes:
 
