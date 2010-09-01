@@ -16,8 +16,8 @@
 ===                            ====
  * The user inside the settings of the addon is not the same user under witch the xbmc system ist started.
  * The login-name of the user whos running xbmc has to be same as inside the settings.
-
-
+=== ====
+=== ====
 ===I have several of this timeout-errors or could not read errors. What should I do ?===
 ---------------------------------------------------------------------------------------
 ===                            ====
