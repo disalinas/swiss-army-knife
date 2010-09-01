@@ -170,11 +170,12 @@ cd "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp"
 
 while [ $LOOP -eq '1'  ];
 do
+  # echo -n .
   nc -4 -u -l $PORT2 -w 1 > transfer_from_master_to_slave.tmp
   SIZE2=$(cat transfer_from_master_to_slave.tmp)
   sleep 1
-  echo -n .
-  if [ $SIZE1 == $SIZE2 ] ; then
+  echo $SIZE1 $SIZE2
+  if [ "$SIZE1" == "$SIZE2" ] ; then
      echo
      echo
      echo INFO processing data done
@@ -185,7 +186,6 @@ do
 
      echo $VOLNAME > $SLAVE_VOLNAME
      cat $SLAVE_VOLNAME | nc -4 -u $PORT3 $ -q 1  >/dev/null
-
   fi
 done
 

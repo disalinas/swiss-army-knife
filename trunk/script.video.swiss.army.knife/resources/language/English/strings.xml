@@ -178,5 +178,6 @@
         <string id="33318">Vobcopy-directory not found or writeable !</string>
         <string id="33319">Network master directory not found or writeable !</string>
         <string id="33320">Network-functions are disabled.</string>
+        <string id="33321">Local ssh server is not configured properly</string>
 
  </strings>

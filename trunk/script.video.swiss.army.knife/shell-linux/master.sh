@@ -100,8 +100,13 @@ PORT4=`expr $1 + 3`
 # cleanup
 
 if [ -e $CANCEL_ALL ] ; then
-   rm $CANCEL_ALL >/dev/null 2>&1
+     rm $CANCEL_ALL >/dev/null 2>&1
 fi
+
+if [ -e $2/file.transfer  ] ; then
+     rm $2//file.transfer >/dev/null 2>&1
+fi
+
 
 echo
 echo INFO processing data
@@ -129,17 +134,20 @@ do
   if [ "$REMOTEIP" == "0.0.0.0" ] ; then
       CONNECT=0
   else
-      echo -n .
       PID1=$(ps axu | grep "nc \-4 \-u \-l $PORT1" | grep -v grep | awk '{print $2}')
 
       # we only need 1 instance for the remote cancel
 
       if [ $CSTART -eq 0 ] ; then
-           nc -4 -u -l $PORT4 -w 1 > $CANCEL_ALL
+           nc -4 -u -l $PORT4 -w 1 > $CANCEL_ALL &
+           echo
+           echo
+           echo INFO copy data with netcat
+           echo
            CSTART=1
       fi
 
-      if [-z "PID1" ] ; then
+      if [ -z "PID1" ] ; then
           echo
           echo
           echo INFO processing data done
@@ -147,11 +155,11 @@ do
           LOOP=0
           SIZET=$(ls -la $2/file.transfer | awk '{print $5}')
           echo $SIZET > $SIZE_TRANSFER
-          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $PORT2 -q 1  >/dev/null
+          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $PORT2 -q 1  >/dev/null &
 
           # to rename the file we need the volname from the remote side
 
-          nc -4 -u -l $PORT3 -w 1 > $NAME_AFTER_TRANSFER
+          nc -4 -u -l $PORT3 -w 1 > $NAME_AFTER_TRANSFER &
           NAME=$(cat $NAME_AFTER_TRANSFER)
 
           mv $2/file.transfer $2/$NAME
@@ -178,6 +186,7 @@ do
            kill -9 $PID2 $PID1 > /dev/null 2>&1
 
            echo
+           echo
            echo no connection from a client to port $1 was made.
            echo master-script do exit now ...
            echo
@@ -185,6 +194,12 @@ do
            echo -----------------------------------------------------------------
            exit $E_TIMEOUT
      fi
+  fi
+
+  if [ $CONNECT -eq 1 ] ; then
+     echo -n .
+  else
+     echo -n .
   fi
 
   sleep 1
@@ -195,12 +210,12 @@ do
 
   # Test for cancel from  the remote side
 
-  if [ -e $CANCEL_ALL ] ; then
-     echo
-     echo
-     echo INFO processing data canceld from the remote-side
-     echo
-  fi
+#  if [ -e $CANCEL_ALL ] ; then
+#     echo
+#     echo
+#     echo INFO processing data canceld from the remote-side
+#     echo
+#  fi
 
 done
 

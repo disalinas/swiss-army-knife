@@ -944,41 +944,60 @@ if __name__ == '__main__':
 
        else:
 
-           # Check that directory exists and could be written 
-           # Bluray-directory is only included if the functions are enabled
+           # We have a ssh configuration that should work ....
+           # But should working and working properly are two diffrent things ,-)
+            
+           state_ssh = OSCheckSSH()
+           if (state_ssh == 1):
+               GUIInfo(0,__language__(33321)) 
+               GUIlog ("please do configure ssh-server for login without any passwords")
+               GUIlog ("This addon do not start until ssh communication is working properly for the current user") 
+               GUIlog ("Addon do exit now ...")
+           else:
 
-           if (__enable_bluray__ == "true"):
-               state = OSCheckLicence()
-               if (state == 1):
-                   if (OSCheckContainerID(2)):
-                       GUIInfo(1,__language__(33307))
-               else:
-                   __enable_bluray__ = "false"
-                   GUIInfo(1,__language__(33315))
+               # Check that directory exists and could be written 
+               # Bluray-directory is only included if the functions are enabled
+
+               if (__enable_bluray__ == "true"):
+
+                  # The check for a valid mkv licence is only executed 
+                  # if the bluray part is enabled ..  
+
+                  state = OSCheckLicence()
+                  if (state == 1):
+                      if (OSCheckContainerID(2)):
+                          GUIInfo(1,__language__(33307))
+                  else:
+                       __enable_bluray__ = "false"
+                       GUIInfo(1,__language__(33315))
       
-           if (OSCheckContainerID(1)):
-               GUIInfo(1,__language__(33306))
+               if (OSCheckContainerID(1)):
+                   GUIInfo(1,__language__(33306))
+   
+               if (OSCheckContainerID(0)):
+                   GUIInfo(1,__language__(33305))
 
-           if (OSCheckContainerID(0)):
-               GUIInfo(1,__language__(33305))
+               if (OSCheckContainerID(3)):
+                   GUIInfo(1,__language__(33318))
 
-           if (OSCheckContainerID(3)):
-               GUIInfo(1,__language__(33318))
+               # Network container is only tested if the function is enabled ...
 
-           # Network container is only tested if the function is enabled ...
+               if (__enable_network__ == "true"):         
+                   if (OSCheckContainerID(4)):
+                       GUIInfo(1,__language__(33319))
+               
+                       # We do not enable a option in the case the container is not 
+                       # writeable 
+      
+                       __enable_network__ == "false" 
+ 
 
-           if (__enable_network__ == "true"):         
-               if (OSCheckContainerID(4)):
-                   GUIInfo(1,__language__(33319)) 
+               GUIlog ("create main-menu")
 
-
-           GUIlog ("create main-menu")
-
-           time.sleep(1)
-           xbmc.executebuiltin("Dialog.Close(busydialog)")
-           menu01 = GUIMain01Class()
-           del menu01
-           GUIlog ("addon-ended")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               menu01 = GUIMain01Class()
+               del menu01
+               GUIlog ("addon-ended")
    
    
 #########################################################
