@@ -71,11 +71,9 @@ Fixes:
 Date : 08.29.2010 | Release : 0.6.14    | Author  : H.Weber | CVS:253-261
 ----------------------------------------------------------------------------------------------------
 
-
 Changes:
 
-- Added settings for multiple timeout values that are used inside 
-  python.
+- Added settings for multiple timeout values that are used inside python.
   Timeout t1 : state-file default value 5 secounds 
   Timeout t2 : dvd-chapter file value 10 secounds
   Timeout t3 : bluray-chapter file value 100 secounds
@@ -83,6 +81,9 @@ Changes:
 - add slave-dvdiso.sh to svn
 - Added network menu 
 - Check network container on startup if function is enabled
+- On startup do check ssh and if successfull never again.
+- Added ssh-server message hickup ,-) 
+- Disable network functions if container is not writeable.
 
 Fixes:
 
