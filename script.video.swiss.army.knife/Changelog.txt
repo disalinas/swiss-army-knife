@@ -84,13 +84,16 @@ Changes:
 - On startup do check ssh and if successfull never again.
 - Added ssh-server message hickup ,-) 
 - Disable network functions if container is not writeable.
+- Check Errorlevel after installation of software with dpkg.
 
 Fixes:
 
 - The bluray.progress file was not added to the filelist to kill a job
 - setup.sh had a wrong entry for EULA-file 
 - directory master and slave removed
-
+- Fixed a BIG Bug.We should not check for software that is part of the bluray 
+  functions if the user do not install the bluray option during the execution of 
+  setup.sh
 
 
 
