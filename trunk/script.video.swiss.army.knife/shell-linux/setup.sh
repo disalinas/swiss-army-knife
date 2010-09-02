@@ -36,6 +36,7 @@ E_TOOLNOTF=2
 E_NOROOT=3
 E_SSHKEY=4
 E_LICENCE_NOT_ACCEPTED=5
+E_DPKG
 
 
 
@@ -371,6 +372,18 @@ if [ $? -eq 1 ] ; then
          wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-32.tar.gz
          tar xvzf handbrake-0.9.4-32.tar.gz
          dpkg -i handbrake-cli_lucid1_i386.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of handbrake-cli_lucid1_i386.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG 
+         else 
+            rm handbrake-cli_lucid1_i386.deb > /dev/null 2>&1
+         fi
       else
          clear
          echo
@@ -380,6 +393,18 @@ if [ $? -eq 1 ] ; then
          wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-64.tar.gz
          tar xvzf handbrake-0.9.4-64.tar.gz
          dpkg -i handbrake-cli_lucid1_amd64.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of handbrake-cli_lucid1_amd64.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG
+         else
+            rm handbrake-cli_lucid1_amd64.deb > /dev/null 2>&1
+         fi 
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -418,7 +443,18 @@ else
          wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-32.tar.gz
          tar xvzf handbrake-0.9.4-32.tar.gz
          dpkg -i handbrake-cli_lucid1_i386.deb
-         rm handbrake-0.9.4-32.tar.gz 
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of handbrake-cli_lucid1_i386.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG
+         else 
+            rm handbrake-0.9.4-32.tar.gz
+         fi 
       else
          clear
          echo
@@ -428,7 +464,18 @@ else
          wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-64.tar.gz
          tar xvzf handbrake-0.9.4-64.tar.gz
          dpkg -i handbrake-cli_lucid1_amd64.deb
-         rm handbrake-0.9.4-64.tar.gz
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of handbrake-cli_lucid1_amd64.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG 
+         else
+            rm handbrake-cli_lucid1_amd64.deb > /dev/null 2>&1
+         fi 
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -470,7 +517,27 @@ if [ $? -eq 1 ] ; then
          wget http://swiss-army-knife.googlecode.com/files/makemkv-v1.5.8-32.tar.gz
          tar xvzf makemkv-v1.5.8-32.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of makemkv-v1.5.8-bin_20100818-1_i386.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG 
+         fi
          dpkg -i makemkv-v1.5.8-oss_20100818-1_i386.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of makemkv-v1.5.8-oss_20100818-1_i386.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG
+         fi
          rm xvzf makemkv-v1.5.8-32.tar.gz 
       else
          clear
@@ -481,7 +548,27 @@ if [ $? -eq 1 ] ; then
          wget http://swiss-army-knife.googlecode.com/files/makemkv-1.5.8-64.tar.gz
          tar xvzf makemkv-1.5.8-64.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of makemkv-v1.5.8-bin_20100819-1_amd64.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG
+         fi
          dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of makemkv-v1.5.8-oss_20100819-1_amd64.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG
+         fi
          rm makemkv-1.5.8-64.tar.gz
       fi
    fi
@@ -521,9 +608,28 @@ else
          wget http://swiss-army-knife.googlecode.com/files/makemkv-v1.5.8-32.tar.gz
          tar xvzf makemkv-v1.5.8-32.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of makemkv-v1.5.8-bin_20100818-1_i386.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG 
+         fi
          dpkg -i makemkv-v1.5.8-oss_20100818-1_i386.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of makemkv-v1.5.8-oss_20100818-1_i386.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG  
+         fi
          rm xvzf makemkv-v1.5.8-32.tar.gz
-
       else
          clear
          echo
@@ -533,8 +639,28 @@ else
          wget http://swiss-army-knife.googlecode.com/files/makemkv-1.5.8-64.tar.gz
          tar xvzf makemkv-1.5.8-64.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of makemkv-v1.5.8-bin_20100819-1_amd64.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG
+         fi
          dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
-         rm makemkv-1.5.8-64.tar.gz 
+         if [ $? -eq 1 ]; then
+            clear 
+            echo the installation of makemkv-v1.5.8-oss_20100819-1_amd64.deb
+            echo was not successfull. 
+            echo please do confirm that the installation was not successfull.
+            echo  
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG
+         fi
+         rm makemkv-1.5.8-64.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -576,6 +702,9 @@ echo Addon can now be running over xbmc  ......
 echo
 echo
 echo - Please do updates the settings with the addon-manager.
+echo - Do not forget to replace the preset name xbmc@localhost 
+echo   if your username is not xbmc.
+echo
 echo
 echo Have fun with this addon and I wish you happy ripping.
 echo Feel free to send me a few notes about your expirience with
@@ -583,6 +712,8 @@ echo this addon on the feedback url.
 echo
 echo http://code.google.com/p/swiss-army-knife/wiki/Feedback
 echo
+echo Greetings from switzerland 
+echo Hans
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 echo
