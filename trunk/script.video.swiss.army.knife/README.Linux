@@ -111,6 +111,8 @@ including  2 debian files.
 - The script do check if handbrake or makemkv are allready installed.
 - The script do check witch versions of the tools makemkv and handbrake 
   are installed.
+- If a error is detected during the installation of makemkv or handbrake 
+  the script do exit now.
 - Multiple parts of the script do now ask if they should be executed.
 - By this you can later run setup.sh and only execute the needed part 
   again.

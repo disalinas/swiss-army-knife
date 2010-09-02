@@ -323,14 +323,18 @@ class GUIExpertNetworkClass(xbmcgui.Window):
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32093) ,menu)
              if (choice == 0):
+                 GUIInfo(1,__language__(33205)) 
                  exit = True
-             if (choice == 1): 
+             if (choice == 1):
+                 GUIInfo(1,__language__(33205))  
                  exit = True    
              if (choice == 2):
+                 GUIInfo(1,__language__(33205)) 
                  exit = True
              if (choice == 3):
+                 GUIInfo(1,__language__(33205)) 
                  exit = True 
-             if (choice == 4):
+             if (choice == 4): 
                  exit = False                  
           self.close()
 
