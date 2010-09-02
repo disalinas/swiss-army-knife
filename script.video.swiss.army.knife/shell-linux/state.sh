@@ -8,7 +8,7 @@
 ###########################################################
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
-# $1 user                                                 #
+# $1 device to controll                                   #
 # description :                                           #
 # returns the state of the dvd or bluray-drive            #
 # 0              Media inserted                           #
@@ -34,6 +34,7 @@ EXPECTED_ARGS=1
 
 E_BADARGS=1
 E_TOOLNOTF=2
+E_INACTIVE=3
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/media-error.log"
 MEDIA_TYPE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/media.log"
@@ -58,7 +59,6 @@ dvd+rw-mediainfo
 awk
 head
 lsdvd
-makemkvcon
 EOF`
 
 # Check if all commands are found on your system ...
@@ -107,6 +107,31 @@ if [ $RETVAL1 -eq 0 ] ; then
        exit 0
    fi
 
+   # In the case the bluray function are not enabled we do exit the script now
+   # if the script is not allready finished over the above dvd-part
+ 
+   if [ -e  $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_DISABLED ] ; then 
+       echo
+       echo bluray-functions are disabled 
+       echo
+       exit $E_INACTIVE 
+   fi 
+
+
+   # If the command makemkvcon is not installed during the execution of 
+   # setup.sh and the bluray function is enabled we stop now .....
+
+   which makemkvcon >/dev/null 2>&1
+   if [ $? -eq 1 ]; then
+        echo "ERROR! \" makemkvcon is missing. ${0} requires it to operate."
+        echo "Please install \"makemkvcon\"."
+        echo
+        echo Please run setup.sh again to install makemkv 
+        echo 
+        echo ----------------------- script rc=2 -----------------------------
+        echo -----------------------------------------------------------------
+        exit $E_TOOLNOTF
+   fi
 
    if [ $1 == '/dev/sr0' ] ; then
       PARA="disc:0"

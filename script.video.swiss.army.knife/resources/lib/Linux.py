@@ -182,6 +182,18 @@ def OSConfiguration(index):
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_SUB > /dev/null 2>&1"
         status = os.system("%s" % (command))
 
+
+    # All the options that can be enabled or disabled over settings or during the execution of setup.sh 
+    # are reported back to the shell-scripts.
+  
+    if (config[10] == 'true'):
+        sys.platform.startswith('linux')
+        command = "echo -n BLURAY ENABLED" > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_ENABLED"
+        status = os.system("%s" % (command))
+    else:
+        command = "echo -n BLURAY DISABLED" > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_DISABLED"
+        status = os.system("%s" % (command))
+
     # All used internal files are stored inside after here ...
 
     config[26] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/username'  
