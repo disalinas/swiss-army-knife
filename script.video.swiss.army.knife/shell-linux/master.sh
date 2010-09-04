@@ -70,6 +70,7 @@ awk
 dd
 netstat
 nc
+grep
 sleep
 EOF`
 
@@ -112,7 +113,7 @@ echo
 echo INFO processing data
 echo
 
-nc -4 -u -l $PORT1 | dd of=$2/file.transfer > /dev/null 2>&1  &
+nc -4 -l $PORT1 | dd of=$2/file.transfer > /dev/null 2>&1  &
 
 echo timeout 120 secounds for slave-connection is starting now
 echo
@@ -134,12 +135,12 @@ do
   if [ "$REMOTEIP" == "0.0.0.0" ] ; then
       CONNECT=0
   else
-      PID1=$(ps axu | grep "nc \-4 \-u \-l $PORT1" | grep -v grep | awk '{print $2}')
+      PID1=$(ps axu | grep "nc \-4 \-l $PORT1" | grep -v grep | awk '{print $2}')
 
       # we only need 1 instance for the remote cancel
 
       if [ $CSTART -eq 0 ] ; then
-           nc -4 -u -l $PORT4 -w 1 > $CANCEL_ALL &
+           nc -4 -l $PORT4 -w 1 > $CANCEL_ALL &
            echo
            echo
            echo INFO copy data with netcat
@@ -159,7 +160,7 @@ do
 
           # to rename the file we need the volname from the remote side
 
-          nc -4 -u -l $PORT3 -w 1 > $NAME_AFTER_TRANSFER &
+          nc -4 -l $PORT3 -w 1 > $NAME_AFTER_TRANSFER &
           NAME=$(cat $NAME_AFTER_TRANSFER)
 
           mv $2/file.transfer $2/$NAME
@@ -182,7 +183,7 @@ do
      if [ $TIMEOUT -gt 120 ] ; then
 
            PID2=$(ps axu | grep "dd of=$2/file.transfer" | grep -v grep |awk '{print $2}')
-           PID1=$(ps axu | grep "nc \-4 \-u \-l $PORT1" | grep -v grep |awk '{print $2}')
+           PID1=$(ps axu | grep "nc \-4 \-l $PORT1" | grep -v grep |awk '{print $2}')
            kill -9 $PID2 $PID1 > /dev/null 2>&1
 
            echo
@@ -210,17 +211,25 @@ do
 
   # Test for cancel from  the remote side
 
-#  if [ -e $CANCEL_ALL ] ; then
-#     echo
-#     echo
-#     echo INFO processing data canceld from the remote-side
-#     echo
-#  fi
+  if [ -e $CANCEL_ALL ] ; then
+     grep CANCEL $CANCEL_ALL
+
+
+     echo
+     echo
+     echo INFO processing data canceld from the remote-side
+     echo
+     PID2=$(ps axu | grep "dd of=$2/file.transfer" | grep -v grep |awk '{print $2}')
+     PID1=$(ps axu | grep "nc \-4 \-l $PORT1" | grep -v grep |awk '{print $2}')
+     kill -9 $PID2 $PID1 > /dev/null 2>&1
+  fi
 
 done
 
 # In the case we have started a port4 netcat process we have kill the process.....
 
+PID1=$(ps axu | grep "nc \-4 \-l $PORT4" | grep -v grep |awk '{print $2}')
+kill -9 $PID1 > /dev/null 2>&1
 
 
 echo

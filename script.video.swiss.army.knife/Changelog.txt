@@ -94,7 +94,7 @@ Fixes:
 - Fixed a BIG Bug.We should not check for software that is part of the bluray 
   functions if the user do not install the bluray option during the execution of 
   setup.sh
-
+- we should allwayas send data with tcp instead of udp. 
 
 
 

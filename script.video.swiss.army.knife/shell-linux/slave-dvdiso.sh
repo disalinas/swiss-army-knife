@@ -137,14 +137,14 @@ echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
 echo INFO volname send to master-ip  [$VOLNAME]
 echo
 
-dd bs=2048 if=$2 | nc -4 -u $3 $PORT1 >/dev/null 2>&1  &
+dd bs=2048 if=$2 | nc -4 $3 $PORT1 >/dev/null 2>&1  &
 
 echo
 echo timeout 5 secounds for master-connection is starting now
 
 sleep 5
 
-PID1=$(ps axu | grep "nc \-4 \-u $3 $PORT1" | grep -v grep |awk '{print $2}')
+PID1=$(ps axu | grep "nc \-4 $3 $PORT1" | grep -v grep |awk '{print $2}')
 
 if [ -z $PID1 ] ; then
    echo
@@ -171,7 +171,7 @@ cd "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp"
 while [ $LOOP -eq '1'  ];
 do
   # echo -n .
-  nc -4 -u -l $PORT2 -w 1 > transfer_from_master_to_slave.tmp
+  nc -4 -l $PORT2 -w 1 > transfer_from_master_to_slave.tmp
   SIZE2=$(cat transfer_from_master_to_slave.tmp)
   sleep 1
   echo $SIZE1 $SIZE2
@@ -185,7 +185,7 @@ do
      # The remote master needs the file name of the dvd
 
      echo $VOLNAME > $SLAVE_VOLNAME
-     cat $SLAVE_VOLNAME | nc -4 -u $PORT3 $ -q 1  >/dev/null
+     cat $SLAVE_VOLNAME | nc -4 $PORT3 $ -q 1  >/dev/null
   fi
 done
 
