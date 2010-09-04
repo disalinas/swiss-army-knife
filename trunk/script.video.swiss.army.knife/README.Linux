@@ -94,6 +94,13 @@ Run the following command as user root :
 
 ./setup.sh xbmc
 
+If you do not run setup.sh the following messages comes up on
+starting the addon.
+
+"Prior to run this addon setup.sh must be executed" 
+
+Only after the execution of setup.sh this mesage never comes again.
+ 
 As long the eula is not accepted the script do not change any 
 settings of the system.
 
@@ -116,6 +123,7 @@ including  2 debian files.
 - Multiple parts of the script do now ask if they should be executed.
 - By this you can later run setup.sh and only execute the needed part 
   again.
+
  
 This debian-filea are only tested on Ubuntu 10.04 LTS.If you don't use 
 a debian based system, or your system is to old, you have to compile 
@@ -169,6 +177,9 @@ user@xbmcdev:~/.MakeMKV$
 
 Pleas do not try to remove the makemkv files and reinstall them.
 
+If your licence key is expired you see the following message inside the addon
+
+"Licence-key for makemkv expired"
 
 6.2 What should you do if you have found a error ? 
 
@@ -196,7 +207,7 @@ http://code.google.com/p/swiss-army-knife/issues/list
 7.O Using the addon and have fun 
 
 Lucern, Switzerland 
-08.29.2010 
+09.04.2010 
 linuxluemmel.ch@gmail.ch alias Hans Weber 
 
  
