@@ -98,6 +98,13 @@ PORT2=`expr $1 + 1`
 PORT3=`expr $1 + 2`
 PORT4=`expr $1 + 3`
 
+echo
+echo "[$PORT1] from slave dd"
+echo "[$PORT2] to slave size of file"
+echo "[$PORT3] from slave name of file after transprt"
+echo "[$PORT4] from slave Cancel operation"
+echo
+
 # cleanup
 
 if [ -e $CANCEL_ALL ] ; then
@@ -130,57 +137,45 @@ do
 
   # We kneed to know from where we are connected
 
-  REMOTEIP=$(netstat -tunl | grep $PORT1 | awk '{print $4}' | tr ':' ' ' | awk '{print $1}')
+  REMOTEIP=$(netstat -tun | grep $PORT1 | grep ESTABLISHED | awk '{print $4}' | grep $PORT1 | tr ':' ' ' | awk '{print $1}')
 
-  if [ "$REMOTEIP" == "0.0.0.0" ] ; then
-      CONNECT=0
+  if [ -z  "$REMOTEIP" ] ; then
+     if [ $CSTART -eq 0 ] ; then
+        CONNECT=0
+     fi
   else
+
       PID1=$(ps axu | grep "nc \-4 \-l $PORT1" | grep -v grep | awk '{print $2}')
 
       # we only need 1 instance for the remote cancel
 
       if [ $CSTART -eq 0 ] ; then
-           nc -4 -l $PORT4 -w 1 > $CANCEL_ALL &
+           (
+            nc -4 -l $PORT4 -w 1 > $CANCEL_ALL 2>/dev/null  &
+           ) > /dev/null 2>&1 &
+
            echo
            echo
            echo INFO copy data with netcat
            echo
            CSTART=1
+           CONNECT=1
       fi
 
-      if [ -z "PID1" ] ; then
-          echo
-          echo
-          echo INFO processing data done
-          echo
-          LOOP=0
-          SIZET=$(ls -la $2/file.transfer | awk '{print $5}')
-          echo $SIZET > $SIZE_TRANSFER
-          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $PORT2 -q 1  >/dev/null &
-
-          # to rename the file we need the volname from the remote side
-
-          nc -4 -l $PORT3 -w 1 > $NAME_AFTER_TRANSFER &
-          NAME=$(cat $NAME_AFTER_TRANSFER)
-
-          mv $2/file.transfer $2/$NAME
-
-          # We can exit now
-
-      else
-          netstat -tunp > $TMP 2>$TMP
-          REMOTEIP=$(cat $TMP  | grep $PORT1 | grep $PID1 | awk '{print $5}' | tr ':' ' ' | awk '{print $1}')
-          SIZET=$(ls -la $2/file.transfer | awk '{print $5}')
-          echo $SIZET > $SIZE_TRANSFER
-          CONNECT=1
-          cat $SIZE_TRANSFER | nc -4 -u $REMOTEIP $PORT2 -q 1  >/dev/null
-     fi
+      netstat -tunp > $TMP 2>$TMP
+      SLAVE=$(cat $TMP  | grep $PORT1 | grep $PID1 | awk '{print $5}' | tr ':' ' ' | awk '{print $1}')
+      SIZET=$(ls -la $2/file.transfer | awk '{print $5}')
+      echo $SIZET > $SIZE_TRANSFER
+      CONNECT=1
+      cat $SIZE_TRANSFER | nc -4 $SLAVE $PORT2 -q 1  >/dev/null
   fi
+
 
   # After 120 secounds and no active connection we have reached timeout
 
   if [ $CONNECT -eq 0 ] ; then
      if [ $TIMEOUT -gt 120 ] ; then
+        if [ $CSTART -eq 0 ] ; then
 
            PID2=$(ps axu | grep "dd of=$2/file.transfer" | grep -v grep |awk '{print $2}')
            PID1=$(ps axu | grep "nc \-4 \-l $PORT1" | grep -v grep |awk '{print $2}')
@@ -194,13 +189,42 @@ do
            echo ----------------------- script rc=2 -----------------------------
            echo -----------------------------------------------------------------
            exit $E_TIMEOUT
+        fi
      fi
+  fi
+
+  if [ $CONNECT -eq 0 ] ; then
+     echo -n .
   fi
 
   if [ $CONNECT -eq 1 ] ; then
      echo -n .
-  else
-     echo -n .
+     if [ -z  "$REMOTEIP" ] ; then
+          echo
+          echo
+          echo INFO processing data done
+          echo
+
+          sleep 5
+
+          LOOP=0
+          SIZET=$(ls -la $2/file.transfer | awk '{print $5}')
+          echo $SIZET > $SIZE_TRANSFER
+          cat $SIZE_TRANSFER | nc -4 $SLAVE $PORT2 -q 1  >/dev/null &
+
+          # to rename the file we need the volname from the remote side
+
+          nc -4 -l $PORT3 -w 1 > $NAME_AFTER_TRANSFER &
+
+          echo
+          echo INFO renmame filter after transfer
+          echo
+
+          sleep 3
+
+          NAME=$(cat $NAME_AFTER_TRANSFER)
+          mv $2/file.transfer $2/$NAME
+     fi
   fi
 
   sleep 1
@@ -213,22 +237,23 @@ do
 
   if [ -e $CANCEL_ALL ] ; then
      grep CANCEL $CANCEL_ALL
-
-
-     echo
-     echo
-     echo INFO processing data canceld from the remote-side
-     echo
-     PID2=$(ps axu | grep "dd of=$2/file.transfer" | grep -v grep |awk '{print $2}')
-     PID1=$(ps axu | grep "nc \-4 \-l $PORT1" | grep -v grep |awk '{print $2}')
-     kill -9 $PID2 $PID1 > /dev/null 2>&1
+     retval=$?
+     if [ $retval -eq 0 ] ; then
+       echo
+       echo
+       echo INFO processing data canceld from the remote-side
+       echo
+       PID2=$(ps axu | grep "dd of=$2/file.transfer" | grep -v grep |awk '{print $2}')
+       PID1=$(ps axu | grep "nc \-4 \-l $PORT1" | grep -v grep |awk '{print $2}')
+       kill -9 $PID2 $PID1 > /dev/null 2>&1
+     fi
   fi
 
 done
 
 # In the case we have started a port4 netcat process we have kill the process.....
 
-PID1=$(ps axu | grep "nc \-4 \-l $PORT4" | grep -v grep |awk '{print $2}')
+PID1=$(ps axu | grep "nc \-4 \-l $PORT4 \-w" | grep -v grep |awk '{print $2}')
 kill -9 $PID1 > /dev/null 2>&1
 
 
