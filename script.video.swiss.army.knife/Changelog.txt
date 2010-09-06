@@ -98,6 +98,21 @@ Fixes:
 - we should allwayas send data with tcp instead of udp. 
 
 
+----------------------------------------------------------------------------------------------------
+Date : 09.06.2010 | Release : 0.6.16    | Author  : H.Weber | CVS:279
+----------------------------------------------------------------------------------------------------
+
+
+Changes:
+
+- Added settings for multiple timeout values that are used inside python.
+
+
+Fixes:
+
+- Until we have a Release Candidate the verbose flag will be set default to on.
+
+ 
 
 
 
