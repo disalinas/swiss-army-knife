@@ -189,7 +189,6 @@ do
      echo
      echo
      echo INFO processing data done
-     echo
      LOOP=0
 
      sleep 3
@@ -197,8 +196,10 @@ do
      nc -4 -l $PORT2 -w 1 > transfer_from_master_to_slave.tmp
      SIZE2=$(cat transfer_from_master_to_slave.tmp)
 
-     # The remote master needs the file name of the dvd
+     echo INFO transmitted data-size in bytes [$SIZE2]
+     echo
 
+     # The remote master needs the file name of the dvd
 
      echo $VOLNAME > $SLAVE_VOLNAME
      cat $SLAVE_VOLNAME | nc -4 $3 $PORT3 -q 1 >/dev/null 2>&1 &
