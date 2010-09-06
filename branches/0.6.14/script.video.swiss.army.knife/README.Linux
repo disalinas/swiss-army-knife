@@ -1,0 +1,220 @@
+Readme.Linux for xbmc addon swiss-army-knife  
+--------------------------------------------
+
+1.0 Welcome to my first addon swiss-army-knife
+
+Please do excuse my poor writen english. My native language 
+is german and I do speak a few others imho very good, but speaking 
+and writing are two completly diffrent things.If you would would like to
+improve the addon with your own language , patches are allways welcome.
+ 
+As you may know until now, we had a few things inside xbmc like
+ 
+* Scripts
+* Programs 
+* Plugins for Video 
+* Plugins for Music
+and many more 
+
+After the release xbmc version 10.5 or higher anything is called a addon.
+I used the switch to to the new addon-system  to make complete rewrite  of  
+the old code from my previous script called "luemmels-dvd-ripper".
+My old script was running .... but had a few down-sides...
+
+- it was very huge ... and btw my first ever written python script.
+- No support for blurays. 
+- all code for os and gui was in a single file.
+- it was hard to debug ..... and maintain.
+- I had no subversion controll for the script.
+- It was running on windows and linux. 
+
+By this new addon I changed a few things.
+
+1.) There are 3 strict seperated parts ( GUI / OS / shell-script)
+2.) The code looks nicer .-)
+3.) The code is easyer to maintain.   
+4.) Subversion is now a important part of my work during the development of this 
+    addon .... (and saved my ass one time ;-))
+5.) For someone who wants to port the addon to windows or mac the work is easyer. 
+    Please feel free to send patches for windows and mac.
+    I do not use xbmc on this operating systems and I have therefore no intention 
+    do portinbg this addon by myself.
+
+
+1.1 What are the functions this addon provides ? 
+
+* create a exact iso copy of a dvd with dd.
+* try to copy crippled dvd's with ddrescue.
+* convert dvd to a h264 container. 
+* convert bluray to a mkv container.
+* In a later release I plan to work  some of this features over the network. 
+
+
+2.) Requierements for this addon 
+
+- a Ubuntu 10.04 LTS system or higher. 
+- a SVN build of XBMC (at least SVN 31953) or higher.
+- a DVD-drive and optional a bluray if you would like to transcode BD-disk
+- a place where you can store ripps. Be prepared that this place must be very very 
+  big. 
+
+3.0 What Software will be installed ? 
+
+The list is to long but you can have a look inside the file 
+shell-linux/setup.sh 
+
+4.0 Where is the livcd.sh shell-script gone ? 
+
+The replacement is called setup.sh and is inside the shell-linux 
+directory.
+
+
+5.) Upgrade from a previous version 
+
+Please do remove any previous version of the addon including the addon-directory
+inside user-data. As long the addon remains alpha a lot of changes do occur. 
+
+Very-Import as long this Addon is Alpha !!!!!
+
+ALLWAYS RUN THE SETUP PROGRAMM INSIDE THE LINUX-SHELL FOLDER !!!
+ALLWAYS REMOVE THE ADDON-FILES INCLUDING ADDON-DIRECTORY PRIOR 
+TO INSTALL A NEW VERSION OF THIS ADDON.
+
+6.) Installation 
+
+At first you have to extract the addon-zip inside the right place.
+
+~/.xbmc/addons
+
+Change to the shell-linux directory inside tha addon.
+
+cd ~/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+
+Run the following command as user root :
+
+./setup.sh xbmc
+
+If you do not run setup.sh the following messages comes up on
+starting the addon.
+
+"Prior to run this addon setup.sh must be executed" 
+
+Only after the execution of setup.sh this mesage never comes again.
+ 
+As long the eula is not accepted the script do not change any 
+settings of the system.
+
+If your user name for the linux-system is something other than 
+xbmc, replace xbmc with your own username.(hint -> whoami[enter])
+   
+This shell-scripts do install all software for the addon 
+including  2 debian files.
+
+- It creates all directorys for ripping and transcoding 
+- It will prepare the ssh-server and client to login without 
+  any password.
+- Depend on your system handbrake and makemkv are installed
+  (32 or 64 bit).
+- The script do check if handbrake or makemkv are allready installed.
+- The script do check witch versions of the tools makemkv and handbrake 
+  are installed.
+- If a error is detected during the installation of makemkv or handbrake 
+  the script do exit now.
+- Multiple parts of the script do now ask if they should be executed.
+- By this you can later run setup.sh and only execute the needed part 
+  again.
+
+ 
+This debian-filea are only tested on Ubuntu 10.04 LTS.If you don't use 
+a debian based system, or your system is to old, you have to compile 
+this 2 packages for yourself. The full-source of the 2 packages  is provided 
+only on the project-page to minimize the download-size.
+
+http://swiss-army-knife.googlecode.com/files/makemkv_1.5.8.src.tar.gz
+http://swiss-army-knife.googlecode.com/files/Handbrake-0.9.4-src.tar.gz
+
+The next step to running this addon is to complete the setup with valid 
+settings over xbmc. Open the xbmc addon-manager and enable the addon, if you 
+did not allready.
+Do change the settings to your needs like ...
+
+* the place where to store your iso copys
+* the directory to store the dvd transcoding files
+* the directory to store the bluray mkv files
+* the directory to store vob's  
+* the directory to store over the network
+* the user for the ssh communication
+* Internal timeout values fo the shell-scripts
+* Enable or disable some functions
+
+and many more .....
+
+6.1 Licence key for makekmv 
+
+* Get a valid licence key for makemkv 
+ 
+http://www.makemkv.com/forum2/viewtopic.php?f=5&t=1053
+
+* Start makemkv an do the following :
+
+-> Help -> Register -> new code from above link
+
+If the addon finds a retired licence-key the addon bluray-functions
+are completly disabled. You must renew your makemmkv-licence key !!!
+ 
+Little Tip:
+
+Do set the computer to a previous date and do set a new key inside the gui :-) 
+or do edit this file ....
+
+user@xbmcdev:~$ cd .MakeMKV/
+user@xbmcdev:~/.MakeMKV$ ls -al
+total 16
+drwxr-xr-x  2 root root   26 2010-07-10 18:01 .
+drwxr-xr-x 45 user user 8192 2010-08-23 21:58 ..
+-rw-r--r--  1 root root  187 2010-08-23 20:57 settings.conf
+user@xbmcdev:~/.MakeMKV$ 
+
+Pleas do not try to remove the makemkv files and reinstall them.
+
+If your licence key is expired you see the following message inside the addon
+
+"Licence-key for makemkv expired"
+
+6.2 What should you do if you have found a error ? 
+
+- Be sure to read the logs ...
+- Be sure that the ssh-communication is correct (test ssh-communication) inside 
+  the addon.
+- Check the permissions of the shell-script folder. 
+- Check the permissions of the data-containers. 
+- Have a cool drink ;-)
+- Have a look into the F.A.Q (http://code.google.com/p/swiss-army-knife/wiki/FAQ)
+- I also recommand to test the shell-functions inside a terminal with your current 
+  user.
+  
+  http://code.google.com/p/swiss-army-knife/wiki/LinuxShell
+
+6.3 Feedback 
+
+http://code.google.com/p/swiss-army-knife/wiki/Feedback
+
+5.4 Bugtracking 
+
+http://code.google.com/p/swiss-army-knife/issues/list
+
+
+7.O Using the addon and have fun 
+
+Lucern, Switzerland 
+09.04.2010 
+linuxluemmel.ch@gmail.ch alias Hans Weber 
+
+ 
+
+
+
+ 
+
+
+
