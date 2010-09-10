@@ -99,14 +99,13 @@ Fixes:
 
 
 ----------------------------------------------------------------------------------------------------
-Date : 09.06.2010 | Release : 0.6.16    | Author  : H.Weber | CVS:279
+Date : 09.06.2010 | Release : 0.6.15    | Author  : H.Weber | CVS:279
 ----------------------------------------------------------------------------------------------------
 
 
 Changes:
 
-- Added settings for multiple timeout values that are used inside python.
-
+- test $SHELL inside setup.sh prior to execute anything.
 
 Fixes:
 
