@@ -15,6 +15,13 @@
 
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
+if [ $SHELL -ne "/bin/bash" ] ; then
+   echo only bash shell is supported by this shell-script.
+   echo It looks like you are using somehting other than /bin/bash.
+   echo
+   exit 255
+fi
+
 echo
 echo ----------------------------------------------------------------------------
 SCRIPT=$(basename $0)
@@ -36,15 +43,15 @@ E_TOOLNOTF=2
 E_NOROOT=3
 E_SSHKEY=4
 E_LICENCE_NOT_ACCEPTED=5
-E_DPKG
-
+E_DPKG=6
+E_WRONG_SHELL=255
 
 
 ###########################################################
 #            Check-Arguments to Script                    #
 ###########################################################
 if [ $# -ne $EXPECTED_ARGS ] ; then
-  clear 
+  clear
   echo "Usage: setup.sh p1"
   echo
   echo " [p1] username"
@@ -95,7 +102,7 @@ done
 #            Who is running the script ?                  #
 ###########################################################
 if [ "$UID" -ne 0 ] ; then
-   clear 
+   clear
    echo "you must be root to run this script !"
    echo "sudo ./setup.sh"
    echo
@@ -112,24 +119,24 @@ fi
 ###########################################################
 #            Is licence-file allready local ?             #
 ###########################################################
-if [ ! -e EULA-0.6.14 ] ; then
+if [ ! -e EULA-0.6.15 ] ; then
    clear
    echo
    echo download licence file from google-code
    echo
-   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.14
+   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.15
 fi
 
 
-if [ -e EULA-0.6.14 ] ; then
+if [ -e EULA-0.6.15 ] ; then
    clear
-   cat EULA-0.6.14
+   cat EULA-0.6.15
    echo
    echo -n "Do you want to accept this enduser-licnce ? (y)"
    read ans
    if [ $ans == "y" ] ; then
       clear
-      echo "EULA 0.6.14 accepted"
+      echo "EULA 0.6.15 accepted"
       echo
       echo -n press any key to continue ..
       read any
@@ -140,16 +147,16 @@ if [ -e EULA-0.6.14 ] ; then
       echo -----------------------------------------------------------------
       exit $E_LICENCE_NOT_ACCEPTED
    fi
-else 
-   clear 
-   echo The EULA-FILE can no be downloaded and therefore you must 
+else
+   clear
+   echo The EULA-FILE can not be downloaded and therefore you must
    echo use a svn release of this addon.
    echo You do this at you own risk .....
-   echo the last stable puplic released version was 0.6.13
-   echo 
+   echo the last stable puplic released version was 0.6.14
+   echo
    echo -n press any key to continue or ctrl-c to abort..
-   read any   
-fi 
+   read any
+fi
 ###########################################################
 
 
@@ -282,8 +289,7 @@ if [ $ans == "n" ] ; then
    echo
    echo -----------------------------------------------------------
    echo software for installation of the bluray-functions is not installed.
-   echo If you later decide to use them then run setup.sh
-   echo again.
+   echo If you later decide to use them then run setup.sh again.
    echo
    echo -n press any key to continue ..
    read any
@@ -332,6 +338,13 @@ if [ $ans == "y" ] ; then
       echo -n press any key to continue ..
       read any
    fi
+   if [ $RETVAL -eq 1 ] ; then
+      clear
+      echo the command to create the ssh-keys was not successfull.
+      echo the error-code was [$RETVAL]
+      exit $E_SSHKEY
+   fi
+
 fi
 
 if [ $ans == "n" ] ; then
@@ -353,6 +366,9 @@ fi
 ###########################################################
 #            Section Handbrake                            #
 ###########################################################
+
+# We test if the command HandBrakeCLI is allready installed ...
+
 which HandBrakeCLI >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
@@ -373,15 +389,15 @@ if [ $? -eq 1 ] ; then
          tar xvzf handbrake-0.9.4-32.tar.gz
          dpkg -i handbrake-cli_lucid1_i386.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of handbrake-cli_lucid1_i386.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
-            exit $E_DPKG 
-         else 
+            exit $E_DPKG
+         else
             rm handbrake-cli_lucid1_i386.deb > /dev/null 2>&1
          fi
       else
@@ -394,17 +410,17 @@ if [ $? -eq 1 ] ; then
          tar xvzf handbrake-0.9.4-64.tar.gz
          dpkg -i handbrake-cli_lucid1_amd64.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of handbrake-cli_lucid1_amd64.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
             exit $E_DPKG
          else
             rm handbrake-cli_lucid1_amd64.deb > /dev/null 2>&1
-         fi 
+         fi
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -444,17 +460,17 @@ else
          tar xvzf handbrake-0.9.4-32.tar.gz
          dpkg -i handbrake-cli_lucid1_i386.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of handbrake-cli_lucid1_i386.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
             exit $E_DPKG
-         else 
+         else
             rm handbrake-0.9.4-32.tar.gz
-         fi 
+         fi
       else
          clear
          echo
@@ -465,17 +481,17 @@ else
          tar xvzf handbrake-0.9.4-64.tar.gz
          dpkg -i handbrake-cli_lucid1_amd64.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of handbrake-cli_lucid1_amd64.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
-            exit $E_DPKG 
+            exit $E_DPKG
          else
             rm handbrake-cli_lucid1_amd64.deb > /dev/null 2>&1
-         fi 
+         fi
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -498,6 +514,9 @@ fi
 ###########################################################
 #            Section makemkvcon                           #
 ###########################################################
+
+# Test command makemkvcon ...
+
 which makemkvcon >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
@@ -516,29 +535,29 @@ if [ $? -eq 1 ] ; then
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
          wget http://swiss-army-knife.googlecode.com/files/makemkv-v1.5.8-32.tar.gz
          tar xvzf makemkv-v1.5.8-32.tar.gz
-         dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
+         dpkg -i makemkv-v1.5.8-bin_20100822-1_i386.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of makemkv-v1.5.8-bin_20100818-1_i386.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
-            echo -n press any key to continue ..
-            read any
-            exit $E_DPKG 
-         fi
-         dpkg -i makemkv-v1.5.8-oss_20100818-1_i386.deb
-         if [ $? -eq 1 ]; then
-            clear 
-            echo the installation of makemkv-v1.5.8-oss_20100818-1_i386.deb
-            echo was not successfull. 
-            echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
             exit $E_DPKG
          fi
-         rm xvzf makemkv-v1.5.8-32.tar.gz 
+         dpkg -i makemkv-v1.5.8-oss_20100822-1_i386.deb
+         if [ $? -eq 1 ]; then
+            clear
+            echo the installation of makemkv-v1.5.8-oss_20100818-1_i386.deb
+            echo was not successfull.
+            echo please do confirm that the installation was not successfull.
+            echo
+            echo -n press any key to continue ..
+            read any
+            exit $E_DPKG
+         fi
+         rm makemkv-v1.5.8-32.tar.gz
       else
          clear
          echo
@@ -549,22 +568,22 @@ if [ $? -eq 1 ] ; then
          tar xvzf makemkv-1.5.8-64.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of makemkv-v1.5.8-bin_20100819-1_amd64.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
             exit $E_DPKG
          fi
          dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of makemkv-v1.5.8-oss_20100819-1_amd64.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
             exit $E_DPKG
@@ -578,6 +597,7 @@ if [ $? -eq 1 ] ; then
       echo -----------------------------------------------------------
       echo makemkv is not installed.
       echo You can not transcode a bluray as long this tool is not installed.
+      echo If you decide to transcode blurays pleas do run this tool again.
       echo
       echo -n press any key to continue ..
       read any
@@ -607,29 +627,29 @@ else
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
          wget http://swiss-army-knife.googlecode.com/files/makemkv-v1.5.8-32.tar.gz
          tar xvzf makemkv-v1.5.8-32.tar.gz
-         dpkg -i makemkv-v1.5.8-bin_20100818-1_i386.deb
+         dpkg -i makemkv-v1.5.8-bin_20100822-1_i386.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of makemkv-v1.5.8-bin_20100818-1_i386.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
-            exit $E_DPKG 
+            exit $E_DPKG
          fi
-         dpkg -i makemkv-v1.5.8-oss_20100818-1_i386.deb
+         dpkg -i makemkv-v1.5.8-oss_20100822-1_i386.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of makemkv-v1.5.8-oss_20100818-1_i386.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
-            exit $E_DPKG  
+            exit $E_DPKG
          fi
-         rm xvzf makemkv-v1.5.8-32.tar.gz
+         rm makemkv-v1.5.8-32.tar.gz
       else
          clear
          echo
@@ -640,22 +660,22 @@ else
          tar xvzf makemkv-1.5.8-64.tar.gz
          dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of makemkv-v1.5.8-bin_20100819-1_amd64.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
             exit $E_DPKG
          fi
          dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
          if [ $? -eq 1 ]; then
-            clear 
+            clear
             echo the installation of makemkv-v1.5.8-oss_20100819-1_amd64.deb
-            echo was not successfull. 
+            echo was not successfull.
             echo please do confirm that the installation was not successfull.
-            echo  
+            echo
             echo -n press any key to continue ..
             read any
             exit $E_DPKG
@@ -681,18 +701,18 @@ fi
 ###########################################################
 clear
 cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
-if [ ! -e 0.6.14-setup.done ] ; then
+if [ ! -e 0.6.15-setup.done ] ; then
    echo
    echo -----------------------------------------------------------
-   echo create setup.done and licence-file inside addon-data directory 
+   echo create setup.done and licence-file inside addon-data directory
    echo
-   echo "0.6.14" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.14-setup.done
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.14-setup.done
+   echo "0.6.15" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.15-setup.done
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.15-setup.done
 fi
 
-if [ ! -e EULA-0.6.14 ] ; then
-   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.14 EULA-0.6.14
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.14
+if [ ! -e EULA-0.6.15 ] ; then
+   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.14 EULA-0.6.15
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.15
 fi
 
 
@@ -702,17 +722,16 @@ echo Addon can now be running over xbmc  ......
 echo
 echo
 echo - Please do updates the settings with the addon-manager.
-echo - Do not forget to replace the preset name xbmc@localhost 
+echo - Do not forget to replace the default name xbmc@localhost
 echo   if your username is not xbmc.
-echo
 echo
 echo Have fun with this addon and I wish you happy ripping.
 echo Feel free to send me a few notes about your expirience with
-echo this addon on the feedback url.
+echo this addon on the feedback url or inside the xbmc-forum.
 echo
 echo http://code.google.com/p/swiss-army-knife/wiki/Feedback
 echo
-echo Greetings from switzerland 
+echo Greetings from switzerland
 echo Hans
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
