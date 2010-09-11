@@ -101,6 +101,7 @@
  * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress
  * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
  * /home/xbmc/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
+ * /home/xbmc/swiss.army.knife
 
  * Following rip-containers are created.
 
