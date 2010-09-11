@@ -814,10 +814,14 @@ def OSCheckContainerID(index):
 
     if (os.path.exists(__data_container__[index])):
         if (os.access(__data_container__[index],os.W_OK) == False):
+           if (__verbose__ == 'true'):
+               OSlog("Container path [" + __data_container__[index] + "] is not writeable !")
            return 1
         else:
            return 0
     else:
+        if (__verbose__ == 'true'):
+            OSlog("Container path [" + __data_container__[index] + "] is not found !")
         return 1
 
 #########################################################
