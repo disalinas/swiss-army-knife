@@ -205,6 +205,15 @@ if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/t
    chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
 fi
 
+# Do store all user defined functions ... because this directory is outside the addon 
+# directory structure the functions inside this directory are save from being deleted.
+
+if [ ! -e /home/$1/swiss.army.knife ] ; then
+   mkdir /home/$1/swiss.army.knife
+   chown -R $1:$1 /home/$1/swiss.army.knife
+fi
+
+
 if [ ! -e /dvdrip ] ; then
    mkdir /dvdrip
    chown -R $1:$1 /dvdrip

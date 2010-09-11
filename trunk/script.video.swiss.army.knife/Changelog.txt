@@ -109,6 +109,10 @@ Changes:
 - Print path if some or all paths do not exist inside the 
   logs including not writeable.
 - All shell-shell scripts do check if shell is /bin/bash. 
+- Create Folder for user-shell scripts during the execution
+  of setup.sh 
+- Added more strings including future messages 
+  (In thic case the addon can allready be translated to other languages)
 
 Fixes:
 
