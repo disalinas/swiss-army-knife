@@ -317,7 +317,7 @@ class GUIExpertNetworkClass(xbmcgui.Window):
           exit = True
 
           menu = []       
-          for i in range(32170,32175):
+          for i in range(32160,32165):
 	      menu.append(__language__(i))
           while (exit): 
              dialog = xbmcgui.Dialog()

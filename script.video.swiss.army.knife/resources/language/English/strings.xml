@@ -96,11 +96,11 @@
         <!-- Network       -->
         <!--               -->        
 
-        <string id="32170">Start Master</string>
-        <string id="32171">Start Slave [dvd to master]</string>
-        <string id="32172">Start Slave [bluray to master]</string>
-        <string id="32173">Start Slave [copy rip to master]</string>
-        <string id="32174">Back</string>
+        <string id="32160">Start Master</string>
+        <string id="32161">Start Slave [dvd to master]</string>
+        <string id="32162">Start Slave [bluray to master]</string>
+        <string id="32163">Start Slave [copy rip to master]</string>
+        <string id="32164">Back</string>
 
         <!--                --> 
         <!-- Joblist Window -->
