@@ -250,7 +250,7 @@ def OSConfiguration(index):
     # Store configuration inside modul global list
 
     __configLinux__ = config
-
+       
     return config
 
 #########################################################
