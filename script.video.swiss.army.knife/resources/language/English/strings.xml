@@ -115,6 +115,19 @@
         <string id="32176"> </string>
         <string id="32177">There are no active jobs</string>
 
+
+        <!--                  --> 
+        <!-- Transcode Window -->
+        <!--                  -->
+         
+
+
+        <!--                  --> 
+        <!-- User-Scripts     -->
+        <!--                  -->
+
+
+
         <!--               --> 
         <!-- Info          -->
         <!--               -->
@@ -179,5 +192,6 @@
         <string id="33319">Network master directory not found or writeable !</string>
         <string id="33320">Network-functions are disabled.</string>
         <string id="33321">Local ssh server is not configured properly</string>
+        <string id="33322">User-functions are disabled.</string>
 
  </strings>

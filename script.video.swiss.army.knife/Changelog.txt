@@ -106,12 +106,14 @@ Date : 09.06.2010 | Release : 0.6.15    | Author  : H.Weber | CVS:279
 Changes:
 
 - test $SHELL inside setup.sh prior to execute anything.
-- Print path do not exist insid the logs including not writeable
+- Print path if some or all paths do not exist inside the 
+  logs including not writeable.
+- All shell-shell scripts do check if shell is /bin/bash. 
 
 Fixes:
 
 - Until we have a Release Candidate the verbose flag will be set default to on.
-- Language-ID for network windows were wrong (fixed)
+- Language-ID for network windows were wrong (fixed).
 
  
 

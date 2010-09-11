@@ -18,6 +18,13 @@
 
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
+if [ $SHELL -ne "/bin/bash" ] ; then
+   echo only bash shell is supported by this shell-script.
+   echo It looks like you are using somehting other than /bin/bash.
+   echo
+   exit 255
+fi
+
 echo
 echo ----------------------------------------------------------------------------
 SCRIPT=$(basename $0)

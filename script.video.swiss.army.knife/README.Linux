@@ -110,6 +110,7 @@ xbmc, replace xbmc with your own username.(hint -> whoami[enter])
 This shell-scripts do install all software for the addon 
 including  2 debian files.
 
+- It checks that the shell is /bin/bash.
 - It creates all directorys for ripping and transcoding 
 - It will prepare the ssh-server and client to login without 
   any password.
@@ -162,8 +163,6 @@ http://www.makemkv.com/forum2/viewtopic.php?f=5&t=1053
 If the addon finds a retired licence-key the addon bluray-functions
 are completly disabled. You must renew your makemmkv-licence key !!!
  
-Little Tip:
-
 Do set the computer to a previous date and do set a new key inside the gui :-) 
 or do edit this file ....
 
@@ -184,6 +183,8 @@ If your licence key is expired you see the following message inside the addon
 6.2 What should you do if you have found a error ? 
 
 - Be sure to read the logs ...
+- This addons write all logs to the xbmc.log inside ~/temp/xbmc.log.
+- Be sure to have verbose log is set inside the settings.
 - Be sure that the ssh-communication is correct (test ssh-communication) inside 
   the addon.
 - Check the permissions of the shell-script folder. 
@@ -207,7 +208,7 @@ http://code.google.com/p/swiss-army-knife/issues/list
 7.O Using the addon and have fun 
 
 Lucern, Switzerland 
-09.04.2010 
+09.11.2010 
 linuxluemmel.ch@gmail.ch alias Hans Weber 
 
  
