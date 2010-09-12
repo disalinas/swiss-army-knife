@@ -5,7 +5,7 @@
 #########################################################
 # AUTHOR  : Hans Weber                                  #
 # EMAIL   : linuxluemmel.ch@gmail.com                   #
-# XBMC    : Version 10.5  or higher                     #
+# XBMC    : Version 10.0 or higher                      #
 # PYTHON  : internal xbmc python 2.4.X                  #
 # OS      : Linux                                       #
 # TASKS   : This python code contains only os-dependet  #

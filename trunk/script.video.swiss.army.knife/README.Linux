@@ -7,7 +7,8 @@ Please do excuse my poor writen english. My native language
 is german and I do speak a few others imho very good, but speaking 
 and writing are two completly diffrent things.If you would would like to
 improve the addon with your own language , patches are allways welcome.
- 
+(Especialy to remove this typos from english) 
+
 As you may know until now, we had a few things inside xbmc like
  
 * Scripts
@@ -26,7 +27,8 @@ My old script was running .... but had a few down-sides...
 - all code for os and gui was in a single file.
 - it was hard to debug ..... and maintain.
 - I had no subversion controll for the script.
-- It was running on windows and linux. 
+- It was running on windows and linux but it was a pain to maintain both 
+  releases. 
 
 By this new addon I changed a few things.
 
@@ -86,6 +88,9 @@ At first you have to extract the addon-zip inside the right place.
 
 ~/.xbmc/addons
 
+If you did install this addon over the luxeria-repository then this 
+step was allready made for you.
+
 Change to the shell-linux directory inside tha addon.
 
 cd ~/.xbmc/addons/script.video.swiss.army.knife/shell-linux
@@ -143,7 +148,7 @@ Do change the settings to your needs like ...
 * the directory to store the dvd transcoding files
 * the directory to store the bluray mkv files
 * the directory to store vob's  
-* the directory to store over the network
+* the directory to store the files over the network
 * the user for the ssh communication
 * Internal timeout values fo the shell-scripts
 * Enable or disable some functions
@@ -164,7 +169,7 @@ If the addon finds a retired licence-key the addon bluray-functions
 are completly disabled. You must renew your makemmkv-licence key !!!
  
 Do set the computer to a previous date and do set a new key inside the gui :-) 
-or do edit this file ....
+or do edit this file over the commandline ....
 
 user@xbmcdev:~$ cd .MakeMKV/
 user@xbmcdev:~/.MakeMKV$ ls -al
@@ -184,7 +189,7 @@ If your licence key is expired you see the following message inside the addon
 
 - Be sure to read the logs ...
 - This addons write all logs to the xbmc.log inside ~/temp/xbmc.log.
-- Be sure to have verbose log is set inside the settings.
+- Be sure to have verbose log activated inside the settings.
 - Be sure that the ssh-communication is correct (test ssh-communication) inside 
   the addon.
 - Check the permissions of the shell-script folder. 
@@ -195,6 +200,7 @@ If your licence key is expired you see the following message inside the addon
   user.
   
   http://code.google.com/p/swiss-army-knife/wiki/LinuxShell
+
 
 6.3 Feedback 
 

@@ -243,6 +243,12 @@ if [ ! -e /dvdrip/vobcopy ] ; then
    mkdir /dvdrip/vobcopy
    chown -R $1:$1 /dvdrip/vobcopy
 fi
+
+if [ ! -e /dvdrip/transcode ] ; then
+   mkdir /dvdrip/transcode
+   chown -R $1:$1 /dvdrip/transcode
+fi
+
 ###########################################################
 
 

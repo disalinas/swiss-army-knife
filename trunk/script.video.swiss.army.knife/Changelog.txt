@@ -111,13 +111,16 @@ Changes:
 - All shell-shell scripts do check if shell is /bin/bash. 
 - Create Folder for user-shell scripts during the execution
   of setup.sh 
-- Added more strings including future messages 
-  (In thic case the addon can allready be translated to other languages)
+- added transcode folder for transcoding jobs.
+- Added more strings including future messages. 
+  (In this case the addon can allready be translated to other languages)
+- Added Transcode & Burning menu
 
 Fixes:
 
 - Until we have a Release Candidate the verbose flag will be set default to on.
 - Language-ID for network windows were wrong (fixed).
+- Range for Network messages moved.
 
  
 

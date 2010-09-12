@@ -15,17 +15,17 @@
         <string id="32051">Default dvd-device</string>
         <string id="32052">Default bluray-device</string>   
         <string id="32053">Used directorys</string> 
-        <string id="32054">default iso-rip-directory</string> 
-        <string id="32055">default dvd-transcode-directory</string> 
-        <string id="32056">default bluray mkv-directory</string>
+        <string id="32054">Default iso-rip-directory</string> 
+        <string id="32055">Default dvd-transcode-directory</string> 
+        <string id="32056">Default bluray mkv-directory</string>
         <string id="32057">Various settings</string> 
         <string id="32058">Default ssh-command</string> 
         <string id="32059">Default 1. audio language (dvd)</string> 
         <string id="32060">Default 2. audio language (dvd)</string> 
         <string id="32061">Default transcoding (dvd)</string> 
         <string id="32062">Enable bluray-functions</string>
-        <string id="32063">Enable network-ripping-functions</string>
-        <string id="32064">Enable burning-functions</string>
+        <string id="32063">Enable network ripping functions</string>
+        <string id="32064">Enable transcode & burning functions</string>
         <string id="32065">Password protect Expert-Mode</string>
         <string id="32066">Password</string>
         <string id="32067">Default size single-layer dvd</string>  
@@ -47,8 +47,11 @@
         <string id="32090">Mainmenu Swiss-Army-Knife</string> 
         <string id="32091">Job-Window</string> 
         <string id="32092">Mainmenu Expert-Mode</string>   
-        <string id="32093">Mainmenu Network</string>          
+        <string id="32093">Mainmenu Network</string>
+        <string id="32094">Mainmenu User-Functions</string>
+        <string id="32095">Mainmenu Transcode & Burning</string>                
        
+
         <!--           -->
         <!-- Main-Menu -->
         <!--           --> 
@@ -70,12 +73,23 @@
         <string id="32122">Ripp DVD to ISO (confirmed)</string>
         <string id="32123">Rescue-copy DVD to iso (confirmed)</string>
         <string id="32124">Copy vob-files from DVD to hd (confirmed)</string>
-        <string id="32125">Reserved transcode & burning</string>      
+        <string id="32125">Transcode & Burning</string>      
         <string id="32126">Network-Functions</string>
         <string id="32127">Reserved user-scripts</string>
         <string id="32128">Test ssh connection</string>
         <string id="32129">Info</string>
         <string id="32130">Back</string>
+
+
+        <!--               --> 
+        <!-- Network       -->
+        <!--               -->        
+
+        <string id="32140">Start Master</string>
+        <string id="32141">Start Slave [dvd to master]</string>
+        <string id="32142">Start Slave [bluray to master]</string>
+        <string id="32143">Start Slave [copy rip to master]</string>
+        <string id="32144">Back</string>
 
         <!--                    --> 
         <!-- Progress-bar text  -->
@@ -93,16 +107,6 @@
         <string id="32157">copy from slave</string>
         <string id="32158">copy to master</string>
 
-
-        <!--               --> 
-        <!-- Network       -->
-        <!--               -->        
-
-        <string id="32160">Start Master</string>
-        <string id="32161">Start Slave [dvd to master]</string>
-        <string id="32162">Start Slave [bluray to master]</string>
-        <string id="32163">Start Slave [copy rip to master]</string>
-        <string id="32164">Back</string>
 
         <!--                --> 
         <!-- Joblist Window -->
@@ -122,16 +126,13 @@
         <!-- Transcode Window -->
         <!--                  -->
          
-        <string id="32180"> </string>
-        <string id="32181"> </string>
-        <string id="32182"> </string>
-        <string id="32183"> </string>
-        <string id="32184"> </string>
-        <string id="32185"> </string>
-        <string id="32186"> </string>
-        <string id="32187"> </string>
-        <string id="32188"> </string>
-        <string id="32189"> </string>
+        <string id="32180">DVD -> MPEG2</string>
+        <string id="32181">DVD -> ISO for burning</string>
+        <string id="32182">DVD -> xvid</string>
+        <string id="32183">DVD -> h264 (low-profile)</string>
+        <string id="32184">DVD -> Iphone</string>
+        <string id="32185">DVD -> PSP</string>
+        <string id="32186">Back</string>
  
         <!--                  --> 
         <!-- User-Scripts     -->
@@ -218,6 +219,6 @@
         <string id="33322">User-functions are disabled</string>
         <string id="33323">Error inside the active job</string>
         <string id="33324">No connection to master possible</string>
-        <string id="33325">Burning-functions are disabled</string> 
+        <string id="33325">Burning and Transcode functions are disabled</string> 
          
  </strings>

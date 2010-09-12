@@ -5,7 +5,7 @@
 #########################################################
 # AUTHOR  : Hans Weber                                  #
 # EMAIL   : linuxluemmel.ch@gmail.com                   #
-# XBMC    : Version 10.5  or higher                     #
+# XBMC    : Version 10.0 or higher                      #
 # PYTHON  : internal xbmc python 2.4.X                  #
 # OS      : Linux                                       #
 # TASKS   : - copy a dvd 1:1 as a iso file to a disk    #
@@ -39,7 +39,7 @@ __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "09-06-2010"
 __version__ 		= "0.6.15"
-__code_name__           = "Stargate"
+__code_name__           = "Godzilla"
 __XBMC_Revision__ 	= "31953"
 __index_config__        = 50 
  
@@ -301,6 +301,57 @@ def GUIInfo(Selector,Info):
 
 
 #########################################################
+# Function  : GUIExpertTranscodeClass                   #
+#########################################################
+# Parameter : XBMC-Window Class                         #
+#                                                       #
+# xbmcgui.Window                                        # 
+#                                                       # 
+# Returns   : none                                      #
+#########################################################
+class GUIExpertTranscodeClass(xbmcgui.Window):
+
+      def __init__(self):
+
+          global __jobs__ 
+          exit = True
+
+          menu = []       
+          for i in range(32180,32187):
+	      menu.append(__language__(i))
+          while (exit): 
+             dialog = xbmcgui.Dialog()
+             choice  = dialog.select(__language__(32095) ,menu)
+             if (choice == 0):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True
+             if (choice == 1):
+                 GUIInfo(1,__language__(33205))  
+                 exit = True    
+             if (choice == 2):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True
+             if (choice == 3):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True 
+             if (choice == 4):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True
+             if (choice == 5):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True
+             if (choice == 6): 
+                 exit = False
+
+          self.close()
+
+#########################################################
+
+
+
+
+
+#########################################################
 # Function  : GUIExpertNetworkClass                     #
 #########################################################
 # Parameter : XBMC-Window Class                         #
@@ -317,7 +368,7 @@ class GUIExpertNetworkClass(xbmcgui.Window):
           exit = True
 
           menu = []       
-          for i in range(32160,32165):
+          for i in range(32140,32145):
 	      menu.append(__language__(i))
           while (exit): 
              dialog = xbmcgui.Dialog()
@@ -658,19 +709,19 @@ class GUIExpertWinClass(xbmcgui.Window):
                      GUIInfo(0,__language__(33308))
 
              if (choice == 5):
-                 GUIInfo(1,__language__(33205)) 
+                 if (__enable_burning__ == 'true'):                
+                     TranscodeWindow = GUIExpertTranscodeClass()
+                     del TranscodeWindow 
+                 else:
+                     GUIInfo(0,__language__(33325))   
 
              if (choice == 6):
-                 
-                 # Network 
- 
                  if (__enable_network__ == 'true'):                
                      NetworkWindow = GUIExpertNetworkClass()
                      del NetworkWindow 
                  else:
                      GUIInfo(0,__language__(33320))                            
                   
-   
              if (choice == 7):
                  GUIInfo(1,__language__(33205)) 
 
@@ -915,7 +966,7 @@ if __name__ == '__main__':
    
    __enable_bluray__   = __configuration__[10]
    __enable_network__  = __configuration__[11]
-   __enable_burning__  = __configuration__[15]
+   __enable_burning__  = __configuration__[12]
    __enable_customer__ = __configuration__[14]
    __verbose__         = __configuration__[17]
    __enable_pw_mode__  = __configuration__[19]
@@ -995,7 +1046,7 @@ if __name__ == '__main__':
       
                        __enable_network__ == "false" 
  
-
+               
                GUIlog ("create main-menu")
 
                xbmc.executebuiltin("Dialog.Close(busydialog)")
