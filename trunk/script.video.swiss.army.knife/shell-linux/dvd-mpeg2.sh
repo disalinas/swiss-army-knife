@@ -1,68 +1,114 @@
 #!/bin/bash
 ###########################################################
-# scriptname : dvd2mpeg2.sh                               #
+# scriptname : dvd-mpeg2.sh                               #
 ###########################################################
-#                                                         #
-# RELEASE 0.6B luemmels-dvd-ripper                        #
-#                                                         # 
-# This script is part of luemmels-dvd-ripper script for   #
-# xbmc and is licenced under the gpl-licence              # 
-#                                                         #
-# http://code.google.com/p/luemmels-dvd-ripper            #
-#                                                         #
-########################################################### 
-# author     : hans weber                                 #
-#                                                         #
+# This script is part of the addon swiss-army-knife for   #
+# xbmc and is licenced under the gpl-licence              #
+# http://code.google.com/p/swiss-army-knife/              #
+###########################################################
+# author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
-#                                                         #
 # $1 device                                               #
-# $2 directory for rip                                    #          
+# $2 directory for rip                                    #
 # $3 export-name                                          #
-# $4 chapter to extract (1-x)                             #
-# $5 audio channel to extract (0-x)                       #
+# $4 chapter to extract (starting with index 1 !!!!! )    #
+# $5 audio channel to extract                             #
 #                                                         #
 # optional $6,7 -a secound-audio language (0-x)   -a 2    #
 # optional $8,9 -s subtitle-nummer        (0-x)   -s 0    #
 #                                                         #
-# both of the above paramters could be called allone !    #
-# means only -a 0 or -s 0x20                              #
-#                                                         #   
-#                                                         #
 # description :                                           #
 # generates a native mpeg2 of a dvd                       #
-#                                                         #
 ###########################################################
 
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+
+SHELLTEST="/bin/bash"
+if [ $SHELL != $SHELLTEST ] ; then
+   clear
+   echo
+   echo only bash shell is supported by this shell-script.
+   echo It looks like you are using somehting other than /bin/bash.
+   echo
+   exit 255
+fi
+
+clear
+echo
+echo ----------------------------------------------------------------------------
+SCRIPT=$(basename $0)
+echo "script    :" $SCRIPT
+cat version
+echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
+cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
+echo ----------------------------------------------------------------------------
+
+OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/transcode-error.log"
+JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
+JOBERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR"
+OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd-transcode.log"
 
 # Define the counting commands we expect inside the script
 
 EXPECTED_ARGS=5
 
-# Error-codes 
+# Error-codes
 
 E_BADARGS=1
-E_TOOLNOTF=2
-E_INVALID_AUDIO=3
-E_INVALID_SUB=4
 
-OUTPUT_ERROR=~/dvdripper/transcode-dvd2mpeg2-error.log
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: dvd2mpeg.sh p1 p2 p3 p4 p5"
+  echo "Usage: dvd-mpeg2.sh p1 p2 p3 p4 p5"
   echo "                                      "
   echo "[p1] device or complet path to ripfile"
-  echo "[p2] directory for rip"                                    
-  echo "[p3] export-name without extension"                                          
-  echo "[p4] chapter to extract [1-X]"                                   
+  echo "[p2] directory for rip"
+  echo "[p3] export-name (excluding mkv)"
+  echo "[p4] chapter to extract [1-X]"
   echo "[p5] audio channel to extract [0-X]"
   echo "The above paramters p1-p5 are allways needet"
-  echo "                                            " 
+  echo "                                            "
   echo "There are 2 addional parameters to pass to the script"
   echo "                                            "
-  echo "p6 second audio-track   -a 3 [0-X]"
-  echo "p7 subtitle             -s 0 [0-X]"   
-  echo "dvd2mpeg.sh was called with wrong arguments" > $OUTPUT_ERROR                         
+  echo "p6,7  second audio-track   -a 3 [0-X]"
+  echo "p8,9  subtitle             -s 0 [0-X]"
+  echo
+  echo "dvd-mpeg2.sh was called with wrong arguments"
+  echo
+  echo example :
+  echo
+  echo ./dvd-mpeg2.sh /dev/sr0 /dvdrip/dvd stargate 1 0 -a 1 -s 0
+  echo
+  echo would use device /dev/sr0
+  echo store the file insie /dvdrip/dvd
+  echo the filename inside the directory will be stargate.mkv
+  echo Track 1 will be extracted
+  echo Audio-track 0 will be extracted
+  echo Audio-track 1 will be extracted
+  echo Subtitle-track 0 will be extracted 
+  echo
+  echo ----------------------- script rc=1 -----------------------------
+  echo -----------------------------------------------------------------
   exit $E_BADARGS
+fi
+
+
+if [ $4 -eq 0 ]; then
+  echo "the parameter 4 must be starting with 1 !"
+  echo
+  echo ----------------------- script rc=1 -----------------------------
+  echo -----------------------------------------------------------------
+  exit $E_BADARGS
+fi
+
+
+if [ $# -eq 9 ]; then
+    if [[ "$6" =~ ^-s ]] ; then
+     echo "with 9 parameters the subtitle -s must be the last  !"
+     echo
+     echo ----------------------- script rc=1 -----------------------------
+     echo -----------------------------------------------------------------
+     exit $E_BADARGS
+    fi
 fi
 
 
@@ -88,38 +134,48 @@ tcextract
 transcode 
 EOF`
 
- 
+
 # Check if all commands are found on your system ...
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
-   which ${REQUIRED_TOOL} >/dev/null 2>&1    
+   which ${REQUIRED_TOOL} >/dev/null 2>&1
    if [ $? -eq 1 ]; then
-        echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate." > $OUTPUT_ERROR  
-        echo "       Please install \"${REQUIRED_TOOL}\"." > $OUTPUT_ERROR  
+        echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate."
+        echo "Please install \"${REQUIRED_TOOL}\"."
+        echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate." > $OUTPUT_ERROR
+        echo "Please install \"${REQUIRED_TOOL}\"." > $OUTPUT_ERROR
+        echo
+        echo ----------------------- script rc=2 -----------------------------
+        echo -----------------------------------------------------------------
         exit $E_TOOLNOTF
-   fi        
+   fi
 done
 
 
-cd $2 2> $OUTPUT_ERROR
 
+####################################################################################
+#                                                                                  #
+#                       Create temporary directory                                 #
+#                                                                                  #
+####################################################################################
 
-# create temporary-file pending on pid of the script
-
+cd $2 
 temp_file=$$
-
 mkdir $temp_file 2> $OUTPUT_ERROR
 cd $temp_file 2> $OUTPUT_ERROR
 
 
 
 
-if [ $# -eq $EXPECTED_ARGS ]; then 
 
-     ##################################################
-     # Ok we transcode 1 audio track and no subtitles #
-     ##################################################
+####################################################################################
+#                                                                                  #
+#                       transcode job with 1 audio-track                           #
+#                                                                                  #
+####################################################################################
+
+if [ $# -eq $EXPECTED_ARGS ]; then 
 
      # Get the DVD name and video properties with lsdvd
 

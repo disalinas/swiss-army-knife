@@ -21,16 +21,19 @@
 # generates a mkv container of a dvd                      #
 ###########################################################
 
-
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
-if [ $SHELL -ne "/bin/bash" ] ; then
+SHELLTEST="/bin/bash"
+if [ $SHELL != $SHELLTEST ] ; then
+   clear
+   echo
    echo only bash shell is supported by this shell-script.
    echo It looks like you are using somehting other than /bin/bash.
    echo
    exit 255
 fi
 
+clear
 echo
 echo ----------------------------------------------------------------------------
 SCRIPT=$(basename $0)
@@ -72,7 +75,7 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo
   echo example :
   echo
-  echo ./dvd-handbrake /dev/sr0 /dvdrip/dvd stargate 1 0 -a 1 -s 0
+  echo ./dvd-handbrake.sh /dev/sr0 /dvdrip/dvd stargate 1 0 -a 1 -s 0
   echo
   echo would use device /dev/sr0
   echo store the file insie /dvdrip/dvd

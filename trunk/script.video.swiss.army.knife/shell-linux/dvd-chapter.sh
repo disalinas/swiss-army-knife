@@ -18,16 +18,19 @@
 # - 3. Every track has a own subtitle-list                #
 ###########################################################
 
-
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
-if [ $SHELL -ne "/bin/bash" ] ; then
+SHELLTEST="/bin/bash"
+if [ $SHELL != $SHELLTEST ] ; then
+   clear
+   echo
    echo only bash shell is supported by this shell-script.
    echo It looks like you are using somehting other than /bin/bash.
    echo
    exit 255
 fi
 
+clear
 echo
 echo ----------------------------------------------------------------------------
 SCRIPT=$(basename $0)
