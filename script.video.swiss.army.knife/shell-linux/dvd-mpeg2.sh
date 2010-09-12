@@ -46,7 +46,7 @@ echo ---------------------------------------------------------------------------
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/transcode-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 JOBERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR"
-OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd-transcode.log"
+OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd-mpeg2.log"
 
 # Define the counting commands we expect inside the script
 
@@ -167,31 +167,31 @@ cd $temp_file 2> $OUTPUT_ERROR
 lsdvd -a $1 1>/dev/null 2>&1
 
 
-
 ####################################################################################
 #                                                                                  #
 #                       transcode job with 1 audio-track                           #
 #                                                                                  #
 ####################################################################################
 
-if [ $# -eq $EXPECTED_ARGS ]; then 
+if [ $# -eq $EXPECTED_ARGS ]; then
 
      # Get the DVD name and video properties with lsdvd
 
      DVD_INFO=`mktemp`
      lsdvd -x $1 > ${DVD_INFO} 2>/dev/null
 
-     if [ $4 -lt 10 ] ; then 
+     if [ $4 -lt 10 ] ; then
          DVD_TITLE=0$4
      else
-         DVD_TITLE=$4          
-     fi 
+         DVD_TITLE=$4
+     fi
+
 
      DVD_NAME=`grep "Disc Title:" ${DVD_INFO} | cut -f2 -d':' | sed 's/ //g'`
 
 
      TITLE_INFO=`mktemp`
-     lsdvd -x -t ${DVD_TITLE} $1 > ${TITLE_INFO}
+     lsdvd -x -t ${DVD_TITLE} $1 > ${TITLE_INFO} 2>/dev/null
 
      # Video format, PAL or NTSC
 
@@ -208,7 +208,7 @@ if [ $# -eq $EXPECTED_ARGS ]; then
      # Get some useful information from mplayer and store it in a temp file
 
      STREAM_INFO=`mktemp`
-     mplayer -quiet -nojoystick -nolirc -dvd-device $1 dvd://${DVD_TITLE} -vo null -ao null -frames 0 -identify > ${STREAM_INFO}
+     mplayer -quiet -nojoystick -nolirc -dvd-device $1 dvd://${DVD_TITLE} -vo null -ao null -frames 0 -identify > ${STREAM_INFO} 2>/dev/null
 
      # make it mplayer compatible.
 
@@ -227,7 +227,7 @@ if [ $# -eq $EXPECTED_ARGS ]; then
 
      AUDIO_TRACK_USER=$5
 
-     # Validate the audio track 
+     # Validate the audio track
 
      AUDIO_TRACK_VALIDATE=`grep "audio stream: ${AUDIO_TRACK_USER}" ${STREAM_INFO}`
 
@@ -241,10 +241,10 @@ if [ $# -eq $EXPECTED_ARGS ]; then
           AUDIO_TRACK_DETAILS=`grep "audio stream: ${AUDIO_TRACK_USER}" ${STREAM_INFO}`
      else
 
-          # invalid audio track 
+          # invalid audio track
 
-          AUDIO_TRACK_DETAILS=`grep "audio stream: ${AUDIO_TRACK}" ${STREAM_INFO}` > $OUTPUT_ERROR  
-          echo "Using ${AUDIO_TRACK_DETAILS}" > $OUTPUT_ERROR  
+          AUDIO_TRACK_DETAILS=`grep "audio stream: ${AUDIO_TRACK}" ${STREAM_INFO}` > $OUTPUT_ERROR
+          echo "Using ${AUDIO_TRACK_DETAILS}" > $OUTPUT_ERROR
           exit $E_INVALID_AUDIO
      fi
 
@@ -263,7 +263,7 @@ if [ $# -eq $EXPECTED_ARGS ]; then
      DVD_TITLE_CHAPTERS=`grep ID_DVD_TITLE_${DVD_TITLE}_CHAPTERS} ${STREAM_INFO} | cut -d'=' -f2`
      DVD_TITLE_ANGLES=`grep ID_DVD_TITLE_${DVD_TITLE}_ANGLES ${STREAM_INFO} | cut -d'=' -f2`
      DVD_TITLE_CHAPTER_POINTS=`grep CHAPTERS: ${STREAM_INFO} | sed 's/CHAPTERS: //' | sed 's/,$//'`
-   
+
      # Remove temp files
 
      rm ${DVD_INFO}
@@ -275,7 +275,7 @@ if [ $# -eq $EXPECTED_ARGS ]; then
      AUDIO_FILE=${DVD_NAME}.${AUDIO_FORMAT}
      VIDEO_FILE=${DVD_NAME}.m2v
      MPLEX_FILE=$3.mpg
-     
+
      AUDIO_FIFO=`mktemp`
      VIDEO_FIFO=`mktemp`
      MPLEX_FIFO=`mktemp`
@@ -284,36 +284,64 @@ if [ $# -eq $EXPECTED_ARGS ]; then
 
      rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} 2>/dev/null
 
-     mkfifo ${AUDIO_FIFO} 
+     echo
+     echo INFO create fifo for communication
+
+     mkfifo ${AUDIO_FIFO}
      mkfifo ${VIDEO_FIFO}
      mkfifo ${MPLEX_FIFO}
+
+     echo INFO fifo created
+     echo
+
+     echo INFO extract audio language [$5] from track [$4]
 
      # Get audio over fifo
 
      tcextract -i ${AUDIO_FIFO} -a ${AUDIO_TRACK} -t vob -x ${AUDIO_FORMAT} > ${AUDIO_FILE} &
 
-     # Get video over fifo 
+     echo INFO background process started ....
+
+     # echo -n "Continue ? (y)"
+     # read ans
+
+     # Get video over fifo
+
+     echo
+     echo INFO extract video track [$4]
 
      tcextract -i ${VIDEO_FIFO} -a ${VIDEO_TRACK} -t vob -x mpeg2 > ${VIDEO_FILE} &
 
-     # Start transcode and send output to fifo 
- 
-     tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P | tee ${AUDIO_FIFO} ${VIDEO_FIFO} > /dev/null     
-     
+     echo INFO background process started ....
+
+     # Start transcode and send output to fifo
+
+     echo
+     echo INFO starting transcode ....
+
+     (
+      tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P -d 0 | tee ${AUDIO_FIFO} ${VIDEO_FIFO} &
+     ) > $OUT_TRANS 2>&1 &
+
+     echo INFO background process started ....
+     echo
+     echo -n "Continue ? (y)"
+     read ans
+
      mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE} > /dev/null 2>&1
-       
+
      rm ${AUDIO_FILE} 2>/dev/null
      rm ${VIDEO_FILE} 2>/dev/null
 
      mv ${MPLEX_FILE} ../${MPLEX_FILE}
-                        
-     rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} 2>/dev/null    
 
-     cd .. 
-     rm -rf $temp_file 2> $OUTPUT_ERROR  
+     rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} 2>/dev/null
 
-     exit 0       
-fi 
+     cd ..
+     rm -rf $temp_file 2> $OUTPUT_ERROR
+
+     exit 0
+fi
 
 
 
