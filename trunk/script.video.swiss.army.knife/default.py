@@ -301,6 +301,65 @@ def GUIInfo(Selector,Info):
 
 
 #########################################################
+# Function  : GUIExpertUserfunctionsClass               #
+#########################################################
+# Parameter : XBMC-Window Class                         #
+#                                                       #
+# xbmcgui.Window                                        # 
+#                                                       # 
+# Returns   : none                                      #
+#########################################################
+class GUIExpertUserfunctionsClass(xbmcgui.Window):
+
+      def __init__(self):
+
+          global __jobs__ 
+          exit = True
+
+          menu = []       
+          for i in range(32190,32200):
+	      menu.append(__language__(i))
+          while (exit): 
+             dialog = xbmcgui.Dialog()
+             choice  = dialog.select(__language__(32094) ,menu)
+             if (choice == 0):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True
+             if (choice == 1):
+                 GUIInfo(1,__language__(33205))  
+                 exit = True    
+             if (choice == 2):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True
+             if (choice == 3):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True 
+             if (choice == 4):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True
+             if (choice == 5):
+                 GUIInfo(1,__language__(33205)) 
+                 exit = True
+             if (choice == 6): 
+                 GUIInfo(1,__language__(33205))
+                 exit = True
+             if (choice == 7): 
+                 GUIInfo(1,__language__(33205))
+                 exit = True
+             if (choice == 8): 
+                 GUIInfo(1,__language__(33205))
+                 exit = True
+             if (choice == 9): 
+                 exit = False
+
+          self.close()
+
+#########################################################
+
+
+
+
+#########################################################
 # Function  : GUIExpertTranscodeClass                   #
 #########################################################
 # Parameter : XBMC-Window Class                         #
@@ -723,7 +782,11 @@ class GUIExpertWinClass(xbmcgui.Window):
                      GUIInfo(0,__language__(33320))                            
                   
              if (choice == 7):
-                 GUIInfo(1,__language__(33205)) 
+                 if (__enable_customer__ == 'true'):                
+                     UserfunctionsWindow = GUIExpertUserfunctionsClass()
+                     del UserfunctionsWindow 
+                 else:
+                     GUIInfo(0,__language__(33322)) 
 
              if (choice == 8):
                  state_ssh = OSCheckSSH()
