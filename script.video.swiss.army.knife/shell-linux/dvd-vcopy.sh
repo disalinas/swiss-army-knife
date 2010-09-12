@@ -50,6 +50,7 @@ EXPECTED_ARGS=2
 E_BADARGS=1
 E_BADB=2
 E_NOMOUNT=3
+E_TOOLNOTF=50
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-vcopy.sh p1 p2"

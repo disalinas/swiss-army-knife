@@ -55,6 +55,7 @@ EXPECTED_ARGS=5
 # Error-codes
 
 E_BADARGS=1
+E_TOOLNOTF=50
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-handbrake.sh p1 p2 p3 p4 p5"
