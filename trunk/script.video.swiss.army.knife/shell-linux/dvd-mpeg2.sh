@@ -55,14 +55,14 @@ EXPECTED_ARGS=5
 # Error-codes
 
 E_BADARGS=1
-
+E_TOOLNOTF=50
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-mpeg2.sh p1 p2 p3 p4 p5"
   echo "                                      "
   echo "[p1] device or complet path to ripfile"
   echo "[p2] directory for rip"
-  echo "[p3] export-name (excluding mkv)"
+  echo "[p3] export-name (excluding mpg)"
   echo "[p4] chapter to extract [1-X]"
   echo "[p5] audio channel to extract [0-X]"
   echo "The above paramters p1-p5 are allways needet"
@@ -84,7 +84,7 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo Track 1 will be extracted
   echo Audio-track 0 will be extracted
   echo Audio-track 1 will be extracted
-  echo Subtitle-track 0 will be extracted 
+  echo Subtitle-track 0 will be extracted
   echo
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------
@@ -115,23 +115,23 @@ fi
 # Define the commands we will be using inside the script ...
 
 REQUIRED_TOOLS=`cat << EOF
-cut 
-echo 
-grep 
-head 
-lsdvd 
-mencoder 
+cut
+echo
+grep
+head
+lsdvd
+mencoder
 mplayer
 mkfifo
-mktemp 
-mplex 
+mktemp
+mplex
 mv
-rm 
-sed 
-stat 
-tccat 
+rm
+sed
+stat
+tccat
 tcextract
-transcode 
+transcode
 EOF`
 
 
@@ -156,16 +156,15 @@ done
 
 ####################################################################################
 #                                                                                  #
-#                       Create temporary directory                                 #
+#                       Create temporary directory and break css                   #
 #                                                                                  #
 ####################################################################################
 
-cd $2 
+cd $2 > /dev/null 2> $OUTPUT_ERROR
 temp_file=$$
 mkdir $temp_file 2> $OUTPUT_ERROR
 cd $temp_file 2> $OUTPUT_ERROR
-
-
+lsdvd -a $1 1>/dev/null 2>&1
 
 
 

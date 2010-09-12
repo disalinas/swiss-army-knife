@@ -45,7 +45,7 @@ EXPECTED_ARGS=4
 # Error-codes
 
 E_BADARGS=1
-E_TOOLNOTF=2
+E_TOOLNOTF=50
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"

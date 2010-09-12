@@ -115,6 +115,7 @@ Changes:
 - Added more strings including future messages. 
   (In this case the addon can allready be translated to other languages)
 - Added Transcode & Burning menu
+- added dvd-mpeg2.sh to svn 
 
 Fixes:
 
