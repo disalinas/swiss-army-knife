@@ -115,8 +115,8 @@ Changes:
 - Added more strings including future messages. 
   (In this case the addon can allready be translated to other languages)
 - Added Transcode & Burning menu to Expert-Mode
-- Added dvd-mpeg2.sh to svn 
-- Added User-Shell Functions menu to Expert-Mode 
+- Added dvd-mpeg2.sh to svn. 
+- Added User-Shell Functions menu to Expert-Mode.
 
 Fixes:
 
