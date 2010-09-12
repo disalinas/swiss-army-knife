@@ -131,7 +131,6 @@ if [ ! -e EULA-0.6.15 ] ; then
    wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.15
 fi
 
-
 if [ -e EULA-0.6.15 ] ; then
    clear
    cat EULA-0.6.15
@@ -169,88 +168,115 @@ fi
 ###########################################################
 #            Create directorys                            #
 ###########################################################
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
+
+clear
+echo
+echo Would you like to create the default directorys 
+echo inside /dvdrip and the default user-script directory
+echo inside the home-folder of /home/$1
+echo All directorys inside the addon-directorys itself are 
+echo are created as well.
+echo If you answer "no" you have to create all directorys 
+echo by yourself. 
+echo -n "Should this setup script create all needed directorys ? (y/n)"
+read ans
+
+if [ $ans == "y" ] ; then
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
+   fi
+
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray
+   fi
+
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
+   fi
+
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log
+   fi
+
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress
+   fi
+
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+   fi
+
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
+   fi
+
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
+   fi
+
+   # Do store all user defined functions ... because this directory is outside the addon 
+   # directory structure the functions inside this directory are save from being deleted.
+
+   if [ ! -e /home/$1/swiss.army.knife ] ; then
+      mkdir /home/$1/swiss.army.knife
+      chown -R $1:$1 /home/$1/swiss.army.knife
+   fi
+
+   # Create all data-containers 
+
+   if [ ! -e /dvdrip ] ; then
+      mkdir /dvdrip
+      chown -R $1:$1 /dvdrip
+   fi
+
+   if [ ! -e /dvdrip/iso ] ; then
+      mkdir /dvdrip/iso
+      chown -R $1:$1 /dvdrip/iso
+   fi
+
+   if [ ! -e /dvdrip/dvd ] ; then
+      mkdir /dvdrip/dvd
+      chown -R $1:$1 /dvdrip/dvd
+   fi
+
+   if [ ! -e /dvdrip/bluray ] ; then
+      mkdir /dvdrip/bluray
+      chown -R $1:$1 /dvdrip/bluray
+   fi
+
+   if [ ! -e /dvdrip/network ] ; then
+      mkdir /dvdrip/network
+      chown -R $1:$1 /dvdrip/network
+   fi
+
+   if [ ! -e /dvdrip/vobcopy ] ; then
+      mkdir /dvdrip/vobcopy
+      chown -R $1:$1 /dvdrip/vobcopy
+   fi
+
+   if [ ! -e /dvdrip/transcode ] ; then
+      mkdir /dvdrip/transcode
+      chown -R $1:$1 /dvdrip/transcode
+   fi
 fi
 
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray
-fi
-
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
-fi
-
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log
-fi
-
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress
-fi
-
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-fi
-
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
-fi
-
-if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp ] ; then
-   mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
-   chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
-fi
-
-# Do store all user defined functions ... because this directory is outside the addon 
-# directory structure the functions inside this directory are save from being deleted.
-
-if [ ! -e /home/$1/swiss.army.knife ] ; then
-   mkdir /home/$1/swiss.army.knife
-   chown -R $1:$1 /home/$1/swiss.army.knife
-fi
-
-
-if [ ! -e /dvdrip ] ; then
-   mkdir /dvdrip
-   chown -R $1:$1 /dvdrip
-fi
-
-if [ ! -e /dvdrip/iso ] ; then
-   mkdir /dvdrip/iso
-   chown -R $1:$1 /dvdrip/iso
-fi
-
-if [ ! -e /dvdrip/dvd ] ; then
-   mkdir /dvdrip/dvd
-   chown -R $1:$1 /dvdrip/dvd
-fi
-
-if [ ! -e /dvdrip/bluray ] ; then
-   mkdir /dvdrip/bluray
-   chown -R $1:$1 /dvdrip/bluray
-fi
-
-if [ ! -e /dvdrip/network ] ; then
-   mkdir /dvdrip/network
-   chown -R $1:$1 /dvdrip/network
-fi
-
-if [ ! -e /dvdrip/vobcopy ] ; then
-   mkdir /dvdrip/vobcopy
-   chown -R $1:$1 /dvdrip/vobcopy
-fi
-
-if [ ! -e /dvdrip/transcode ] ; then
-   mkdir /dvdrip/transcode
-   chown -R $1:$1 /dvdrip/transcode
+if [ $ans == "n" ] ; then
+   clear
+   echo
+   echo -----------------------------------------------------------
+   echo No directorys have ben created by this shell-script.
+   echo If you later decide to create them then run setup.sh again.
+   echo
+   echo -n press any key to continue ..
+   read any
 fi
 
 ###########################################################
@@ -743,6 +769,10 @@ echo
 echo - Please do updates the settings with the addon-manager.
 echo - Do not forget to replace the default name xbmc@localhost
 echo   if your username is not xbmc.
+echo - If you did not created the directorys you have to create them 
+echo   now and to change all directorys inside the settings.
+echo - Please remember that no "spaces" inside the directory-names 
+echo   are allowed. 
 echo
 echo Have fun with this addon and I wish you happy ripping.
 echo Feel free to send me a few notes about your expirience with
