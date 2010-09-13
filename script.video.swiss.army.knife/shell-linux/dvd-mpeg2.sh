@@ -317,27 +317,27 @@ if [ $# -eq $EXPECTED_ARGS ]; then
      # Start transcode and send output to fifo
 
      echo
-     echo INFO starting transcode ....
+     echo INFO starting transcode
 
      (
       tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P -d 0 | tee ${AUDIO_FIFO} ${VIDEO_FIFO} &
      ) > $OUT_TRANS 2>&1 &
 
      echo INFO background process started ....
-     echo INFO processing data 
-     echo 
+     echo INFO processing data
+     echo
      LOOP=1
      while [ $LOOP -eq '1'  ];
      do
        echo -n .
+
        sleep 15
 
        # Stay inside loop until tccat is finished
 
        PID1=$(ps axu | grep "tccat \-i" | grep -v grep | awk '{print $2}')
- 
-       if [ -z "$PID1" ] ; then 
-          LOOP=1
+       if [ -z "$PID1" ] ; then
+          LOOP=0
           echo
           echo
           echo INFO processing data done
@@ -345,31 +345,29 @@ if [ $# -eq $EXPECTED_ARGS ]; then
        fi
      done
 
-     echo -n "Continue with mplex ? (y)"
-     read ans
 
      echo
-     echo INFO starting mplex ....
+     echo INFO starting mplex
 
-     ( 
+     (
       mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE} $
      ) > $OUT_TRANS 2>&1 &
 
      echo INFO background process started ....
-     echo INFO processing data 
-     echo 
+     echo INFO processing data
+     echo
      LOOP=1
      while [ $LOOP -eq '1'  ];
      do
        echo -n .
-       sleep 15
+
+       sleep 1
 
        # Stay inside loop until tccat is finished
 
        PID1=$(ps axu | grep "mplex \-M" | grep -v grep | awk '{print $2}')
- 
-       if [ -z "$PID1" ] ; then 
-          LOOP=1
+       if [ -z "$PID1" ] ; then
+          LOOP=0
           echo
           echo
           echo INFO processing data done
@@ -377,8 +375,7 @@ if [ $# -eq $EXPECTED_ARGS ]; then
        fi
      done
 
-
-     # Clean-up files 
+     # Clean-up files
 
      rm ${AUDIO_FILE} 2>/dev/null
      rm ${VIDEO_FILE} 2>/dev/null
@@ -389,12 +386,21 @@ if [ $# -eq $EXPECTED_ARGS ]; then
 
      cd ..
 
-     # We remove the complet directory path that we created 
+     # We remove the complet directory path that we created
+     # and we leave only the generated mpeg2
 
      rm -rf $temp_file 2> $OUTPUT_ERROR
 
      exit 0
 fi
+
+
+
+
+
+
+
+
 
 
 
