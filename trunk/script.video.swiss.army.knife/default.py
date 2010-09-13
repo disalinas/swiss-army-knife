@@ -1066,6 +1066,8 @@ if __name__ == '__main__':
 
        else:
 
+           Enable_Startup_Addon = 0  
+
            # We have a ssh configuration that should work ....
            # But should working and working properly are two diffrent things ,-)
             
@@ -1088,19 +1090,24 @@ if __name__ == '__main__':
                   state = OSCheckLicence()
                   if (state == 1):
                       if (OSCheckContainerID(2)):
+                          Enable_Startup_Addon = Enable_Startup_Addon + 1  
                           GUIInfo(1,__language__(33307))
                   else:
                        __enable_bluray__ = "false"
+                       Enable_Startup_Addon = Enable_Startup_Addon + 1
                        GUIInfo(1,__language__(33315))
       
                if (OSCheckContainerID(1)):
                    GUIInfo(1,__language__(33306))
+                   Enable_Startup_Addon = Enable_Startup_Addon + 1
    
                if (OSCheckContainerID(0)):
                    GUIInfo(1,__language__(33305))
+                   Enable_Startup_Addon = Enable_Startup_Addon + 1
 
                if (OSCheckContainerID(3)):
                    GUIInfo(1,__language__(33318))
+                   Enable_Startup_Addon = Enable_Startup_Addon + 1
 
                # Network container is only tested if the function is enabled ...
 
@@ -1111,14 +1118,34 @@ if __name__ == '__main__':
                        # We do not enable a option in the case the container is not 
                        # writeable 
       
+                       Enable_Startup_Addon = Enable_Startup_Addon + 1
                        __enable_network__ == "false" 
  
-               
-               GUIlog ("create main-menu")
+               # Transcode and burning container is only tested if the function is enabled ....  
 
-               xbmc.executebuiltin("Dialog.Close(busydialog)")
-               menu01 = GUIMain01Class()
-               del menu01
+               if (__enable_burning__ == "true"):         
+                   if (OSCheckContainerID(5)):
+                       GUIInfo(1,__language__(33306))
+               
+                       # We do not enable a option in the case the container is not 
+                       # writeable 
+      
+                       Enable_Startup_Addon = Enable_Startup_Addon + 1
+                       __enable_burning__ == "false" 
+
+               # New since release 0.6.15 if any error comes up we do not start .....
+               # Only without any error on startup we do create the menu.
+               # In this case I have to ask less questions .... If a error comes ...
+
+               if (Enable_Startup_Addon == 0):  
+                   GUIlog ("create main-menu")
+                   xbmc.executebuiltin("Dialog.Close(busydialog)")
+                   menu01 = GUIMain01Class()
+                   del menu01
+               else:
+                    GUIlog ("This addon do not start until all errors on startup are resolved ....") 
+                    GUIlog ("Addon do exit now ...")
+                    xbmc.executebuiltin("Dialog.Close(busydialog)")
                GUIlog ("addon-ended")
    
    
