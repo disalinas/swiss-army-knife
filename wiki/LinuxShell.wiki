@@ -3,7 +3,10 @@
 Inside the folder shell-linux are several shell-scripts that can be executed over 
 ssh or manually.In the case of a unexpected error I would try to run them in a terminal.
 
+=== PLEASE DO NEVER EXECUTE THIS SHELL-SCRIPTS AS USER ROOT ====
 
+ * Only execute the script as the xbmc user you did run setup.sh 
+ 
 ----------------------------------------------------------------------------------------
 == state.sh == 
 ----------------------------------------------------------------------------------------
