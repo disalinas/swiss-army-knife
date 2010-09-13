@@ -1021,7 +1021,8 @@ class GUIMain01Class(xbmcgui.Window):
 if __name__ == '__main__':
    
    xbmc.executebuiltin("ActivateWindow(busydialog)")
-    
+
+   GUIlog ("Release Addon : [" + __version__ + "]")     
    GUIlog ("addon-startet")
 
    GUIlog ("loading-configuration")

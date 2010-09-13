@@ -25,7 +25,7 @@ if [ $SHELL != $SHELLTEST ] ; then
    clear
    echo
    echo only bash shell is supported by this shell-script.
-   echo It looks like you are using somehting other than /bin/bash.
+   echo It looks like you are using something other than /bin/bash.
    echo
    exit 255
 fi

@@ -117,6 +117,7 @@ Changes:
 - Added Transcode & Burning menu to Expert-Mode
 - Added dvd-mpeg2.sh to svn. 
 - Added User-Shell Functions menu to Expert-Mode.
+- Print release version inside the log.
 
 Fixes:
 
@@ -124,6 +125,7 @@ Fixes:
 - Language-ID for network windows were wrong (fixed).
 - Range for Network messages moved.
 - same error-level for all shell-scripts "tool not found"
+- Typo inside shell-scripts.
  
 
 
