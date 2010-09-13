@@ -116,9 +116,7 @@ def OSConfiguration(index):
     config[10] = __settings__.getSetting("id-show-bluray")
     config[11] = __settings__.getSetting("id-show-network")
     config[12] = __settings__.getSetting("id-show-burning")
-
-    # config [13] reserved for future use
-
+    config[13] = __settings__.getSetting("id-transcode")
     config[14] = __settings__.getSetting("id-customer")
     config[15] = __settings__.getSetting("id-burn")
     config[16] = __settings__.getSetting("id-netcat")
@@ -135,6 +133,10 @@ def OSConfiguration(index):
     config[23] = __settings__.getSetting("id-t1") 
     config[24] = __settings__.getSetting("id-t2")
     config[25] = __settings__.getSetting("id-t3")
+
+    # Modul-global variable to detect if debug-log is active
+
+    __verbose__ = config[17]
 
     # We neeed more logs ....
 
@@ -167,11 +169,6 @@ def OSConfiguration(index):
         OSlog("configuration index 25: [" + config[25] + "]")                        
 
 
-
-    # Modul-global variable to detect if debug-log is active
-
-    __verbose__ = config[17]
-
     # On startup we need to check that all data-containers are writeable
 
     __data_container__.append(config[3])
@@ -179,6 +176,7 @@ def OSConfiguration(index):
     __data_container__.append(config[5])
     __data_container__.append(config[21])
     __data_container__.append(config[22]) 
+    __data_container__.append(config[13])  
 
 
     # We need to write a few files on startup inside the addon-dirctory
@@ -341,11 +339,12 @@ def OSRun(command,backg,busys):
 
     status = os.system("%s" % (commandssh))
 
+    if (__verbose__ == 'true'):
+        OSlog("status command [" + commandssh + "] is rc:=[" + str(status) +"]")
+        OSlog ("OSRun end")
+
     if (busys):
         xbmc.executebuiltin("Dialog.Close(busydialog)")
-
-    if (__verbose__ == 'true'):
-        OSlog ("OSRun end")
 
     return status
 
@@ -850,6 +849,8 @@ def OSCheckContainerID(index):
                OSlog("Container path [" + __data_container__[index] + "] is not writeable !")
            return 1
         else:
+           if (__verbose__ == 'true'):
+               OSlog("Container path [" + __data_container__[index] + "] is checked succesfull for writeable attribut")
            return 0
     else:
         if (__verbose__ == 'true'):

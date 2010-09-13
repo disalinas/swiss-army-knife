@@ -17,6 +17,7 @@
         <setting id="id-bluray" type="text" label="32056" default="/dvdrip/bluray" />  
         <setting id="id-vobcopy" type="text" label="32072" default="/dvdrip/vobcopy" />
         <setting id="id-network" type="text" label="32073" default="/dvdrip/network" />          
+        <setting id="id-transcode" type="text" label="32077" default="/dvdrip/transcode" />          
 
         <!-- Various Settings  -->
 
