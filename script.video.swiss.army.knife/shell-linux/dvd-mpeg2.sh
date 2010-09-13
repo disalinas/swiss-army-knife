@@ -334,7 +334,7 @@ if [ $# -eq $EXPECTED_ARGS ]; then
 
        # Stay inside loop until tccat is finished
 
-       PID1=$(ps axu | grep "tccat -i" | grep -v grep | awk '{print $2}')
+       PID1=$(ps axu | grep "tccat \-i" | grep -v grep | awk '{print $2}')
  
        if [ -z "$PID1" ] ; then 
           LOOP=1
@@ -345,19 +345,52 @@ if [ $# -eq $EXPECTED_ARGS ]; then
        fi
      done
 
-     echo -n "Continue ? (y)"
+     echo -n "Continue with mplex ? (y)"
      read ans
 
-     mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE} > /dev/null 2>&1
+     echo
+     echo INFO starting mplex ....
+
+     ( 
+      mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE} $
+     ) > $OUT_TRANS 2>&1 &
+
+     echo INFO background process started ....
+     echo INFO processing data 
+     echo 
+     LOOP=1
+     while [ $LOOP -eq '1'  ];
+     do
+       echo -n .
+       sleep 15
+
+       # Stay inside loop until tccat is finished
+
+       PID1=$(ps axu | grep "mplex \-M" | grep -v grep | awk '{print $2}')
+ 
+       if [ -z "$PID1" ] ; then 
+          LOOP=1
+          echo
+          echo
+          echo INFO processing data done
+          echo
+       fi
+     done
+
+
+     # Clean-up files 
 
      rm ${AUDIO_FILE} 2>/dev/null
      rm ${VIDEO_FILE} 2>/dev/null
 
-     mv ${MPLEX_FILE} ../${MPLEX_FILE}
+     mv ${MPLEX_FILE} ../${MPLEX_FILE} 2>/dev/null
 
      rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} 2>/dev/null
 
      cd ..
+
+     # We remove the complet directory path that we created 
+
      rm -rf $temp_file 2> $OUTPUT_ERROR
 
      exit 0
