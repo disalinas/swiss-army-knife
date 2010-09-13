@@ -136,6 +136,38 @@ def OSConfiguration(index):
     config[24] = __settings__.getSetting("id-t2")
     config[25] = __settings__.getSetting("id-t3")
 
+    # We neeed more logs ....
+
+    if (__verbose__ == 'true'):
+        OSlog("configuration index 0: [" + config[0] + "]")
+        OSlog("configuration index 1: [" + config[1] + "]")  
+        OSlog("configuration index 2: [" + config[2] + "]")              
+        OSlog("configuration index 3: [" + config[3] + "]")
+        OSlog("configuration index 4: [" + config[4] + "]")  
+        OSlog("configuration index 5: [" + config[5] + "]") 
+        OSlog("configuration index 6: [" + config[6] + "]")
+        OSlog("configuration index 7: [" + config[7] + "]")  
+        OSlog("configuration index 8: [" + config[8] + "]")              
+        OSlog("configuration index 9: [" + config[9] + "]")
+        OSlog("configuration index 10: [" + config[10] + "]") 
+        OSlog("configuration index 11: [" + config[11] + "]")
+        OSlog("configuration index 12: [" + config[12] + "]") 
+        OSlog("configuration index 13: [" + config[13] + "]")      
+        OSlog("configuration index 14: [" + config[14] + "]")
+        OSlog("configuration index 15: [" + config[15] + "]")
+        OSlog("configuration index 16: [" + config[16] + "]")
+        OSlog("configuration index 17: [" + config[17] + "]")
+        OSlog("configuration index 18: [" + config[18] + "]")
+        OSlog("configuration index 19: [" + config[19] + "]")
+        OSlog("configuration index 20: [" + config[20] + "]")
+        OSlog("configuration index 21: [" + config[21] + "]")
+        OSlog("configuration index 22: [" + config[22] + "]")
+        OSlog("configuration index 23: [" + config[23] + "]")
+        OSlog("configuration index 24: [" + config[24] + "]")
+        OSlog("configuration index 25: [" + config[25] + "]")                        
+
+
+
     # Modul-global variable to detect if debug-log is active
 
     __verbose__ = config[17]

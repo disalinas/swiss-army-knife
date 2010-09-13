@@ -324,7 +324,27 @@ if [ $# -eq $EXPECTED_ARGS ]; then
      ) > $OUT_TRANS 2>&1 &
 
      echo INFO background process started ....
-     echo
+     echo INFO processing data 
+     echo 
+     LOOP=1
+     while [ $LOOP -eq '1'  ];
+     do
+       echo -n .
+       sleep 15
+
+       # Stay inside loop until tccat is finished
+
+       PID1=$(ps axu | grep "tccat -i" | grep -v grep | awk '{print $2}')
+ 
+       if [ -z "$PID1" ] ; then 
+          LOOP=1
+          echo
+          echo
+          echo INFO processing data done
+          echo
+       fi
+     done
+
      echo -n "Continue ? (y)"
      read ans
 
