@@ -177,7 +177,8 @@ echo inside the home-folder of /home/$1
 echo All directorys inside the addon-directorys itself are 
 echo are created as well.
 echo If you answer "no" you have to create all directorys 
-echo by yourself. 
+echo by yourself and the shell-scripts may not working.
+echo
 echo -n "Should this setup script create all needed directorys ? (y/n)"
 read ans
 
@@ -230,7 +231,14 @@ if [ $ans == "y" ] ; then
       chown -R $1:$1 /home/$1/swiss.army.knife
    fi
 
-   # Create all data-containers 
+   # All shell-scripts run in non interactive mode do send the output into this directory
+
+   if [ ! -e /home/$1/swiss.army.knife/ssh ] ; then
+      mkdir /home/$1/swiss.army.knife/ssh
+      chown -R $1:$1 /home/$1/swiss.army.knife/ssh
+   fi
+
+   # Create all data-containers
 
    if [ ! -e /dvdrip ] ; then
       mkdir /dvdrip

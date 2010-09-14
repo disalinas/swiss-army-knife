@@ -54,7 +54,7 @@ echo ---------------------------------------------------------------------------
 
 EXPECTED_ARGS=1
 
-# Error-codes 
+# Error-codes
 
 E_BADARGS=1
 E_TOOLNOTF=50
