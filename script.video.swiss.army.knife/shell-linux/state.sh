@@ -35,6 +35,8 @@ if [ $SHELL != $SHELLTEST ] ; then
    echo only bash shell is supported by this shell-script.
    echo It looks like you are using something other than /bin/bash.
    echo
+   echo ----------------------- script rc=255 ---------------------------
+   echo -----------------------------------------------------------------
    exit 255
 fi
 
