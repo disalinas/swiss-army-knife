@@ -232,6 +232,8 @@ def GUIProgressbar(InfoText):
                # Job is finished ...
                 
                if (OSDetectLastStage() == True):
+                   if (__verbose__):
+                      GUIlog('active job finished')
                    dp.close() 
                    exit = False
                    retval = 1
@@ -925,6 +927,8 @@ class GUIMain01Class(xbmcgui.Window):
                          GUIInfo(0,__language__(33303))    
 
                  if (choice == 1):  
+                     if (__verbose__):
+                        GUIlog('menu dvd-transcode activated')
                      Lock = OSCheckLock(__configuration__[1])
                      if (Lock == 0):
                          dvd_info = xbmc.getDVDState()
@@ -953,7 +957,9 @@ class GUIMain01Class(xbmcgui.Window):
                      else:
                          GUIInfo(0,__language__(33308))    
 
-                 if (choice == 2): 
+                 if (choice == 2):
+                     if (__verbose__):
+                        GUIlog('menu dvd-iso activated') 
                      Lock = OSCheckLock(__configuration__[1])
                      if (Lock == 0):
                          dvd_info = xbmc.getDVDState()
@@ -984,6 +990,8 @@ class GUIMain01Class(xbmcgui.Window):
 
 
                  if (choice == 3): 
+                     if (__verbose__):
+                        GUIlog('menu expert-mode activated')
                      if ( __enable_pw_mode__ == 'true'):
                          kb = xbmc.Keyboard('default', 'heading', True)
                          kb.setDefault()
@@ -993,14 +1001,20 @@ class GUIMain01Class(xbmcgui.Window):
                          if (kb.isConfirmed()):
                              password = kb.getText()
                              if (password == __pw__ ):
+                                 if (__verbose__):
+                                     GUIlog('menu expert-mode starting -> password correct')
                                  ExpertWindow = GUIExpertWinClass()
                                  del ExpertWindow
                              else: 
+                                 if (__verbose__):
+                                     GUIlog('menu expert-mode disabled -> password not correct')
                                  GUIInfo(2,__language__(33213))    
                      else:
                           ExpertWindow = GUIExpertWinClass()
                           del ExpertWindow         
                  if (choice == 4): 
+                     if (__verbose__):
+                        GUIlog('menu jobs activated')
                      JobWindow = GUIJobWinClass()
                      del JobWindow        
                  if (choice == 5): 
@@ -1021,7 +1035,6 @@ class GUIMain01Class(xbmcgui.Window):
 if __name__ == '__main__':
    
    xbmc_version = xbmc.getInfoLabel("System.BuildVersion")
-   
    xbmc.executebuiltin("ActivateWindow(busydialog)")
 
    GUIlog ("Release xbmc  : [" +  xbmc_version + "]")     
