@@ -120,6 +120,8 @@ Changes:
 - Print release version inside the log.
 - Print mutch more logs if verbose mode is active.
 - Prevent that user-uid 0 (root) can execute the shell-scripts.
+- Create ssh-folder with setup.sh
+- All commands that are executed over ssh are storend inside $HOME/swiss.army.knife/ssh/output
 
 Fixes:
 

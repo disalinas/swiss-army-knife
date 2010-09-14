@@ -3,7 +3,7 @@
 ###########################################################
 
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
-LOG="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/iso-log"
+LOG="$HOME/swiss.army.knife/ssh/output"
 
 echo
 echo ----------------------------------------------------------------------------
