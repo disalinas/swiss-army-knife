@@ -15,6 +15,17 @@
 # 1              Media not reconized                      #
 ###########################################################
 
+if [ "$UID" == 0 ] ; then
+   clear
+   echo This script should not be executed as user root !
+   echo You have to remove this lines to run this script as user 
+   echo root, what is by the way not recommanded !!
+   echo
+   echo ----------------------- script rc=254 ---------------------------
+   echo -----------------------------------------------------------------
+   exit 254
+fi
+
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 SHELLTEST="/bin/bash"
