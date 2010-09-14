@@ -7,7 +7,6 @@
 # http://code.google.com/p/swiss-army-knife/              #
 ###########################################################
 # author     : linuxluemmel.ch@gmail.com                  #
-# author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
 # $1 device                                               #
 # $2 auto-mode                                            #
@@ -18,6 +17,17 @@
 # - 3. Every track has a own subtitle-list                #
 ###########################################################
 
+if [ "$UID" == 0 ] ; then
+   clear
+   echo This script should not be executed as user root !
+   echo You have to remove this lines to run this script as user 
+   echo root, what is by the way not recommanded !!
+   echo
+   echo ----------------------- script rc=254 ---------------------------
+   echo -----------------------------------------------------------------
+   exit 254
+fi
+
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 SHELLTEST="/bin/bash"
@@ -27,6 +37,8 @@ if [ $SHELL != $SHELLTEST ] ; then
    echo only bash shell is supported by this shell-script.
    echo It looks like you are using something other than /bin/bash.
    echo
+   echo ----------------------- script rc=255 ---------------------------
+   echo -----------------------------------------------------------------
    exit 255
 fi
 

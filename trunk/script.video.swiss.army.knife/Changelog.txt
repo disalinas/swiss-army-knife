@@ -119,6 +119,7 @@ Changes:
 - Added User-Shell Functions menu to Expert-Mode.
 - Print release version inside the log.
 - Print mutch more logs if verbose mode is active.
+- Prevent that user-uid 0 (root) can execute the shell-scripts.
 
 Fixes:
 
