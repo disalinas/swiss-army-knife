@@ -54,7 +54,7 @@ By this new addon I changed a few things.
 
 2.) Requierements for this addon 
 
-- a Ubuntu 10.04 LTS system or higher. 
+- a Ubuntu 10.04 LTS system or higher. (Test passed on Ubuntu 10.04 LTS) 
 - a SVN build of XBMC (at least SVN 31953) or higher.
 - a DVD-drive and optional a bluray if you would like to transcode BD-disk
 - a place where you can store ripps. Be prepared that this place must be very very 
@@ -116,6 +116,7 @@ This shell-scripts do install all software for the addon
 including  2 debian files.
 
 - It checks that the shell is /bin/bash.
+- It checks that user root is running the script.
 - It creates all directorys for ripping and transcoding 
 - It will prepare the ssh-server and client to login without 
   any password.
