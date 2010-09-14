@@ -6,7 +6,7 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
 === PLEASE DO NEVER EXECUTE THIS SHELL-SCRIPTS AS USER ROOT !!! ====
 
  * Only execute the script as the xbmc user you did run setup.sh 
- 
+ * After the release 0.6.15 it is not longer possible to run the scripts as user root. 
 ----------------------------------------------------------------------------------------
 == state.sh == 
 ----------------------------------------------------------------------------------------
