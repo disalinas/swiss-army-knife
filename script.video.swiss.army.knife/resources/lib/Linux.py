@@ -177,6 +177,7 @@ def OSConfiguration(index):
     __data_container__.append(config[21])
     __data_container__.append(config[22]) 
     __data_container__.append(config[13])  
+    __data_container__.append(os.getenv("HOME") + '/swiss.army.knife/ssh')   
 
 
     # We need to write a few files on startup inside the addon-dirctory

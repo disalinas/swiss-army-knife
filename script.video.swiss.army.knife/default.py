@@ -1109,42 +1109,58 @@ if __name__ == '__main__':
                        __enable_bluray__ = "false"
                        Enable_Startup_Addon = Enable_Startup_Addon + 1
                        GUIInfo(1,__language__(33315))
-      
-               if (OSCheckContainerID(1)):
-                   GUIInfo(1,__language__(33306))
-                   Enable_Startup_Addon = Enable_Startup_Addon + 1
-   
-               if (OSCheckContainerID(0)):
-                   GUIInfo(1,__language__(33305))
-                   Enable_Startup_Addon = Enable_Startup_Addon + 1
 
-               if (OSCheckContainerID(3)):
-                   GUIInfo(1,__language__(33318))
-                   Enable_Startup_Addon = Enable_Startup_Addon + 1
-
-               # Network container is only tested if the function is enabled ...
-
-               if (__enable_network__ == "true"):         
-                   if (OSCheckContainerID(4)):
-                       GUIInfo(1,__language__(33319))
-               
-                       # We do not enable a option in the case the container is not 
-                       # writeable 
-      
+               if (Enable_Startup_Addon == 0):      
+                   if (OSCheckContainerID(1)):
+                       GUIInfo(1,__language__(33306))
                        Enable_Startup_Addon = Enable_Startup_Addon + 1
-                       __enable_network__ == "false" 
+   
+               if (Enable_Startup_Addon == 0):
+                   if (OSCheckContainerID(0)):
+                       GUIInfo(1,__language__(33305))
+                       Enable_Startup_Addon = Enable_Startup_Addon + 1
+
+               if (Enable_Startup_Addon == 0): 
+                   if (OSCheckContainerID(3)):
+                       GUIInfo(1,__language__(33318))
+                       Enable_Startup_Addon = Enable_Startup_Addon + 1
+               
+               # Network container is only tested if the function is enabled ...
+       
+               if (Enable_Startup_Addon == 0): 
+                   if (__enable_network__ == "true"):         
+                       if (OSCheckContainerID(4)):
+                           GUIInfo(1,__language__(33319))
+               
+                           # We do not enable a option in the case the container is not 
+                           # writeable 
+      
+                           Enable_Startup_Addon = Enable_Startup_Addon + 1
+                           __enable_network__ == "false" 
  
                # Transcode and burning container is only tested if the function is enabled ....  
 
-               if (__enable_burning__ == "true"):         
-                   if (OSCheckContainerID(5)):
-                       GUIInfo(1,__language__(33306))
+               if (Enable_Startup_Addon == 0): 
+                   if (__enable_burning__ == "true"):         
+                       if (OSCheckContainerID(5)):
+                           GUIInfo(1,__language__(33306))
                
-                       # We do not enable a option in the case the container is not 
-                       # writeable 
+                           # We do not enable a option in the case the container is not 
+                           # writeable 
       
+                           Enable_Startup_Addon = Enable_Startup_Addon + 1
+                           __enable_burning__ == "false" 
+
+
+               # Last Test prior to startup ....
+               # I guess I said it allready 100 times ...  "please execute setup.sh"
+
+               if (Enable_Startup_Addon == 0):
+                   if (OSCheckContainerID(6)):
                        Enable_Startup_Addon = Enable_Startup_Addon + 1
-                       __enable_burning__ == "false" 
+                       GUIInfo(1,__language__(33327))
+                       if (__verbose__):
+                           GUIlog('read the file called README.Linux or shorter RTFM')
 
                # New since release 0.6.15 if any error comes up we do not start .....
                # Only without any error on startup we do create the menu.

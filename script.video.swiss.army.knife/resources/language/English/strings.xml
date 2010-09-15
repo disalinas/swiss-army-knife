@@ -222,5 +222,6 @@
         <string id="33324">No connection to master possible</string>
         <string id="33325">Burning and Transcode functions are disabled</string> 
         <string id="33326">Burning and Transcode directory not found or writeable !</string> 
-         
+        <string id="33327">Run setup.sh to create ssh-dir !</string>         
+ 
  </strings>
