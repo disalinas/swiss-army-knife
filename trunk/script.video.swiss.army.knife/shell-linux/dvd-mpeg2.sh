@@ -202,7 +202,6 @@ if [ $# -eq $EXPECTED_ARGS ]; then
 
      DVD_NAME=`grep "Disc Title:" ${DVD_INFO} | cut -f2 -d':' | sed 's/ //g'`
 
-
      TITLE_INFO=`mktemp`
      lsdvd -x -t ${DVD_TITLE} $1 > ${TITLE_INFO} 2>/dev/null
 
@@ -279,9 +278,9 @@ if [ $# -eq $EXPECTED_ARGS ]; then
 
      # Remove temp files
 
-     rm ${DVD_INFO}
-     rm ${TITLE_INFO}
-     rm ${STREAM_INFO}
+     rm ${DVD_INFO} > /dev/null 2>&1
+     rm ${TITLE_INFO} > /dev/null 2>&1
+     rm ${STREAM_INFO} > /dev/null 2>&1
 
      # Setup some variables
 
@@ -295,36 +294,29 @@ if [ $# -eq $EXPECTED_ARGS ]; then
 
      # Create the FIFOs
 
-     rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} 2>/dev/null
+     rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} > /dev/null 2>&1
 
      echo
      echo INFO create fifo for communication
 
-     mkfifo ${AUDIO_FIFO}
-     mkfifo ${VIDEO_FIFO}
-     mkfifo ${MPLEX_FIFO}
+     mkfifo ${AUDIO_FIFO} > /dev/null 2>&1
+     mkfifo ${VIDEO_FIFO} > /dev/null 2>&1
+     mkfifo ${MPLEX_FIFO} > /dev/null 2>&1
 
      echo INFO fifo created
      echo
 
+     # Get audio 01 over fifo
+
      echo INFO extract audio language [$5] from track [$4]
-
-     # Get audio over fifo
-
      tcextract -i ${AUDIO_FIFO} -a ${AUDIO_TRACK} -t vob -x ${AUDIO_FORMAT} > ${AUDIO_FILE} &
-
      echo INFO background process started ....
-
-     # echo -n "Continue ? (y)"
-     # read ans
 
      # Get video over fifo
 
      echo
      echo INFO extract video track [$4]
-
      tcextract -i ${VIDEO_FIFO} -a ${VIDEO_TRACK} -t vob -x mpeg2 > ${VIDEO_FILE} &
-
      echo INFO background process started ....
 
      # Start transcode and send output to fifo
@@ -337,6 +329,9 @@ if [ $# -eq $EXPECTED_ARGS ]; then
      ) > $OUT_TRANS 2>&1 &
 
      echo INFO background process started ....
+
+
+
      echo INFO processing data
      echo
      LOOP=1
@@ -410,19 +405,14 @@ fi
 
 
 
-
-
-
-
-
-
+####################################################################################
+#                                                                                  #
+#                       transcode job with 2 audio-track                           #
+#                                                                                  #
+####################################################################################
 
 if [ $# -eq 7 ]; then 
     if [[ "$6" =~ ^-a ]] ; then
-        
-       ###################################################
-       # Ok we transcode 2 audio tracks and no subtitles # 
-       ###################################################
 
        # Get the DVD name and video properties with lsdvd
 
@@ -438,7 +428,7 @@ if [ $# -eq 7 ]; then
        DVD_NAME=`grep "Disc Title:" ${DVD_INFO} | cut -f2 -d':' | sed 's/ //g'`
 
        TITLE_INFO=`mktemp`
-       lsdvd -x -t ${DVD_TITLE} $1 > ${TITLE_INFO}
+       lsdvd -x -t ${DVD_TITLE} $1 > ${TITLE_INFO} 2>/dev/null
 
        # Video format, PAL or NTSC
 
@@ -515,9 +505,9 @@ if [ $# -eq 7 ]; then
    
        # Remove temp files
 
-       rm ${DVD_INFO}
-       rm ${TITLE_INFO}
-       rm ${STREAM_INFO}
+       rm ${DVD_INFO} > /dev/null 2>&1
+       rm ${TITLE_INFO} > /dev/null 2>&1
+       rm ${STREAM_INFO} > /dev/null 2>&1
 
        # Setup some variables
 
@@ -526,37 +516,88 @@ if [ $# -eq 7 ]; then
        VIDEO_FILE=${DVD_NAME}.m2v
        MPLEX_FILE=$3.mpg
      
-       AUDIO_FIFO=`mktemp`
+       AUDIO_FIFO=`mktemp` 
        VIDEO_FIFO=`mktemp`
        MPLEX_FIFO=`mktemp`
 
        # Create the FIFOs
 
-       rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} 2>/dev/null
+       rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} > /dev/null 2>&1
 
-       mkfifo ${AUDIO_FIFO} 
-       mkfifo ${VIDEO_FIFO}
-       mkfifo ${MPLEX_FIFO}
+       echo
+       echo INFO create fifo for communication
 
-       # Get audio-01 over fifo 
+       mkfifo ${AUDIO_FIFO} > /dev/null 2>&1 
+       mkfifo ${VIDEO_FIFO} > /dev/null 2>&1
+       mkfifo ${MPLEX_FIFO} > /dev/null 2>&1
 
+       # Get audio 01 over fifo
+
+       echo INFO fifo created
+       echo
+       echo INFO extract audio language [$5] from track [$4]
        tcextract -i ${AUDIO_FIFO} -a ${AUDIO_TRACK} -t vob -x ${AUDIO_FORMAT} > ${AUDIO_FILE_1} &
+       echo INFO background process started .... 
 
-       # Get video over fifo 
 
+       # Get video over fifo
+
+       echo
+       echo INFO extract video track [$4] 
        tcextract -i ${VIDEO_FIFO} -a ${VIDEO_TRACK} -t vob -x mpeg2 > ${VIDEO_FILE} &
+       echo INFO background process started .... 
 
-       # Start transcode and send output to fifo (video and 1. audio)
- 
-       tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P | tee ${AUDIO_FIFO} ${VIDEO_FIFO} > /dev/null     
+
+       # Start transcode and send output to fifo
+
+       echo
+       echo INFO starting transcode process 1
+       (
+        tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P -d 0 | tee ${AUDIO_FIFO} ${VIDEO_FIFO} &
+       ) > $OUT_TRANS 2>&1 &
+       echo INFO background process started ....
+
      
        # Get audio-02 over fifo 
 
+       echo
+       echo INFO extract audio language [$5] from track [$AUDIO_TRACK_SEC]
        tcextract -i ${AUDIO_FIFO} -a ${AUDIO_TRACK_SEC} -t vob -x ${AUDIO_FORMAT} > ${AUDIO_FILE_2} &
+       echo INFO background process started .... 
           
        # Start transcode and send output to fifo (2. audio)
  
-       tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P | tee ${AUDIO_FIFO} > /dev/null     
+       echo
+       echo INFO starting transcode process 2
+       (
+        tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P -d 0 | tee ${AUDIO_FIFO} > /dev/null &     
+       )
+
+
+       echo INFO processing data
+       echo
+       LOOP=1
+       while [ $LOOP -eq '1'  ];
+       do
+         echo -n .
+
+         sleep 15
+
+         # Stay inside loop until tccat is finished
+
+         PID1=$(ps axu | grep "tccat \-i" | grep -v grep | awk '{print $2}')
+         PID2=$(ps axu | grep "tccat \-i" | grep -v grep | awk '{print $2}')
+         if [ -z "$PID1" ] ; then
+            LOOP=0
+            echo
+            echo
+            echo INFO processing data done
+            echo
+         fi
+       done
+
+
+
 
        mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE_1} ${AUDIO_FILE_2} > /dev/null 2>&1
        
