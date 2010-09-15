@@ -9,6 +9,7 @@
 ---------------------------------------------------------------------------------------
 ===                            ====
  * You should read a file called README inside of the addon-directory ... ;-)
+ * *PLEASE DO RUN SETUP.SH AFTER EVERY UPDATE OR UPGRADE OF THE ADDON !*
 === ====
 === ====
 ===Error-Message : "Licence-key for makemkv expired"===
