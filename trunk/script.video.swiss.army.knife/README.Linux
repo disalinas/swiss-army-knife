@@ -17,7 +17,7 @@ As you may know until now, we had a few things inside xbmc like
 * Plugins for Music
 and many more 
 
-After the release xbmc version 10.5 or higher anything is called a addon.
+After the release xbmc version 10.0 or higher anything is called a addon.
 I used the switch to to the new addon-system  to make complete rewrite  of  
 the old code from my previous script called "luemmels-dvd-ripper".
 My old script was running .... but had a few down-sides...
@@ -105,9 +105,22 @@ starting the addon.
 "Prior to run this addon setup.sh must be executed" 
 
 Only after the execution of setup.sh this mesage never comes again.
+Please do read the instructions carefully.
  
 As long the eula is not accepted the script do not change any 
 settings of the system.
+
+If you are not using a stable release of this addon you see the 
+following message .....
+
+-----------------------------------------------------------------------
+The EULA-FILE can not be downloaded and therefore you must
+use a svn release of this addon.
+You do this at you own risk .....
+the last stable puplic released version was 0.6.14
+
+press any key to continue or ctrl-c to abort..
+-----------------------------------------------------------------------
 
 If your user name for the linux-system is something other than 
 xbmc, replace xbmc with your own username.(hint -> whoami[enter])
