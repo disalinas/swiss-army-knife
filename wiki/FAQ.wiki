@@ -226,11 +226,20 @@ Inside the file settings.conf the licence key can be updated or deleted.
   * Yes , but only for the primary audio-language.The secound audio-language is downmixed to be faster with the transcoding.
   * If you wish to have also the secound audio track in AC3 do edit dvd-handbrake.sh 
 
-===I found a error. What should I do ?=
+===I found a error. What should I do ?===
 -----------------------------------------------------------------------------------------
 ===                            ==== 
   * read the xbmc.log and make a copy for the error-ticket.
   * Create a error-ticket. (http://code.google.com/p/swiss-army-knife/issues/list
   * Tickets without a valid xbmc.log (and may other logs from the log-directory) are be set to invalid.
+
+== ==
+== ==
+===Where is the output from all this shell-scripts writen ?===
+-----------------------------------------------------------------------------------------
+===                            ==== 
+  * If you are running the scripts interactive you see the output on the console.
+  * After the release of 0.6.15 all shell-scripts executed over the addon have a single file in wich the output will be written.
+  * *$HOME/swiss.army.knife/ssh*
 
  
