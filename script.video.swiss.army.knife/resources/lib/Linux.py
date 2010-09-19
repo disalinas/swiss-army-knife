@@ -2063,3 +2063,77 @@ def OSDVDvcopy():
     return 1
 
 #########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSDVDtoMKV                                #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           MKV-process not startet                   #
+# 1           MKV-process startet                       #
+#                                                       #
+#########################################################
+def OSDVDtoMKV():
+
+    global __configLinux__
+    global __exec_dvd__
+    global __verbose__
+
+    parameters = len(__exec_dvd__)
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # Execution of shell-script dvd6.sh inside shell-linux
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd9.sh command ready to start")
+
+    # Prepare command string
+
+    dvd_command = ""
+    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2] + " " + __exec_dvd__[3]
+
+    if (__verbose__ == 'true'):
+        OSlog("final :" + dvd_command)
+
+    OSRun("dvd9.sh " + dvd_command,True,False)
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-vcopy.sh command executed")
+
+    # Now we do loop until the PID-file exists
+
+    time.sleep(8)
+
+    WCycles = 5
+    Waitexit = True
+    while (Waitexit):
+           if (os.path.exists(__configLinux__[32])):
+               if (__verbose__ == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 30):
+               if (__verbose__ == 'true'):
+                   OSlog("Timeout reached 30 secounds for mkv-file  ...")
+                   OSlog("change timeout on line 2124 for mkv-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0
+
+    # Clean exec-array dvd
+
+    for index in range((parameters - 1),0):
+        del  __exec_dvd__[index]
+
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+
+#########################################################
