@@ -122,6 +122,8 @@ Changes:
 - Prevent that user-uid 0 (root) can execute the shell-scripts.
 - Create ssh-folder with setup.sh
 - All commands that are executed over ssh are storend inside $HOME/swiss.army.knife/ssh/output
+- Added dvd-mkv.sh to svn 
+- Integrate dvd-mkv.sh into addon
 
 Fixes:
 
@@ -130,6 +132,9 @@ Fixes:
 - Range for Network messages moved.
 - same error-level for all shell-scripts "tool not found"
 - Typo inside shell-scripts.
+- Test if we use makemkvcon inside a script that the command is running.
+
+ 
  
 
 

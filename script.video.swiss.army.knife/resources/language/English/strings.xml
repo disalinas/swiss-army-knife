@@ -70,7 +70,7 @@
         <!--               -->
 
         <string id="32120">Transcode BluRay to MKV (confirmend)</string>
-        <string id="32121">Transcode DVD (confirmed)</string>
+        <string id="32121">Transcode DVD high-profile(confirmed)</string>
         <string id="32122">Ripp DVD to ISO (confirmed)</string>
         <string id="32123">Rescue-copy DVD to iso (confirmed)</string>
         <string id="32124">Copy vob-files from DVD to hd (confirmed)</string>
@@ -107,7 +107,7 @@
         <string id="32156">copy all vobs to harddisk</string>
         <string id="32157">copy from slave</string>
         <string id="32158">copy to master</string>
-
+        <string id="32159">transcode dvd to mkv</string>
 
         <!--                --> 
         <!-- Joblist Window -->
@@ -130,7 +130,7 @@
         <string id="32180">DVD -> MPEG2</string>
         <string id="32181">DVD -> ISO for burning</string>
         <string id="32182">DVD -> MKV</string>
-        <string id="32183">DVD -> h264 (low-profile)</string>
+        <string id="32183">DVD -> h264 low-profile</string>
         <string id="32184">DVD -> Iphone</string>
         <string id="32185">DVD -> PSP</string>
         <string id="32186">Back</string>

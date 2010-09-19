@@ -13,7 +13,7 @@
 # $3 name of mkv (excluding extension mkv)                #
 # $4 Track to extract (Tracks starting at index 0)        #
 # description :                                           #
-# Convert bluray track to mkv container                   #
+# Convert dvd track to mkv container                      #
 ###########################################################
 
 if [ "$UID" == 0 ] ; then
@@ -59,6 +59,7 @@ EXPECTED_ARGS=4
 
 E_BADARGS=1
 E_TOOLNOTF=50
+E_MAKEMKV=253
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
@@ -127,11 +128,31 @@ fi
 makemkvcon --messages=/dev/null --progress=bluray.progress mkv $PARA $4 $2 > /dev/null 2>&1  &
 ) > /dev/null 2>&1
 
+echo
+echo INFO wait 30 secounds
+echo
+
 sleep 30
+
+# We need to be sure that makemkvcon is running in background ...
+# If this is not the case we exit the script.
+
+PID1=$(ps axu | grep "makemkvcon \-\-m" | grep -v grep | awk '{print $2}')
+if [ -z "$PID1" ] ; then
+    echo
+    echo makemkvcon is not running after 30 secounds. Please check your
+    echo settings and configuration and licence-key
+    echo
+    exit $E_MAKEMKV
+fi
+
+echo
+echo INFO pid makemkvon[$PID1]
+echo
 
 echo $1 > $JOBFILE
 echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
-echo 32150 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
+echo 32159 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
 echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
 
 if [ $4 -lt '10' ] ; then
@@ -147,7 +168,6 @@ echo $SCRIPTDIR/bluray.progress >> ~/.xbmc/userdata/addon_data/script.video.swis
 echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 ps axu | grep makemkvcon | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 
-
 echo
 echo INFO processing data
 echo
@@ -159,7 +179,7 @@ do
    echo $progress > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
    sleep 2
 
-   if [ $progress -eq "100"  ] ; then
+   if [ $progress -eq "100" ] ; then
        rm bluray.progress > /dev/null 2>&1
        echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
        echo
@@ -185,8 +205,7 @@ fi
 rm $JOBFILE > /dev/null 2>&1
 
 
-
-# Delete all progress-files 
+# Delete all progress-files
 
 sleep 1
 rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
