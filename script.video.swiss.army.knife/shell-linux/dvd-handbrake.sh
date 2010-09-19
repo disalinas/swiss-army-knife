@@ -192,7 +192,7 @@ if [ $# -eq 5 ]; then
     echo INFO starting HandBrakeCLI
 
     (
-     HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+     HandBrakeCLI -i $1 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
      -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:t$
      -a $AUDIO1 -E ac3 &
     ) > $OUT_TRANS 2>&1 &
@@ -229,7 +229,7 @@ if [ $# -eq 5 ]; then
             echo INFO processing data pass 2 of 2
             echo
 
-            sleep  5
+            sleep  35
             echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             sleep 1
             echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
@@ -270,7 +270,7 @@ if [ $# -eq 7 ]; then
 
        echo $1 > $JOBFILE
        echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
-   
+
        echo 32152 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
        echo 32153 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
 
@@ -282,7 +282,7 @@ if [ $# -eq 7 ]; then
        echo INFO starting HandBrakeCLI
 
        (
-       HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+       HandBrakeCLI -i $1 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
        -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs$
        -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 \
        -R auto,auto -6 auto,auto -E ac3,acc &
@@ -308,10 +308,10 @@ if [ $# -eq 7 ]; then
          echo -n .
          PASS1=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
          PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         if [ -n "$PASS1" ] ; then 
+         if [ -n "$PASS1" ] ; then
             echo $PASS1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS1 -eq 99 ] ; then
-               sleep 5
+               sleep 35
                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
 
                echo
@@ -419,7 +419,7 @@ if [ $# -eq 7 ]; then
        echo INFO starting HandBrakeCLI
 
        (
-       HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+       HandBrakeCLI -i $1 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
        -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=$
        -a $AUDIO1 -E ac3 &
        ) > $OUT_TRANS 2>&1 &
@@ -443,10 +443,10 @@ if [ $# -eq 7 ]; then
          echo -n .
          PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
          PASS3=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         if [ -n "$PASS2" ] ; then 
+         if [ -n "$PASS2" ] ; then
             echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS2 -eq 98 ] ; then
-               sleep 5
+               sleep 35
                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
                sleep 1
                echo
@@ -493,7 +493,7 @@ if [ $# -eq 9 ]; then
      AUDIO1=$(($5 +  1))
      AUDIO2=$(($7 +  1))
 
-     echo $1 > $JOBFILE 
+     echo $1 > $JOBFILE
      echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
 
      echo 32151 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
@@ -550,7 +550,7 @@ if [ $# -eq 9 ]; then
      echo INFO starting HandBrakeCLI
 
      (
-     HandBrakeCLI -i $1 /dev/sr0 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+     HandBrakeCLI -i $1 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
      -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=1:t$
      -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,dpl2 -E ac3,acc &
      ) > $OUT_TRANS 2>&1 &
@@ -577,7 +577,7 @@ if [ $# -eq 9 ]; then
        if [ -n "$PASS2" ] ; then
           echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress 
           if [ $PASS2 -eq 99 ] ; then
-               sleep 5
+               sleep 35
                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
                sleep 1
                echo

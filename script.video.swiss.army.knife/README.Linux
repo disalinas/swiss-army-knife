@@ -136,6 +136,7 @@ including  2 debian files.
   any password.
 - Depend on your system handbrake and makemkv are installed
   (32 or 64 bit).
+- If you plan to transcode dvd to mkv you have to install makemkv.
 - The script do check if handbrake or makemkv are allready installed.
 - The script do check witch versions of the tools makemkv and handbrake 
   are installed.
@@ -146,10 +147,10 @@ including  2 debian files.
   again.
 
  
-This debian-filea are only tested on Ubuntu 10.04 LTS.If you don't use 
+This debian-files for download  are only tested on Ubuntu 10.04 LTS.If you don't use 
 a debian based system, or your system is to old, you have to compile 
 this 2 packages for yourself. The full-source of the 2 packages  is provided 
-only on the project-page to minimize the download-size.
+on the project-page to minimize the download-size.
 
 http://swiss-army-knife.googlecode.com/files/makemkv_1.5.8.src.tar.gz
 http://swiss-army-knife.googlecode.com/files/Handbrake-0.9.4-src.tar.gz

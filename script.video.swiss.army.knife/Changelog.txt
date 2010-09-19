@@ -124,6 +124,7 @@ Changes:
 - All commands that are executed over ssh are storend inside $HOME/swiss.army.knife/ssh/output
 - Added dvd-mkv.sh to svn 
 - Integrate dvd-mkv.sh into addon
+- Added dvd-low.sh to svn
 
 Fixes:
 
@@ -133,6 +134,7 @@ Fixes:
 - same error-level for all shell-scripts "tool not found"
 - Typo inside shell-scripts.
 - Test if we use makemkvcon inside a script that the command is running.
+- Typo inside dvd-handbrake.sh / text about passes fixed.
 
  
  
