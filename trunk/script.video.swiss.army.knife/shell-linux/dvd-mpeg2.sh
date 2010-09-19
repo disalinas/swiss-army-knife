@@ -358,7 +358,7 @@ if [ $# -eq $EXPECTED_ARGS ]; then
      echo INFO starting mplex
 
      (
-      mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE} $
+      mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE} &
      ) > $OUT_TRANS 2>&1 &
 
      echo INFO background process started ....
@@ -411,19 +411,19 @@ fi
 #                                                                                  #
 ####################################################################################
 
-if [ $# -eq 7 ]; then 
+if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-a ]] ; then
 
        # Get the DVD name and video properties with lsdvd
 
        DVD_INFO=`mktemp`
-       lsdvd -x $1 > ${DVD_INFO}
+       lsdvd -x $1 > ${DVD_INFO} 2>/dev/null
 
-       if [ $4 -lt 10 ] ; then 
+       if [ $4 -lt 10 ] ; then
             DVD_TITLE=0$4
        else
-            DVD_TITLE=$4          
-       fi 
+            DVD_TITLE=$4
+       fi
 
        DVD_NAME=`grep "Disc Title:" ${DVD_INFO} | cut -f2 -d':' | sed 's/ //g'`
 
@@ -464,7 +464,7 @@ if [ $# -eq 7 ]; then
 
        AUDIO_TRACK_USER=$5
 
-       # Validate the audio track 
+       # Validate the audio track
 
        AUDIO_TRACK_VALIDATE=`grep "audio stream: ${AUDIO_TRACK_USER}" ${STREAM_INFO}`
 
@@ -480,10 +480,10 @@ if [ $# -eq 7 ]; then
 
        else
 
-           # invalid audio track 
+           # invalid audio track
 
-           AUDIO_TRACK_DETAILS=`grep "audio stream: ${AUDIO_TRACK}" ${STREAM_INFO}` > $OUTPUT_ERROR  
-           echo "Using ${AUDIO_TRACK_DETAILS}" > $OUTPUT_ERROR  
+           AUDIO_TRACK_DETAILS=`grep "audio stream: ${AUDIO_TRACK}" ${STREAM_INFO}` > $OUTPUT_ERROR
+           echo "Using ${AUDIO_TRACK_DETAILS}" > $OUTPUT_ERROR
            exit $E_INVALID_AUDIO
        fi
 
@@ -502,7 +502,7 @@ if [ $# -eq 7 ]; then
        DVD_TITLE_CHAPTERS=`grep ID_DVD_TITLE_${DVD_TITLE}_CHAPTERS} ${STREAM_INFO} | cut -d'=' -f2`
        DVD_TITLE_ANGLES=`grep ID_DVD_TITLE_${DVD_TITLE}_ANGLES ${STREAM_INFO} | cut -d'=' -f2`
        DVD_TITLE_CHAPTER_POINTS=`grep CHAPTERS: ${STREAM_INFO} | sed 's/CHAPTERS: //' | sed 's/,$//'`
-   
+
        # Remove temp files
 
        rm ${DVD_INFO} > /dev/null 2>&1
@@ -512,11 +512,11 @@ if [ $# -eq 7 ]; then
        # Setup some variables
 
        AUDIO_FILE_1=${DVD_NAME}-1.${AUDIO_FORMAT}
-       AUDIO_FILE_2=${DVD_NAME}-2.${AUDIO_FORMAT} 
+       AUDIO_FILE_2=${DVD_NAME}-2.${AUDIO_FORMAT}
        VIDEO_FILE=${DVD_NAME}.m2v
        MPLEX_FILE=$3.mpg
-     
-       AUDIO_FIFO=`mktemp` 
+
+       AUDIO_FIFO=`mktemp`
        VIDEO_FIFO=`mktemp`
        MPLEX_FIFO=`mktemp`
 
@@ -527,7 +527,7 @@ if [ $# -eq 7 ]; then
        echo
        echo INFO create fifo for communication
 
-       mkfifo ${AUDIO_FIFO} > /dev/null 2>&1 
+       mkfifo ${AUDIO_FIFO} > /dev/null 2>&1
        mkfifo ${VIDEO_FIFO} > /dev/null 2>&1
        mkfifo ${MPLEX_FIFO} > /dev/null 2>&1
 
@@ -537,15 +537,15 @@ if [ $# -eq 7 ]; then
        echo
        echo INFO extract audio language [$5] from track [$4]
        tcextract -i ${AUDIO_FIFO} -a ${AUDIO_TRACK} -t vob -x ${AUDIO_FORMAT} > ${AUDIO_FILE_1} &
-       echo INFO background process started .... 
+       echo INFO background process started ....
 
 
        # Get video over fifo
 
        echo
-       echo INFO extract video track [$4] 
+       echo INFO extract video track [$4]
        tcextract -i ${VIDEO_FIFO} -a ${VIDEO_TRACK} -t vob -x mpeg2 > ${VIDEO_FILE} &
-       echo INFO background process started .... 
+       echo INFO background process started ....
 
 
        # Start transcode and send output to fifo
@@ -557,21 +557,21 @@ if [ $# -eq 7 ]; then
        ) > $OUT_TRANS 2>&1 &
        echo INFO background process started ....
 
-     
-       # Get audio-02 over fifo 
+
+       # Get audio-02 over fifo
 
        echo
-       echo INFO extract audio language [$5] from track [$AUDIO_TRACK_SEC]
+       echo INFO extract audio language [$AUDIO_TRACK_SEC] from track [$4]
        tcextract -i ${AUDIO_FIFO} -a ${AUDIO_TRACK_SEC} -t vob -x ${AUDIO_FORMAT} > ${AUDIO_FILE_2} &
-       echo INFO background process started .... 
-          
+       echo INFO background process started ....
+
        # Start transcode and send output to fifo (2. audio)
- 
+
        echo
        echo INFO starting transcode process 2
        (
-        tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P -d 0 | tee ${AUDIO_FIFO} > /dev/null &     
-       )
+        tccat -i $1 -T ${DVD_TITLE},-1,${DVD_TITLE_ANGLE} -P -d 0 | tee ${AUDIO_FIFO} > /dev/null &
+       ) > $OUT_TRANS 2>&1 &
 
 
        echo INFO processing data
@@ -585,8 +585,8 @@ if [ $# -eq 7 ]; then
 
          # Stay inside loop until tccat is finished
 
-         PID1=$(ps axu | grep "tccat \-i" | grep -v grep | awk '{print $2}')
-         PID2=$(ps axu | grep "tccat \-i" | grep -v grep | awk '{print $2}')
+         PID1=$(ps axu | grep "tccat \-i" | head -1 | grep -v grep | awk '{print $2}')
+         PID2=$(ps axu | grep "tccat \-i" | tail -1 | grep -v grep | awk '{print $2}')
          if [ -z "$PID1" ] ; then
             LOOP=0
             echo
@@ -597,28 +597,59 @@ if [ $# -eq 7 ]; then
        done
 
 
+       echo
+       echo INFO starting mplex
 
+       (
+        mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE_1} ${AUDIO_FILE_2} &
+       ) > $OUT_TRANS 2>&1 &
 
-       mplex -M -f 8 -o ${MPLEX_FILE} ${VIDEO_FILE} ${AUDIO_FILE_1} ${AUDIO_FILE_2} > /dev/null 2>&1
-       
+       echo INFO background process started ....
+       echo INFO processing data
+       echo
+       LOOP=1
+       while [ $LOOP -eq '1'  ];
+       do
+         echo -n .
+
+         sleep 1
+
+         # Stay inside loop until tccat is finished
+
+         PID1=$(ps axu | grep "mplex \-M" | grep -v grep | awk '{print $2}')
+         if [ -z "$PID1" ] ; then
+            LOOP=0
+            echo
+            echo
+            echo INFO processing data done
+            echo
+         fi
+       done
+
+       # Clean-up files
+
        rm ${AUDIO_FILE_1} 2>/dev/null
        rm ${AUDIO_FILE_2} 2>/dev/null
        rm ${VIDEO_FILE} 2>/dev/null
 
        mv ${MPLEX_FILE} ../${MPLEX_FILE}
-                        
-       rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} 2>/dev/null   
+       rm ${AUDIO_FIFO} ${VIDEO_FIFO} ${MPLEX_FIFO} 2>/dev/null
+       cd ..
 
-       cd .. 
-       rm -rf $temp_file 2> $OUTPUT_ERROR   
+       # We remove the complet directory path that we created
+       # and we leave only the generated mpeg2
 
-       exit 0 
-    fi 
+       rm -rf $temp_file 2> $OUTPUT_ERROR
+
+       exit 0
+    fi
+
+
 
 
 
     if [[ "$6" =~ ^-s ]] ; then
-    
+
        ################################################
        # Ok We transcode 1 audio track and 1 subtitle # 
        ################################################

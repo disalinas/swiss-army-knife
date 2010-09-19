@@ -49,6 +49,7 @@ By this new addon I changed a few things.
 * try to copy crippled dvd's with ddrescue.
 * convert dvd to a h264 container. 
 * convert bluray to a mkv container.
+* convert dvd to a mkv container.
 * In a later release I plan to work  some of this features over the network. 
 
 
@@ -228,7 +229,7 @@ http://code.google.com/p/swiss-army-knife/issues/list
 7.O Using the addon and have fun 
 
 Lucern, Switzerland 
-09.11.2010 
+09.18.2010 
 linuxluemmel.ch@gmail.ch alias Hans Weber 
 
  

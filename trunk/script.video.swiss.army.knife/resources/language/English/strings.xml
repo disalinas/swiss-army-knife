@@ -57,7 +57,7 @@
         <!-- Main-Menu -->
         <!--           --> 
                 
-        <string id="32100">Transcode BluRay to mkv</string>
+        <string id="32100">Transcode BluRay to MKV</string>
         <string id="32101">Transcode DVD</string>
         <string id="32102">Ripp DVD to ISO</string>       
         <string id="32103">Expert-Mode</string>
@@ -69,7 +69,7 @@
         <!-- Advanced-Menu -->
         <!--               -->
 
-        <string id="32120">Transcode BluRay to mkv (confirmend)</string>
+        <string id="32120">Transcode BluRay to MKV (confirmend)</string>
         <string id="32121">Transcode DVD (confirmed)</string>
         <string id="32122">Ripp DVD to ISO (confirmed)</string>
         <string id="32123">Rescue-copy DVD to iso (confirmed)</string>
@@ -129,7 +129,7 @@
          
         <string id="32180">DVD -> MPEG2</string>
         <string id="32181">DVD -> ISO for burning</string>
-        <string id="32182">DVD -> xvid</string>
+        <string id="32182">DVD -> MKV</string>
         <string id="32183">DVD -> h264 (low-profile)</string>
         <string id="32184">DVD -> Iphone</string>
         <string id="32185">DVD -> PSP</string>
@@ -222,6 +222,7 @@
         <string id="33324">No connection to master possible</string>
         <string id="33325">Burning and Transcode functions are disabled</string> 
         <string id="33326">Burning and Transcode directory not found or writeable !</string> 
-        <string id="33327">Run setup.sh to create ssh-dir !</string>         
+        <string id="33327">Run setup.sh to create ssh-dir !</string>  
+        <string id="33328">This trancoding features needs makemkv !</string>        
  
  </strings>
