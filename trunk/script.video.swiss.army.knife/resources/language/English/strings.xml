@@ -108,6 +108,7 @@
         <string id="32157">copy from slave</string>
         <string id="32158">copy to master</string>
         <string id="32159">transcode dvd to mkv</string>
+        <string id="32160">transcoding pass 1/1 for mp4</string>
 
         <!--                --> 
         <!-- Joblist Window -->
