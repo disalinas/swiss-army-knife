@@ -390,8 +390,58 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                  GUIInfo(1,__language__(33205))  
                  exit = True    
              if (choice == 2):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True
+  
+                 # We transcode a dvd but this function 
+                 # needs the same configuration like the 
+                 # bluray-part
+                               
+                 Lock = OSCheckLock(__configuration__[1])
+                 if (__enable_bluray__ == 'true'):
+                     if (Lock == 0):
+                         dvd_info = xbmc.getDVDState()
+                         if (dvd_info == 4):
+                             DVDState = OSCheckMedia("DVD-ROM")
+                             if (DVDState == 2):
+                                 GUIInfo(0,__language__(33302)) 
+                             if (DVDState == 1):
+                                 GUIInfo(0,__language__(33311))
+                             if (DVDState == 0):
+                                 tracklist = []
+
+                                 tracklist = OSChapterDVD()
+                                 track = GUISelectList(__language__(33207),tracklist)            
+                     
+                                 # makemkv is not starting with index 1
+
+                                 if (tracklist[0] != 'none'):
+                                      execlist = []
+
+                                      savedir = GUISelectDir() 
+                                      volname = OSDVDVolume()
+                                      volname = GUIEditExportName(volname) 
+ 
+                                      # Update parameters for the OS-Part DVD
+
+                                      execlist.append(__configuration__[1])
+                                      execlist.append(savedir)
+                                      execlist.append(volname)
+                                      execlist.append(track)
+
+                                      execstate =  OSDVDTranscode() 
+                                      if (execstate == 0):
+                                          GUIInfo(2,__language__(33209))
+                                      if (execstate == 1):
+                                          GUIInfo(0,__language__(33208))
+                                          __jobs__ = True
+                                 else:
+                                     GUIInfo(0,__language__(33312)) 
+                         else:
+                             GUIInfo(0,__language__(33309)) 
+                     else:
+                         GUIInfo(0,__language__(33308))    
+                 else:
+                     GUIInfo(0,__language__(33328)) 
+
              if (choice == 3):
                  GUIInfo(1,__language__(33205)) 
                  exit = True 
