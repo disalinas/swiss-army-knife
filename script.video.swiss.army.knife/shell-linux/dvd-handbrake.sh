@@ -204,7 +204,7 @@ if [ $# -eq 5 ]; then
 
     echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
     ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-    PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+    PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
 
     echo
     echo INFO processing data pass 1 of 2
@@ -220,6 +220,21 @@ if [ $# -eq 5 ]; then
          echo $PASS1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress 
          if [ $PASS1 -eq 99 ] ; then
 
+             # We wait until HandBrakeCLI stage 1  is finished ...
+
+            LOOPP2=0
+            while [ $LOOPP2 -eq '0' ];
+            do
+                PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+                echo -n .
+                if [ -n "$PASS2" ] ; then
+                   LOOPP2=1
+                else
+                   LOOPP2=0
+                fi
+                sleep 0.7
+            done
+
             echo
             echo
             echo INFO processing data pass 1 of 2 done
@@ -229,7 +244,6 @@ if [ $# -eq 5 ]; then
             echo INFO processing data pass 2 of 2
             echo
 
-            sleep  35
             echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             sleep 1
             echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
@@ -240,8 +254,23 @@ if [ $# -eq 5 ]; then
       if [ -n "$PASS2" ] ; then
          echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
          if [ $PASS2 -eq 98 ] ; then
-             sleep 15
-             echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress 
+
+             # We wait until HandBrakeCLI is finished ...
+
+             LOOPP2=0
+             while [ $LOOPP2 -eq '0' ];
+             do
+                PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+                echo -n .
+                if [ -n "$PID" ] ; then
+                   LOOPP2=1
+                else
+                   LOOPP2=0
+                fi
+                sleep 0.7
+             done
+
+             echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
              echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
              echo
              echo
@@ -296,7 +325,7 @@ if [ $# -eq 7 ]; then
 
        echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
 
        echo
        echo INFO processing data pass 1 of 2
@@ -311,7 +340,22 @@ if [ $# -eq 7 ]; then
          if [ -n "$PASS1" ] ; then
             echo $PASS1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS1 -eq 99 ] ; then
-               sleep 35
+
+               # We wait until HandBrakeCLI stage 1  is finished ...
+
+               LOOPP2=0
+               while [ $LOOPP2 -eq '0' ];
+               do
+                  PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+                  echo -n .
+                  if [ -n "$PASS2" ] ; then
+                     LOOPP2=1
+                  else
+                     LOOPP2=0
+                  fi
+                  sleep 0.7
+               done
+
                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
 
                echo
@@ -332,7 +376,20 @@ if [ $# -eq 7 ]; then
          if [ -n "$PASS2" ] ; then
             echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS2 -eq 98 ] ; then
-               sleep 15
+
+               LOOPP2=0
+               while [ $LOOPP2 -eq '0' ];
+               do
+                   PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+                   echo -n .
+                   if [ -n "$PID" ] ; then
+                     LOOPP2=1
+                   else
+                     LOOPP2=0
+                   fi
+                   sleep 0.7
+               done
+
                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
                echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
                echo
@@ -389,7 +446,7 @@ if [ $# -eq 7 ]; then
 
        echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-       PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}') 
+       PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
 
        LOOP=1
        while [ $LOOP -eq '1'  ];
@@ -400,7 +457,20 @@ if [ $# -eq 7 ]; then
          if [ -n "$PASS1" ] ; then
             echo $PASS1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS1 -eq 99 ] ; then
-               sleep 5
+
+               LOOPP2=0
+               while [ $LOOPP2 -eq '0' ];
+               do
+                   PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
+                   echo -n .
+                   if [ -n "$PID" ] ; then
+                     LOOPP2=1
+                   else
+                     LOOPP2=0
+                   fi
+                   sleep 0.7
+               done
+
                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
                sleep 2
                echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
@@ -446,7 +516,20 @@ if [ $# -eq 7 ]; then
          if [ -n "$PASS2" ] ; then
             echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS2 -eq 98 ] ; then
-               sleep 35
+
+               LOOPP2=0
+               while [ $LOOPP2 -eq '0' ];
+               do
+                  PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+                  echo -n .
+                  if [ -n "$PASS2" ] ; then
+                     LOOPP2=1
+                  else
+                     LOOPP2=0
+                  fi
+                  sleep 0.7
+               done
+
                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
                sleep 1
                echo
@@ -464,7 +547,20 @@ if [ $# -eq 7 ]; then
          if [ -n "$PASS3" ] ; then
             echo $PASS3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS3 -eq 98 ] ; then
-               sleep 3
+
+               LOOPP2=0
+               while [ $LOOPP2 -eq '0' ];
+               do
+                   PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+                   echo -n .
+                   if [ -n "$PID" ] ; then
+                     LOOPP2=1
+                   else
+                     LOOPP2=0
+                   fi
+                   sleep 0.7
+               done
+
                echo
                echo
                echo INFO processing data pass 3 of 3 done
@@ -531,7 +627,20 @@ if [ $# -eq 9 ]; then
        if [ -n "$PASS1" ] ; then
           echo $PASS1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
           if [ $PASS1 -eq 98 ] ; then
-             sleep 10
+
+             LOOPP2=0
+             while [ $LOOPP2 -eq '0' ];
+             do
+                   PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
+                   echo -n .
+                   if [ -n "$PID" ] ; then
+                     LOOPP2=1
+                   else
+                     LOOPP2=0
+                   fi
+                   sleep 0.7
+             done
+
              echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
              sleep 2
              echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
@@ -560,7 +669,7 @@ if [ $# -eq 9 ]; then
 
      echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
      ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-     PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+     PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
 
      sleep 10
 
@@ -577,7 +686,20 @@ if [ $# -eq 9 ]; then
        if [ -n "$PASS2" ] ; then
           echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress 
           if [ $PASS2 -eq 99 ] ; then
-               sleep 35
+
+               LOOPP2=0
+               while [ $LOOPP2 -eq '0' ];
+               do
+                  PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+                  echo -n .
+                  if [ -n "$PASS2" ] ; then
+                     LOOPP2=1
+                  else
+                     LOOPP2=0
+                  fi
+                  sleep 0.7
+               done
+
                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
                sleep 1
                echo
@@ -594,7 +716,20 @@ if [ $# -eq 9 ]; then
        if [ -n "$PASS3" ] ; then
           echo $PASS3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
           if [ $PASS3 -eq 98 ] ; then
-               sleep 3
+
+               LOOPP2=0
+               while [ $LOOPP2 -eq '0' ];
+               do
+                   PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+                   echo -n .
+                   if [ -n "$PID" ] ; then
+                     LOOPP2=1
+                   else
+                     LOOPP2=0
+                   fi
+                   sleep 0.7
+               done
+
                echo
                echo
                echo INFO processing data pass 3 of 3 done
