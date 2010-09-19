@@ -206,6 +206,7 @@ If your licence key is expired you see the following message inside the addon
 - Be sure to read the logs ...
 - This addons write all logs to the xbmc.log inside ~/temp/xbmc.log.
 - Be sure to have verbose log activated inside the settings.
+- By default this mode is activated.
 - Be sure that the ssh-communication is correct (test ssh-communication) inside 
   the addon.
 - Check the permissions of the shell-script folder. 
