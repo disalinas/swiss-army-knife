@@ -323,6 +323,8 @@ echo If you allreaday installed a previous version of this addon
 echo and have used allready blurays with the addon you can answer no.
 echo This section do only install software to install succcessfull 
 echo makekmkv.The software makemkv itself is not installed.
+echo If you would like to transcode a dvd to mkv you have to answer 
+echo yes.
 echo
 echo -n "Do you want to use bluray-discs inside the addon (y/n)"
 read ans
@@ -575,6 +577,8 @@ if [ $? -eq 1 ] ; then
    clear
    echo The command makemkvcon was not found on your system.
    echo Should makemkv 1.5.8 to be installed ?
+   echo Even if there is no bluray installed you have to answer
+   echo yes if you plan to transcode a dvd to mkv.
    echo
    echo -n "Do you want to install makemkv (y/n)"
    read ans
@@ -781,6 +785,8 @@ echo - If you did not created the directorys you have to create them
 echo   now and to change all directorys inside the settings.
 echo - Please remember that no "spaces" inside the directory-names 
 echo   are allowed. 
+echo - Please be sure that the user has full write permissions to all
+echo   folders !
 echo
 echo Have fun with this addon and I wish you happy ripping.
 echo Feel free to send me a few notes about your expirience with
