@@ -2097,7 +2097,7 @@ def OSDVDtoMKV():
     # Prepare command string
 
     dvd_command = ""
-    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2] + " " + __exec_dvd__[3]
+    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2] + " " + str( __exec_dvd__[3])
 
     if (__verbose__ == 'true'):
         OSlog("final :" + dvd_command)

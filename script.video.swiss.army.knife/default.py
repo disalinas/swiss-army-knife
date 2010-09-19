@@ -426,7 +426,8 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                                       execlist.append(savedir)
                                       execlist.append(volname)
                                       execlist.append(track)
-
+                                      OSDVDAdd(execlist)
+       
                                       execstate =  OSDVDtoMKV()
                                       if (execstate == 0):
                                           GUIInfo(2,__language__(33209))
