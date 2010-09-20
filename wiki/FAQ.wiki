@@ -162,10 +162,11 @@
 -----------------------------------------------------------------------------------------
 ===                            ====
  * Yes. Inside the script-settings is a radio-button to enable / disable all bluray functions.
+ * If you would like to transcode a dvd to mkv you have to activate the bluray-part.
 
 ===                            ====
 ===                            ====
-===Is this script setup.sh running only on Ubuntu based systems ?==
+===Is this script setup.sh running only on Ubuntu 10.04 LTS based systems ?==
 -----------------------------------------------------------------------------------------
 ===                            ==== 
   * Yes.But it should be easy to change it for a system other than Ubuntu.
