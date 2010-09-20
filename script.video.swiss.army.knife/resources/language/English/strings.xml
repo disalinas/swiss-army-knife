@@ -89,8 +89,9 @@
         <string id="32140">Start Master</string>
         <string id="32141">Start Slave [dvd to master]</string>
         <string id="32142">Start Slave [bluray to master]</string>
-        <string id="32143">Start Slave [copy rip to master]</string>
+        <string id="32143">Reserved</string>
         <string id="32144">Back</string>
+        <string id="32145">IP-Adress of the Master</string>
 
         <!--                    --> 
         <!-- Progress-bar text  -->
@@ -225,5 +226,7 @@
         <string id="33326">Burning and Transcode directory not found or writeable !</string> 
         <string id="33327">Run setup.sh to create ssh-dir !</string>  
         <string id="33328">This trancoding features needs makemkv !</string>        
- 
+        <string id="33329">No connection to network-master possible !</string>
+        <string id="33330">No connection fromm a client was made !</string>
+               
  </strings>
