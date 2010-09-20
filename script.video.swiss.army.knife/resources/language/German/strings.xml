@@ -99,30 +99,30 @@
         <!-- They are only used --> 
         <!-- inside the scripts --> 
         
-        <string id="32150">transcode bluray to mkv</string>
-        <string id="32151">copy subtitle</string>
-        <string id="32152">transcoding pass 1</string>
-        <string id="32153">transcoding pass 2</string>
-        <string id="32154">copy dvd to iso-file</string>
-        <string id="32155">resque-copy dvd to iso-file</string>
-        <string id="32156">copy all vobs to harddisk</string>
-        <string id="32157">copy from slave</string>
-        <string id="32158">copy to master</string>
-        <string id="32159">transcode dvd to mkv</string>
-        <string id="32160">transcoding pass 1/1 for mp4</string>
+        <string id="32150">Transcode Bluray zu MKV</string>
+        <string id="32151">Kopiere Untertitel</string>
+        <string id="32152">Transcode Durchgang 1</string>
+        <string id="32153">Transcode Druchgang 2</string>
+        <string id="32154">Kopiere DVD als ISO-Datei</string>
+        <string id="32155">Resque-copy DVD als ISO-Datei</string>
+        <string id="32156">Kopiere alle vobs zur HD</string>
+        <string id="32157">Kopiere vom Slave</string>
+        <string id="32158">Kopiere zum Master</string>
+        <string id="32159">Transcode DVD zu MKV</string>
+        <string id="32160">Transcode Durchgang 1/1 für mp4</string>
 
         <!--                --> 
         <!-- Joblist Window -->
         <!--                -->
         
-        <string id="32170">Progress-bar</string>
-        <string id="32171">Kill job </string>
-        <string id="32172">Remove lock-file</string>     
-        <string id="32173">Back</string>
-        <string id="32174">Stage : </string>
+        <string id="32170">Fortschritts-Balken</string>
+        <string id="32171">Kille aktiven Auftrag</string>
+        <string id="32172">Lock-Datei löschen</string>     
+        <string id="32173">Verlassen</string>
+        <string id="32174">Durchgang : </string>
         <string id="32175"> </string>
         <string id="32176"> </string>
-        <string id="32177">There are no active jobs</string>
+        <string id="32177">Keine aktiven Augträge gefunden</string>
 
 
         <!--                  --> 
@@ -130,103 +130,103 @@
         <!--                  -->
          
         <string id="32180">DVD -> MPEG2</string>
-        <string id="32181">DVD -> ISO for burning</string>
+        <string id="32181">DVD -> ISO zum Brennen</string>
         <string id="32182">DVD -> MKV</string>
         <string id="32183">DVD -> h264 low-profile</string>
         <string id="32184">DVD -> Iphone</string>
         <string id="32185">DVD -> PSP</string>
-        <string id="32186">Back</string>
+        <string id="32186">Verlassen</string>
  
         <!--                  --> 
         <!-- User-Scripts     -->
         <!--                  -->
 
-        <string id="32190">Not available</string>
-        <string id="32191">Not available</string>
-        <string id="32192">Not available</string>
-        <string id="32193">Not available</string>
-        <string id="32194">Not available</string>
-        <string id="32195">Not available</string>
-        <string id="32196">Not available</string>
-        <string id="32197">Not available</string>
-        <string id="32198">Not available</string>
-        <string id="32199">Back</string>
+        <string id="32190">Nicht verfügbar</string>
+        <string id="32191">Nicht verfügbar</string>
+        <string id="32192">Nicht verfügbar</string>
+        <string id="32193">Nicht verfügbar</string>
+        <string id="32194">Nicht verfügbar</string>
+        <string id="32195">Nicht verfügbar</string>
+        <string id="32196">Nicht verfügbar</string>
+        <string id="32197">Nicht verfügbar</string>
+        <string id="32198">Nicht verfügbar</string>
+        <string id="32199">Verlassen</string>
 
         <!--               --> 
         <!-- Info          -->
         <!--               -->
 
-        <string id="33201">info-box</string>
-        <string id="33202">Please select Bluray-track to export</string>
-        <string id="33203">Bluray transcoding startet successfull</string>
-        <string id="33204">Bluray transcoding could not be started</string> 
-        <string id="33205">This feature comes in a later release</string>
-        <string id="33206">Job canceld by user</string>
-        <string id="33207">Please select DVD-track to export</string> 
-        <string id="33208">DVD transcoding startet successfull</string>
-        <string id="33209">DVD transcoding could not be started</string> 
-        <string id="33210">DVD iso copy startet successfull</string>
-        <string id="33211">DVD iso copy could not be started</string> 
-        <string id="33212">Please enter password for Expert-Mode</string> 
-        <string id="33213">The password was not correct</string>  
+        <string id="33201">Info-Fenster</string>
+        <string id="33202">Bitte den Bluray-Track zum exportieren auswählen</string>
+        <string id="33203">Bluray Transcoding erfolgreich gestartet</string>
+        <string id="33204">Bluray transcoding konnte nicht gestarted werden</string> 
+        <string id="33205">Kommz in einem späteren Release</string>
+        <string id="33206">Auftrag gelöscht durch den Benutzer</string>
+        <string id="33207">Bitte DVD-Track zum exportieren auswählen</string> 
+        <string id="33208">DVD transcoding efolgreich gestartet</string>
+        <string id="33209">DVD transcoding konnte nicht gestartet werden</string> 
+        <string id="33210">DVD ISO Kopie erfogreich gestartet</string>
+        <string id="33211">DVD iso Kopier konnte nicht gestartet werden</string> 
+        <string id="33212">Bitte Passwort für den Experten-Modus eingeben</string> 
+        <string id="33213">Das eingegebene Passwort war falsch</string>  
         <string id="33214">INFO:</string>  
-        <string id="33215">WARNING:</string>
-        <string id="33216">ERROR:</string>
+        <string id="33215">WARNUNG:</string>
+        <string id="33216">FEHLER:</string>
         <string id="33217"> </string>
-        <string id="33218">ssh-test connection was successfull</string>
-        <string id="33219">ssh-test connection failed</string>
-        <string id="33220">Please select directory to save </string>
-        <string id="33221">Direcory-name contains spaces</string>
-        <string id="33222">Selected direcory is not writeable</string>
-        <string id="33223">Export-name without extension</string>
-        <string id="33224">Export-name contains not valid chars</string> 
-        <string id="33225">You must confirm a name</string> 
-        <string id="33226">Please select primary audio-language</string>
-        <string id="33227">Would you like to add a secound audio-language ?</string> 
-        <string id="33228">Would you like to use subtitles ?</string>  
-        <string id="33229">Please select secoundary audio-language</string> 
-        <string id="33230">Please select subtitle-track to use</string> 
-        <string id="33231">DVD vobcopy startet successfull</string>
-        <string id="33232">DVD vobcopy could not be started</string> 
-        <string id="33233">Active Job finished successfull</string> 
-        <string id="33234">Please insert empty single-layer-dvd</string> 
-        <string id="33235">Please insert empty dual-layer-dvd</string>
-        <string id="33236">This menu is only visible if there are any user-functions</string>
+        <string id="33218">SSH-Test war erfolgreich</string>
+        <string id="33219">SSH-Test war nicht erolgreich</string>
+        <string id="33220">Bitte Verzeichniss zum speichern auswählen</string>
+        <string id="33221">Verzecihniss-Name enthält Leerschläge</string>
+        <string id="33222">Ausgewähltes Verzeichniss ist nicht beschreibbar</string>
+        <string id="33223">Export-Name ohne eine Dateierweiterung</string>
+        <string id="33224">Export-Name enthält unzulässige Charakter</string> 
+        <string id="33225">Sie müssen einen Namen auswählen</string> 
+        <string id="33226">Bitte die erste Standard Audio-Sprache angeben</string>
+        <string id="33227">Möchten Sie eine zweite Audio-Sprache verwenden ?</string> 
+        <string id="33228">Möchten Sie Untertitel verwenden ?</string>  
+        <string id="33229">Bitte die zweite Audio-Sprache angeben</string> 
+        <string id="33230">Bitten wählen Sie den Untertitel zur Benutzung</string> 
+        <string id="33231">DVD vobcopy erfolgreich  gestartet</string>
+        <string id="33232">DVD vobcopy konnte nicht gestartet werden</string> 
+        <string id="33233">Aktiver Auftrag erfolgreich gelöscht</string> 
+        <string id="33234">Bitte leere Single-Layer-DVD einlegen</string> 
+        <string id="33235">Bitte leere Dual-Layer DVD einlegen</string>
+        <string id="33236">Dieses Menü ist nur sichtbar bei vorhandenen User-Funktionen</string>
         
         <!--               -->
         <!-- Error         -->
         <!--               -->
         
-        <string id="33300">Prior to run this addon setup.sh must be executed</string> 
-        <string id="33301">Inserted disc is not a Bluray-Disc</string>
-        <string id="33302">Timeout t1 to short :  media/state could not be openend</string>
-        <string id="33303">Bluray-functions are disabled.</string>
-        <string id="33304">Timeout t3 to short : blueray-chapters</string>
-        <string id="33305">ISO-directory not found or writeable !</string>
-        <string id="33306">DVD-directory not found or writeable !</string> 
-        <string id="33307">Bluray-directory not found or writeable !</string>
-        <string id="33308">Device is locked by a active job !</string>
-        <string id="33309">Device is not ready !</string>
-        <string id="33310">Job could no be killed</string>  
-        <string id="33311">Inserted disc is not a DVD-Disc</string>    
-        <string id="33312">Timeout t2 to short : chapters dvd</string>  
-        <string id="33313">Problem with generated audio-tracklist</string> 
-        <string id="33314">Problem with generated subtitle-tracklist</string>    
-        <string id="33315">Licence-key for makemkv expired</string>  
-        <string id="33316">Configured ssh-user is not current user</string>  
-        <string id="33317">The inserted dvd is not mounted</string> 
-        <string id="33318">Vobcopy-directory not found or writeable !</string>
-        <string id="33319">Network master directory not found or writeable !</string>
-        <string id="33320">Network-functions are disabled.</string>
-        <string id="33321">Local ssh server is not configured properly</string>
-        <string id="33322">User-functions are disabled</string>
-        <string id="33323">Error inside the active job</string>
-        <string id="33324">No connection to master possible</string>
-        <string id="33325">Burning and Transcode functions are disabled</string> 
+        <string id="33300">Vor dem ausführen des Addons muss setup.sh ausgeführt</string> 
+        <string id="33301">Eingelegte Disk ist keine Bluray</string>
+        <string id="33302">Timeout t1 :  media/state konnte nicht geöffnet werden</string>
+        <string id="33303">Bluray-Funktionen sind deaktiviert.</string>
+        <string id="33304">Timeout t3 : Blueray-Kapitel</string>
+        <string id="33305">ISO-Verzeichniss nicht gefunden oder beschreibbar !</string>
+        <string id="33306">DVD-Verzeichniss nicht gefunden oder beschreibbar !</string> 
+        <string id="33307">Bluray-Verzeichniss gefunden oder beschreibbar !</string>
+        <string id="33308">Gerät ist blockiert durch einen aktiven Auftrag !</string>
+        <string id="33309">Gerät ist nicht bereit !</string>
+        <string id="33310">Auftrag konnte nicht gelöscht werden</string>  
+        <string id="33311">Eingelegte Disk ist keine DVD</string>    
+        <string id="33312">Timeout t2 : Kaptitel DVD</string>  
+        <string id="33313">Problem mit generierter Audio-Trackliste</string> 
+        <string id="33314">Problem mit generierter Untertitel-Trackliste</string>    
+        <string id="33315">Lizenz-Schlüssen für makemkv abgelaufen</string>  
+        <string id="33316">Konfigurierter SSH-Benutzer ist nicht aktueller Benutzer</string>  
+        <string id="33317">Die eingelegte DVD ist nicht gemounted</string> 
+        <string id="33318">Vobcopy-Verzeichniss nicht gefunden oder beschreibbar !</string>
+        <string id="33319">Netzwerk Master Verzeichnis nicht gefunden oder beschreibbar !</string>
+        <string id="33320">Network-Funktions sind deaktiviert.</string>
+        <string id="33321">Lokaler SSH-Server ist falsch konfiguriert</string>
+        <string id="33322">Benutzer-Funktionen sind deaktiviert</string>
+        <string id="33323">Fehler innerhalb des aktiven Aufrags</string>
+        <string id="33324">--</string>
+        <string id="33325">Brenn und Transcode Funktionen sind deaktiviert</string> 
         <string id="33326">Burning and Transcode directory not found or writeable !</string> 
-        <string id="33327">Run setup.sh to create ssh-dir !</string>  
-        <string id="33328">This trancoding features needs makemkv !</string>
-        <string id="33329">No connection to network-master possible !</string>
-        <string id="33330">No connection fromm a client was made !</string>       
+        <string id="33327">Ausführen von setup.sh um SSH-Verzeichniss zu erzeugen !</string>  
+        <string id="33328">Diese Trancode-Funktion benötigt makemkv !</string>
+        <string id="33329">Keine Verbindung zum Netzwerk Master möglich !</string>
+        <string id="33330">Keine Verbindung durch eine Client erstellt !</string>       
  
  </strings>
