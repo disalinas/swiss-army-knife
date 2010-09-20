@@ -12,9 +12,11 @@
     <extension point="xbmc.addon.metadata">
         <platform>linux</platform>
         <licence>gpl</licence>
-	<minversion>31953</minversion>
+	<minversion>33953</minversion>
         <summary>Collection of tools to ripping and transcoding videos.</summary>
-        <description>This collection of tools operates as a GUI for ripping with dd / HandBrake and Makemkv.This script is may not allowed in some countrys.Neither the author of this script or the creators of xbmc are responsible if you break a law by ripping or transcode any dvd or bluray inside your current country.</description>
-    </extension>
+        <summary lang="de">Kollektion von Tools zum rippen und transkodieren von Videos.</description>
+        <description>This collection of tools operates as a GUI for ripping with dd / HandBrake und Makemkv.This script is may not allowed in some countrys.Neither the author of this script or the creators of xbmc are responsible if you break a law by ripping or transcode any dvd or bluray inside your current country.</description>
+        <description lang="de">Dies Kolleketion von Tools operieren als GUI für zum rippen mit dd dd / HandBrake und Makemkv.Dieses Skript ist möglicherweise in einigen Ländern nicht erlaubt. Die Benutzung erfolgt auf eigene Gefahr.</description>
+</extension>
 </addon>
 

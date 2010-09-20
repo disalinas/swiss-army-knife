@@ -126,6 +126,7 @@ Changes:
 - Integrate dvd-mkv.sh into addon
 - Added dvd-low.sh to svn
 - First translation folder added German
+- Translated germans strings.xml and descriptions for addon.xml
 
 Fixes:
 
