@@ -275,6 +275,22 @@ if [ $ans == "y" ] ; then
       mkdir /dvdrip/transcode
       chown -R $1:$1 /dvdrip/transcode
    fi
+
+   if [ ! -e /dvdrip/portable ] ; then
+      mkdir /dvdrip/portable
+      chown -R $1:$1 /dvdrip/portable
+   fi
+
+   if [ ! -e /dvdrip/portable/ip ] ; then
+      mkdir /dvdrip/portable/ip
+      chown -R $1:$1 /dvdrip/portable/ip
+   fi
+
+   if [ ! -e /dvdrip/portable/psp ] ; then
+      mkdir /dvdrip/portable/psp
+      chown -R $1:$1 /dvdrip/portable/psp
+   fi
+
 fi
 
 if [ $ans == "n" ] ; then

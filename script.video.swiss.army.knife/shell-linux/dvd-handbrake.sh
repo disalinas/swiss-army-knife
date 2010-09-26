@@ -97,7 +97,7 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo Track 1 will be extracted
   echo Audio-track 0 will be extracted
   echo Audio-track 1 will be extracted
-  echo Subtitle-track 0 will be extracted 
+  echo Subtitle-track 0 will be extracted
   echo
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------
@@ -178,6 +178,9 @@ done
 ####################################################################################
 if [ $# -eq 5 ]; then
     AUDIO1=$(($5 +  1))
+
+    echo
+    echo INFO transcode job with 1 audio-track
 
     echo $1 > $JOBFILE
     echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
@@ -296,6 +299,9 @@ if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-a ]] ; then
        AUDIO1=$(($5 +  1))
        AUDIO2=$(($7 +  1))
+
+       echo
+       echo INFO transcode job with 2 audio-tracks
 
        echo $1 > $JOBFILE
        echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
@@ -417,6 +423,9 @@ if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-s ]] ; then
        AUDIO1=$(($5 + 1))
 
+       echo
+       echo INFO transcode job with 1 audio-track and 1 subtitle
+
        echo $1 > $JOBFILE
        echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
 
@@ -511,8 +520,8 @@ if [ $# -eq 7 ]; then
        while [ $LOOP -eq '1'  ];
        do
          echo -n .
-         PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         PASS3=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+         PASS2=$(strings $OUT_TRANS | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+         PASS3=$(strings $OUT_TRANS | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
          if [ -n "$PASS2" ] ; then
             echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS2 -eq 98 ] ; then
@@ -520,7 +529,7 @@ if [ $# -eq 7 ]; then
                LOOPP2=0
                while [ $LOOPP2 -eq '0' ];
                do
-                  PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+                  PASS2=$(strings $OUT_TRANS | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
                   echo -n .
                   if [ -n "$PASS2" ] ; then
                      LOOPP2=1
@@ -588,6 +597,9 @@ fi
 if [ $# -eq 9 ]; then
      AUDIO1=$(($5 +  1))
      AUDIO2=$(($7 +  1))
+
+     echo
+     echo INFO transcode job with 2 audio-tracks and 1 subtitle
 
      echo $1 > $JOBFILE
      echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
@@ -664,33 +676,33 @@ if [ $# -eq 9 ]; then
      -a $AUDIO1,$AUDIO2 -A "Audio-1","Audio-2" -B auto,160 -R auto,auto -6 auto,dpl2 -E ac3,acc &
      ) > $OUT_TRANS 2>&1 &
 
-     echo INFO HandBrakeCLI command executed
-     echo
+       echo INFO HandBrakeCLI command executed
+       echo
 
-     echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-     ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-     PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+       sleep 10
 
-     sleep 10
+       echo
+       echo INFO processing data pass 2 of 3
+       echo
 
-     echo
-     echo INFO processing data pass 2 of 3
-     echo
+       echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+       ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
 
-     LOOP=1
-     while [ $LOOP -eq '1'  ];
-     do
-       echo -n .
-       PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-       PASS3=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-       if [ -n "$PASS2" ] ; then
-          echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress 
-          if [ $PASS2 -eq 99 ] ; then
+       LOOP=1
+       while [ $LOOP -eq '1'  ];
+       do
+         echo -n .
+         PASS2=$(strings $OUT_TRANS | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+         PASS3=$(strings $OUT_TRANS | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+         if [ -n "$PASS2" ] ; then
+            echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+            if [ $PASS2 -eq 98 ] ; then
 
                LOOPP2=0
                while [ $LOOPP2 -eq '0' ];
                do
-                  PASS2=$(strings $OUT_TRANS | tail -1 | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+                  PASS2=$(strings $OUT_TRANS | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
                   echo -n .
                   if [ -n "$PASS2" ] ; then
                      LOOPP2=1
@@ -709,13 +721,14 @@ if [ $# -eq 9 ]; then
                echo
                echo INFO processing data pass 3 of 3
                echo
+
                echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
                echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
-          fi
-       fi
-       if [ -n "$PASS3" ] ; then
-          echo $PASS3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-          if [ $PASS3 -eq 98 ] ; then
+            fi
+         fi
+         if [ -n "$PASS3" ] ; then
+            echo $PASS3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+            if [ $PASS3 -eq 98 ] ; then
 
                LOOPP2=0
                while [ $LOOPP2 -eq '0' ];
@@ -739,11 +752,12 @@ if [ $# -eq 9 ]; then
                echo
                echo processing data done
                LOOP=0
-          fi
-       fi
-       sleep 0.7
-     done
+            fi
+         fi
+         sleep 0.7
+       done
 fi
+
 
 # Delete jobfile
 

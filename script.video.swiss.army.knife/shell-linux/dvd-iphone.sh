@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# scriptname : dvd-low.sh                                 #
+# scriptname : dvd-iphone.sh                              #
 ###########################################################
 # This script is part of the addon swiss-army-knife for   #
 # xbmc and is licenced under the gpl-licence              #
@@ -18,7 +18,7 @@
 # optional $8,9 -s subtitle-nummer        (0-x)   -s 0    #
 #                                                         #
 # description :                                           #
-# generates a h264 low-profile container of a dvd         #
+# generates a h264 container of a dvd for iPhone          #
 ###########################################################
 
 if [ "$UID" == 0 ] ; then
@@ -59,7 +59,7 @@ echo ---------------------------------------------------------------------------
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/handbrake-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 JOBERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR"
-OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd-transcode.log"
+OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/iphone-transcode.log"
 
 # Define the counting commands we expect inside the script
 
@@ -71,7 +71,7 @@ E_BADARGS=1
 E_TOOLNOTF=50
 
 if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: dvd-handbrake.sh p1 p2 p3 p4 p5"
+  echo "Usage: dvd-iphone.sh p1 p2 p3 p4 p5"
   echo "                                      "
   echo "[p1] device or complet path to ripfile"
   echo "[p2] directory for rip"
@@ -85,11 +85,11 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo "p6,7  second audio-track   -a 3 [0-X]"
   echo "p8,9  subtitle             -s 0 [0-X]"
   echo
-  echo "dvd-low.sh was called with wrong arguments"
+  echo "dvd-iphone.sh was called with wrong arguments"
   echo
   echo example :
   echo
-  echo ./dvd-low.sh /dev/sr0 /dvdrip/dvd stargate 1 0 -a 1 -s 0
+  echo ./dvd-iphone.sh /dev/sr0 /dvdrip/dvd stargate 1 0 -a 1 -s 0
   echo
   echo would use device /dev/sr0
   echo store the file insie /dvdrip/dvd
@@ -194,7 +194,8 @@ if [ $# -eq 5 ]; then
     echo INFO starting HandBrakeCLI
 
     (
-     HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -f mp4 -m -q 1.0 -a $AUDIO1 -E ac3 &
+     HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -e x264 -q 20.0 -a $AUDIO1 -E faac -B 128 -6 dpl2 -R 48 -D 0.0 -f mp4 \
+     -X 480 -m -x cabac=0:ref=2:me=umh:bframes=0:subme=6:8x8dct=0:trellis=0 &
     ) > $OUT_TRANS 2>&1 &
 
     echo INFO HandBrakeCLI command executed
@@ -277,6 +278,9 @@ if [ $# -eq 7 ]; then
        echo INFO starting HandBrakeCLI
 
        (
+        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -e x264 -q 20.0 -a $AUDIO1,$AUDIO2 -E faac,faac -B 128 -6 dpl2 -R 48 -D 0.0 -f mp4 \
+        -X 480 -m -x cabac=0:ref=2:me=umh:bframes=0:subme=6:8x8dct=0:trellis=0 &
+
         HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -f mp4 -m -q 1.0 -A "Audio-1","Audio-2" -a $AUDIO1,$AUDIO2 E ac3,acc &
        ) > $OUT_TRANS 2>&1 &
 
@@ -419,7 +423,8 @@ if [ $# -eq 7 ]; then
        echo INFO starting HandBrakeCLI
 
        (
-        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -f mp4 -m -q 1.0 -a $AUDIO1 -E ac3 &
+        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -e x264 -q 20.0 -a $AUDIO1 -E faac -B 128 -6 dpl2 -R 48 -D 0.0 -f mp4 \
+        -X 480 -m -x cabac=0:ref=2:me=umh:bframes=0:subme=6:8x8dct=0:trellis=0 &
        ) > $OUT_TRANS 2>&1 &
 
        echo INFO HandBrakeCLI command executed
@@ -559,7 +564,8 @@ if [ $# -eq 9 ]; then
        echo INFO starting HandBrakeCLI
 
        (
-        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -f mp4 -m -q 1.0 -A "Audio-1","Audio-2" -a $AUDIO1,$AUDIO2 E ac3,acc &
+        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -e x264 -q 20.0 -a $AUDIO1,$AUDIO2 -E faac,faac -B 128 -6 dpl2 -R 48 -D 0.0 -f mp4 \
+        -X 480 -m -x cabac=0:ref=2:me=umh:bframes=0:subme=6:8x8dct=0:trellis=0 &
        ) > $OUT_TRANS 2>&1 &
 
        echo INFO HandBrakeCLI command executed
@@ -626,4 +632,3 @@ echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 
 exit
-
