@@ -89,7 +89,7 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   echo
   echo example :
   echo
-  echo ./dvd-iphone.sh /dev/sr0 /dvdrip/dvd stargate 1 0 -a 1 -s 0
+  echo ./dvd-iphone.sh /dev/sr0 /dvdrip/portable/ip stargate 1 0 -a 1 -s 0
   echo
   echo would use device /dev/sr0
   echo store the file insie /dvdrip/dvd
@@ -278,10 +278,8 @@ if [ $# -eq 7 ]; then
        echo INFO starting HandBrakeCLI
 
        (
-        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -e x264 -q 20.0 -a $AUDIO1,$AUDIO2 -E faac,faac -B 128 -6 dpl2 -R 48 -D 0.0 -f mp4 \
+        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -e x264 -q 20.0  -A "Audio-1","Audio-2" -a $AUDIO1,$AUDIO2 -E faac,faac -B 128 -6 dpl2 -R 48 -D 0.0 -f mp4 \
         -X 480 -m -x cabac=0:ref=2:me=umh:bframes=0:subme=6:8x8dct=0:trellis=0 &
-
-        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -f mp4 -m -q 1.0 -A "Audio-1","Audio-2" -a $AUDIO1,$AUDIO2 E ac3,acc &
        ) > $OUT_TRANS 2>&1 &
 
        echo INFO HandBrakeCLI command executed
@@ -564,7 +562,7 @@ if [ $# -eq 9 ]; then
        echo INFO starting HandBrakeCLI
 
        (
-        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -e x264 -q 20.0 -a $AUDIO1,$AUDIO2 -E faac,faac -B 128 -6 dpl2 -R 48 -D 0.0 -f mp4 \
+        HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -e x264 -q 20.0  -A "Audio-1","Audio-2" -a $AUDIO1,$AUDIO2 -E faac,faac -B 128 -6 dpl2 -R 48 -D 0.0 -f mp4 \
         -X 480 -m -x cabac=0:ref=2:me=umh:bframes=0:subme=6:8x8dct=0:trellis=0 &
        ) > $OUT_TRANS 2>&1 &
 
