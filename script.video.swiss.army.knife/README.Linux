@@ -75,9 +75,9 @@ directory.
 5.) Upgrade from a previous version 
 
 Please do remove any previous version of the addon including the addon-directory
-inside user-data. As long the addon remains alpha a lot of changes do occur. 
+inside user-data. As long the addon remains alpha or beta a lot of changes do occur. 
 
-Very-Import as long this Addon is Alpha !!!!!
+Very-Import as long this Addon is only ALPHA or BETA !!!!!
 
 ALLWAYS RUN THE SETUP PROGRAMM INSIDE THE LINUX-SHELL FOLDER !!!
 ALLWAYS REMOVE THE ADDON-FILES INCLUDING ADDON-DIRECTORY PRIOR 
@@ -152,7 +152,7 @@ a debian based system, or your system is to old, you have to compile
 this 2 packages for yourself. The full-source of the 2 packages  is provided 
 on the project-page to minimize the download-size.
 
-http://swiss-army-knife.googlecode.com/files/makemkv_1.5.8.src.tar.gz
+http://swiss-army-knife.googlecode.com/files/makemkv_1.6.0.src.tar.gz
 http://swiss-army-knife.googlecode.com/files/Handbrake-0.9.4-src.tar.gz
 
 The next step to running this addon is to complete the setup with valid 

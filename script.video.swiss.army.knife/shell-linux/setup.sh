@@ -171,13 +171,14 @@ fi
 
 clear
 echo
-echo Would you like to create the default directorys 
+echo Would you like to create the default directorys
 echo inside /dvdrip and the default user-script directory
 echo inside the home-folder of /home/$1
-echo All directorys inside the addon-directorys itself are 
-echo are created as well.
-echo If you answer "no" you have to create all directorys 
+echo All directorys inside the addon-directorys itself are
+echo created as well.
+echo If you answer "no" you have to create all directorys
 echo by yourself and the shell-scripts may not working.
+echo You should realy let this script create them.
 echo
 echo -n "Should this setup script create all needed directorys ? (y/n)"
 read ans
@@ -321,9 +322,9 @@ echo
 echo -----------------------------------------------------------
 echo If you allreaday installed a previous version of this addon
 echo and have used allready blurays with the addon you can answer no.
-echo This section do only install software to install succcessfull 
+echo This section do only install software to install succcessfull
 echo makekmkv.The software makemkv itself is not installed.
-echo If you would like to transcode a dvd to mkv you have to answer 
+echo If you would like to transcode a dvd to mkv you have to answer
 echo yes.
 echo
 echo -n "Do you want to use bluray-discs inside the addon (y/n)"
@@ -576,7 +577,7 @@ which makemkvcon >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
    echo The command makemkvcon was not found on your system.
-   echo Should makemkv 1.5.8 to be installed ?
+   echo Should makemkv 1.6.0 to be installed ?
    echo Even if there is no bluray installed you have to answer
    echo yes if you plan to transcode a dvd to mkv.
    echo
@@ -590,12 +591,18 @@ if [ $? -eq 1 ] ; then
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-v1.5.8-32.tar.gz
-         tar xvzf makemkv-v1.5.8-32.tar.gz
-         dpkg -i makemkv-v1.5.8-bin_20100822-1_i386.deb
+
+         # Download release 1.6.0 from project url for 32 bit 
+
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32.tar.gz
+         tar xvzf makemkv-swiss-army-knife-32.tar.gz    
+ 
+         # Install oss part for makemkv 
+        
+         dpkg -i makemkv-v1.6.0-oss_20100919-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.5.8-bin_20100818-1_i386.deb
+            echo the installation of makemkv-v1.6.0-oss_20100919-1_i386.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -603,10 +610,13 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-         dpkg -i makemkv-v1.5.8-oss_20100822-1_i386.deb
+
+         # Install binary part for makemkv 
+
+         dpkg -i makemkv-v1.6.0-bin_20100919-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.5.8-oss_20100818-1_i386.deb
+            echo the installation of makemkv-v1.6.0-bin_20100919-1_i386.de
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -614,19 +624,28 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-         rm makemkv-v1.5.8-32.tar.gz
+
+         # delete downloaded archive
+
+         rm makemkv-swiss-army-knife-32.tar.gz
       else
          clear
          echo
          echo download software for 64 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-1.5.8-64.tar.gz
-         tar xvzf makemkv-1.5.8-64.tar.gz
-         dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
+
+         # Download release 1.6.0 from project url for 64 bit 
+         
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64.tar.gz
+         tar xvzf makemkv-swiss-army-knife-64.tar.gz  
+
+         # Install oss part for makemkv  
+
+         dpkg -i makemkv-v1.6.0-oss_20100926-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.5.8-bin_20100819-1_amd64.deb
+            echo the installation of makemkv-v1.6.0-oss_20100926-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -634,10 +653,13 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-         dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
+          
+         # Install bin part for makemkv   
+
+         dpkg -i makemkv-v1.6.1-bin_20100926-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.5.8-oss_20100819-1_amd64.deb
+            echo the installation of makemkv-v1.6.1-bin_20100926-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -645,7 +667,7 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-         rm makemkv-1.5.8-64.tar.gz
+         rm makemkv-swiss-army-knife-64.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -654,6 +676,7 @@ if [ $? -eq 1 ] ; then
       echo -----------------------------------------------------------
       echo makemkv is not installed.
       echo You can not transcode a bluray as long this tool is not installed.
+      echo It is also not possible to transcode a dvd to mkv.
       echo If you decide to transcode blurays pleas do run this tool again.
       echo
       echo -n press any key to continue ..
@@ -665,12 +688,15 @@ else
    echo The command makemkvcon was found on your system.
    echo
    echo The release found on your system is : [$MINSTALLED]
-   echo The script can download and install : [v1.5.8]
+   echo The script can download and install : [v1.6.0]
    echo
-   echo Should makemkv [v1.5.8] be installed over
+   echo Should makemkv [v1.6.0] be installed over
    echo the existing release on your system ?
    echo
    echo Warning : This may make makemkv unusable ...
+   echo It is may more save to remove the old release
+   echo by the command dpkg -r or do not touch the
+   echo the current installed makekmkv release [$MINSTALLED] 
    echo
    echo -n "Do you want to update makemkv (y/n)"
    read ans
@@ -682,12 +708,15 @@ else
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-v1.5.8-32.tar.gz
-         tar xvzf makemkv-v1.5.8-32.tar.gz
-         dpkg -i makemkv-v1.5.8-bin_20100822-1_i386.deb
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32.tar.gz
+         tar xvzf makemkv-swiss-army-knife-32.tar.gz
+
+         # Install oss part for makemkv           
+
+         dpkg -i makemkv-v1.6.0-oss_20100919-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.5.8-bin_20100818-1_i386.deb
+            echo the installation of makemkv-v1.6.0-oss_20100919-1_i386.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -695,10 +724,13 @@ else
             read any
             exit $E_DPKG
          fi
-         dpkg -i makemkv-v1.5.8-oss_20100822-1_i386.deb
+
+         # Install bin part for makemkv   
+
+         dpkg -i makemkv-v1.6.0-bin_20100919-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.5.8-oss_20100818-1_i386.deb
+            echo the installation of makemkv-v1.6.0-bin_20100919-1_i386.de
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -706,19 +738,22 @@ else
             read any
             exit $E_DPKG
          fi
-         rm makemkv-v1.5.8-32.tar.gz
+         rm makemkv-swiss-army-knife-32.tar.gz
       else
          clear
          echo
          echo download software for 64 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-1.5.8-64.tar.gz
-         tar xvzf makemkv-1.5.8-64.tar.gz
-         dpkg -i makemkv-v1.5.8-bin_20100819-1_amd64.deb
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64.tar.gz
+         tar xvzf makemkv-swiss-army-knife-64.tar.gz
+
+         # Install oss part for makemkv  
+
+         dpkg -i makemkv-v1.6.0-oss_20100926-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.5.8-bin_20100819-1_amd64.deb
+            echo the installation of makemkv-v1.6.0-oss_20100926-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -726,10 +761,13 @@ else
             read any
             exit $E_DPKG
          fi
-         dpkg -i makemkv-v1.5.8-oss_20100819-1_amd64.deb
+          
+         # Install bin part for makemkv   
+
+         dpkg -i makemkv-v1.6.1-bin_20100926-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.5.8-oss_20100819-1_amd64.deb
+            echo the installation of makemkv-v1.6.1-bin_20100926-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -737,14 +775,16 @@ else
             read any
             exit $E_DPKG
          fi
-         rm makemkv-1.5.8-64.tar.gz
+
+         rm makemkv-swiss-army-knife-64.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
       clear
       echo
       echo -----------------------------------------------------------
-      echo makemkv is not updated and remains as it is.
+      echo current makemkv is not updated to release 1.6.0  and remains 
+      echo as it is.
       echo
       echo -n press any key to continue ..
       read any
@@ -768,7 +808,7 @@ if [ ! -e 0.6.15-setup.done ] ; then
 fi
 
 if [ ! -e EULA-0.6.15 ] ; then
-   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.14 EULA-0.6.15
+   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.15 EULA-0.6.15
    chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.15
 fi
 
