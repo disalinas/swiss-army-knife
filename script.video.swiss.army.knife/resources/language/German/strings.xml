@@ -37,9 +37,11 @@
         <string id="32073">Standard Master Netzwerk Verzeichniss</string>  
         <string id="32074">Standard Timeout 1: Status-Datei</string>
         <string id="32075">Standard Timeout 2: Kapitel-DVD</string> 
-        <string id="32076">Standard Timeout 3: Kapitel-Bluray</string> 
-        <string id="32077">Standard Brenn bzw. Transcode Verzeichniss</string>      
- 
+        <string id="32076">Standard Timeout 3: Kapitel-Bluray</string>
+        <string id="32077">Standard Brenn bzw. Transcode Verzeichniss</string>  
+        <string id="32078">Standard Iphone-Transcode Verzeichniss</string>  
+        <string id="32079">Standard PSP-Transcode Verzeichniss</string>    
+    
 
         <!--              --> 
         <!-- Window-Names -->
