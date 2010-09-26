@@ -38,7 +38,9 @@
         <string id="32074">Default timeout 1: state-file</string>
         <string id="32075">Default timeout 2: chapter-dvd</string> 
         <string id="32076">Default timeout 3: chapter-bluray</string> 
-        <string id="32077">Default burning-transcode directory</string>      
+        <string id="32077">Default burning-transcode directory</string>  
+        <string id="32078">Default iphone-transcode directory</string>  
+        <string id="32079">Default psp-transcode directory</string>      
  
 
         <!--              --> 
