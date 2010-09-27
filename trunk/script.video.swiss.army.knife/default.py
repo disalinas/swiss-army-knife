@@ -41,7 +41,7 @@ __date__ 		= "09-06-2010"
 __version__ 		= "0.6.15"
 __code_name__           = "Godzilla"
 __XBMC_Revision__ 	= "31953"
-__index_config__        = 50 
+__index_config__        = 60 
  
 
 xbmc.output(__script__ + " Version: " + __version__  + "\n")
@@ -1201,6 +1201,27 @@ if __name__ == '__main__':
       
                            Enable_Startup_Addon = Enable_Startup_Addon + 1
                            __enable_burning__ == "false" 
+
+
+               # portable directory 1 
+
+               if (Enable_Startup_Addon == 0): 
+                  if (OSCheckContainerID(7)):
+                     Enable_Startup_Addon = Enable_Startup_Addon + 1
+                     GUIInfo(1,__language__(33331))
+                     if (__verbose__):
+                        GUIlog('read the file called README.Linux or shorter RTFM')
+
+
+
+               # portable directory 2 
+
+              if (Enable_Startup_Addon == 0): 
+                 if (OSCheckContainerID(7)):
+                    Enable_Startup_Addon = Enable_Startup_Addon + 1
+                    GUIInfo(1,__language__(33332))
+                    if (__verbose__):
+                       GUIlog('read the file called README.Linux or shorter RTFM')
 
 
                # Last Test prior to startup ....
