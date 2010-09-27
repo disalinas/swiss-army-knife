@@ -2105,7 +2105,7 @@ def OSDVDtoMKV():
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
-    # Execution of shell-script dvd6.sh inside shell-linux
+    # Execution of shell-script dvd9.sh inside shell-linux
 
     if (__verbose__ == 'true'):
         OSlog("dvd9.sh command ready to start")
@@ -2121,7 +2121,7 @@ def OSDVDtoMKV():
     OSRun("dvd9.sh " + dvd_command,True,False)
 
     if (__verbose__ == 'true'):
-        OSlog("dvd-vcopy.sh command executed")
+        OSlog("dvd-mkv.sh command executed")
 
     # Now we do loop until the PID-file exists
 
@@ -2153,3 +2153,241 @@ def OSDVDtoMKV():
     return 1
 
 #########################################################
+
+
+
+
+#########################################################
+# Function  : OSDVDtoLOW                                #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           handbrake-process not startet             #
+# 1           handbrake-process startet                 #
+#                                                       #
+#########################################################
+def OSDVDtoLOW():
+
+    global __configLinux__
+    global __exec_dvd__
+    global __verbose__
+
+    parameters = len(__exec_dvd__)
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # Execution of shell-script dvd10.sh inside shell-linux
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd10.sh command ready to start")
+
+    # Prepare command string
+
+    dvd_command = ""
+    x = 0
+    for number in __exec_dvd__:
+        dvd_command = dvd_command + " " + __exec_dvd__[x]
+        if (__verbose__ == 'true'):
+            OSlog("dvd-iphone.sh Transcode para: [" + str(x) +  "]  " + __exec_dvd__[x])
+        x = x + 1
+
+    if (__verbose__ == 'true'):
+        OSlog("final :" + dvd_command)
+
+    OSRun("dvd10.sh " + dvd_command,True,False)
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-low.sh command executed")
+
+    # Now we do loop until the PID-file exists
+
+    time.sleep(8)
+
+    WCycles = 5
+    Waitexit = True
+    while (Waitexit):
+           if (os.path.exists(__configLinux__[32])):
+               if (__verbose__ == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 30):
+               if (__verbose__ == 'true'):
+                   OSlog("Timeout reached 30 secounds for low-file  ...")
+                   OSlog("change timeout on line 2213 for low-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0
+
+    # Clean exec-array dvd
+
+    for index in range((parameters - 1),0):
+        del  __exec_dvd__[index]
+
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSDVDtoIphone                             #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           handbrake-process not startet             #
+# 1           handbrake-process startet                 #
+#                                                       #
+#########################################################
+def OSDVDtoIphone():
+
+    global __configLinux__
+    global __exec_dvd__
+    global __verbose__
+
+    parameters = len(__exec_dvd__)
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # Execution of shell-script dvd10.sh inside shell-linux
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd11.sh command ready to start")
+
+    # Prepare command string
+
+    dvd_command = ""
+    x = 0
+    for number in __exec_dvd__:
+        dvd_command = dvd_command + " " + __exec_dvd__[x]
+        if (__verbose__ == 'true'):
+            OSlog("dvd-iphone.sh Transcode para: [" + str(x) +  "]  " + __exec_dvd__[x])
+        x = x + 1
+
+    if (__verbose__ == 'true'):
+        OSlog("final :" + dvd_command)
+
+    OSRun("dvd11.sh " + dvd_command,True,False)
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-iphone.sh command executed")
+
+    # Now we do loop until the PID-file exists
+
+    time.sleep(8)
+
+    WCycles = 5
+    Waitexit = True
+    while (Waitexit):
+           if (os.path.exists(__configLinux__[32])):
+               if (__verbose__ == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 30):
+               if (__verbose__ == 'true'):
+                   OSlog("Timeout reached 30 secounds for iphone-file  ...")
+                   OSlog("change timeout on line 2287 for iphone-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0
+
+    # Clean exec-array dvd
+
+    for index in range((parameters - 1),0):
+        del  __exec_dvd__[index]
+
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+
+#########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSDVDtoPSP                                #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           handbrake-process not startet             #
+# 1           handbrake-process startet                 #
+#                                                       #
+#########################################################
+def OSDVDtoPSP():
+
+    global __configLinux__
+    global __exec_dvd__
+    global __verbose__
+
+    parameters = len(__exec_dvd__)
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # Execution of shell-script dvd10.sh inside shell-linux
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd12.sh command ready to start")
+
+    # Prepare command string
+
+    dvd_command = ""
+    x = 0
+    for number in __exec_dvd__:
+        dvd_command = dvd_command + " " + __exec_dvd__[x]
+        if (__verbose__ == 'true'):
+            OSlog("dvd-iphone.sh Transcode para: [" + str(x) +  "]  " + __exec_dvd__[x])
+        x = x + 1
+
+    if (__verbose__ == 'true'):
+        OSlog("final :" + dvd_command)
+
+    OSRun("dvd12.sh " + dvd_command,True,False)
+
+    if (__verbose__ == 'true'):
+        OSlog("dvd-psp.sh command executed")
+
+    # Now we do loop until the PID-file exists
+
+    time.sleep(8)
+
+    WCycles = 5
+    Waitexit = True
+    while (Waitexit):
+           if (os.path.exists(__configLinux__[32])):
+               if (__verbose__ == 'true'):
+                   OSlog("pid-file exist ...")
+               Waitexit = False
+           else:
+               WCycles = WCycles + 3
+               time.sleep(3)
+           if (WCycles >= 30):
+               if (__verbose__ == 'true'):
+                   OSlog("Timeout reached 30 secounds for psp-file  ...")
+                   OSlog("change timeout on line 2376 for psp-file  ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               return 0
+
+    # Clean exec-array dvd
+
+    for index in range((parameters - 1),0):
+        del  __exec_dvd__[index]
+
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    return 1
+
+#########################################################
+
+
