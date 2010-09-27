@@ -237,6 +237,7 @@ def GUIProgressbar(InfoText):
                    dp.close() 
                    exit = False
                    retval = 1
+                   time.sleep(3)
 
            dp.update(progress,OSGetStageText())
            if dp.iscanceled():
@@ -444,14 +445,347 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      GUIInfo(0,__language__(33328)) 
 
              if (choice == 3):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True 
+                 selected_done = False
+                 append_pars = []
+ 
+                 Lock = OSCheckLock(__configuration__[1])
+                 if (Lock == 0):
+                     dvd_info = xbmc.getDVDState()
+                     if (dvd_info == 4):
+                         DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 2):
+                             GUIInfo(0,__language__(33302)) 
+                         if (DVDState == 1):
+                             GUIInfo(0,__language__(33311))
+                         if (DVDState == 0):
+                             tracklist = []
+                             tracklist = OSChapterDVD()
+                             if (tracklist[0] != 'none'):
+                                 executeList = []
+                                 audio1 = []
+                                 audio2 = []
+                                 sub = []   
+                                 executeList = OSDVDExecuteList(False)
+                                    
+                                 track = GUISelectList(__language__(33207),tracklist)
+                                 track = track + 1
+
+                                 # We have a video-track 
+
+                                 append_pars.append(" " + str(track) + " ") 
+
+                                 GUIlog("Ready to start dvd4.sh")
+                                 audio1 = OSDVDAudioTrack(track)
+                                 GUIlog("dvd4.sh executed")
+
+                                 if (audio1[0] != 'none'):
+                                     aselect1 = GUISelectList(__language__(33226),audio1)
+                                    
+                                     # We have primary-audio language 
+
+                                     append_pars.append(" " + str(aselect1) + " ") 
+ 
+                                     dialog = xbmcgui.Dialog()
+                                     title = __language__(33217)
+                                     question = __language__(33227)
+                                     selected = dialog.yesno(title, question)
+                                     if (selected):
+                                         audio2 = audio1  
+                                         aselect2 = GUISelectList(__language__(33229),audio2)
+                                       
+                                         # a secoundary language was added
+                               
+                                         append_pars.append(" -a " + str(aselect2) + " ")
+  
+                                     dialog = xbmcgui.Dialog()
+                                     title = __language__(33217)
+                                     question = __language__(33228)
+                                     selected = dialog.yesno(title, question)
+                                     if (selected):
+                                         sub = OSDVDSubTrack(track)   
+                                         if (sub[0] != 'none'):
+                                             sselect1 = GUISelectList(__language__(33230),sub)
+
+                                             # subtitle was added 
+
+                                             append_pars.append(" -s " + str(sselect1) + " ")
+                                             selected_done = True 
+                                         else:
+                                             GUIInfo(2,__language__(33314)) 
+                                     else: 
+                                          selected_done = True 
+                                     selected_done = True  
+                                 else:
+                                     GUIInfo(2,__language__(33313)) 
+                             else:
+                                 GUIInfo(0,__language__(33312)) 
+                     else:
+                         GUIInfo(0,__language__(33309))
+                 else:
+                     GUIInfo(0,__language__(33308))    
+
+                 # We have all parameters execpt the filename and the directory to store 
+
+                 if (selected_done == True):
+
+                     execlist = []
+
+                     savedir = GUISelectDir() 
+                     volname = OSDVDVolume()
+                     volname = GUIEditExportName(volname)                      
+ 
+                     # Update parameters for the OS-Part DVD
+
+                     execlist.append(__configuration__[1])
+                     execlist.append(savedir)
+                     execlist.append(volname)
+                                
+                     attach_index = len(append_pars)
+                     for item in range(0,attach_index):
+                          execlist.append(append_pars[item]) 
+                     
+                     if (__verbose__):   
+                        for item in execlist:
+                            GUIlog('dvd-parmater corrections :' + str(item))                                      
+
+                     OSDVDAdd(execlist)       
+
+                     execstate =  OSDVDtoLOW() 
+                     if (execstate == 0):
+                         GUIInfo(2,__language__(33209))
+                     if (execstate == 1):
+                         GUIInfo(0,__language__(33208))
+                         __jobs__ = True
+
              if (choice == 4):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True
+
+                 selected_done = False
+                 append_pars = []
+ 
+                 Lock = OSCheckLock(__configuration__[1])
+                 if (Lock == 0):
+                     dvd_info = xbmc.getDVDState()
+                     if (dvd_info == 4):
+                         DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 2):
+                             GUIInfo(0,__language__(33302)) 
+                         if (DVDState == 1):
+                             GUIInfo(0,__language__(33311))
+                         if (DVDState == 0):
+                             tracklist = []
+                             tracklist = OSChapterDVD()
+                             if (tracklist[0] != 'none'):
+                                 executeList = []
+                                 audio1 = []
+                                 audio2 = []
+                                 sub = []   
+                                 executeList = OSDVDExecuteList(False)
+                                    
+                                 track = GUISelectList(__language__(33207),tracklist)
+                                 track = track + 1
+
+                                 # We have a video-track 
+
+                                 append_pars.append(" " + str(track) + " ") 
+
+                                 GUIlog("Ready to start dvd4.sh")
+                                 audio1 = OSDVDAudioTrack(track)
+                                 GUIlog("dvd4.sh executed")
+
+                                 if (audio1[0] != 'none'):
+                                     aselect1 = GUISelectList(__language__(33226),audio1)
+                                    
+                                     # We have primary-audio language 
+
+                                     append_pars.append(" " + str(aselect1) + " ") 
+ 
+                                     dialog = xbmcgui.Dialog()
+                                     title = __language__(33217)
+                                     question = __language__(33227)
+                                     selected = dialog.yesno(title, question)
+                                     if (selected):
+                                         audio2 = audio1  
+                                         aselect2 = GUISelectList(__language__(33229),audio2)
+                                       
+                                         # a secoundary language was added
+                               
+                                         append_pars.append(" -a " + str(aselect2) + " ")
+  
+                                     dialog = xbmcgui.Dialog()
+                                     title = __language__(33217)
+                                     question = __language__(33228)
+                                     selected = dialog.yesno(title, question)
+                                     if (selected):
+                                         sub = OSDVDSubTrack(track)   
+                                         if (sub[0] != 'none'):
+                                             sselect1 = GUISelectList(__language__(33230),sub)
+
+                                             # subtitle was added 
+
+                                             append_pars.append(" -s " + str(sselect1) + " ")
+                                             selected_done = True 
+                                         else:
+                                             GUIInfo(2,__language__(33314)) 
+                                     else: 
+                                          selected_done = True 
+                                     selected_done = True  
+                                 else:
+                                     GUIInfo(2,__language__(33313)) 
+                             else:
+                                 GUIInfo(0,__language__(33312)) 
+                     else:
+                         GUIInfo(0,__language__(33309))
+                 else:
+                     GUIInfo(0,__language__(33308))    
+
+                 # We have all parameters execpt the filename and the directory to store 
+
+                 if (selected_done == True):
+
+                     execlist = []
+
+                     savedir = GUISelectDir() 
+                     volname = OSDVDVolume()
+                     volname = GUIEditExportName(volname)                      
+ 
+                     # Update parameters for the OS-Part DVD
+
+                     execlist.append(__configuration__[1])
+                     execlist.append(savedir)
+                     execlist.append(volname)
+                                
+                     attach_index = len(append_pars)
+                     for item in range(0,attach_index):
+                          execlist.append(append_pars[item]) 
+                     
+                     if (__verbose__):   
+                        for item in execlist:
+                            GUIlog('dvd-parmater corrections :' + str(item))                                      
+
+                     OSDVDAdd(execlist)       
+
+                     execstate =  OSDVDtoIPHONE() 
+                     if (execstate == 0):
+                         GUIInfo(2,__language__(33209))
+                     if (execstate == 1):
+                         GUIInfo(0,__language__(33208))
+                         __jobs__ = True
+
              if (choice == 5):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True
+
+                 selected_done = False
+                 append_pars = []
+ 
+                 Lock = OSCheckLock(__configuration__[1])
+                 if (Lock == 0):
+                     dvd_info = xbmc.getDVDState()
+                     if (dvd_info == 4):
+                         DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 2):
+                             GUIInfo(0,__language__(33302)) 
+                         if (DVDState == 1):
+                             GUIInfo(0,__language__(33311))
+                         if (DVDState == 0):
+                             tracklist = []
+                             tracklist = OSChapterDVD()
+                             if (tracklist[0] != 'none'):
+                                 executeList = []
+                                 audio1 = []
+                                 audio2 = []
+                                 sub = []   
+                                 executeList = OSDVDExecuteList(False)
+                                    
+                                 track = GUISelectList(__language__(33207),tracklist)
+                                 track = track + 1
+
+                                 # We have a video-track 
+
+                                 append_pars.append(" " + str(track) + " ") 
+
+                                 GUIlog("Ready to start dvd4.sh")
+                                 audio1 = OSDVDAudioTrack(track)
+                                 GUIlog("dvd4.sh executed")
+
+                                 if (audio1[0] != 'none'):
+                                     aselect1 = GUISelectList(__language__(33226),audio1)
+                                    
+                                     # We have primary-audio language 
+
+                                     append_pars.append(" " + str(aselect1) + " ") 
+ 
+                                     dialog = xbmcgui.Dialog()
+                                     title = __language__(33217)
+                                     question = __language__(33227)
+                                     selected = dialog.yesno(title, question)
+                                     if (selected):
+                                         audio2 = audio1  
+                                         aselect2 = GUISelectList(__language__(33229),audio2)
+                                       
+                                         # a secoundary language was added
+                               
+                                         append_pars.append(" -a " + str(aselect2) + " ")
+  
+                                     dialog = xbmcgui.Dialog()
+                                     title = __language__(33217)
+                                     question = __language__(33228)
+                                     selected = dialog.yesno(title, question)
+                                     if (selected):
+                                         sub = OSDVDSubTrack(track)   
+                                         if (sub[0] != 'none'):
+                                             sselect1 = GUISelectList(__language__(33230),sub)
+
+                                             # subtitle was added 
+
+                                             append_pars.append(" -s " + str(sselect1) + " ")
+                                             selected_done = True 
+                                         else:
+                                             GUIInfo(2,__language__(33314)) 
+                                     else: 
+                                          selected_done = True 
+                                     selected_done = True  
+                                 else:
+                                     GUIInfo(2,__language__(33313)) 
+                             else:
+                                 GUIInfo(0,__language__(33312)) 
+                     else:
+                         GUIInfo(0,__language__(33309))
+                 else:
+                     GUIInfo(0,__language__(33308))    
+
+                 # We have all parameters execpt the filename and the directory to store 
+
+                 if (selected_done == True):
+
+                     execlist = []
+
+                     savedir = GUISelectDir() 
+                     volname = OSDVDVolume()
+                     volname = GUIEditExportName(volname)                      
+ 
+                     # Update parameters for the OS-Part DVD
+
+                     execlist.append(__configuration__[1])
+                     execlist.append(savedir)
+                     execlist.append(volname)
+                                
+                     attach_index = len(append_pars)
+                     for item in range(0,attach_index):
+                          execlist.append(append_pars[item]) 
+                     
+                     if (__verbose__):   
+                        for item in execlist:
+                            GUIlog('dvd-parmater corrections :' + str(item))                                      
+
+                     OSDVDAdd(execlist)       
+
+                     execstate =  OSDVDtoPSP() 
+                     if (execstate == 0):
+                         GUIInfo(2,__language__(33209))
+                     if (execstate == 1):
+                         GUIInfo(0,__language__(33208))
+                         __jobs__ = True
+
+
              if (choice == 6): 
                  exit = False
 
