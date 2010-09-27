@@ -1216,12 +1216,12 @@ if __name__ == '__main__':
 
                # portable directory 2 
 
-              if (Enable_Startup_Addon == 0): 
-                 if (OSCheckContainerID(7)):
-                    Enable_Startup_Addon = Enable_Startup_Addon + 1
-                    GUIInfo(1,__language__(33332))
-                    if (__verbose__):
-                       GUIlog('read the file called README.Linux or shorter RTFM')
+               if (Enable_Startup_Addon == 0): 
+                  if (OSCheckContainerID(7)):
+                     Enable_Startup_Addon = Enable_Startup_Addon + 1
+                     GUIInfo(1,__language__(33332))
+                     if (__verbose__):
+                        GUIlog('read the file called README.Linux or shorter RTFM')
 
 
                # Last Test prior to startup ....
