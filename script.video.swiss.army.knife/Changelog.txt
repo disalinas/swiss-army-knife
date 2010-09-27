@@ -131,6 +131,7 @@ Changes:
 - Replace makemkv 1.5.8 with version 1.6.0 (32 and 64 bits)
 - Change setup.sh for makemkv 1.6.0
 - Added directorys /dvdrip/portable/ip and /dvdrip/portable/psp
+  into settings and strings.xml
 - Added dvd-iphone.sh to svn
 
 Fixes:

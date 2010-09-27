@@ -134,6 +134,13 @@ def OSConfiguration(index):
     config[24] = __settings__.getSetting("id-t2")
     config[25] = __settings__.getSetting("id-t3")
 
+
+    # More configuration settings after last alpha 
+
+    config[50] = __settings__.getSetting("iphone-transcode")
+    config[51] = __settings__.getSetting("psp-transcode")   
+
+
     # Modul-global variable to detect if debug-log is active
 
     __verbose__ = config[17]
@@ -166,7 +173,10 @@ def OSConfiguration(index):
         OSlog("configuration index 22: [" + config[22] + "]")
         OSlog("configuration index 23: [" + config[23] + "]")
         OSlog("configuration index 24: [" + config[24] + "]")
-        OSlog("configuration index 25: [" + config[25] + "]")                        
+        OSlog("configuration index 25: [" + config[25] + "]") 
+        OSlog("configuration index 50: [" + config[50] + "]")
+        OSlog("configuration index 51: [" + config[51] + "]")     
+                     
 
 
     # On startup we need to check that all data-containers are writeable
@@ -177,8 +187,9 @@ def OSConfiguration(index):
     __data_container__.append(config[21])
     __data_container__.append(config[22]) 
     __data_container__.append(config[13])  
-    __data_container__.append(os.getenv("HOME") + '/swiss.army.knife/ssh')   
-
+    __data_container__.append(os.getenv("HOME") + '/swiss.army.knife/ssh')  
+    __data_container__.append(config[50])  
+    __data_container__.append(config[51])  
 
     # We need to write a few files on startup inside the addon-dirctory
 
@@ -254,6 +265,11 @@ def OSConfiguration(index):
     config[47] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD_GUI'
     config[48] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/ADVD'
     config[49] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/SDVD'
+
+    # More configuration settings 
+
+    config[50] = __settings__.getSetting("iphone-transcode")
+    config[51] = __settings__.getSetting("psp-transcode")   
 
     # With a list the delete of multiple files is very easy ;-)
 
