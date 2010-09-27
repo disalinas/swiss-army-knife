@@ -137,8 +137,8 @@ def OSConfiguration(index):
 
     # More configuration settings after last alpha 
 
-    config[50] = __settings__.getSetting("iphone-transcode")
-    config[51] = __settings__.getSetting("psp-transcode")   
+    config[50] = __settings__.getSetting("id-iphone")
+    config[51] = __settings__.getSetting("id-psp")   
 
 
     # Modul-global variable to detect if debug-log is active
