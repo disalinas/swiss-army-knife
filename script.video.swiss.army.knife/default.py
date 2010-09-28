@@ -79,6 +79,7 @@ __enable_pw_mode__ = 'false'
 __verbose__        = 'false'
 __pw__ = ''
 __jobs__ = False
+__linebreak__ = 0
 
 
 CWD = os.getcwd().rstrip(";")
@@ -293,9 +294,39 @@ def GUISelectList(InfoText,SelectList):
 #########################################################
 def GUIInfo(Selector,Info):
 
-    dialog = xbmcgui.Dialog()
-    title = __language__(33214 + Selector)
-    selected = dialog.ok(title,Info)
+    global __linebreak__
+
+    # Is the text that should be displayed shorter than __linebreak__ ?
+
+    LenInfo = len(Info)
+
+    if (LenInfo <= (__linebreak__ - 1)):
+
+        # The text fit into a single line 
+
+        dialog = xbmcgui.Dialog()
+        title = __language__(33214 + Selector)
+        selected = dialog.ok(title,Info)
+
+    else:
+
+        # we need to split the single string into 2 lines ...
+
+        line1 = ''
+        line2 = ''
+
+        for word in Info.split(' '):
+            l1 = len(line1)
+            l2 = len(word)
+            if ((l1 + l2) <= (__linebreak__ - 1)):
+                line1 = line1 + word + ' '
+            else:     
+                line2 = line2 + word + ''
+
+        dialog = xbmcgui.Dialog()
+        title = __language__(33214 + Selector)
+        selected = dialog.ok(title,line1,line2)
+  
     return 0
 
 #########################################################
@@ -1221,7 +1252,7 @@ class GUIJobWinClass(xbmcgui.Window):
                  if (__jobs__ == False):
                      state = GUIInfo(0,__language__(32177))
                  else:
-                     state =  GUIProgressbar("Progress current process") 
+                     state =  GUIProgressbar(__language__(32170)) 
                      if (state == 1):
                          __jobs__ = False
              if (choice == 1): 
@@ -1423,8 +1454,21 @@ if __name__ == '__main__':
    xbmc.executebuiltin("ActivateWindow(busydialog)")
 
    GUIlog ("Release xbmc  : [" +  xbmc_version + "]")     
-   GUIlog ("Release Addon : [" + __version__ + "]")     
+   GUIlog ("Release Addon : [" + __version__ + "]")
+   GUIlog ("Author Addon  : [" + __author__  + "]")      
+
    GUIlog ("addon-startet")
+  
+
+   # Because we do not need to calulate the linebreak-position 
+   # on every function call we calculate them now global once
+
+   reference =  __language__(34000)    
+   __linebreak__ = reference.find("Line-2")
+
+   GUIlog ("Linebreak    : [" +  str(__linebreak__) + "]")      
+ 
+   GUIInfo(2,__language__(33236))    
 
    GUIlog ("loading-configuration")
    __configuration__ = OSConfiguration(__index_config__)

@@ -124,7 +124,7 @@
         <string id="32174">Durchgang : </string>
         <string id="32175"> </string>
         <string id="32176"> </string>
-        <string id="32177">Keine aktiven Augträge gefunden</string>
+        <string id="32177">Keine aktiven Aufträge gefunden</string>
 
 
         <!--                  --> 
@@ -162,7 +162,7 @@
         <string id="33202">Bitte den Bluray-Track zum exportieren auswählen</string>
         <string id="33203">Bluray Transcoding erfolgreich gestartet</string>
         <string id="33204">Bluray transcoding konnte nicht gestarted werden</string> 
-        <string id="33205">Kommz in einem späteren Release</string>
+        <string id="33205">Kommt in einem späteren Release</string>
         <string id="33206">Auftrag gelöscht durch den Benutzer</string>
         <string id="33207">Bitte DVD-Track zum exportieren auswählen</string> 
         <string id="33208">DVD transcoding efolgreich gestartet</string>
@@ -225,7 +225,7 @@
         <string id="33323">Fehler innerhalb des aktiven Aufrags</string>
         <string id="33324">--</string>
         <string id="33325">Brenn und Transcode Funktionen sind deaktiviert</string> 
-        <string id="33326">Burning and Transcode directory not found or writeable !</string> 
+        <string id="33326">Brenn und Transcode Verzeichniss nicht gefunden oder beschreibbar !</string> 
         <string id="33327">Ausführen von setup.sh um SSH-Verzeichniss zu erzeugen !</string>  
         <string id="33328">Diese Trancode-Funktion benötigt makemkv !</string>
         <string id="33329">Keine Verbindung zum Netzwerk Master möglich !</string>
@@ -233,4 +233,5 @@
         <string id="33331">IPHONE-Verzeichniss nicht gefunden oder beschreibbar !</string> 
         <string id="33332">PSP-Verzeichniss nicht gefunden oder beschreibbar !</string>      
  
+        <string id="34000">Line-1 1234567891123456789212345678931234567 Line-2 1234567891123456789212345678931234567</string>        
  </strings>

@@ -146,6 +146,10 @@ Fixes:
 - Typo inside shell-scripts.
 - Test if we use makemkvcon inside a script that the command is running.
 - Typo inside dvd-handbrake.sh / text about passes fixed.
+- In the case the +x attribut for the shell-scripts is not set, we set them for 
+  all shell-scripts.
+- Linebreaks for longer text inside dialog.ok function is needed.
+
 
  
  
