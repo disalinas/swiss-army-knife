@@ -664,7 +664,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
                      OSDVDAdd(execlist)       
 
-                     execstate =  OSDVDtoIPHONE() 
+                     execstate =  OSDVDtoIphone() 
                      if (execstate == 0):
                          GUIInfo(2,__language__(33209))
                      if (execstate == 1):

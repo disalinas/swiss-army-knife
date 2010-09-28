@@ -133,6 +133,9 @@ Changes:
 - Added directorys /dvdrip/portable/ip and /dvdrip/portable/psp
   into settings and strings.xml
 - Added dvd-iphone.sh to svn
+- Addes dvd-psp.sh to svn 
+- Integrate dvd-iphone.sh and dvd-psp.sh into addon
+- Code cleaning 
 
 Fixes:
 
