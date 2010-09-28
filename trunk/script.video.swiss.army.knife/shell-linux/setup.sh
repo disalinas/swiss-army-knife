@@ -36,6 +36,7 @@ cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
 
+
 # Define the counting commands we expect inside the script
 
 EXPECTED_ARGS=1
@@ -162,6 +163,13 @@ else
 fi
 ###########################################################
 
+
+
+###########################################################
+#       Set all +x attributes for the shell-folder        #
+########################################################### 
+
+chmod +x *sh > /dev/null 2>&1
 
 
 

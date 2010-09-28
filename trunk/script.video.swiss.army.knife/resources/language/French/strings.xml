@@ -231,5 +231,6 @@
         <string id="33330">Aucune connexion du client n'a été effectuée !</string>
         <string id="33331">Répertoire IPHONE non trouvé ou non inscriptible !</string> 
         <string id="33332">Répertoire PSP non trouvé ou non inscriptible !</string>  
-               
+ 
+        <string id="34000">Line-1 12345678911234567892123456789312345678Line-2 12345678911234567892123456789312345678</string>              
  </strings>
