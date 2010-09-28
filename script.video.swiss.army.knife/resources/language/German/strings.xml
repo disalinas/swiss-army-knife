@@ -233,5 +233,7 @@
         <string id="33331">IPHONE-Verzeichniss nicht gefunden oder beschreibbar !</string> 
         <string id="33332">PSP-Verzeichniss nicht gefunden oder beschreibbar !</string>      
  
+         # Warning : do not modify this id !!!! 
+
         <string id="34000">Line-1 1234567891123456789212345678931234567 Line-2 1234567891123456789212345678931234567</string>        
  </strings>

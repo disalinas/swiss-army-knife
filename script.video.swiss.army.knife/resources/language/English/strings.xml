@@ -233,5 +233,7 @@
         <string id="33331">IPHONE-directory not found or writeable !</string> 
         <string id="33332">PSP-directory not found or writeable !</string>
 
-        <string id="34000">Line-1 12345678911234567892123456789312345678Line-2 12345678911234567892123456789312345678</string>                
+        # Warning : do not modify this id !!!!   
+
+        <string id="34000">Line-1 1234567891123456789212345678931234567 Line-2 1234567891123456789212345678931234567</string>                
  </strings>

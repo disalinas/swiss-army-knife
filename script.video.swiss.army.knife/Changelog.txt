@@ -136,6 +136,7 @@ Changes:
 - Addes dvd-psp.sh to svn 
 - Integrate dvd-iphone.sh and dvd-psp.sh into addon
 - Code cleaning 
+- Addes deinstall.sh to svn 
 
 Fixes:
 

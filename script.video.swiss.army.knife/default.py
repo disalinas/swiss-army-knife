@@ -13,7 +13,7 @@
 #           - transcode dvd to multiple formats         #
 #           - Integration of user-functions             #
 # VERSION : 0.6.15                                      #
-# DATE    : 09-06-10                                    #
+# DATE    : 09-28-10                                    #
 # STATE   : Beta 1                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -37,7 +37,7 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "09-06-2010"
+__date__ 		= "09-28-2010"
 __version__ 		= "0.6.15"
 __code_name__           = "Godzilla"
 __XBMC_Revision__ 	= "31953"
@@ -1581,7 +1581,7 @@ if __name__ == '__main__':
                            __enable_burning__ == "false" 
 
 
-               # portable directory 1 
+               # portable directory 1 (iphone)
 
                if (Enable_Startup_Addon == 0): 
                   if (OSCheckContainerID(7)):
@@ -1592,7 +1592,7 @@ if __name__ == '__main__':
 
 
 
-               # portable directory 2 
+               # portable directory 2 (psp)
 
                if (Enable_Startup_Addon == 0): 
                   if (OSCheckContainerID(7)):
