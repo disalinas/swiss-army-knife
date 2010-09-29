@@ -1467,9 +1467,7 @@ if __name__ == '__main__':
    __linebreak__ = reference.find("Line-2")
 
    GUIlog ("Linebreak    : [" +  str(__linebreak__) + "]")      
- 
-   GUIInfo(2,__language__(33236))    
-
+   
    GUIlog ("loading-configuration")
    __configuration__ = OSConfiguration(__index_config__)
    

@@ -45,6 +45,7 @@ By this new addon I changed a few things.
 
 1.1 What are the functions this addon provides ? 
 
+
 * create a exact iso copy of a dvd with dd.
 * try to copy crippled dvd's with ddrescue.
 * convert dvd to a h264 container. 
@@ -147,8 +148,11 @@ including  2 debian files.
 - Multiple parts of the script do now ask if they should be executed.
 - By this you can later run setup.sh and only execute the needed part 
   again.
-
  
+
+After release 0.6.15 a deinstall.sh script is provided to uninstall all 
+software that was installed during the execution of setup.sh 
+
 This debian-files for download  are only tested on Ubuntu 10.04 LTS.If you don't use 
 a debian based system, or your system is to old, you have to compile 
 this 2 packages for yourself. The full-source of the 2 packages  is provided 
