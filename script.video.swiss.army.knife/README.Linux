@@ -171,6 +171,7 @@ Do change the settings to your needs like ...
 * the directory to store the bluray mkv files
 * the directory to store vob's  
 * the directory to store the files over the network
+* the directory to store the psp and iphone transcode files
 * the user for the ssh communication
 * Internal timeout values fo the shell-scripts
 * Enable or disable some functions
@@ -224,20 +225,65 @@ If your licence key is expired you see the following message inside the addon
   
   http://code.google.com/p/swiss-army-knife/wiki/LinuxShell
 
-
 6.3 Feedback 
 
 http://code.google.com/p/swiss-army-knife/wiki/Feedback
 
-5.4 Bugtracking 
+6.4 Bugtracking 
 
 http://code.google.com/p/swiss-army-knife/issues/list
+
+6.5 First steps with the addon 
+
+If you are starting the addon the first time you see 5 Menu-Entrys.
+
+1. Transcode BluRay to MKV
+2. Transcode DVD
+3. Expert-Mode
+4. Job-Controll
+5. Exit
+
+
+1. Transcode BluRay to MKV
+---------------------------
+
+As the name suggest we transcode a bluray to a mkv-container with this 
+menu-point. All you have to do is to insert a bluray disc into device 
+specified inside the settings and press the button.
+
+All bluray transcoding parameters are not asked because this menu-point assumes 
+the following:
+
+- The longest movie on the bluray-disk will be converted to mkv.
+- All audio languages from the track will be converted 
+- The produced file will be stored by default on the directory /dvdrip/bluray  
+
+If you would like more controll where to store the file you must use the expert-mode.
+
+
+2. Transcode DVD
+
+As it says it will transcode a dvd.The format under wich the transcoded file will be stored
+is depend from the settting : Default transcoding (dvd) 
+
+We have the following choices:
+
+Format choosen 			Default directory to store the generated file(s)
+
+-> 264-high			/dvdrip/dvd 		
+-> iso				/dvdrip/iso	
+-> h264-low                     /dvdrip/transcode 
+-> mkv                          /dvdrip/transcode 
+-> vobcopy                      /dvdrip/vobcopy  
+-> mpeg2                        /dvdrip/transcode    
+-> iphone                       /dvdrip/portable/ip
+-> psp                          /dvdrip/portable/psp
 
 
 7.O Using the addon and have fun 
 
 Lucern, Switzerland 
-09.18.2010 
+09.29.2010 
 linuxluemmel.ch@gmail.ch alias Hans Weber 
 
  
