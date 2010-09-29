@@ -29,7 +29,7 @@
         <setting id="id-lang1" type="text" label="32059" default="en"/>    
         <setting id="id-lang2" type="text" label="32060" default="none"/>
         <setting id="id-dvd-subt" type="text" label="32070" default="none"/>
-        <setting id="id-def-dvd" type="enum" label="32061" values= h264-high|iso|h264-low|mkv|mpeg2|iphone|psp" default="0"/>
+        <setting id="id-def-dvd" type="enum" label="32061" values="h264-high|iso|h264-low|mkv|mpeg2|iphone|psp" default="0"/>
         <setting id="id-show-bluray" type="bool" label="32062" default="true"/>
         <setting id="id-show-network" type="bool" label="32063" default="false"/>
         <setting id="id-show-burning" type="bool" label="32064" default="false"/> 
