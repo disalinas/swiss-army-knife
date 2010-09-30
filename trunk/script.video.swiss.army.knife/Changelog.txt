@@ -137,7 +137,8 @@ Changes:
 - Integrate dvd-iphone.sh and dvd-psp.sh into addon
 - Code cleaning 
 - Added deinstall.sh to svn
-- Added First steps in README.Linux 
+- Added first steps in README.Linux 
+- Folder tools added to svn
 
 Fixes:
 
@@ -151,6 +152,7 @@ Fixes:
 - In the case the +x attribut for the shell-scripts is not set, we set them for 
   all shell-scripts.
 - Linebreaks for longer text inside dialog.ok function is needed.
+- it seems that makemkv 1.6.0 had a few problems .... I to test version 1.6.1
 
 
  
