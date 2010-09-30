@@ -166,6 +166,17 @@ apt-get remove --purge  liba52-0.7.4 libfaac0 libmp3lame0 libmp4v2-0 libogg0 lib
 apt-get remove --purge  libbz2-1.0 libgcc1 libstdc++6 zlib1g
 apt-get remove --purge  build-essential lynx libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev
 
+packets1=$(dpkg -l | grep ^ii | grep handbr | awk '{print $2}')
+packets2=$(dpkg -l | grep ^ii | grep makemkv | awk '{print $2}')
+ 
+
 clear
+echo the following packets from setup.sh have ben found.
+echo $packets1 $packets2
+echo
+echo You should remove them with the command dpkg -r
+echo
+echo 
 echo by by ..
+
 

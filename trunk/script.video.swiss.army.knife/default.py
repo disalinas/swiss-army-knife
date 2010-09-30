@@ -11,6 +11,7 @@
 # TASKS   : - copy a dvd 1:1 as a iso file to a disk    #
 #           - transcode bluray to matroska container    #
 #           - transcode dvd to multiple formats         #
+#             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions             #
 # VERSION : 0.6.15                                      #
 # DATE    : 09-28-10                                    #
@@ -67,6 +68,7 @@ import urllib, urlparse, urllib2, xml.dom.minidom
 ####################### GLOBAL DATA #####################
 
 __configuration__ = []  
+__dvd_tr_defaults__ = []
 
 __settings__ = xbmcaddon.Addon(id=__scriptID__)
 __language__ = __settings__.getLocalizedString
@@ -254,6 +256,63 @@ def GUIProgressbar(InfoText):
 
 
 
+
+
+#########################################################
+# Function  : GUISelectDVDTranscode                     #
+#########################################################
+# Parameter : none                                      #
+#                                                       # 
+#                                                       # 
+# Returns   : none                                      #
+#########################################################
+def GUISelectDVDTranscode():
+
+    # We define the default parameters for the dvd-transcoding 
+
+    # 1 -> 264-high 	/dev/sr0   	/dvdrip/dvd 		
+    # 2 -> iso 		/dev/sr0  	/dvdrip/iso	
+    # 3 -> h264-low	/dev/sr0 	/dvdrip/transcode 
+    # 4 -> mkv 		/dev/sr0 	/dvdrip/transcode 
+    # 5 -> vobcopy	/dev/sr0 	/dvdrip/vobcopy  
+    # 6 -> mpeg2	/dev/sr0 	/dvdrip/transcode    
+    # 7 -> iphone  	/dev/sr0	/dvdrip/portable/ip
+    # 8 -> psp		/dev/sr0	/dvdrip/portable/psp
+
+    dvd_parameters = []
+
+    # h264-high 
+    dvd_parameters.append(__configuration__[1] + " " + __configuration__[4] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+   
+    # iso
+    dvd_parameters.append(__configuration__[1] + " " + __configuration__[3] + " " + "var1")
+
+    # h264-low
+    dvd_parameters.append(__configuration__[1] + " " + __configuration__[13] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+
+    # mkv     
+    dvd_parameters.append(__configuration__[1] + " " + __configuration__[13] + " " + "var1")
+
+    # vobcopy 
+    dvd_parameters.append(__configuration__[1] + " " + __configuration__[21] + " " + "var1")
+
+    # mpeg2 
+    dvd_parameters.append(__configuration__[1] + " " + __configuration__[13] + " " + "var1")
+
+    # iphone  
+    dvd_parameters.append(__configuration__[1] + " " + __configuration__[50] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+
+    # psp
+    dvd_parameters.append(__configuration__[1] + " " + __configuration__[51] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+    
+    return dvd_parameters    
+#########################################################
+
+
+
+
+
+
 #########################################################
 # Function  : GUISelectList                             #
 #########################################################
@@ -321,7 +380,7 @@ def GUIInfo(Selector,Info):
             if ((l1 + l2) <= (__linebreak__ - 1)):
                 line1 = line1 + word + ' '
             else:     
-                line2 = line2 + word + ''
+                line2 = line2 + word + ' '
 
         dialog = xbmcgui.Dialog()
         title = __language__(33214 + Selector)
@@ -1491,6 +1550,11 @@ if __name__ == '__main__':
 
    else:
 
+       # We do set all default values for multiple dvd transcoding 
+       # functions 
+
+       __dvd_tr_defaults__ == GUISelectDVDTranscode() 
+
        # if we would have the wrong user for the ssh-command 
        # we would have a funny mess .... 
 
@@ -1534,7 +1598,6 @@ if __name__ == '__main__':
                           GUIInfo(1,__language__(33307))
                   else:
                        __enable_bluray__ = "false"
-                       Enable_Startup_Addon = Enable_Startup_Addon + 1
                        GUIInfo(1,__language__(33315))
 
                if (Enable_Startup_Addon == 0):      
@@ -1593,7 +1656,7 @@ if __name__ == '__main__':
                # portable directory 2 (psp)
 
                if (Enable_Startup_Addon == 0): 
-                  if (OSCheckContainerID(7)):
+                  if (OSCheckContainerID(8)):
                      Enable_Startup_Addon = Enable_Startup_Addon + 1
                      GUIInfo(1,__language__(33332))
                      if (__verbose__):
