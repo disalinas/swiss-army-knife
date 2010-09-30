@@ -39,6 +39,8 @@ By this new addon I changed a few things.
     addon .... (and saved my ass one time ;-))
 5.) For someone who wants to port the addon to windows or mac the work is easyer. 
     Please feel free to send patches for windows and mac.
+    If you decide to port this addon to windows please be aware that 
+    binarys for 32 and 64 bits have to be build.
     I do not use xbmc on this operating systems and I have therefore no intention 
     do portinbg this addon by myself.
 
@@ -108,7 +110,7 @@ starting the addon.
 
 "Prior to run this addon setup.sh must be executed" 
 
-Only after the execution of setup.sh this mesage never comes again.
+Only after the execution of setup.sh this message never comes again.
 Please do read the instructions carefully.
  
 As long the eula is not accepted the script do not change any 
@@ -149,7 +151,6 @@ including  2 debian files.
 - By this you can later run setup.sh and only execute the needed part 
   again.
  
-
 After release 0.6.15 a deinstall.sh script is provided to uninstall all 
 software that was installed during the execution of setup.sh 
 
@@ -262,6 +263,7 @@ If you would like more controll where to store the file you must use the expert-
 
 
 2. Transcode DVD
+-----------------
 
 As it says it will transcode a dvd.The format under wich the transcoded file will be stored
 is depend from the settting : Default transcoding (dvd) 
@@ -279,6 +281,13 @@ Format choosen 			Default directory to store the generated file(s)
 -> iphone                       /dvdrip/portable/ip
 -> psp                          /dvdrip/portable/psp
 
+What format you chose is up to you .....
+
+If you like a 1:1 copy select iso
+If you wish a high quality take h264-high
+If the rip should be very fast take h264-low
+ 
+By default I set the transcode profile to h264-high.
 
 7.O Using the addon and have fun 
 
