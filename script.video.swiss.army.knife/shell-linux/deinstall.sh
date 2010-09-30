@@ -37,9 +37,6 @@ echo ---------------------------------------------------------------------------
 
 
 
-# Define the counting commands we expect inside the script
-
-EXPECTED_ARGS=1
 
 # Error-codes
 
@@ -50,26 +47,6 @@ E_SSHKEY=4
 E_LICENCE_NOT_ACCEPTED=5
 E_DPKG=6
 E_WRONG_SHELL=255
-
-
-
-###########################################################
-#            Check-Arguments to Script                    #
-###########################################################
-if [ $# -ne $EXPECTED_ARGS ] ; then
-  clear
-  echo "Usage: setup.sh p1"
-  echo
-  echo " [p1] username"
-  echo
-  echo "stup.sh was called without arguments"
-  echo
-  echo
-  echo ----------------------- script rc=1 -----------------------------
-  echo -----------------------------------------------------------------
-  exit $E_BADARGS
-fi
-###########################################################
 
 
 
@@ -168,7 +145,7 @@ apt-get remove --purge  build-essential lynx libc6-dev libssl-dev libgl1-mesa-de
 
 packets1=$(dpkg -l | grep ^ii | grep handbr | awk '{print $2}')
 packets2=$(dpkg -l | grep ^ii | grep makemkv | awk '{print $2}')
- 
+
 
 clear
 echo the following packets from setup.sh have ben found.
@@ -176,7 +153,7 @@ echo $packets1 $packets2
 echo
 echo You should remove them with the command dpkg -r
 echo
-echo 
+echo
 echo by by ..
 
 
