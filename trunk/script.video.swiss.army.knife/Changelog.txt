@@ -139,6 +139,10 @@ Changes:
 - Added deinstall.sh to svn
 - Added first steps in README.Linux 
 - Folder tools added to svn
+- Check that bluray-functions are set in the case a usr
+  wish to transcode all dvd's to mkv.
+- Integrate makemkv 1.6.1 for 32 bit into setup.sh 
+
 
 Fixes:
 

@@ -73,12 +73,13 @@ __dvd_tr_defaults__ = []
 __settings__ = xbmcaddon.Addon(id=__scriptID__)
 __language__ = __settings__.getLocalizedString
 
-__enable_bluray__ = 'false'
-__enable_network__ = 'false'
-__enable_burning__ = 'false'
+__default_dvd_tr__  = 0
+__enable_bluray__   = 'false'
+__enable_network__  = 'false'
+__enable_burning__  = 'false'
 __enable_customer__ = 'false'
-__enable_pw_mode__ = 'false'
-__verbose__        = 'false'
+__enable_pw_mode__  = 'false'
+__verbose__         = 'false'
 __pw__ = ''
 __jobs__ = False
 __linebreak__ = 0
@@ -1518,18 +1519,18 @@ if __name__ == '__main__':
 
    GUIlog ("addon-startet")
   
-
    # Because we do not need to calulate the linebreak-position 
    # on every function call we calculate them now global once
 
    reference =  __language__(34000)    
    __linebreak__ = reference.find("Line-2")
 
-   GUIlog ("Linebreak    : [" +  str(__linebreak__) + "]")      
+   GUIlog ("Linebreak     : [" +  str(__linebreak__) + "]")      
    
    GUIlog ("loading-configuration")
    __configuration__ = OSConfiguration(__index_config__)
    
+   __default_dvd_tr__  = int(__configuration__[9]) 
    __enable_bluray__   = __configuration__[10]
    __enable_network__  = __configuration__[11]
    __enable_burning__  = __configuration__[12]
@@ -1537,6 +1538,9 @@ if __name__ == '__main__':
    __verbose__         = __configuration__[17]
    __enable_pw_mode__  = __configuration__[19]
    __pw__              = __configuration__[20]
+      
+   GUIlog ("Transcoding   : [" +  str(__default_dvd_tr__) + "]")      
+ 
 
    # check that setup.sh was run prior to starting the addon 
  
@@ -1581,8 +1585,8 @@ if __name__ == '__main__':
                GUIlog ("please do configure ssh-server for login without any passwords")
                GUIlog ("This addon do not start until ssh communication is working properly for the current user") 
                GUIlog ("Addon do exit now ...")
-           else:
-
+           else:                       
+                
                # Check that directory exists and could be written 
                # Bluray-directory is only included if the functions are enabled
 
@@ -1600,6 +1604,15 @@ if __name__ == '__main__':
                        __enable_bluray__ = "false"
                        GUIInfo(1,__language__(33315))
 
+               else:
+                    
+                    # In the case that someone would like to transcode a dvd to mkv  
+                    # the bluray-part must be active !!!!!
+                     
+                    if (__default_dvd_tr__ == 3):
+                      GUIInfo(1,__language__(33333))
+                      Enable_Startup_Addon = Enable_Startup_Addon + 1   
+     
                if (Enable_Startup_Addon == 0):      
                    if (OSCheckContainerID(1)):
                        GUIInfo(1,__language__(33306))

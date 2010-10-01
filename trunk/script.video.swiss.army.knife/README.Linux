@@ -63,7 +63,7 @@ By this new addon I changed a few things.
 - a Ubuntu 10.04 LTS system or higher. (Test passed on Ubuntu 10.04 LTS) 
 - a SVN build of XBMC (at least SVN 31953) or higher.
 - a DVD-drive and optional a bluray if you would like to transcode BD-disk
-- a place where you can store ripps. Be prepared that this place must be very very 
+- a place where you can store ripps. Be prepared that this place must be very 
   big. 
 
 3.0 What Software will be installed ? 
@@ -153,13 +153,14 @@ including  2 debian files.
  
 After release 0.6.15 a deinstall.sh script is provided to uninstall all 
 software that was installed during the execution of setup.sh 
+This script do not remove any folder from the movie-containers !
 
 This debian-files for download  are only tested on Ubuntu 10.04 LTS.If you don't use 
 a debian based system, or your system is to old, you have to compile 
 this 2 packages for yourself. The full-source of the 2 packages  is provided 
 on the project-page to minimize the download-size.
 
-http://swiss-army-knife.googlecode.com/files/makemkv_1.6.0.src.tar.gz
+http://swiss-army-knife.googlecode.com/files/makemkv_1.6.1.src.tar.gz
 http://swiss-army-knife.googlecode.com/files/Handbrake-0.9.4-src.tar.gz
 
 The next step to running this addon is to complete the setup with valid 
@@ -174,7 +175,7 @@ Do change the settings to your needs like ...
 * the directory to store the files over the network
 * the directory to store the psp and iphone transcode files
 * the user for the ssh communication
-* Internal timeout values fo the shell-scripts
+* Internal timeout values for the shell-scripts
 * Enable or disable some functions
 
 and many more .....
@@ -240,7 +241,7 @@ If your licence key is expired you see the following message inside the addon
   
   http://code.google.com/p/swiss-army-knife/wiki/LinuxShell
 
-- To collect all logs that are needed I created a little tool inside the tool folder.
+- To collect all logs that are needed I created a little script inside the tool folder.
 
 6.3 Feedback 
 
@@ -302,7 +303,7 @@ What format you chose is up to you .....
 If you like a 1:1 copy select iso
 If you wish a high quality take h264-high
 If the rip should be very fast take h264-low
-If you like to watch a dvd with huble-teleskop use psp :-) 
+If you like to watch a dvd with huble-teleskop resolution use psp :-) 
  
 By default I set the transcode profile to h264-high.
 

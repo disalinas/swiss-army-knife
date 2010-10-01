@@ -637,10 +637,10 @@ if [ $? -eq 1 ] ; then
 
          # Install binary part for makemkv 
 
-         dpkg -i makemkv-v1.6.0-bin_20100919-1_i386.deb
+         dpkg -i makemkv-v1.6.0-bin_20100930-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.0-bin_20100919-1_i386.de
+            echo the installation of makemkv-v1.6.0-bin_20100930-1_i386.de
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -712,9 +712,9 @@ else
    echo The command makemkvcon was found on your system.
    echo
    echo The release found on your system is : [$MINSTALLED]
-   echo The script can download and install : [v1.6.0]
+   echo The script can download and install : [v1.6.1]
    echo
-   echo Should makemkv [v1.6.0] be installed over
+   echo Should makemkv [v1.6.1] be installed over
    echo the existing release on your system ?
    echo
    echo Warning : This may make makemkv unusable ...
@@ -751,10 +751,10 @@ else
 
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.0-bin_20100919-1_i386.deb
+         dpkg -i makemkv-v1.6.0-bin_20100930-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.0-bin_20100919-1_i386.de
+            echo the installation of makemkv-v1.6.0-bin_20100930-1_i386.de
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -807,7 +807,7 @@ else
       clear
       echo
       echo -----------------------------------------------------------
-      echo current makemkv is not updated to release 1.6.0  and remains 
+      echo current makemkv is not updated to release 1.6.1  and remains 
       echo as it is.
       echo
       echo -n press any key to continue ..
@@ -845,10 +845,10 @@ echo
 echo - Please do updates the settings with the addon-manager.
 echo - Do not forget to replace the default name xbmc@localhost
 echo   if your username is not xbmc.
-echo - If you did not created the directorys you have to create them 
+echo - If you did not created the directorys. You have to create them
 echo   now and to change all directorys inside the settings.
-echo - Please remember that no "spaces" inside the directory-names 
-echo   are allowed. 
+echo - Please remember that no "spaces" inside the directory-names
+echo   are allowed.
 echo - Please be sure that the user has full write permissions to all
 echo   folders !
 echo

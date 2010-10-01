@@ -121,6 +121,9 @@ if [ -e EULA-0.6.15 ] ; then
       echo "EULA 0.6.15 accepted"
       echo
       echo all software-installations from setup.sh will be removed !!!!
+      echo all data-containers are not touched or a single file removed !!!
+      echo the ssh-keys remaining on the system and have to be deleted by you !!
+      echo
       echo -n press any key to continue ..
       echo
       read any
@@ -152,7 +155,7 @@ echo the following packets from setup.sh have ben found.
 echo $packets1 $packets2
 echo
 echo You should remove them with the command dpkg -r
-echo
+echo You should also remove the directory ~./ssh
 echo
 echo by by ..
 
