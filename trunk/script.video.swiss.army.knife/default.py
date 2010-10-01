@@ -68,7 +68,7 @@ import urllib, urlparse, urllib2, xml.dom.minidom
 ####################### GLOBAL DATA #####################
 
 __configuration__ = []  
-__dvd_tr_defaults__ = []
+__dvd_values__ = []
 
 __settings__ = xbmcaddon.Addon(id=__scriptID__)
 __language__ = __settings__.getLocalizedString
@@ -265,7 +265,7 @@ def GUIProgressbar(InfoText):
 # Parameter : none                                      #
 #                                                       # 
 #                                                       # 
-# Returns   : none                                      #
+# Returns   : list of all default values                #
 #########################################################
 def GUISelectDVDTranscode():
 
@@ -282,30 +282,15 @@ def GUISelectDVDTranscode():
 
     dvd_parameters = []
 
-    # h264-high 
-    dvd_parameters.append(__configuration__[1] + " " + __configuration__[4] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
-   
-    # iso
-    dvd_parameters.append(__configuration__[1] + " " + __configuration__[3] + " " + "var1")
-
-    # h264-low
-    dvd_parameters.append(__configuration__[1] + " " + __configuration__[13] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
-
-    # mkv     
-    dvd_parameters.append(__configuration__[1] + " " + __configuration__[13] + " " + "var1")
-
-    # vobcopy 
-    dvd_parameters.append(__configuration__[1] + " " + __configuration__[21] + " " + "var1")
-
-    # mpeg2 
-    dvd_parameters.append(__configuration__[1] + " " + __configuration__[13] + " " + "var1")
-
-    # iphone  
-    dvd_parameters.append(__configuration__[1] + " " + __configuration__[50] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
-
-    # psp
-    dvd_parameters.append(__configuration__[1] + " " + __configuration__[51] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
-    
+    dvd_parameters.append("4 2 " + __configuration__[1] + " " + __configuration__[4] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+    dvd_parameters.append("3 0 " + __configuration__[1] + " " + __configuration__[3] + " " + "var1")
+    dvd_parameters.append("4 2 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+    dvd_parameters.append("3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
+    dvd_parameters.append("3 0 " +  __configuration__[1] + " " + __configuration__[21] + " " + "var1")
+    dvd_parameters.append("3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
+    dvd_parameters.append("4 2 " +  __configuration__[1] + " " + __configuration__[50] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+    dvd_parameters.append("4 2 " +  __configuration__[1] + " " + __configuration__[51] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+      
     return dvd_parameters    
 #########################################################
 
@@ -1557,8 +1542,14 @@ if __name__ == '__main__':
        # We do set all default values for multiple dvd transcoding 
        # functions 
 
-       __dvd_tr_defaults__ == GUISelectDVDTranscode() 
+       GUIlog ("Transcoding   : [" +  "read default values tr" + "]")       
+       __dvd_values__ = GUISelectDVDTranscode() 
+ 
+       if (__verbose__ == "true"):                
+          GUIlog ("Default DVD   : [" + __dvd_values__[__default_dvd_tr__] + "]")      
 
+       GUIlog ("Transcoding   : [" +  "read default values done" + "]")           
+         
        # if we would have the wrong user for the ssh-command 
        # we would have a funny mess .... 
 
@@ -1661,7 +1652,7 @@ if __name__ == '__main__':
                   if (OSCheckContainerID(7)):
                      Enable_Startup_Addon = Enable_Startup_Addon + 1
                      GUIInfo(1,__language__(33331))
-                     if (__verbose__):
+                     if (__verbose__ == "true"):
                         GUIlog('read the file called README.Linux or shorter RTFM')
 
 
@@ -1672,7 +1663,7 @@ if __name__ == '__main__':
                   if (OSCheckContainerID(8)):
                      Enable_Startup_Addon = Enable_Startup_Addon + 1
                      GUIInfo(1,__language__(33332))
-                     if (__verbose__):
+                     if (__verbose__ == "true"):
                         GUIlog('read the file called README.Linux or shorter RTFM')
 
 
@@ -1683,7 +1674,7 @@ if __name__ == '__main__':
                    if (OSCheckContainerID(6)):
                        Enable_Startup_Addon = Enable_Startup_Addon + 1
                        GUIInfo(1,__language__(33327))
-                       if (__verbose__):
+                       if (__verbose__ == "true"):
                            GUIlog('read the file called README.Linux or shorter RTFM')
 
                # New since release 0.6.15 if any error comes up we do not start .....
