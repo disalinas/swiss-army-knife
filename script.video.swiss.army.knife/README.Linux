@@ -306,7 +306,10 @@ If the rip should be very fast take h264-low
 If you like to watch a dvd with huble-teleskop resolution use psp :-) 
  
 By default I set the transcode profile to h264-high.
+The longest track will be ripped or transcoded automatic. 
 
+The default languages and subtitles are defined from the addon-settings.
+You can chose up to 2 audio-languages and 1 subtitle.
 
 7.O Using the addon and have fun 
 

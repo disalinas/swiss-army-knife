@@ -14,7 +14,7 @@
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions             #
 # VERSION : 0.6.15                                      #
-# DATE    : 09-28-10                                    #
+# DATE    : 10-02-10                                    #
 # STATE   : Beta 1                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -395,9 +395,16 @@ class GUIExpertUserfunctionsClass(xbmcgui.Window):
           global __jobs__ 
           exit = True
 
-          menu = []       
+          menu = []
+          index = 1       
           for i in range(32190,32200):
-	      menu.append(__language__(i))
+
+              userdescription = OSGetUserDesc(index)
+              if (userdescription == " "):
+ 	          menu.append(__language__(i))
+              else:
+                  menu.append(userdescription)
+              index = index + 1
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32094) ,menu)
