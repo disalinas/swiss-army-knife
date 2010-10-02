@@ -143,6 +143,10 @@ Changes:
   wish to transcode all dvd's to mkv.
 - Integrate makemkv 1.6.1 for 32 bit into setup.sh 
 - Checked 1.6.1 for 64 bit 
+- Allow execution of user definded functions 1-9 over addon
+
+  example : - start a vpn connection 
+            and many more  
 
 Fixes:
 
@@ -156,7 +160,7 @@ Fixes:
 - In the case the +x attribut for the shell-scripts is not set, we set them for 
   all shell-scripts.
 - Linebreaks for longer text inside dialog.ok function is needed.
-- it seems that makemkv 1.6.0 had a few problems .... I to test version 1.6.1
+- it seems that makemkv 1.6.0 had a few problems .... I do test version 1.6.1 now
 
 
  

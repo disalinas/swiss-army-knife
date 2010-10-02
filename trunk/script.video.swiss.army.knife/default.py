@@ -12,7 +12,7 @@
 #           - transcode bluray to matroska container    #
 #           - transcode dvd to multiple formats         #
 #             including Appple Iphone and Sony PSP      # 
-#           - Integration of user-functions             #
+#           - Integration of user-functions 1-9         #
 # VERSION : 0.6.15                                      #
 # DATE    : 10-02-10                                    #
 # STATE   : Beta 1                                      #
@@ -396,48 +396,59 @@ class GUIExpertUserfunctionsClass(xbmcgui.Window):
           exit = True
 
           menu = []
-          index = 1       
+          index = 1 
+          found = 0 
+     
           for i in range(32190,32200):
-
               userdescription = OSGetUserDesc(index)
               if (userdescription == " "):
  	          menu.append(__language__(i))
               else:
                   menu.append(userdescription)
+                  found = found + 1
               index = index + 1
-          while (exit): 
-             dialog = xbmcgui.Dialog()
-             choice  = dialog.select(__language__(32094) ,menu)
-             if (choice == 0):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True
-             if (choice == 1):
-                 GUIInfo(1,__language__(33205))  
-                 exit = True    
-             if (choice == 2):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True
-             if (choice == 3):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True 
-             if (choice == 4):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True
-             if (choice == 5):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True
-             if (choice == 6): 
-                 GUIInfo(1,__language__(33205))
-                 exit = True
-             if (choice == 7): 
-                 GUIInfo(1,__language__(33205))
-                 exit = True
-             if (choice == 8): 
-                 GUIInfo(1,__language__(33205))
-                 exit = True
-             if (choice == 9): 
-                 exit = False
 
+          # If there are no user-functions found 
+          # we will exit ... 
+
+          if (found == 0):  
+            GUIInfo(0,__language__(33236)) 
+            if (__verbose__ == "true"):                
+               GUIlog ("no user-functions found.Read the documenation how to use them")     
+            self.close()
+          else:
+              while (exit): 
+                     dialog = xbmcgui.Dialog()
+                     choice  = dialog.select(__language__(32094) ,menu)
+                     if (choice == 0):
+                         if (menu[0] != " "):
+                            OSRun("user1.sh",True,False) 
+                     if (choice == 1):
+                         if (menu[1] != " "):
+                            OSRun("user2.sh",True,False)   
+                     if (choice == 2):
+                         if (menu[2] != " "):
+                            OSRun("user3.sh",True,False)  
+                     if (choice == 3):
+                         if (menu[3] != " "):
+                            OSRun("user4.sh",True,False)  
+                     if (choice == 4):
+                         if (menu[4] != " "): 
+                            OSRun("user5.sh",True,False)  
+                     if (choice == 5):
+                         if (menu[5] != " "):
+                            OSRun("user6.sh",True,False) 
+                     if (choice == 6):
+                        if (menu[6] != " "): 
+                           OSRun("user7.sh",True,False) 
+                     if (choice == 7):
+                         if (menu[7] != " "): 
+                            OSRun("user8.sh",True,False) 
+                     if (choice == 8):
+                         if (menu[8] != " "): 
+                            OSRun("user9.sh",True,False) 
+                     if (choice == 9): 
+                        exit = False
           self.close()
 
 #########################################################
