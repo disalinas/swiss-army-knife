@@ -38,7 +38,7 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "09-28-2010"
+__date__ 		= "10-02-2010"
 __version__ 		= "0.6.15"
 __code_name__           = "Godzilla"
 __XBMC_Revision__ 	= "31953"
@@ -1457,6 +1457,10 @@ class GUIMain01Class(xbmcgui.Window):
                  if (choice == 3): 
                      if (__verbose__ == "true"):      
                         GUIlog('menu expert-mode activated')
+
+                     # In the case the expert-mode is password protected 
+                     # we ask for the passsword and compare it.
+                   
                      if ( __enable_pw_mode__ == 'true'):
                          kb = xbmc.Keyboard('default', 'heading', True)
                          kb.setDefault()
