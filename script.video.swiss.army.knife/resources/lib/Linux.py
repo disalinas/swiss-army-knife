@@ -2415,18 +2415,25 @@ def OSGetUserDesc(index):
 
     desc = []
 
+    UserScript = os.getenv("HOME") + '/swiss.army.knife/' + 'user' + str(index) + '.sh' 
     UserDescription = os.getenv("HOME") + '/swiss.army.knife/' + 'user' + str(index) + '.desc'
 
     if (__verbose__ == 'true'):
         OSlog("Try to load user-function description : " + UserDescription)
 
     if (os.path.exists(UserDescription)):
-        UserDescF = open(UserDescription,'r')
-        for line in UserDescF.readlines():
-            line = line.strip()
-            desc.append(line)
-        UserDescF.close
-        return desc[0]    
+
+        # We need both a description file and a shell-script
+
+        if (os.path.exists(UserScript)):
+            UserDescF = open(UserDescription,'r')
+            for line in UserDescF.readlines():
+                line = line.strip()
+                desc.append(line)
+            UserDescF.close
+            return desc[0]
+        else:
+            return " "    
     else:
         return " "
 #########################################################

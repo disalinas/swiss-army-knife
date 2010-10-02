@@ -55,6 +55,7 @@ By this new addon I changed a few things.
 * convert dvd to a mkv container.
 * convert dvd to iphone compatible format.
 * convert dvd to psp compatible format. 
+* Execute up to 9 user-defined shell-scripts.
 * In a later release I plan to work  some of this features over the network. 
 
 
@@ -310,6 +311,10 @@ The longest track will be ripped or transcoded automatic.
 
 The default languages and subtitles are defined from the addon-settings.
 You can chose up to 2 audio-languages and 1 subtitle.
+
+
+6.6 User-Functions (up to 9 shell-scripts) 
+
 
 7.O Using the addon and have fun 
 
