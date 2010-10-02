@@ -1313,7 +1313,9 @@ class GUIJobWinClass(xbmcgui.Window):
                          GUIInfo(0,__language__(33310))     
              if (choice == 2):  
                  removal = OSRemoveLock()  
-             if (choice == 3):   
+             if (choice == 3):  
+                 if (__verbose__ == "true"):      
+                     GUIlog('menu job-window exit')
                  exit = False
           self.close()
 
@@ -1355,6 +1357,8 @@ class GUIMain01Class(xbmcgui.Window):
                  dialog = xbmcgui.Dialog()
                  choice  = dialog.select(__language__(32090) ,menu)
                  if (choice == 0):
+                     if (__verbose__ == "true"):      
+                        GUIlog('menu bluray-transcode activated')
                      Lock = OSCheckLock(__configuration__[2])
                      if (__enable_bluray__ == 'true'):
                          if (Lock == 0):
@@ -1388,7 +1392,7 @@ class GUIMain01Class(xbmcgui.Window):
                          GUIInfo(0,__language__(33303))    
 
                  if (choice == 1):  
-                     if (__verbose__):
+                     if (__verbose__ == "true"):      
                         GUIlog('menu dvd-transcode activated')
                      Lock = OSCheckLock(__configuration__[1])
                      if (Lock == 0):
@@ -1419,7 +1423,7 @@ class GUIMain01Class(xbmcgui.Window):
                          GUIInfo(0,__language__(33308))    
 
                  if (choice == 2):
-                     if (__verbose__):
+                     if (__verbose__ == "true"):      
                         GUIlog('menu dvd-iso activated') 
                      Lock = OSCheckLock(__configuration__[1])
                      if (Lock == 0):
@@ -1451,7 +1455,7 @@ class GUIMain01Class(xbmcgui.Window):
 
 
                  if (choice == 3): 
-                     if (__verbose__):
+                     if (__verbose__ == "true"):      
                         GUIlog('menu expert-mode activated')
                      if ( __enable_pw_mode__ == 'true'):
                          kb = xbmc.Keyboard('default', 'heading', True)
@@ -1474,7 +1478,7 @@ class GUIMain01Class(xbmcgui.Window):
                           ExpertWindow = GUIExpertWinClass()
                           del ExpertWindow         
                  if (choice == 4): 
-                     if (__verbose__):
+                     if (__verbose__ == "true"):      
                         GUIlog('menu jobs activated')
                      JobWindow = GUIJobWinClass()
                      del JobWindow        
@@ -1500,6 +1504,7 @@ if __name__ == '__main__':
 
    GUIlog ("Release xbmc  : [" +  xbmc_version + "]")     
    GUIlog ("Release Addon : [" + __version__ + "]")
+   GUIlog ("Addon url     : [" + __url__ + "]")
    GUIlog ("Author Addon  : [" + __author__  + "]")      
 
    GUIlog ("addon-startet")
@@ -1542,13 +1547,15 @@ if __name__ == '__main__':
        # We do set all default values for multiple dvd transcoding 
        # functions 
 
-       GUIlog ("Transcoding   : [" +  "read default values tr" + "]")       
+       if (__verbose__ == "true"):      
+            GUIlog ("Transcoding   : [" +  "read default values tr" + "]")       
        __dvd_values__ = GUISelectDVDTranscode() 
  
        if (__verbose__ == "true"):                
           GUIlog ("Default DVD   : [" + __dvd_values__[__default_dvd_tr__] + "]")      
 
-       GUIlog ("Transcoding   : [" +  "read default values done" + "]")           
+       if (__verbose__ == "true"):      
+          GUIlog ("Transcoding   : [" +  "read default values done" + "]")           
          
        # if we would have the wrong user for the ssh-command 
        # we would have a funny mess .... 
@@ -1572,10 +1579,11 @@ if __name__ == '__main__':
             
            state_ssh = OSCheckSSH()
            if (state_ssh == 1):
-               GUIInfo(0,__language__(33321)) 
-               GUIlog ("please do configure ssh-server for login without any passwords")
-               GUIlog ("This addon do not start until ssh communication is working properly for the current user") 
-               GUIlog ("Addon do exit now ...")
+               GUIInfo(0,__language__(33321))
+               if (__verbose__ == "true"):        
+                   GUIlog ("please do configure ssh-server for login without any passwords")
+                   GUIlog ("This addon do not start until ssh communication is working properly for the current user") 
+                   GUIlog ("Addon do exit now ...")
            else:                       
                 
                # Check that directory exists and could be written 
@@ -1687,9 +1695,10 @@ if __name__ == '__main__':
                    menu01 = GUIMain01Class()
                    del menu01
                else:
-                    GUIlog ("This addon do not start until all errors on startup are resolved ....") 
-                    GUIlog ("Addon do exit now ...")
-                    xbmc.executebuiltin("Dialog.Close(busydialog)")
+                    if (__verbose__ == "true"):      
+                        GUIlog ("This addon do not start until all errors on startup are resolved ....") 
+                        GUIlog ("Addon do exit now ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
                GUIlog ("addon-ended")
    
    

@@ -396,7 +396,8 @@ def OSCheckMedia(Media):
     if (os.path.exists(__configLinux__[45])):
         if (os.path.exists(__configLinux__[30])):
             os.remove(__configLinux__[30])
-            OSlog("state-file do exist prio to loop and will be deleted")
+            if (__verbose__ == 'true'): 
+               OSlog("state-file do exist prior to loop and will be deleted")
     else:
         OSCleanTemp()
 
@@ -408,7 +409,8 @@ def OSCheckMedia(Media):
 
     if (os.path.exists(__configLinux__[30])):
        os.remove(__configLinux__[30])
-       OSlog("state-file do exist prio to loop and will be deleted")
+       if (__verbose__ == 'true'): 
+          OSlog("state-file do exist prio to loop and will be deleted")
  
     if (Media == 'BLURAY'):
         OSRun("br0.sh " +  __configLinux__[2],True,False)
@@ -956,7 +958,7 @@ def OSKillProc():
 
             for pid in pid_list:
                 try:
-                   if (__verbose__):
+                   if (__verbose__ == 'true'):
                         OSlog("send signal 9 to pid : " + str(pid))
                    os.kill(pid,9)
                 except OSError, err:
@@ -964,8 +966,8 @@ def OSKillProc():
 
             # remove files from job
 
-            if (__verbose__):
-                OSlog("all processes terminated with kill -9 now we deleting files ...")
+            if (__verbose__ == 'true'):
+               OSlog("all processes terminated with kill -9 now we deleting files ...")
 
             if (os.path.exists(__configLinux__[35])):
 
