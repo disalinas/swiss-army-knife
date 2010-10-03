@@ -232,9 +232,22 @@ def OSConfiguration(index):
         sys.platform.startswith('linux')
         command = "echo -n BLURAY ENABLED > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_ENABLED"
         status = os.system("%s" % (command))
+
+        # If the file BLURAY_DISABLED exist we remove it now ....
+
+        command = "rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_DISABLED >/dev/null 2>&1"
+        status = os.system("%s" % (command))
+ 
+
     else:
         command = "echo -n BLURAY DISABLED > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_DISABLED"
         status = os.system("%s" % (command))
+
+        # If the file BLURAY_ENABLED exist we remove it now ....
+
+        command = "rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_ENABLED >/dev/null 2>&1"
+        status = os.system("%s" % (command))
+
 
     # All used internal files are stored inside after here ...
 
