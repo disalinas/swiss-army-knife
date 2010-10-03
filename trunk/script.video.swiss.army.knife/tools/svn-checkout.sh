@@ -1,5 +1,5 @@
 ###########################################################
-# scriptname : collect-log.sh                             #
+# scriptname : svn-checkout.sh                            #
 ###########################################################
 # This script is part of the addon swiss-army-knife for   #
 # xbmc and is licenced under the gpl-licence              #
@@ -9,13 +9,5 @@
 # parameters : none                                       #
 ###########################################################
 
-
-cp $HOME/.xbmc/temp/xbmc.log .
-cp $HOME/swiss.army.knife/ssh/output .
-cp -r $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/* settings/
-
-tar cvzf collected-error.tar.gz *
-
-rm xbmc.log >/dev/null 2>&1
-rm output >/dev/null 2>&1
-rm -rf settings/* >/dev/null 2>&1
+cd ../..
+svn checkout http://swiss-army-knife.googlecode.com/svn/trunk/script.video.swiss.army.knife/ swiss-army-knife

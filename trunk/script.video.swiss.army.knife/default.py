@@ -282,14 +282,14 @@ def GUISelectDVDTranscode():
 
     dvd_parameters = []
 
-    dvd_parameters.append("4 2 " + __configuration__[1] + " " + __configuration__[4] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
-    dvd_parameters.append("3 0 " + __configuration__[1] + " " + __configuration__[3] + " " + "var1")
-    dvd_parameters.append("4 2 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
-    dvd_parameters.append("3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
-    dvd_parameters.append("3 0 " +  __configuration__[1] + " " + __configuration__[21] + " " + "var1")
-    dvd_parameters.append("3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
-    dvd_parameters.append("4 2 " +  __configuration__[1] + " " + __configuration__[50] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
-    dvd_parameters.append("4 2 " +  __configuration__[1] + " " + __configuration__[51] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+    dvd_parameters.append("h264-high " +  "4 2 " + __configuration__[1] + " " + __configuration__[4] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+    dvd_parameters.append("iso " +  "3 0 " + __configuration__[1] + " " + __configuration__[3] + " " + "var1")
+    dvd_parameters.append("h264-low " + "4 2 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+    dvd_parameters.append("mkv " + "3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
+    dvd_parameters.append("vobcopy " + "3 0 " +  __configuration__[1] + " " + __configuration__[21] + " " + "var1")
+    dvd_parameters.append("mpeg2 " + "3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
+    dvd_parameters.append("iphone " + "4 2 " +  __configuration__[1] + " " + __configuration__[50] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
+    dvd_parameters.append("psp " + "4 2 " +  __configuration__[1] + " " + __configuration__[51] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
       
     return dvd_parameters    
 #########################################################
@@ -1437,6 +1437,7 @@ class GUIMain01Class(xbmcgui.Window):
                                      executeList = []
                                      executeList = OSDVDExecuteList(True)   
                                      execstate =  OSDVDTranscode() 
+                                     # execstate = OSDVDTranscodeDefault(__dvd_values__[__default_dvd_tr__])    
                                      if (execstate == 0):
                                          GUIInfo(2,__language__(33209))
                                      if (execstate == 1):

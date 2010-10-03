@@ -82,7 +82,7 @@ The replacement is called setup.sh and is inside the shell-linux
 directory.
 
 
-5.) Upgrade from a previous version 
+5.0 Upgrade from a previous version 
 -----------------------------------
 
 Please do remove any previous version of the addon including the addon-directory
@@ -94,8 +94,8 @@ ALLWAYS RUN THE SETUP PROGRAMM INSIDE THE LINUX-SHELL FOLDER !!!
 ALLWAYS REMOVE THE ADDON-FILES INCLUDING ADDON-DIRECTORY PRIOR 
 TO INSTALL A NEW VERSION OF THIS ADDON.
 
-6.) Installation 
------------------
+6.0 Installation 
+----------------
 
 At first you have to extract the addon-zip inside the right place.
 
@@ -328,7 +328,7 @@ You can chose up to 2 audio-languages and 1 subtitle.
 ------------------------------------------
 
 With the release of 0.6.15 a user can integrate up to 9 shell-scripts 
-into the addon.There are a lot options that can resolved with this user-scripts.
+into the addon.There are a lot of options that can resolved with this user-scripts.
 
 Possible Actions than can be made with this integration.
 
@@ -344,6 +344,9 @@ Every user-script needs a description-file (user1.desc to user9.desc)
 user@xbmcdev:~/swiss.army.knife$ cat user1.desc 
 vpn connection on
 user@xbmcdev:~/swiss.army.knife$ 
+
+Both files for every shell-script have to exist or the menu-point 
+will not be activated.
 
 
 7.O Using the addon and have fun 

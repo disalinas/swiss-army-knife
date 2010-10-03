@@ -1,5 +1,5 @@
 ###########################################################
-# scriptname : collect-log.sh                             #
+# scriptname : progress.sh                                #
 ###########################################################
 # This script is part of the addon swiss-army-knife for   #
 # xbmc and is licenced under the gpl-licence              #
@@ -10,12 +10,13 @@
 ###########################################################
 
 
-cp $HOME/.xbmc/temp/xbmc.log .
-cp $HOME/swiss.army.knife/ssh/output .
-cp -r $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/* settings/
-
-tar cvzf collected-error.tar.gz *
-
-rm xbmc.log >/dev/null 2>&1
-rm output >/dev/null 2>&1
-rm -rf settings/* >/dev/null 2>&1
+if [ -e $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress ] ; then
+  PERCENT=$(cat $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress)
+  echo
+  echo current progress [$PERCENT%]
+  echo
+else
+  echo
+  echo no active job found
+  echo
+fi
