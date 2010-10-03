@@ -148,6 +148,8 @@ Changes:
   example : - start a vpn connection 
             and many more  
 
+-  Add progress.sh to svn 
+
 Fixes:
 
 - Until we have a Release Candidate the verbose flag will be set default to on.

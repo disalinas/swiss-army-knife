@@ -2450,3 +2450,34 @@ def OSGetUserDesc(index):
     else:
         return " "
 #########################################################
+
+
+
+
+
+#########################################################
+# Function  : OSDVDTranscodeDefault                     #
+#########################################################
+# Parameter : Paramlist                                 #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           default transcode-process not startet     #
+# 1           default transcode-process startet         #
+#                                                       #
+#########################################################
+def OSDVDTranscodeDefault(Paramlist):
+
+    global __configLinux__
+    global __exec_dvd__
+    global __verbose__
+    
+    para = [] 
+    for word in Paramlist.split(' '):
+        para.append(word)
+        if (__verbose__ == 'true'): 
+           OSlog("Transcode value prior to execute : [" + word + "]") 
+    return 0 
+#########################################################
+
+
