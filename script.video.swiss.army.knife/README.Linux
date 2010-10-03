@@ -2,6 +2,7 @@ Readme.Linux for xbmc addon swiss-army-knife
 --------------------------------------------
 
 1.0 Welcome to my first addon swiss-army-knife
+----------------------------------------------
 
 Please do excuse my poor writen english. My native language 
 is german and I do speak a few others imho very good, but speaking 
@@ -46,7 +47,7 @@ By this new addon I changed a few things.
 
 
 1.1 What are the functions this addon provides ? 
-
+------------------------------------------------
 
 * create a exact iso copy of a dvd with dd.
 * try to copy crippled dvd's with ddrescue.
@@ -59,7 +60,8 @@ By this new addon I changed a few things.
 * In a later release I plan to work  some of this features over the network. 
 
 
-2.) Requierements for this addon 
+2.0 Requierements for this addon 
+---------------------------------
 
 - a Ubuntu 10.04 LTS system or higher. (Test passed on Ubuntu 10.04 LTS) 
 - a SVN build of XBMC (at least SVN 31953) or higher.
@@ -68,17 +70,20 @@ By this new addon I changed a few things.
   big. 
 
 3.0 What Software will be installed ? 
+-------------------------------------
 
 The list is to long but you can have a look inside the file 
 shell-linux/setup.sh 
 
-4.0 Where is the livcd.sh shell-script gone ? 
 
+4.0 Where is the livcd.sh shell-script gone ? 
+---------------------------------------------
 The replacement is called setup.sh and is inside the shell-linux 
 directory.
 
 
 5.) Upgrade from a previous version 
+-----------------------------------
 
 Please do remove any previous version of the addon including the addon-directory
 inside user-data. As long the addon remains alpha or beta a lot of changes do occur. 
@@ -90,6 +95,7 @@ ALLWAYS REMOVE THE ADDON-FILES INCLUDING ADDON-DIRECTORY PRIOR
 TO INSTALL A NEW VERSION OF THIS ADDON.
 
 6.) Installation 
+-----------------
 
 At first you have to extract the addon-zip inside the right place.
 
@@ -182,6 +188,7 @@ Do change the settings to your needs like ...
 and many more .....
 
 6.1 Licence key for makekmv 
+---------------------------
 
 * Get a valid licence key for makemkv 
  
@@ -226,6 +233,7 @@ If your licence key is expired you see the following message inside the addon
 "Licence-key for makemkv expired"
 
 6.2 What should you do if you have found a error ? 
+--------------------------------------------------
 
 - Be sure to read the logs ...
 - This addons write all logs to the xbmc.log inside ~/temp/xbmc.log.
@@ -245,14 +253,17 @@ If your licence key is expired you see the following message inside the addon
 - To collect all logs that are needed I created a little script inside the tool folder.
 
 6.3 Feedback 
+------------
 
 http://code.google.com/p/swiss-army-knife/wiki/Feedback
 
 6.4 Bugtracking 
+---------------
 
 http://code.google.com/p/swiss-army-knife/issues/list
 
 6.5 First steps with the addon 
+------------------------------
 
 If you are starting the addon the first time you see 5 Menu-Entrys.
 
@@ -314,9 +325,29 @@ You can chose up to 2 audio-languages and 1 subtitle.
 
 
 6.6 User-Functions (up to 9 shell-scripts) 
+------------------------------------------
+
+With the release of 0.6.15 a user can integrate up to 9 shell-scripts 
+into the addon.There are a lot options that can resolved with this user-scripts.
+
+Possible Actions than can be made with this integration.
+
+- Start & Stop a vpn connection
+- Copy files to a nas
+
+All user-scripts called user1.sh to user9.sh must be placed inside 
+
+~/swiss.army.knife 
+
+Every user-script needs a description-file (user1.desc to user9.desc)
+
+user@xbmcdev:~/swiss.army.knife$ cat user1.desc 
+vpn connection on
+user@xbmcdev:~/swiss.army.knife$ 
 
 
 7.O Using the addon and have fun 
+--------------------------------
 
 Lucern, Switzerland 
 09.29.2010 
