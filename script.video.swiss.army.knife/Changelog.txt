@@ -148,7 +148,8 @@ Changes:
   example : - start a vpn connection 
             and many more  
 
--  Add progress.sh to svn 
+- Add progress.sh to svn 
+- Add svn-checkout.sh to svn 
 
 Fixes:
 
