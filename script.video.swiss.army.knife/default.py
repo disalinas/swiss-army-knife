@@ -275,10 +275,9 @@ def GUISelectDVDTranscode():
     # 2 -> iso 		/dev/sr0  	/dvdrip/iso	
     # 3 -> h264-low	/dev/sr0 	/dvdrip/transcode 
     # 4 -> mkv 		/dev/sr0 	/dvdrip/transcode 
-    # 5 -> vobcopy	/dev/sr0 	/dvdrip/vobcopy  
-    # 6 -> mpeg2	/dev/sr0 	/dvdrip/transcode    
-    # 7 -> iphone  	/dev/sr0	/dvdrip/portable/ip
-    # 8 -> psp		/dev/sr0	/dvdrip/portable/psp
+    # 5 -> vobcopy	/dev/sr0 	/dvdrip/vobcopy      
+    # 6 -> iphone  	/dev/sr0	/dvdrip/portable/ip
+    # 7 -> psp		/dev/sr0	/dvdrip/portable/psp
 
     dvd_parameters = []
 
@@ -287,7 +286,6 @@ def GUISelectDVDTranscode():
     dvd_parameters.append("h264-low " + "5 2 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
     dvd_parameters.append("mkv " + "3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
     dvd_parameters.append("vobcopy " + "3 0 " +  __configuration__[1] + " " + __configuration__[21] + " " + "var1")
-    dvd_parameters.append("mpeg2 " + "3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
     dvd_parameters.append("iphone " + "5 2 " +  __configuration__[1] + " " + __configuration__[50] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
     dvd_parameters.append("psp " + "5 2 " +  __configuration__[1] + " " + __configuration__[51] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
       
@@ -482,18 +480,15 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
           exit = True
 
           menu = []       
-          for i in range(32180,32187):
+          for i in range(32180,32186):
 	      menu.append(__language__(i))
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32095) ,menu)
              if (choice == 0):
-                 GUIInfo(1,__language__(33205)) 
-                 exit = True
-             if (choice == 1):
                  GUIInfo(1,__language__(33205))  
                  exit = True    
-             if (choice == 2):
+             if (choice == 1):
   
                  # We transcode a dvd but this function 
                  # needs the same configuration like the 
@@ -547,7 +542,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                  else:
                      GUIInfo(0,__language__(33328)) 
 
-             if (choice == 3):
+             if (choice == 2):
                  selected_done = False
                  append_pars = []
  
@@ -660,7 +655,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          GUIInfo(0,__language__(33208))
                          __jobs__ = True
 
-             if (choice == 4):
+             if (choice == 3):
 
                  selected_done = False
                  append_pars = []
@@ -774,7 +769,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          GUIInfo(0,__language__(33208))
                          __jobs__ = True
 
-             if (choice == 5):
+             if (choice == 4):
 
                  selected_done = False
                  append_pars = []
@@ -889,7 +884,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          __jobs__ = True
 
 
-             if (choice == 6): 
+             if (choice == 5): 
                  exit = False
 
           self.close()
@@ -1376,7 +1371,7 @@ class GUIMain01Class(xbmcgui.Window):
               __jobs__ = False
 
           menu = []      
-          for i in range(32100,32106):
+          for i in range(32100,32105):
 	      menu.append(__language__(i))
 
           exit_script = True 
@@ -1436,8 +1431,7 @@ class GUIMain01Class(xbmcgui.Window):
                                  if (tracklist[0] != 'none'):
                                      executeList = []
                                      executeList = OSDVDExecuteList(True)   
-                                     execstate =  OSDVDTranscode() 
-                                     # execstate = OSDVDTranscodeDefault(__dvd_values__[__default_dvd_tr__])    
+                                     execstate = OSDVDTranscodeDefault(__dvd_values__[__default_dvd_tr__])    
                                      if (execstate == 0):
                                          GUIInfo(2,__language__(33209))
                                      if (execstate == 1):
@@ -1450,39 +1444,7 @@ class GUIMain01Class(xbmcgui.Window):
                      else:
                          GUIInfo(0,__language__(33308))    
 
-                 if (choice == 2):
-                     if (__verbose__ == "true"):      
-                        GUIlog('menu dvd-iso activated') 
-                     Lock = OSCheckLock(__configuration__[1])
-                     if (Lock == 0):
-                         dvd_info = xbmc.getDVDState()
-                         if (dvd_info == 4):
-                             DVDState = OSCheckMedia("DVD-ROM")
-                             if (DVDState == 2):
-                                 GUIInfo(0,__language__(33302)) 
-                             if (DVDState == 1):
-                                 GUIInfo(0,__language__(33311))
-                             if (DVDState == 0):
-                                 tracklist = []
-                                 tracklist = OSChapterDVD()
-                                 if (tracklist[0] != 'none'):
-                                     executeList = []
-                                     executeList = OSDVDExecuteList(True)   
-                                     execstate = OSDVDcopyToIso() 
-                                     if (execstate == 0):
-                                         GUIInfo(2,__language__(33211))
-                                     if (execstate == 1):
-                                         GUIInfo(0,__language__(33210))
-                                         __jobs__ = True
-                                 else:
-                                     GUIInfo(0,__language__(33312)) 
-                         else:
-                             GUIInfo(0,__language__(33309))
-                     else:
-                         GUIInfo(0,__language__(33308))    
-
-
-                 if (choice == 3): 
+                 if (choice == 2): 
                      if (__verbose__ == "true"):      
                         GUIlog('menu expert-mode activated')
 
@@ -1509,12 +1471,12 @@ class GUIMain01Class(xbmcgui.Window):
                      else:
                           ExpertWindow = GUIExpertWinClass()
                           del ExpertWindow         
-                 if (choice == 4): 
+                 if (choice == 3): 
                      if (__verbose__ == "true"):      
                         GUIlog('menu jobs activated')
                      JobWindow = GUIJobWinClass()
                      del JobWindow        
-                 if (choice == 5): 
+                 if (choice == 4): 
                      if (__verbose__):
                          GUIlog('menu exit activated')
                      exit_script = False

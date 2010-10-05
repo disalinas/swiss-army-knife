@@ -2481,17 +2481,17 @@ def OSDVDTranscodeDefault(Paramlist):
     # The para string contains all info for the default transcode-selection 
     # The secound parameter is the most importand one ...
 
-    if (__verbose__ == 'true'): 
-       x = 0 
-       dvd_command = ""
-       for number in __exec_dvd__:
-           dvd_command = dvd_command + " " + __exec_dvd__[x]
-           x = x + 1  
-       OSlog("__exec_dvd__ filds [" + dvd_command + "]")                      
- 
     if (para[1] == '5'):
 
        # We can pass the arguments 1:1 
+   
+       if (__verbose__ == 'true'): 
+          x = 0 
+          dvd_command = ""
+          for number in __exec_dvd__:
+              dvd_command = dvd_command + " " + __exec_dvd__[x]
+              x = x + 1  
+          OSlog("__exec_dvd__ filds andvanced [" + dvd_command + "]")  
 
        if (__verbose__ == 'true'):
           OSlog("advanced transcoding selected")   
@@ -2508,12 +2508,24 @@ def OSDVDTranscodeDefault(Paramlist):
 
     if (para[1] == '3'):
 
-       # Delete all parameters execpt 1-3 
+       new_exec = []  
+       export_name = __exec_dvd__[2]
+       export_dir = para[4]
+       export_device = para[3] 
 
-       parameters = len(__exec_dvd__)
-       for index in range((parameters - 1),3):
-           del  __exec_dvd__[index]
-
+       new_exec.append(export_device)
+       new_exec.append(export_dir) 
+       new_exec.append(export_name)
+ 
+       __exec_dvd__ = new_exec
+ 
+       if (__verbose__ == 'true'): 
+          x = 0 
+          dvd_command = ""
+          for number in __exec_dvd__:
+              dvd_command = dvd_command + " " + __exec_dvd__[x]
+              x = x + 1  
+          OSlog("__exec_dvd__ filds simple [" + dvd_command + "]")  
 
        if (__verbose__ == 'true'): 
           OSlog("simple transcoding selected")
@@ -2523,8 +2535,6 @@ def OSDVDTranscodeDefault(Paramlist):
           state_tr = OSDVDtoMKV() 
        if (para[0] == 'vobcopy'):
           state_tr = OSDVDvcopy() 
-       if (para[0] == 'mpeg2'):
-          state_tr = 0 
  
     return state_tr
 #########################################################
