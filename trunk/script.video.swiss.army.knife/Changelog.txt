@@ -150,6 +150,8 @@ Changes:
 
 - Add progress.sh to svn 
 - Add svn-checkout.sh to svn 
+- Remove iso function from main-menu
+- Remove mpeg2 function from transcoding-menu
 
 Fixes:
 
@@ -165,6 +167,9 @@ Fixes:
 - Linebreaks for longer text inside dialog.ok function is needed.
 - it seems that makemkv 1.6.0 had a few problems .... I do test version 1.6.1 now
 - We should only have 1 bluray option file (thanks to dekani from xbmc.org forum)
+- removed mpeg2 transcoding from svn ... (comes in later release) this has not a 
+  important priority
+
 
  
  

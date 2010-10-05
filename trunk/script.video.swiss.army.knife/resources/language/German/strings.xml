@@ -60,11 +60,10 @@
         <!--           --> 
                 
         <string id="32100">Transcode BluRay zu MKV</string>
-        <string id="32101">Transcode DVD</string>
-        <string id="32102">Rippe DVD zu ISO</string>       
-        <string id="32103">Experten-Modus</string>
-        <string id="32104">Aktive Aufträge</string>
-        <string id="32105">Verlassen</string>
+        <string id="32101">Transcode DVD</string>     
+        <string id="32102">Experten-Modus</string>
+        <string id="32103">Aktive Aufträge</string>
+        <string id="32104">Verlassen</string>
 
 
         <!--               --> 
@@ -131,13 +130,12 @@
         <!-- Transcode Window -->
         <!--                  -->
          
-        <string id="32180">DVD -> MPEG2</string>
-        <string id="32181">DVD -> ISO zum Brennen</string>
-        <string id="32182">DVD -> MKV</string>
-        <string id="32183">DVD -> h264 low-profile</string>
-        <string id="32184">DVD -> Iphone</string>
-        <string id="32185">DVD -> PSP</string>
-        <string id="32186">Verlassen</string>
+        <string id="32180">DVD -> ISO zum Brennen</string>
+        <string id="32181">DVD -> MKV</string>
+        <string id="32182">DVD -> h264 low-profile</string>
+        <string id="32183">DVD -> Iphone</string>
+        <string id="32184">DVD -> PSP</string>
+        <string id="32185">Verlassen</string>
  
         <!--                  --> 
         <!-- User-Scripts     -->
