@@ -562,6 +562,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
                              if (DVDState == 3):
+                                 GUIlog('dvd-copy protection detected !!')  
                                  selection = GUIYesNo(1,__language__(33334))
                                  if (selection):
                                      DVDState = 0
@@ -617,6 +618,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
                          if (DVDState == 3):
+                             GUIlog('dvd-copy protection detected !!') 
                              selection = GUIYesNo(1,__language__(33334))
                              if (selection):
                                  DVDState = 0
@@ -735,6 +737,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
                          if (DVDState == 3):
+                             GUIlog('dvd-copy protection detected !!') 
                              selection = GUIYesNo(1,__language__(33334))
                              if (selection):
                                  DVDState = 0
@@ -853,6 +856,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
                          if (DVDState == 3):
+                             GUIlog('dvd-copy protection detected !!') 
                              selection = GUIYesNo(1,__language__(33334))
                              if (selection):
                                  DVDState = 0
@@ -1093,6 +1097,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
                          if (DVDState == 3):
+                             GUIlog('dvd-copy protection detected !!')  
                              selection = GUIYesNo(1,__language__(33334))
                              if (selection):
                                  DVDState = 0
@@ -1208,6 +1213,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
                          if (DVDState == 3):
+                             GUIlog('dvd-copy protection detected !!') 
                              selection = GUIYesNo(1,__language__(33334))
                              if (selection):
                                  DVDState = 0
@@ -1302,6 +1308,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
                          if (DVDState == 3):
+                             GUIlog('dvd-copy protection detected !!') 
                              selection = GUIYesNo(1,__language__(33334))
                              if (selection):
                                  DVDState = 0
@@ -1511,13 +1518,10 @@ class GUIMain01Class(xbmcgui.Window):
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
                              if (DVDState == 3):
-
-                                 # we ask to continue if we detect a copy protection ....
- 
+                                 GUIlog('dvd-copy protection detected !!') 
                                  selection = GUIYesNo(1,__language__(33334))
                                  if (selection):
-                                     DVDState = 0
-              
+                                     DVDState = 0              
                              if (DVDState == 2):
                                  GUIInfo(0,__language__(33302)) 
                              if (DVDState == 1):
