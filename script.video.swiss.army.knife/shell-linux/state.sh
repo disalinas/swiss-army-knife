@@ -13,6 +13,7 @@
 # returns the state of the dvd or bluray-drive            #
 # 0              Media inserted                           #
 # 1              Media not reconized                      #
+# 4              Media inserted with copy-protection      #
 ###########################################################
 
 if [ "$UID" == 0 ] ; then
@@ -131,28 +132,44 @@ if [ $RETVAL1 -eq 0 ] ; then
        cat $MEDIA_TYPE | head -3 | tail -1 | awk '{print $4}' > $MEDIA_RETURN
 
        # If the filesystem of the inserted dvd is incorrect we should not copy the dvd with dd
+       # or try to transcode this inserted dvd. From my point of view the lsdvd command is one 
+       # of the best indicators that a dvd has fooled or invalid file-system.
 
+       # A little note to the users of my script.If you have a few strings to add here ....
+       
        echo
        echo "INFO [media:[DVD-ROM]]"
        echo
 
-       CRC=$(cat $DVD_CRC_ERRRORS | grep "Zero check failed")
+       CRC_COUNTER=0 
        
+       CRC=$(cat $DVD_CRC_ERRRORS | grep "Zero check failed")
        if [ -n "$CRC" ] ; then 
+           CRC_COUNTER=1  
+       fi
+
+       CRC=$(cat $DVD_CRC_ERRRORS | grep "CHECK_VALUE failed")
+       if [ -n "$CRC" ] ; then 
+           CRC_COUNTER=1  
+       fi
+
+       if [ $CRC_COUNTER -eq 0 ] ; then 
+           echo ----------------------- script rc=0 -----------------------------
+           echo -----------------------------------------------------------------
+           exit 0
+       else
            echo 
            echo This DVD seeems to be very good copy-protected. 
            echo It is a guess that transcoding and dd-copy will not work on this 
-           echo DVD.It is recommandet to use resque-copy this disk.
+           echo DVD.It is recommandet to use resque-copy with this disk.
+           echo Even with a rescue-copy it is not certain that this disk can be 
+           echo duplicated.
            echo  
            echo ----------------------- script rc=4 -----------------------------
            echo -----------------------------------------------------------------
            echo 1 > $MEDIA_NOT_PROPER
            exit $E_CRC_ERROR 
-       else
-           echo ----------------------- script rc=0 -----------------------------
-           echo -----------------------------------------------------------------
-           exit 0
-       fi
+       fi 
    fi
 
    # In the case the bluray function are not enabled we do exit the script now
