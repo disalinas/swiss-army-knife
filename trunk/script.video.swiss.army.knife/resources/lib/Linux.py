@@ -282,7 +282,9 @@ def OSConfiguration(index):
     # More configuration settings 
 
     config[50] = __settings__.getSetting("iphone-transcode")
-    config[51] = __settings__.getSetting("psp-transcode")   
+    config[51] = __settings__.getSetting("psp-transcode")  
+    config[52] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD-CRC'
+ 
 
     # With a list the delete of multiple files is very easy ;-)
 
@@ -396,6 +398,8 @@ def OSRun(command,backg,busys):
 # 0           Checked media is inside drive             #
 # 1           No media found inside drive               #
 # 2           State file do not exist                   #
+# 3           DVD has a invalid file-system used as     #
+#             copy prevention !!!                       # 
 #                                                       #
 #########################################################
 def OSCheckMedia(Media):
@@ -472,7 +476,15 @@ def OSCheckMedia(Media):
         f.close
 
         if (media == Media):
-            return 0
+
+            # In a few cases the dvd that is inserted do not use 
+            # a proper file-system -> any kind of copy-prevention 
+            
+            if (os.path.exists(__configLinux__[52])):
+                os.remove(__configLinux__[52])
+                return 3
+            else:
+                return 0
         else:
             return 1
 
