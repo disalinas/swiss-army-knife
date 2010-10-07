@@ -152,6 +152,10 @@ Changes:
 - Add svn-checkout.sh to svn 
 - Remove iso function from main-menu
 - Remove mpeg2 function from transcoding-menu
+- Integrate makemkv 1.6.1 for 32 bit into setup.sh 
+- Checked 1.6.1 for 64 bit 
+- Test integrated tests to detect dvd's with crc-error copy protection 
+
 
 Fixes:
 
@@ -169,7 +173,12 @@ Fixes:
 - We should only have 1 bluray option file (thanks to dekani from xbmc.org forum)
 - removed mpeg2 transcoding from svn ... (comes in later release) this has not a 
   important priority
+- I have a brand-new dvd "Illuminati" that seems to be very good protected.
+  A investigate more tests on this ....
 
+  - dd copy .... error after 7 % 
+  - Transcoding with handbrake  .... exception ....
+  - rescue-copy do work but is very slow in execution.
 
  
  
