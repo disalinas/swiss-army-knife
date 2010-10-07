@@ -64,7 +64,7 @@ E_CRC_ERROR=4
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/media-error.log"
 MEDIA_TYPE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/media.log"
 MEDIA_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state"
-MEDIA_NOT_PROPER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/dvd-crc"
+MEDIA_NOT_PROPER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD-CRC"
 DVD_CRC_ERRRORS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/lsdvd_error"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
 
@@ -146,6 +146,7 @@ if [ $RETVAL1 -eq 0 ] ; then
            echo  
            echo ----------------------- script rc=4 -----------------------------
            echo -----------------------------------------------------------------
+           echo 1 > $MEDIA_NOT_PROPER
            exit $E_CRC_ERROR 
        else
            echo ----------------------- script rc=0 -----------------------------

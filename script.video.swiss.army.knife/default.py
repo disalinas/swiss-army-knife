@@ -111,6 +111,67 @@ else:
 
 
 
+
+#########################################################
+# Function  : GUIGUIYesNo                               #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# Selector    integer                                   # 
+#                                                       #
+# 0           Info                                      #
+# 1           Warning                                   #
+# 2           Error                                     #
+# 3           No text                                   #
+#                                                       #
+# Info        String to be shown inside Dialog-Box      #
+#                                                       # 
+# Returns   : OK or Yes                                 #
+#########################################################
+def GUIYesNo(Selector,Info):
+
+    global __linebreak__
+
+    # Is the text that should be displayed shorter than __linebreak__ ?
+
+    LenInfo = len(Info)
+
+    if (LenInfo <= (__linebreak__ - 1)):
+
+        # The text fit into a single line 
+
+        dialog = xbmcgui.Dialog()
+        title = __language__(33214 + Selector)
+        selected = dialog.yesno(title,Info)
+
+    else:
+
+        # we need to split the single string into 2 lines ...
+
+        line1 = ''
+        line2 = ''
+
+        for word in Info.split(' '):
+            l1 = len(line1)
+            l2 = len(word)
+            if ((l1 + l2) <= (__linebreak__ - 1)):
+                line1 = line1 + word + ' '
+            else:     
+                line2 = line2 + word + ' '
+
+        dialog = xbmcgui.Dialog()
+        title = __language__(33214 + Selector)
+        selected = dialog.yesno(title,line1,line2)
+  
+    return selected
+
+#########################################################
+
+
+
+
+
+
 #########################################################
 # Function  : GUIEditExportName                         #
 #########################################################
@@ -1421,6 +1482,14 @@ class GUIMain01Class(xbmcgui.Window):
                          dvd_info = xbmc.getDVDState()
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
+                             if (DVDState == 3):
+
+                                 # we ask to continue if we detect a copy protection ....
+ 
+                                 selection = GUIYesNo(1,__language__(33334))
+                                 if (selection):
+                                     DVDState = 0
+              
                              if (DVDState == 2):
                                  GUIInfo(0,__language__(33302)) 
                              if (DVDState == 1):
