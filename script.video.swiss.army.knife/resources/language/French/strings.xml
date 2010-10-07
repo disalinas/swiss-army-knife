@@ -230,7 +230,7 @@
         <string id="33331">Répertoire IPHONE non trouvé ou non inscriptible !</string> 
         <string id="33332">Répertoire PSP non trouvé ou non inscriptible !</string> 
         <string id="33333">Le mkv par défaut a besoin des fonctionnalités Blu-ray</string>   
-        <string id="33334">Copy-Protection detected. Process anyway ?</string>
+        <string id="33334">Protection contre la copie détectée. Traiter quand même ?</string>
            
         # Warning : do not modify this id !!!!   
 
