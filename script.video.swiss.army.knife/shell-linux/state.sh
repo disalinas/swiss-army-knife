@@ -59,10 +59,13 @@ EXPECTED_ARGS=1
 E_BADARGS=1
 E_TOOLNOTF=50
 E_INACTIVE=3
+E_CRC_ERROR=4
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/media-error.log"
 MEDIA_TYPE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/media.log"
 MEDIA_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state"
+MEDIA_NOT_PROPER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/dvd-crc"
+DVD_CRC_ERRRORS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/lsdvd_error"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
 
 
@@ -104,13 +107,21 @@ do
 done
 
 
+
+# cleanup
+
+if [ -e $MEDIA_NOT_PROPER ] ; then 
+    rm $MEDIA_NOT_PROPER > /dev/null 2>&1
+    rm $DVD_CRC_ERRRORS > /dev/null 2>&1
+fi
+
 OUTPUT=$(dvd+rw-mediainfo $1 > $MEDIA_TYPE 2>/dev/null)
 RETVAL1=$?
 if [ $RETVAL1 -eq 0 ] ; then
 
    # In booth cases (dvd or blureay) the return valaue is zero
 
-   lsdvd -a $1 > /dev/null 2>&1
+   lsdvd -a $1 > $DVD_CRC_ERRRORS 2>&1
    RETVAL2=$?
 
    if [ $RETVAL2 -eq 0 ] ; then
@@ -125,10 +136,22 @@ if [ $RETVAL1 -eq 0 ] ; then
        echo "INFO [media:[DVD-ROM]]"
        echo
 
-       echo ----------------------- script rc=0 -----------------------------
-       echo -----------------------------------------------------------------
-
-       exit 0
+       CRC=$(cat $DVD_CRC_ERRRORS | grep "Zero check failed")
+       
+       if [ -n "$CRC" ] ; then 
+           echo 
+           echo This DVD seeems to be very good copy-protected. 
+           echo It is a guess that transcoding and dd-copy will not work on this 
+           echo DVD.It is recommandet to use resque-copy this disk.
+           echo  
+           echo ----------------------- script rc=4 -----------------------------
+           echo -----------------------------------------------------------------
+           exit $E_CRC_ERROR 
+       else
+           echo ----------------------- script rc=0 -----------------------------
+           echo -----------------------------------------------------------------
+           exit 0
+       fi
    fi
 
    # In the case the bluray function are not enabled we do exit the script now
