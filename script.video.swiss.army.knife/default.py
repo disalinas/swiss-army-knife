@@ -561,6 +561,10 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          dvd_info = xbmc.getDVDState()
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
+                             if (DVDState == 3):
+                                 selection = GUIYesNo(1,__language__(33334))
+                                 if (selection):
+                                     DVDState = 0
                              if (DVDState == 2):
                                  GUIInfo(0,__language__(33302)) 
                              if (DVDState == 1):
@@ -612,6 +616,10 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      dvd_info = xbmc.getDVDState()
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 3):
+                             selection = GUIYesNo(1,__language__(33334))
+                             if (selection):
+                                 DVDState = 0
                          if (DVDState == 2):
                              GUIInfo(0,__language__(33302)) 
                          if (DVDState == 1):
@@ -726,6 +734,10 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      dvd_info = xbmc.getDVDState()
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 3):
+                             selection = GUIYesNo(1,__language__(33334))
+                             if (selection):
+                                 DVDState = 0
                          if (DVDState == 2):
                              GUIInfo(0,__language__(33302)) 
                          if (DVDState == 1):
@@ -840,6 +852,10 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      dvd_info = xbmc.getDVDState()
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 3):
+                             selection = GUIYesNo(1,__language__(33334))
+                             if (selection):
+                                 DVDState = 0
                          if (DVDState == 2):
                              GUIInfo(0,__language__(33302)) 
                          if (DVDState == 1):
@@ -1076,6 +1092,10 @@ class GUIExpertWinClass(xbmcgui.Window):
                      dvd_info = xbmc.getDVDState()
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 3):
+                             selection = GUIYesNo(1,__language__(33334))
+                             if (selection):
+                                 DVDState = 0
                          if (DVDState == 2):
                              GUIInfo(0,__language__(33302)) 
                          if (DVDState == 1):
@@ -1187,6 +1207,10 @@ class GUIExpertWinClass(xbmcgui.Window):
                      dvd_info = xbmc.getDVDState()
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 3):
+                             selection = GUIYesNo(1,__language__(33334))
+                             if (selection):
+                                 DVDState = 0
                          if (DVDState == 2):
                              GUIInfo(0,__language__(33302)) 
                          if (DVDState == 1):
@@ -1277,6 +1301,10 @@ class GUIExpertWinClass(xbmcgui.Window):
                      dvd_info = xbmc.getDVDState()
                      if (dvd_info == 4):
                          DVDState = OSCheckMedia("DVD-ROM")
+                         if (DVDState == 3):
+                             selection = GUIYesNo(1,__language__(33334))
+                             if (selection):
+                                 DVDState = 0
                          if (DVDState == 2):
                              GUIInfo(0,__language__(33302)) 
                          if (DVDState == 1):
