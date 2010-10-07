@@ -32,7 +32,7 @@
  * I guess most of the dvd's purchased prior to 2005 are not "crippled dvd's"
  * After 2005 the big players from hollywood began to sell "crippled dvd's". This kind of dvd's can be played on allmost all players but are copy protected.
  * With a copy protected dvd it can be very hard to produce a backup with dd or to transcode with handbrake.
- * The rescue-copy mode use ddresque to copy instead of dd.
+ * The rescue-copy mode use ddresque to copy instead of dd.I had a case in where this mode  was the only way to backup a dvd (I used over one hour to backup this dvd)
  
 === ====
 === ====
