@@ -666,10 +666,10 @@ if [ $? -eq 1 ] ; then
 
          # Install oss part for makemkv  
 
-         dpkg -i makemkv-v1.6.0-oss_20100926-1_amd64.deb
+         dpkg -i makemkv-v1.6.0-oss_20101007-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.0-oss_20100926-1_amd64.deb
+            echo the installation of makemkv-v1.6.0-oss_20101007-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -680,10 +680,10 @@ if [ $? -eq 1 ] ; then
           
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.1-bin_20100926-1_amd64.deb
+         dpkg -i makemkv-v1.6.1-bin_20101007-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.1-bin_20100926-1_amd64.deb
+            echo the installation of makemkv-v1.6.1-bin_20101007-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -774,10 +774,10 @@ else
 
          # Install oss part for makemkv  
 
-         dpkg -i makemkv-v1.6.0-oss_20100926-1_amd64.deb
+         dpkg -i makemkv-v1.6.0-oss_20101007-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.0-oss_20100926-1_amd64.deb
+            echo the installation of makemkv-v1.6.0-oss_20101007-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -788,10 +788,10 @@ else
           
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.1-bin_20100926-1_amd64.deb
+         dpkg -i makemkv-v1.6.1-bin_20101007-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.1-bin_20100926-1_amd64.deb
+            echo the installation of makemkv-v1.6.1-bin_20101007-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
