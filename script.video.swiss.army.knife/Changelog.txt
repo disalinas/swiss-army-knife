@@ -188,6 +188,7 @@ Date : 10.08.2010 | Release : 0.6.16    | Author  : H.Weber | CVS:366
 
 Changes:
 
+- Implement a working-thread
  
 Fixes: 
 

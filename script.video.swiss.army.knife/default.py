@@ -56,7 +56,7 @@ xbmc.output(__script__ + " Version: " + __version__  + "\n")
 ####################### IMPORTS #########################
 
 import xbmc, xbmcgui,xbmcaddon
-import os, sys, thread, stat, time, string, re
+import os, sys, threading, stat, time, string, re
 import urllib, urlparse, urllib2, xml.dom.minidom
 
 #########################################################
@@ -83,7 +83,7 @@ __verbose__         = 'false'
 __pw__ = ''
 __jobs__ = False
 __linebreak__ = 0
-
+__exitFlag__ = 0
 
 CWD = os.getcwd().rstrip(";")
 sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
@@ -439,7 +439,7 @@ def GUIInfo(Selector,Info):
 
 
 #########################################################
-# Function  : GUIExpertUserfunctionsClass               #
+# Class     : GUIExpertUserfunctionsClass               #
 #########################################################
 # Parameter : XBMC-Window Class                         #
 #                                                       #
@@ -525,7 +525,7 @@ class GUIExpertUserfunctionsClass(xbmcgui.Window):
 
 
 #########################################################
-# Function  : GUIExpertTranscodeClass                   #
+# Class     : GUIExpertTranscodeClass                   #
 #########################################################
 # Parameter : XBMC-Window Class                         #
 #                                                       #
@@ -977,7 +977,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
 
 #########################################################
-# Function  : GUIExpertNetworkClass                     #
+# Class     : GUIExpertNetworkClass                     #
 #########################################################
 # Parameter : XBMC-Window Class                         #
 #                                                       #
@@ -1021,7 +1021,7 @@ class GUIExpertNetworkClass(xbmcgui.Window):
 
 
 #########################################################
-# Function  : GUIExpertWinClass                         #
+# Class     : GUIExpertWinClass                         #
 #########################################################
 # Parameter : XBMC-Window Class                         #
 #                                                       #
@@ -1390,7 +1390,7 @@ class GUIExpertWinClass(xbmcgui.Window):
 
 
 #########################################################
-# Function  : GUIJobWinClass                            #
+# Class     : GUIJobWinClass                            #
 #########################################################
 # Parameter : XBMC-Window Class                         #
 #                                                       #
@@ -1444,7 +1444,7 @@ class GUIJobWinClass(xbmcgui.Window):
 
 
 #########################################################
-# Function  : GUIMain01Class                            #
+# Class     : GUIMain01Class                            #
 #########################################################
 # Parameter : XBMC-Window Class                         #
 #                                                       #
@@ -1584,6 +1584,39 @@ class GUIMain01Class(xbmcgui.Window):
           self.close()
 
 #########################################################
+
+
+
+
+
+#########################################################
+# Class     : GUIWorkerThread                           #
+#########################################################
+# Parameter : none                                      #
+# Returns   : none                                      #
+#########################################################
+class GUIWorkerThread(threading.Thread):
+
+        def __init__(self):
+            threading.Thread.__init__(self)        
+        def run(self):
+
+            exit = True
+            if (__verbose__ == "true"):   
+                GUIlog('[W-Thread] starting ...')
+            while (exit):  
+                   if __exitFlag__:
+                      if (__verbose__ == "true"):    
+                         GUIlog('[W-Thread] do exit ...')
+                      exit = False
+                   time.sleep(1)
+                   GUIlog('[W-Thread] active ...')
+            if (__verbose__ == "true"):   
+                GUIlog('[W-Thread] do exit now ...')
+            thread.exit()          
+                     
+#########################################################
+
 
 
 
@@ -1785,6 +1818,12 @@ if __name__ == '__main__':
                # In this case I have to ask less questions .... If a error comes ...
 
                if (Enable_Startup_Addon == 0):  
+
+                   # Starting worker-thread 
+
+                   thread2 = GUIWorkerThread()
+                   thread2.start()
+
                    GUIlog ("create main-menu")
                    xbmc.executebuiltin("Dialog.Close(busydialog)")
                    menu01 = GUIMain01Class()
@@ -1793,7 +1832,10 @@ if __name__ == '__main__':
                     if (__verbose__ == "true"):      
                         GUIlog ("This addon do not start until all errors on startup are resolved ....") 
                         GUIlog ("Addon do exit now ...")
+
                xbmc.executebuiltin("Dialog.Close(busydialog)")
+               __exitFlag__ = 1
+               time.sleep(2)     
                GUIlog ("addon-ended")
    
    
