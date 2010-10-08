@@ -1484,11 +1484,18 @@ class GUIMain01Class(xbmcgui.Window):
         
           global __jobs__
  
-          # Retrive JobsState to act inside the addon ....
+          # Get current JobsState to act inside the addon ....
 
           job_state = OSGetJobState()
           if (job_state == 1):
+
+              # The real-job files do exist.
+              # Prior to set the job-state to active we have 
+              # to be sure that the main-process of every 
+              # shell-script is running ....
+ 
               __jobs__ = True
+
           if (job_state == 0):
               __jobs__ = False
 
@@ -1636,7 +1643,7 @@ class GUIWorkerThread(threading.Thread):
                    time.sleep(1)
                    GUIlog('[W-Thread] is active and running ...')
                    if (__ProgressView__ == False):
-                       if (__jobs__ == 1):
+                       if (__jobs__ == True):
                           if (__verbose__ == "true"):   
                              GUIlog('[W-Thread] active jobe is running .....') 
 

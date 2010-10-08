@@ -63,7 +63,7 @@ E_MAKEMKV=253
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
-PWATCH=="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
+PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: bluray-transcode.sh p1 p2 p3 p4"

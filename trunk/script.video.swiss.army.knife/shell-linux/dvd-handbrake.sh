@@ -60,7 +60,7 @@ OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 JOBERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd-transcode.log"
-PWATCH=="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
+PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
 # Define the counting commands we expect inside the script
 
