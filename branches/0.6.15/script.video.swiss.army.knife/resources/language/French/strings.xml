@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+        <!--              -->
+        <!-- General Main -->
+        <!--              -->  
+        
+        <string id="32000">Addon Swiss-Army-Knife</string>
+        <string id="32001">http://code.google.com/p/swiss-army-knife</string>
+
+        <!--          --> 
+        <!-- Settings -->
+        <!--          --> 
+
+        <string id="32050">Script pour les lecteurs</string> 
+        <string id="32051">Lecteur dvd par défaut</string>
+        <string id="32052">Lecteur blu-ray par défaut</string>   
+        <string id="32053">Répertoires utilisés</string> 
+        <string id="32054">Répertoire rip iso</string> 
+        <string id="32055">Répertoire dvd-transcodage-h264 par défaut</string> 
+        <string id="32056">Répertoire blu-ray mkv par défaut</string>
+        <string id="32057">Paramètres divers</string> 
+        <string id="32058">Commande ssh par défaut</string> 
+        <string id="32059">Langue audio 1. par défaut (dvd)</string> 
+        <string id="32060">Langue audio 2. par défaut (dvd)</string> 
+        <string id="32061">Transcodage par défaut (dvd)</string> 
+        <string id="32062">Activer les fonctions blu-ray</string>
+        <string id="32063">Activer les fonctions de rippage par réseau</string>
+        <string id="32064">Activer transcodage &amp; fonctions de gravure</string>
+        <string id="32065">Mot de passe pour la protection du Mode Expert</string>
+        <string id="32066">Mot de passe</string>
+        <string id="32067">Taille par défaut du dvd simple couche</string>  
+        <string id="32068">Port de démarrage par défaut pour netcat (6 ports udp)</string>
+        <string id="32069">Débogage verbeux</string>
+        <string id="32070">Sous-titre par défaut (dvd)</string> 
+        <string id="32071">Activer les scripts-shell-clients</string>  
+        <string id="32072">Répertoire copie vob par défaut</string> 
+        <string id="32073">Répertoire du réseau maître</string>  
+        <string id="32074">Timeout par défaut 1: état du fichier</string>
+        <string id="32075">Timeout par défaut 2: chapitre-dvd</string> 
+        <string id="32076">Timeout par défaut 3: chapitre-blu-ray</string> 
+        <string id="32077">Répertoire par défaut pour gravure-transcodage</string> 
+        <string id="32078">Répertoire par défaut pour iphone-transcodage</string>  
+        <string id="32079">Répertoire par défaut pour psp-transcodage</string>        
+ 
+
+        <!--              --> 
+        <!-- Window-Names -->
+        <!--              --> 
+
+        <string id="32090">Menu Principal Swiss-Army-Knife</string> 
+        <string id="32091">Fenêtre-Travaux</string> 
+        <string id="32092">Menu Principal Mode Expert</string>   
+        <string id="32093">Menu Principal Réseau</string>
+        <string id="32094">Menu Principal Fonctions Utilisateur</string>
+        <string id="32095">Menu Principal Transcodage &amp; Gravure</string>                
+       
+
+        <!--           -->
+        <!-- Main-Menu -->
+        <!--           --> 
+                
+        <string id="32100">Transcoder Blu-Ray vers MKV</string>
+        <string id="32101">Transcoder DVD</string>       
+        <string id="32102">Mode Expert</string>
+        <string id="32103">Suivre les travaux</string>
+        <string id="32104">Quitter</string>
+
+
+        <!--               --> 
+        <!-- Advanced-Menu -->
+        <!--               -->
+
+        <string id="32120">Transcoder Blu-Ray vers MKV (confirmé)</string>
+        <string id="32121">Transcoder DVD profil haut niveau(confirmé)</string>
+        <string id="32122">Ripper DVD vers ISO (confirmé)</string>
+        <string id="32123">Copie de restauration DVD vers iso (confirmé)</string>
+        <string id="32124">Copier des fichiers vob du DVD vers le dd (confirmé)</string>
+        <string id="32125">Transcodage &amp; Gravure</string>      
+        <string id="32126">Fonctions Réseau</string>
+        <string id="32127">Scripts Utilisateur</string>
+        <string id="32128">Tester la connexion ssh</string>
+        <string id="32129">Info</string>
+        <string id="32130">Retour</string>
+
+
+        <!--               --> 
+        <!-- Network       -->
+        <!--               -->        
+
+        <string id="32140">Démarrer le Maître</string>
+        <string id="32141">Démarrer l'Esclave [dvd vers maître]</string>
+        <string id="32142">Démarrer l'Esclave [blu-ray vers maître]</string>
+        <string id="32143">Réservé</string>
+        <string id="32144">Retour</string>
+        <string id="32145">Adresse IP du Maître</string>
+
+        <!--                    --> 
+        <!-- Progress-bar text  -->
+        <!--                    -->
+        <!-- They are only used --> 
+        <!-- inside the scripts --> 
+        
+        <string id="32150">transcode blu-ray vers mkv</string>
+        <string id="32151">copie le sous-titre</string>
+        <string id="32152">transcode la passe 1</string>
+        <string id="32153">transcode la passe 2</string>
+        <string id="32154">copie dvd vers fichier iso</string>
+        <string id="32155">copie de restauration dvd vers un fichier iso</string>
+        <string id="32156">copie tous les vobs vers le disque dur</string>
+        <string id="32157">copie à partir du maitre</string>
+        <string id="32158">copie vers l'esclave</string>
+        <string id="32159">transcode dvd vers mkv</string>
+        <string id="32160">transcode la passe 1/1 du mp4</string>
+
+        <!--                --> 
+        <!-- Joblist Window -->
+        <!--                -->
+        
+        <string id="32170">Barre de progression</string>
+        <string id="32171">Tuer le travail</string>
+        <string id="32172">Supprimer le fichier de vérouillage</string>     
+        <string id="32173">Retour</string>
+        <string id="32174">Etape : </string>
+        <string id="32175"> </string>
+        <string id="32176"> </string>
+        <string id="32177">Il n'y a pas de travail actif</string>
+
+
+        <!--                  --> 
+        <!-- Transcode Window -->
+        <!--                  -->
+         
+        <string id="32180">DVD -> ISO pour gravure</string>
+        <string id="32181">DVD -> MKV</string>
+        <string id="32182">DVD -> h264 profil bas niveau</string>
+        <string id="32183">DVD -> Iphone</string>
+        <string id="32184">DVD -> PSP</string>
+        <string id="32185">Back</string>
+ 
+        <!--                  --> 
+        <!-- User-Scripts     -->
+        <!--                  -->
+
+        <string id="32190"> </string>
+        <string id="32191"> </string>
+        <string id="32192"> </string>
+        <string id="32193"> </string>
+        <string id="32194"> </string>
+        <string id="32195"> </string>
+        <string id="32196"> </string>
+        <string id="32197"> </string>
+        <string id="32198"> </string>
+        <string id="32199">Retour</string>
+
+        <!--               --> 
+        <!-- Info          -->
+        <!--               -->
+
+        <string id="33201">boite d'info</string>
+        <string id="33202">Veuiller choisir la piste Blu-ray à exporter</string>
+        <string id="33203">Transcodage Blu-ray démarré avec succès</string>
+        <string id="33204">Le transcodage Blu-ray n'a pas pu être lancé</string> 
+        <string id="33205">Cette fonctionnalité sera disponible dans une prochaine version</string>
+        <string id="33206">Travail annulé par l'utilisateur</string>
+        <string id="33207">Veuillez sélectionner la piste DVD à exporter</string> 
+        <string id="33208">Transcodage DVD démarré avec succès</string>
+        <string id="33209">Le transcodage DVD n'a pas pu être lancé</string> 
+        <string id="33211">La copie iso DVD n'a pas pu être lancée</string> 
+        <string id="33212">Veuillez saisir le mot de passe pour le mode Expert</string> 
+        <string id="33213">Le mot de passe était incorrect</string>  
+        <string id="33214">INFO:</string>  
+        <string id="33215">AVERTISSEMENT:</string>
+        <string id="33216">ERREUR:</string>
+        <string id="33217"> </string>
+        <string id="33218">Le test de connexion ssh a réussi</string>
+        <string id="33219">Le test de connexion ssh a échoué</string>
+        <string id="33220">Veuillez choisir un répertoire pour la sauvegarde</string>
+        <string id="33221">Le nom de répertoire contient des espaces</string>
+        <string id="33222">Le répertoire choisi n'est pas inscriptible</string>
+        <string id="33223">Nom d'export sans extension</string>
+        <string id="33224">Le nom d'export contient des caractères invalides</string> 
+        <string id="33225">Vous devez confirmer un nom</string> 
+        <string id="33226">Veuillez choisir la première langue audio</string>
+        <string id="33227">Voulez-vous ajouter une deuxième langue audio ?</string> 
+        <string id="33228">Voulez-vous utiliser des sous-titres ?</string>  
+        <string id="33229">Veuillez choisir la deuxième langue audio</string> 
+        <string id="33230">Veuillez choisir la piste de sous-titre à utiliser</string> 
+        <string id="33231">copie vob DVD démarrée avec succès</string>
+        <string id="33232">La copie vob DVD ne peut pas lancée</string> 
+        <string id="33233">Le travail actif est finit avec succès</string> 
+        <string id="33234">Veuillez insérer un dvd simple-couche vide</string> 
+        <string id="33235">Veuillez insérer un dvd simple-couche vide</string>
+        <string id="33236">Ce menu est visible uniquement s'il y a des fonctions utilisateur</string>
+        
+        <!--               -->
+        <!-- Error         -->
+        <!--               -->
+        
+        <string id="33300">Avant de démarrer cet addon, setup.sh doit être lancé</string> 
+        <string id="33301">Le disque inséré n'est pas un disque Blu-ray</string>
+        <string id="33302">Timeout t1 trop court : le media ne peut pas être ouvert</string>
+        <string id="33303">Les fonctions Blu-ray sont désactivées.</string>
+        <string id="33304">Timeout t3 trop court : chapitre blue-ray</string>
+        <string id="33305">Répertoire ISO non trouvé ou non inscriptible !</string>
+        <string id="33306">Répertoire DVD non trouvé ou non inscriptible !</string> 
+        <string id="33307">Répertoire blu-ray non trouvé ou non inscriptible !</string>
+        <string id="33308">Le lecteur est déjà vérouillé par un travail actif !</string>
+        <string id="33309">Lecteur non prêt !</string>
+        <string id="33310">Le travail ne peut pas être tué</string>  
+        <string id="33311">Le disque inséré n'est pas un disque DVD</string>    
+        <string id="33312">Timeout t2 trop court : chapitres dvd</string>  
+        <string id="33313">Problème avec la liste des pistes audio générée</string> 
+        <string id="33314">Problème avec la liste des pistes sous-titre générée</string>    
+        <string id="33315">La clef de licence pour makemkv a expiré</string>  
+        <string id="33316">L'utilisateur configuré pour le ssh n'est pas l'utilisateur courant</string>  
+        <string id="33317">Le dvd inséré n'est pas monté</string> 
+        <string id="33318">Répertoire copie vob non trouvé ou non inscriptible !</string>
+        <string id="33319">Le répertoire réseau du maître non trouvé ou non inscriptible !</string>
+        <string id="33320">Les fonctions Réseau sont désactivées.</string>
+        <string id="33321">Le serveur ssh local n'est pas configuré correctement</string>
+        <string id="33322">Les fonctions utilisateur sont désactivées</string>
+        <string id="33323">Erreur dans le travail actif</string>
+        <string id="33324">--</string>
+        <string id="33325">Les fonctions de gravure et de transcodage sont désactivées</string> 
+        <string id="33326">Répertoire de gravure et de transcodage non trouvé ou non inscriptible !</string> 
+        <string id="33327">Lancer setup.sh pour créer le répertoire ssh !</string>  
+        <string id="33328">Cette fonctionnalité de transcodage a besoin de makemkv !</string>        
+        <string id="33329">Aucune connexion possible avec le maître réseau !</string>
+        <string id="33330">Aucune connexion du client n'a été effectuée !</string>
+        <string id="33331">Répertoire IPHONE non trouvé ou non inscriptible !</string> 
+        <string id="33332">Répertoire PSP non trouvé ou non inscriptible !</string> 
+        <string id="33333">Le mkv par défaut a besoin des fonctionnalités Blu-ray</string>   
+        <string id="33334">Protection contre la copie détectée. Traiter quand même ?</string>
+           
+        # Warning : do not modify this id !!!!   
+
+        <string id="34000">Line-1 1234567891123456789212345678931234567 Line-2 1234567891123456789212345678931234567</string>
+ </strings>
