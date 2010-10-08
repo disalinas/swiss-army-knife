@@ -114,7 +114,28 @@ else:
 
 
 #########################################################
-# Function  : GUIGUIYesNo                               #
+# Function  : GUINotification                           #
+#########################################################
+# Parameter :                                           #
+#                                                       #
+# Info        String to be shown inside Dialog-Box      #
+#                                                       # 
+# Returns   : none                                      #
+#########################################################
+def GUINotification(Info):
+
+    if (__verbose__ == "true"):
+        GUIlog('notificatio : [' + Info + "]")
+    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),Info,10) ")
+    return 
+     
+#########################################################
+
+
+
+
+#########################################################
+# Function  : GUIYesNo                                  #
 #########################################################
 # Parameter :                                           #
 #                                                       #
@@ -487,39 +508,39 @@ class GUIExpertUserfunctionsClass(xbmcgui.Window):
                      if (choice == 0):
                          if (menu[0] != " "):
                             OSRun("user1.sh",True,False) 
-                            xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user1.sh,10) ")  
+                            GUINotification("user1.sh executed")   
                      if (choice == 1):
                          if (menu[1] != " "):
                             OSRun("user2.sh",True,False)   
-                            xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user2.sh,10) ")
+                            GUINotification("user2.sh executed")   
                      if (choice == 2):
                          if (menu[2] != " "):
                             OSRun("user3.sh",True,False)  
-                            xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user3.sh,10) ")
+                            GUINotification("user3.sh executed")   
                      if (choice == 3):
                          if (menu[3] != " "):
                             OSRun("user4.sh",True,False)  
-                            xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user4.sh,10) ") 
+                            GUINotification("user4.sh executed")    
                      if (choice == 4):
                          if (menu[4] != " "): 
                             OSRun("user5.sh",True,False)  
-                            xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user5.sh,10) ")
+                            GUINotification("user5.sh executed")   
                      if (choice == 5):
                          if (menu[5] != " "):
                             OSRun("user6.sh",True,False) 
-                            xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user6.sh,10) ")
+                            GUINotification("user6.sh executed")   
                      if (choice == 6):
                         if (menu[6] != " "): 
                            OSRun("user7.sh",True,False) 
-                           xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user7.sh,10) ")
+                           GUINotification("user7.sh executed")   
                      if (choice == 7):
                          if (menu[7] != " "): 
                             OSRun("user8.sh",True,False) 
-                            xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user8.sh,10) ")
+                            GUINotification("user8.sh executed")   
                      if (choice == 8):
                          if (menu[8] != " "): 
                             OSRun("user9.sh",True,False) 
-                            xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),user9.sh,10) ")  
+                            GUINotification("user9.sh executed")     
                      if (choice == 9): 
                         exit = False
           self.close()
