@@ -55,6 +55,7 @@ echo ---------------------------------------------------------------------------
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/iso-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/dvd-dd.log"
+PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
 # Define the counting commands we expect inside the script
 
@@ -187,6 +188,7 @@ rm $JOBFILE > /dev/null 2>&1
 
 sleep 1
 rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+rm $PWATCH > /dev/null 2>&1
 
 echo
 echo ----------------------- script rc=0 -----------------------------

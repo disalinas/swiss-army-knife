@@ -284,7 +284,7 @@ def OSConfiguration(index):
     config[50] = __settings__.getSetting("iphone-transcode")
     config[51] = __settings__.getSetting("psp-transcode")  
     config[52] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD-CRC'
- 
+    config[53] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH'
 
     # With a list the delete of multiple files is very easy ;-)
 
@@ -2549,6 +2549,38 @@ def OSDVDTranscodeDefault(Paramlist):
           state_tr = OSDVDvcopy() 
  
     return state_tr
+#########################################################
+
+
+
+
+#########################################################
+# Function  : OSCheckMainProcess                        #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 0           default main-process is running           #
+# 1           default main-process is not running       #
+# 2           pid for main-process is not set           #
+#             (the pid-file could not be readed         #
+#########################################################
+def OSCheckMainProcess():
+
+    global __configLinux__
+    global __verbose__
+
+    pid = []
+
+    if (os.path.exists(__configLinux__[53])):
+        WatchF = open(__configLinux__[53],'r')
+        for line in WatchF.readlines():
+                line = line.strip()
+                pid.append(line)
+        WatchF.close()
+    else:
+         return 2
 #########################################################
 
 
