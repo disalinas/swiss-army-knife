@@ -14,7 +14,7 @@
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
 # VERSION : 0.6.15                                      #
-# DATE    : 10-02-10                                    #
+# DATE    : 10-08-10                                    #
 # STATE   : Beta 1                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
