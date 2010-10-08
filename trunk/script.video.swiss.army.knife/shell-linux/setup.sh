@@ -124,7 +124,7 @@ fi
 ###########################################################
 #            Is licence-file allready local ?             #
 ###########################################################
-if [ ! -e EULA-0.6.15 ] ; then
+if [ ! -e EULA-0.6.16 ] ; then
    clear
    echo
    echo download licence file from google-code
@@ -132,15 +132,15 @@ if [ ! -e EULA-0.6.15 ] ; then
    wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.15
 fi
 
-if [ -e EULA-0.6.15 ] ; then
+if [ -e EULA-0.6.16 ] ; then
    clear
-   cat EULA-0.6.15
+   cat EULA-0.6.16
    echo
    echo -n "Do you want to accept this enduser-licnce ? (y)"
    read ans
    if [ $ans == "y" ] ; then
       clear
-      echo "EULA 0.6.15 accepted"
+      echo "EULA 0.6.16 accepted"
       echo
       echo -n press any key to continue ..
       read any
@@ -156,7 +156,7 @@ else
    echo The EULA-FILE can not be downloaded and therefore you must
    echo use a svn release of this addon.
    echo You do this at you own risk .....
-   echo the last stable puplic released version was 0.6.14
+   echo the last stable puplic released version was 0.6.15
    echo
    echo -n press any key to continue or ctrl-c to abort..
    read any
@@ -822,18 +822,18 @@ fi
 ###########################################################
 clear
 cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
-if [ ! -e 0.6.15-setup.done ] ; then
+if [ ! -e 0.6.16-setup.done ] ; then
    echo
    echo -----------------------------------------------------------
    echo create setup.done and licence-file inside addon-data directory
    echo
-   echo "0.6.15" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.15-setup.done
+   echo "0.6.16" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.16-setup.done
    chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.15-setup.done
 fi
 
-if [ ! -e EULA-0.6.15 ] ; then
-   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.15 EULA-0.6.15
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.15
+if [ ! -e EULA-0.6.16 ] ; then
+   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.15 EULA-0.6.16
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.16
 fi
 
 
