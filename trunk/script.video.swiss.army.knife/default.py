@@ -84,6 +84,7 @@ __pw__ = ''
 __jobs__ = False
 __linebreak__ = 0
 __exitFlag__ = 0
+__ProgressView__ = False
 
 CWD = os.getcwd().rstrip(";")
 sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
@@ -283,6 +284,9 @@ def GUIlog(msg):
 #########################################################
 def GUIProgressbar(InfoText):
 
+    global __ProgressView__   
+
+    __ProgressView__ = True
     progress = OSGetProgressVal()
     dp = xbmcgui.DialogProgress()
     dp.create(InfoText)
@@ -310,6 +314,7 @@ def GUIProgressbar(InfoText):
               exit = False
               retval = 0 
            time.sleep(1)
+    __ProgressView__ = False
     return (retval)             
 
 #########################################################
@@ -1600,17 +1605,20 @@ class GUIWorkerThread(threading.Thread):
         def __init__(self):
             threading.Thread.__init__(self)        
         def run(self):
-
             exit = True
             if (__verbose__ == "true"):   
                 GUIlog('[W-Thread] starting ...')
             while (exit):  
-                   if __exitFlag__:
+                   if (__exitFlag__ == 1):
                       if (__verbose__ == "true"):    
-                         GUIlog('[W-Thread] do exit ...')
-                      exit = False
+                         exit = False
                    time.sleep(1)
-                   GUIlog('[W-Thread] active ...')
+                   GUIlog('[W-Thread] is active and running ...')
+                   if (__ProgressView__ == False):
+                       if (__jobs__ == 1):
+                          if (__verbose__ == "true"):   
+                             GUIlog('[W-Thread] active jobe is running .....') 
+
             if (__verbose__ == "true"):   
                 GUIlog('[W-Thread] do exit now ...')
             thread.exit()          
