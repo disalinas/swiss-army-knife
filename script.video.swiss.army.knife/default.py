@@ -13,9 +13,9 @@
 #           - transcode dvd to multiple formats         #
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
-# VERSION : 0.6.15                                      #
-# DATE    : 10-02-10                                    #
-# STATE   : Beta 1                                      #
+# VERSION : 0.6.16                                      #
+# DATE    : 10-08-10                                    #
+# STATE   : Beta 2                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #

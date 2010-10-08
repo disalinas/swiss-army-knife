@@ -12,7 +12,7 @@
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
 # VERSION : 0.6.15                                      #
-# DATE    : 10-02-10                                    #
+# DATE    : 10-08-10                                    #
 # STATE   : Beta 1                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -257,7 +257,7 @@ def OSConfiguration(index):
 
     # Every release has a sepeperate setup.done file .....
 
-    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.15-setup.done'
+    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.16-setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
     config[32] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid'
