@@ -159,6 +159,7 @@ echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stag
 echo -n $2/$3.iso > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
 echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 ps axu | grep "ddrescue" | head -1 |  grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+ps axu | grep "ddrescue" | head -1 |  grep -v grep |awk '{print $2}' > $PWATCH
 
 echo INFO processing data
 echo

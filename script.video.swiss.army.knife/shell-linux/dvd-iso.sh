@@ -56,6 +56,14 @@ JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/dvd-dd.log"
 PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
+SHELL_CANCEL=0
+TERM_ALL="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL"
+KILL_FILES="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES"
+if [ -e $TERM_ALL ] ; then 
+   rm $TERM_ALL > /dev/null 2>&1
+fi
+
+
 # Define the counting commands we expect inside the script
 
 EXPECTED_ARGS=3
@@ -65,6 +73,7 @@ EXPECTED_ARGS=3
 E_BADARGS=1
 E_BADB=2
 E_TOOLNOTF=50
+E_TERMINATE=100
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-iso.sh p1 p2 p3"
@@ -89,6 +98,7 @@ isoinfo
 dd
 awk
 nohup
+eject
 EOF`
 
 
@@ -181,19 +191,59 @@ do
      LOOP=0
   fi
   sleep 4
+
+  # Terminate Looping -> Main-Process was killed 
+
+  if [ -e $TERM_ALL ] ; then 
+     echo
+     echo
+     echo INFO processing task  have ben killed or ended unexpected ..... 
+     echo
+     LOOP=0
+     SHELL_CANCEL=1
+  fi
+
 done
 
-# Delete jobfile
 
-rm $JOBFILE > /dev/null 2>&1
+if [ "$SHELL_CANCEL" == "0" ] ; then 
+ 
+   # Delete jobfile
 
-sleep 1
-rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
-rm $PWATCH > /dev/null 2>&1
+   rm $JOBFILE > /dev/null 2>&1
 
-echo
-echo ----------------------- script rc=0 -----------------------------
-echo -----------------------------------------------------------------
+   sleep 1
 
-exit 0
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+
+   eject $1
+ 
+   echo
+   echo ----------------------- script rc=0 -----------------------------
+   echo -----------------------------------------------------------------
+
+   exit 0
+
+else
+
+   # ups ... something was going very wrong    
+   # we only erase file depend on the setttings of the addon
+
+   if [ -e $KILL_FILES ] ; then
+      rm $2/$3.iso > /dev/null 2>&1  
+   fi
+
+   rm $JOBFILE > /dev/null 2>&1
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   echo 
+   echo ERROR : This job was not successsfully   
+   echo
+   echo ----------------------- script rc=100 ---------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TERMINATE
+fi 
 

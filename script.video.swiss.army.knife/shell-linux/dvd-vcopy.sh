@@ -53,6 +53,7 @@ echo ---------------------------------------------------------------------------
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/vobcopy-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/vobcopy.log"
+PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
 # Define the counting commands we expect inside the script
 
@@ -147,6 +148,8 @@ echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stag
 echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 ps axu | grep "vobcopy -v -m" | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 
+ps axu | grep "vobcopy -v -m" | grep -v grep |awk '{print $2}' > $PWATCH
+
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
@@ -176,7 +179,9 @@ done
 rm $JOBFILE > /dev/null 2>&1
 
 sleep 1
+
 rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+rm $PWATCH > /dev/null 2>&1
 
 echo
 echo ----------------------- script rc=0 -----------------------------

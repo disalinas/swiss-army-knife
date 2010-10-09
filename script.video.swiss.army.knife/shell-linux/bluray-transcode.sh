@@ -152,10 +152,6 @@ echo INFO pid makemkvon[$PID1]
 echo $PID1 > $PWATCH
 echo
 
-
-
-
-
 echo $1 > $JOBFILE
 echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
 echo 32150 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
