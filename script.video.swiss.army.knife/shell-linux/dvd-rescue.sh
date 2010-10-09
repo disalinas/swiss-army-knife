@@ -57,6 +57,15 @@ JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/dvd-dd.log"
 PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
+SHELL_CANCEL=0
+TERM_ALL="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL"
+KILL_FILES="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES"
+if [ -e $TERM_ALL ] ; then 
+   rm $TERM_ALL > /dev/null 2>&1
+fi
+
+
+
 # Define the counting commands we expect inside the script
 
 EXPECTED_ARGS=3
@@ -66,6 +75,7 @@ EXPECTED_ARGS=3
 E_BADARGS=1
 E_BADB=2
 E_TOOLNOTF=50
+E_TERMINATE=100
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-rescue.sh p1 p2 p3"
@@ -90,6 +100,7 @@ isoinfo
 ddrescue
 awk
 nohup
+eject
 EOF`
 
 
@@ -173,27 +184,146 @@ do
   SIZE2=$(ls -la $2/$3.iso | awk '{print $5}')
   PROGRESS=$(bc -l <<< "scale=0; ($SIZE2 / $T1)")
   echo $PROGRESS > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+
+
+  # This should be the normal entry-point .... but this entry-point do not work on some 
+  # copy-protected dvd's the iso is allmost copy but few bytes are missing ....
+
   if [ $SIZE1 == $SIZE2 ] ; then
      echo
      echo
-     echo INFO processing data done
+     echo INFO processing data done to the file-size 
+     echo the rescue process may run longer...
+     echo
+     echo wait now until the main-process is terminated.
+     echo 
+     LOOP=0
+
+     # we do wait until the rescue process is finsished 
+     # I saw a few times this process needs longer to finish ....
+ 
+     LOOP2=1
+     while [ $LOOP2 -eq '1'  ];
+     do
+       PID=$(ps axu | grep "ddrescue" | head -1 |  grep -v grep |awk '{print $2}' )
+       echo -n .
+       if [ -n "$PID" ] ; then
+           LOOPP2=1
+       else
+           echo 
+           echo 
+           echo INFO processing data done and process terminated 
+           echo
+           LOOPP2=0
+       fi
+       sleep 0.7
+     done
+  fi
+
+  # This is the secound entry-point .... in the case that only a few bytes are missing
+  # from the generated iso -> you can send your donation to the content-owner 
+  # the company who made the dvd don't like that a copy can made ... 
+
+  if [ "$PROGRESS" == "100" ] ; then
+  if [ "$LOOP" == "1" ] ; then
+     echo
+     echo
+     echo INFO processing data done to the percent-size 
+     echo the rescue process may run longer...
+     echo
+     echo wait now until the main-process is terminated.
+     echo after 4 minutes the process will be killed
+     echo 
+     LOOP=0
+
+     # we do wait until the rescue process is finsished 
+     # I saw a few times this process needs longer to finish ....
+ 
+     LOOP2=1
+     TIMOUT=0 
+     while [ $LOOP2 -eq '1'  ];
+     do
+       PID=$(ps axu | grep "ddrescue" | head -1 |  grep -v grep |awk '{print $2}' )
+       echo -n .
+       if [ -n "$PID" ] ; then
+           LOOPP2=1
+       else
+           echo 
+           echo 
+           echo INFO processing data done and process terminated 
+           echo
+           LOOPP2=0
+       fi
+
+       sleep 1
+
+       TIMEOUT=`expr $TIMEOUT + 1`
+
+       if [ $TIMEOUT -eq "240" ] ; then
+          LOOP2=0
+          kill -9 $PID > /dev/null 2>&1 
+       fi
+     done
+  fi
+  fi
+
+  sleep 4
+
+  # Terminate Looping -> Main-Process was killed 
+
+  if [ -e $TERM_ALL ] ; then 
+     echo
+     echo
+     echo INFO processing task  have ben killed or ended unexpected ..... 
      echo
      LOOP=0
+     SHELL_CANCEL=1
   fi
-  sleep 4
+
 done
 
-# Delete jobfile
 
-rm $JOBFILE > /dev/null 2>&1
+if [ "$SHELL_CANCEL" == "0" ] ; then 
+ 
+   # Delete jobfile
 
-sleep 1
-rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
-rm $PWATCH > /dev/null 2>&1
+   rm $JOBFILE > /dev/null 2>&1
 
-echo
-echo ----------------------- script rc=0 -----------------------------
-echo -----------------------------------------------------------------
+   sleep 1
 
-exit 0
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+
+   eject $1
+
+   echo
+   echo 
+   echo
+   echo ----------------------- script rc=0 -----------------------------
+   echo -----------------------------------------------------------------
+
+   exit 0
+
+else
+
+   # ups ... something was going very wrong    
+   # we only erase file depend on the setttings of the addon
+
+   if [ -e $KILL_FILES ] ; then
+      rm $2/$3.iso > /dev/null 2>&1  
+   fi
+
+   rm $JOBFILE > /dev/null 2>&1
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   echo 
+   echo ERROR : This job was not successsfully   
+   echo
+   echo ----------------------- script rc=100 ---------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TERMINATE
+fi 
+
 
