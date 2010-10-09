@@ -29,7 +29,7 @@
         <string id="32065">Password protect Expert-Mode</string>
         <string id="32066">Password</string>
         <string id="32067">Default size single-layer dvd</string>  
-        <string id="32068">Default netcat start-port (6 udp ports)</string>
+        <string id="32068">Default netcat start-port (6 tcp ports)</string>
         <string id="32069">Verbose debug</string>
         <string id="32070">Default subtitle (dvd)</string> 
         <string id="32071">Enable customer-shell-scripts</string>  
@@ -41,7 +41,7 @@
         <string id="32077">Default burning-transcode directory</string>  
         <string id="32078">Default iphone-transcode directory</string>  
         <string id="32079">Default psp-transcode directory</string>      
- 
+        <string id="32080">Delete all files if processing fails</string>            
 
         <!--              --> 
         <!-- Window-Names -->

@@ -60,6 +60,7 @@ OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 JOBERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd-transcode.log"
+PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
 # Define the counting commands we expect inside the script
 
@@ -206,6 +207,8 @@ if [ $# -eq 5 ]; then
     ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
     PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
 
+    echo $PID > $PWATCH
+
     echo
     echo INFO processing data pass 1 of 1
     echo
@@ -288,6 +291,8 @@ if [ $# -eq 7 ]; then
        echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+
+       echo $PID > $PWATCH
 
        echo
        echo INFO processing data pass 1 of 1
@@ -378,6 +383,8 @@ if [ $# -eq 7 ]; then
        ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
 
+       echo $PID > $PWATCH 
+
        LOOP=1
        while [ $LOOP -eq '1'  ];
        do
@@ -430,6 +437,8 @@ if [ $# -eq 7 ]; then
        echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+
+       echo $PID > $PWATCH
 
        echo
        echo INFO processing data pass 2 of 2
@@ -518,6 +527,8 @@ if [ $# -eq 9 ]; then
        ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
 
+       echo $PID > $PWATCH 
+
        LOOP=1
        while [ $LOOP -eq '1'  ];
        do
@@ -571,6 +582,8 @@ if [ $# -eq 9 ]; then
        ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
 
+       echo $PID > $PWATCH  
+
        echo
        echo INFO processing data pass 2 of 2
        echo
@@ -620,6 +633,7 @@ rm $JOBFILE > /dev/null 2>&1
 
 sleep 1
 rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+rm $PWATCH > /dev/null 2>&1 
 
 echo
 echo ----------------------- script rc=0 -----------------------------

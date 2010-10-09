@@ -29,7 +29,7 @@
         <string id="32065">Mot de passe pour la protection du Mode Expert</string>
         <string id="32066">Mot de passe</string>
         <string id="32067">Taille par défaut du dvd simple couche</string>  
-        <string id="32068">Port de démarrage par défaut pour netcat (6 ports udp)</string>
+        <string id="32068">Port de démarrage par défaut pour netcat (6 ports tcp)</string>
         <string id="32069">Débogage verbeux</string>
         <string id="32070">Sous-titre par défaut (dvd)</string> 
         <string id="32071">Activer les scripts-shell-clients</string>  
@@ -40,7 +40,8 @@
         <string id="32076">Timeout par défaut 3: chapitre-blu-ray</string> 
         <string id="32077">Répertoire par défaut pour gravure-transcodage</string> 
         <string id="32078">Répertoire par défaut pour iphone-transcodage</string>  
-        <string id="32079">Répertoire par défaut pour psp-transcodage</string>        
+        <string id="32079">Répertoire par défaut pour psp-transcodage</string> 
+        <string id="32080">Delete all files if processing fails</string>        
  
 
         <!--              --> 

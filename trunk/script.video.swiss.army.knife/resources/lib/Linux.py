@@ -13,7 +13,7 @@
 #           os that should exexcute this addon.         #
 # VERSION : 0.6.15                                      #
 # DATE    : 10-08-10                                    #
-# STATE   : Beta 1                                      #
+# STATE   : Beta 2                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -139,7 +139,8 @@ def OSConfiguration(index):
 
     config[50] = __settings__.getSetting("id-iphone")
     config[51] = __settings__.getSetting("id-psp")   
-
+    config[55] = __settings__.getSetting("id-delete")   
+ 
 
     # Modul-global variable to detect if debug-log is active
 
@@ -196,6 +197,7 @@ def OSConfiguration(index):
     # DVD_LANG1
     # DVD_LANG2
     # DVD_SUB
+    # KILL_FILES
 
     # Over these files we know inside the shell-scripts witch languages and
     # subtitles we would like to transcode
@@ -222,6 +224,14 @@ def OSConfiguration(index):
         status = os.system("%s" % (command))
     else:
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_SUB > /dev/null 2>&1"
+        status = os.system("%s" % (command))
+
+    if (config[55] == 'true'):
+        sys.platform.startswith('linux')
+        command = "echo -n DELETE ALL FILES IF PROCESS TERMINATE ! > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES"
+        status = os.system("%s" % (command))
+    else:
+        command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES > /dev/null 2>&1"
         status = os.system("%s" % (command))
 
 
@@ -285,6 +295,7 @@ def OSConfiguration(index):
     config[51] = __settings__.getSetting("psp-transcode")  
     config[52] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD-CRC'
     config[53] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH'
+    config[54] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL'
 
     # With a list the delete of multiple files is very easy ;-)
 
@@ -981,18 +992,30 @@ def OSKillProc():
 
             # Kill the processes
 
+            pcounter = 0
+            pfailed = 0
             for pid in pid_list:
                 try:
-                   if (__verbose__ == 'true'):
-                        OSlog("send signal 9 to pid : " + str(pid))
-                   os.kill(pid,9)
+                   os.kill(pid,0)
+                   pfailed = 0 
                 except OSError, err:
-                  return (1)
+                   pfailed = 1
+                if (pfailed == 0):
+                   try: 
+                       os.kill(pid,9) 
+                   except OSError, err:
+                       pcounter = pcounter + 1                  
+                else:
+                    pcounter = pcounter + 1                    
 
-            # remove files from job
+            if (pcounter == 0):  
+                if (__verbose__ == 'true'):
+                   OSlog("all processes terminated with kill -9 now we deleting files ...")
+            else:
+                if (__verbose__ == 'true'):
+                   OSlog("some processes can not terminated with kill -9 ...") 
 
-            if (__verbose__ == 'true'):
-               OSlog("all processes terminated with kill -9 now we deleting files ...")
+            # Delete files 
 
             if (os.path.exists(__configLinux__[35])):
 
@@ -2579,6 +2602,19 @@ def OSCheckMainProcess():
                 line = line.strip()
                 pid.append(line)
         WatchF.close()
+         
+        # We have the main pid of the important transcode or copy process
+        # As long this pid is running properly we give back -> 0 
+
+        try: 
+            os.kill(int(pid[0]), 0)
+            return 0
+        except OSError, err:
+            
+            # We send back the signal to stop all polling ....
+            # and to terminae the scripts immediately
+
+            return 1  
     else:
          return 2
 #########################################################

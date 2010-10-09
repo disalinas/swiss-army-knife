@@ -189,8 +189,12 @@ Date : 10.08.2010 | Release : 0.6.16    | Author  : H.Weber | CVS:366
 Changes:
 
 - Implement a working-thread
+- During a active job the main-process (dd/handbrake/makemkv( will be checked over 
+  the worker-thread.
+- After a successfull operation the dvd-drive will be opened
+- Integrate worker-thread into dvd-iso.sh (testet successfully)
  
 Fixes: 
 
-
+- Typo inside german description addon.xml
 

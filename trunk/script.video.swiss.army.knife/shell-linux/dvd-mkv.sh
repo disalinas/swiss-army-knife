@@ -63,6 +63,7 @@ E_MAKEMKV=253
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
+PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-mkv.sh p1 p2 p3 p4"
@@ -150,6 +151,8 @@ echo
 echo INFO pid makemkvon[$PID1]
 echo
 
+echo $PID1 > $PWATCH 
+
 echo $1 > $JOBFILE
 echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
 echo 32159 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
@@ -209,6 +212,7 @@ rm $JOBFILE > /dev/null 2>&1
 
 sleep 1
 rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+rm $PWATCH > /dev/null 2>&1
 
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
