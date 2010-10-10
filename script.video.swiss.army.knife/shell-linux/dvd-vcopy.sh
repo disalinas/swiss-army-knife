@@ -178,7 +178,7 @@ do
   if [ -e $TERM_ALL ] ; then
      echo
      echo
-     echo INFO processing task  have ben killed or ended unexpected ..... 
+     echo INFO processing task have ben killed or ended unexpected ..... 
      echo
      LOOP=0
      SHELL_CANCEL=1
