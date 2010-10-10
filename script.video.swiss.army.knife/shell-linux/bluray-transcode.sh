@@ -59,11 +59,20 @@ EXPECTED_ARGS=4
 
 E_BADARGS=1
 E_TOOLNOTF=50
+E_TERMINATE=100
 E_MAKEMKV=253
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
+
+SHELL_CANCEL=0
+TERM_ALL="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL"
+KILL_FILES="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES"
+if [ -e $TERM_ALL ] ; then 
+   rm $TERM_ALL > /dev/null 2>&1
+fi
+
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: bluray-transcode.sh p1 p2 p3 p4"
@@ -88,6 +97,7 @@ nohup
 sed
 sort
 makemkvcon
+eject
 EOF`
 
 
@@ -193,31 +203,70 @@ do
    fi
 
    sleep 2
+
+   # Terminate Looping -> Main-Process was killed 
+
+   if [ -e $TERM_ALL ] ; then 
+      echo
+      echo
+      echo INFO processing task have ben killed or ended unexpected ..... 
+      echo
+      SHELL_CANCEL=1 
+      break
+   fi
 done
 
-if [ $4 -lt '10' ] ; then
-   mv $2/title0$4.mkv $2/$3.mkv
+
+if [ "$SHELL_CANCEL" == "0" ] ; then
+ 
+   if [ $4 -lt '10' ] ; then
+      mv $2/title0$4.mkv $2/$3.mkv
+   fi
+   if [ $4 -gt '10' ] ; then
+      mv $2/title$4.mkv $2/$3.mkv
+   fi
+
+   # Delete jobfile
+
+   rm $JOBFILE > /dev/null 2>&1
+
+   sleep 1
+
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   eject $1
+ 
+   echo
+   echo ----------------------- script rc=0 -----------------------------
+   echo -----------------------------------------------------------------
+
+   exit 0
+
+else
+
+   # ups ... something was going very wrong    
+   # we only erase file depend on the setttings of the addon
+
+   if [ -e $KILL_FILES ] ; then
+      if [ $4 -lt '10' ] ; then
+         rm $2/title0$4.mkv > /dev/null 2>&1 
+      fi
+      if [ $4 -gt '10' ] ; then
+         rm $2/title$4.mkv > /dev/null 2>&1
+      fi
+   fi
+
+   rm $JOBFILE > /dev/null 2>&1
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   echo
+   echo ERROR : This job was not successsfully  
+   echo
+   echo ----------------------- script rc=100 ---------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TERMINATE
 fi
-
-if [ $4 -gt '10' ] ; then
-   mv $2/title$4.mkv $2/$3.mkv
-fi
-
-# Delete jobfile
-
-rm $JOBFILE > /dev/null 2>&1
-
-
-
-# Delete all progress-files 
-
-sleep 1
-rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
-rm $PWATCH > /dev/null 2>&1
-
-echo ----------------------- script rc=0 -----------------------------
-echo -----------------------------------------------------------------
-
-exit 0
 
 
