@@ -199,7 +199,8 @@ Changes:
 - Integrate worker-thread into dvd-vcopy.sh (testet successfully) 
 - Integrate worker-thread into dvd-mkv.sh  (testet successfully)
 - Integrate worker-thread into bluray-transcode.sh (testet successfully)
- 
+- Integrate worker-thread inti dvd-handbrake.sh testet successfully)
+  including a few little optimisations an cosmetics 
 
 Fixes: 
 
