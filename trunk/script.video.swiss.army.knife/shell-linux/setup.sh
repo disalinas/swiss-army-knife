@@ -601,7 +601,7 @@ which makemkvcon >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
    echo The command makemkvcon was not found on your system.
-   echo Should makemkv 1.6.0 to be installed ?
+   echo Should makemkv 1.6.1 to be installed ?
    echo Even if there is no bluray installed you have to answer
    echo yes if you plan to transcode a dvd to mkv.
    echo
@@ -616,7 +616,7 @@ if [ $? -eq 1 ] ; then
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download release 1.6.0 from project url for 32 bit 
+         # Download release 1.6.1 from project url for 32 bit 
 
          wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32.tar.gz
          tar xvzf makemkv-swiss-army-knife-32.tar.gz    
@@ -637,10 +637,10 @@ if [ $? -eq 1 ] ; then
 
          # Install binary part for makemkv 
 
-         dpkg -i makemkv-v1.6.0-bin_20100930-1_i386.deb
+         dpkg -i makemkv-v1.6.1-bin_20100930-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.0-bin_20100930-1_i386.de
+            echo the installation of makemkv-v1.6.1-bin_20100930-1_i386.de
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -659,7 +659,7 @@ if [ $? -eq 1 ] ; then
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download release 1.6.0 from project url for 64 bit 
+         # Download release 1.6.1 from project url for 64 bit 
          
          wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64.tar.gz
          tar xvzf makemkv-swiss-army-knife-64.tar.gz  
@@ -751,10 +751,10 @@ else
 
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.0-bin_20100930-1_i386.deb
+         dpkg -i makemkv-v1.6.1-bin_20100930-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.0-bin_20100930-1_i386.de
+            echo the installation of makemkv-v1.6.1-bin_20100930-1_i386.de
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -828,7 +828,7 @@ if [ ! -e 0.6.16-setup.done ] ; then
    echo create setup.done and licence-file inside addon-data directory
    echo
    echo "0.6.16" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.16-setup.done
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.15-setup.done
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.16-setup.done
 fi
 
 if [ ! -e EULA-0.6.16 ] ; then

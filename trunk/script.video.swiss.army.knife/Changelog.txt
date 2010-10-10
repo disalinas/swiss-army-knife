@@ -197,11 +197,15 @@ Changes:
 - Integrate worker-thread into dvd-iso.sh (testet successfully)
 - Intergate worker-thread into dvd-resque.sh (testet successfully)
 - Integrate worker-thread into dvd-vcopy.sh (testet successfully) 
-- Integrate worker-thread into dvd-mkv.sh  (testet successfully) 
+- Integrate worker-thread into dvd-mkv.sh  (testet successfully)
+- Integrate worker-thread into bluray-transcode.sh (testet successfully)
  
+
 Fixes: 
 
 - Typo inside german description addon.xml
 - Fixed ugly bug with dvd-vcopy.sh and dvd volume-names 
   that have spaces inside the name (fixed and tested)
+- Typo inside setup.sh fixed for 32 makemkv (thanks to Chip2786)
+
 
