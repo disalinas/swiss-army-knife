@@ -55,6 +55,13 @@ JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/vobcopy.log"
 PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
+SHELL_CANCEL=0
+TERM_ALL="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL"
+KILL_FILES="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES"
+if [ -e $TERM_ALL ] ; then 
+   rm $TERM_ALL > /dev/null 2>&1
+fi
+
 # Define the counting commands we expect inside the script
 
 EXPECTED_ARGS=2
@@ -65,6 +72,7 @@ E_BADARGS=1
 E_BADB=2
 E_NOMOUNT=3
 E_TOOLNOTF=50
+E_TERMINATE=100
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-vcopy.sh p1 p2"
@@ -90,6 +98,8 @@ vobcopy
 tr
 bc
 awk
+eject
+strings
 EOF`
 
 
@@ -113,6 +123,7 @@ done
 DVDDIR=$(mount | grep $1 | awk '{print $3}')
 
 if [ -z $DVDDIR ] ; then
+   echo
    echo ERROR : dvd was not montet and therefore can vobcopy no be startet  > $OUTPUT_ERROR
    echo ERROR : dvd was not montet and therefore can vobcopy no be startet
    echo
@@ -120,23 +131,22 @@ if [ -z $DVDDIR ] ; then
    exit $E_NOMOUNT
 fi
 
-echo
-echo
-echo INFO get size of all vob-files[$DVDDIR/VIDEO_TS]
-
-SIZE1=$(du -b $DVDDIR/VIDEO_TS | tail -1 | awk '{print $1}')
-T1=$(bc -l <<< "scale=0; ($SIZE1 / 100)")
 VOLNAME=$(volname $1 | tr -dc ‘[:alnum:]‘)
 
 rm -rf $2/$VOLNAME >/dev/null 2>&1
+mkdir $2/$VOLNAME > /dev/null 2>&1
+cd $2/$VOLNAME > /dev/null 2>&1
 
+echo
 echo INFO volume-name[$VOLNAME]
+echo VOB-DIRECTORY [$2/$VOLNAME]
+echo
 echo INFO starting vobcopy
 echo
 echo
 
 (
-vobcopy -v -m -o $2 -t $VOLNAME 2>/dev/null
+vobcopy > $OUT_TRANS 2>&1
 ) > $OUT_TRANS 2>&1 &
 
 sleep 10
@@ -146,24 +156,15 @@ echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stag
 echo 32156 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
 echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
 echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-ps axu | grep "vobcopy -v -m" | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-
-ps axu | grep "vobcopy -v -m" | grep -v grep |awk '{print $2}' > $PWATCH
+ps axu | grep "vobcopy" | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+ps axu | grep "vobcopy" | grep -v grep |awk '{print $2}' > $PWATCH
 
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
   echo -n .
-  SIZE2=$(cd /dvdrip/vobcopy/$VOLNAME/VIDEO_TS && du -b | tail -1 | awk '{print $1}')
-  PROGRESS=$(bc -l <<< "scale=0; ($SIZE2 / $T1)")
+  PROGRESS=$(strings $OUT_TRANS | grep of | tail -1 | awk '{print $5}' | tr -dc ‘[:digit:]‘)
   echo $PROGRESS > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-
-  # We neeed to update the file-list on every loop
-
-  LIST1=$(ls -al $2/$VOLNAME/VIDEO_TS/* | awk '{print $8}')
-  echo $LIST1 | tr  [:blank:] '\n' > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
-  echo $2/$VOLNAME >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
-
   if [ $PROGRESS  == "100" ] ; then
      echo
      echo
@@ -171,21 +172,58 @@ do
      echo
      LOOP=0
   fi
-  sleep 10
+
+  sleep 3
+
+  if [ -e $TERM_ALL ] ; then
+     echo
+     echo
+     echo INFO processing task  have ben killed or ended unexpected ..... 
+     echo
+     LOOP=0
+     SHELL_CANCEL=1
+  fi
+
 done
 
-# Delete jobfile
 
-rm $JOBFILE > /dev/null 2>&1
+if [ "$SHELL_CANCEL" == "0" ] ; then 
+ 
+   # Delete jobfile
 
-sleep 1
+   rm $JOBFILE > /dev/null 2>&1
 
-rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
-rm $PWATCH > /dev/null 2>&1
+   sleep 1
 
-echo
-echo ----------------------- script rc=0 -----------------------------
-echo -----------------------------------------------------------------
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
 
-exit 0
+   eject $1
+ 
+   echo
+   echo ----------------------- script rc=0 -----------------------------
+   echo -----------------------------------------------------------------
 
+   exit 0
+
+else
+
+   # ups ... something was going very wrong    
+   # we only erase file depend on the setttings of the addon
+
+   if [ -e $KILL_FILES ] ; then
+      cd $2
+      rm -rf $2/$VOLNAME >/dev/null 2>&1  
+   fi
+
+   rm $JOBFILE > /dev/null 2>&1
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   echo 
+   echo ERROR : This job was not successsfully   
+   echo
+   echo ----------------------- script rc=100 ---------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TERMINATE
+fi 

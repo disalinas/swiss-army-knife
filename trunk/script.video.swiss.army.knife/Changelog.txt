@@ -177,8 +177,10 @@ Fixes:
 - I have a brand-new dvd "Illuminati" that seems to be very good protected.
   A investigate more tests on this ....
 
-  - dd copy .... error after 7 % 
+  - dd copy .... error after 7 %
+  - vobcopy error after 99 % 
   - Transcoding with handbrake  .... exception ....
+
   - rescue-copy do work but is very slow in execution.
 
 
@@ -193,8 +195,12 @@ Changes:
   the worker-thread.
 - After a successfull operation the dvd-drive will be opened
 - Integrate worker-thread into dvd-iso.sh (testet successfully)
+- Intergate worker-thread into dvd-resque.sh (testet successfully)
+- Integrate worker-thread inti dvd-vcopy.sh (testet successfully)  
  
 Fixes: 
 
 - Typo inside german description addon.xml
+- Fixed ugly bug with dvd-vcopy.sh and dvd volume-names 
+  that have spaces inside the name (fixed and tested)
 
