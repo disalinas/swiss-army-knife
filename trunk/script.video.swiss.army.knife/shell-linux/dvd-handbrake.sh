@@ -20,6 +20,15 @@
 # description :                                           #
 # generates a mkv container of a dvd                      #
 ###########################################################
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+
+
+
+###########################################################
+#                                                         #
+# Check that not user root is not running this script     #
+#                                                         #
+###########################################################
 
 if [ "$UID" == 0 ] ; then
    clear
@@ -32,7 +41,15 @@ if [ "$UID" == 0 ] ; then
    exit 254
 fi
 
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -46,6 +63,15 @@ if [ $SHELL != $SHELLTEST ] ; then
    exit 255
 fi
 
+###########################################################
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
+
 clear
 echo
 echo ----------------------------------------------------------------------------
@@ -56,20 +82,58 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
+
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/handbrake-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 JOBERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd-transcode.log"
 PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
-# Define the counting commands we expect inside the script
+SHELL_CANCEL=0
+TERM_ALL="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL"
+KILL_FILES="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES"
+if [ -e $TERM_ALL ] ; then 
+   rm $TERM_ALL > /dev/null 2>&1
+fi
 
 EXPECTED_ARGS=5
-
-# Error-codes
-
 E_BADARGS=1
 E_TOOLNOTF=50
+E_TERMINATE=100
+E_MENCODER=252
+E_HANDBRAKE=253
+E_SUID0=254
+E_WRONG_SHELL=255
+
+REQUIRED_TOOLS=`cat << EOF
+HandBrakeCLI
+sed
+tr
+strings
+sleep
+mencoder
+nohup
+eject
+EOF`
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-handbrake.sh p1 p2 p3 p4 p5"
@@ -105,41 +169,33 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   exit $E_BADARGS
 fi
 
-
 if [ $4 -eq 0 ]; then
-  echo "the parameter 4 must be starting with 1 !"
-  echo
-  echo ----------------------- script rc=1 -----------------------------
-  echo -----------------------------------------------------------------
-  exit $E_BADARGS
+   echo "the parameter 4 must be starting with 1 !"
+   echo
+   echo ----------------------- script rc=1 -----------------------------
+   echo -----------------------------------------------------------------
+   exit $E_BADARGS
 fi
-
 
 if [ $# -eq 9 ]; then
-    if [[ "$6" =~ ^-s ]] ; then
-     echo "with 9 parameters the subtitle -s must be the last  !"
-     echo
-     echo ----------------------- script rc=1 -----------------------------
-     echo -----------------------------------------------------------------
-     exit $E_BADARGS
-    fi
+   if [[ "$6" =~ ^-s ]] ; then
+      echo "with 9 parameters the subtitle -s must be the last  !"
+      echo
+      echo ----------------------- script rc=1 -----------------------------
+      echo -----------------------------------------------------------------
+      exit $E_BADARGS
+   fi
 fi
 
+###########################################################
 
-# Define the commands we will be using inside the script ...
 
-REQUIRED_TOOLS=`cat << EOF
-HandBrakeCLI
-sed
-tr
-strings
-sleep
-mencoder
-nohup
-EOF`
 
-# clean-up
-
+###########################################################
+#                                                         #
+# Cleanup a few files on startup of the script            #
+#                                                         #
+###########################################################
 
 if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR" ] ; then
     rm "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR" > /dev/null 2>&1
@@ -149,9 +205,15 @@ if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" ] ; 
     rm "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" > /dev/null 2>&1
 fi
 
+###########################################################
 
 
-# Check if all commands are found on your system ...
+
+###########################################################
+#                                                         #
+# We must be certain that all software is installed       #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -168,29 +230,25 @@ do
    fi
 done
 
+###########################################################
 
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 1 audio-track                           #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 1 audio-track                        #
+#                                                         #
+###########################################################
+
 if [ $# -eq 5 ]; then
     AUDIO1=$(($5 +  1))
-
-    echo
-    echo INFO transcode job with 1 audio-track
-
-    echo $1 > $JOBFILE
-    echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
-
-    echo 32152 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
-    echo 32153 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
-
-    echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
-    echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
 
     echo
     echo INFO starting HandBrakeCLI
@@ -202,17 +260,34 @@ if [ $# -eq 5 ]; then
     ) > $OUT_TRANS 2>&1 &
 
     echo INFO HandBrakeCLI command executed
-    echo
 
-    sleep 10
+    sleep 6
 
-    echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-    ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
     PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
-
     echo $PID > $PWATCH
 
-    echo
+    if [ -z "$PID" ] ; then
+       echo
+       echo HandBrakeCLI is not running after 6 secounds. Please check your
+       echo settings and log-files.
+       echo
+       exit $E_HANDBRAKE
+    fi
+
+    echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid   
+    ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+
+    echo INFO transcode job with 1 audio-track
+
+    echo $1 > $JOBFILE
+    echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
+
+    echo 32152 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
+    echo 32153 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
+
+    echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+    echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
+
     echo INFO processing data pass 1 of 2
     echo
 
@@ -239,21 +314,24 @@ if [ $# -eq 5 ]; then
                    LOOPP2=0
                 fi
                 sleep 0.7
+                if [ -e $TERM_ALL ] ; then 
+                    SHELL_CANCEL=1 
+                    break 
+                fi
             done
+  
+            if [ "$SHELL_CANCEL" == "0" ] ; then 
+               echo
+               echo
+               echo INFO processing data pass 1 of 2 done
+               echo INFO processing data pass 2 of 2
+               echo
 
-            echo
-            echo
-            echo INFO processing data pass 1 of 2 done
-            echo
+               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+               echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+               echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+           fi
 
-            echo
-            echo INFO processing data pass 2 of 2
-            echo
-
-            echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-            sleep 1
-            echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-            echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
          fi
       fi
 
@@ -274,49 +352,57 @@ if [ $# -eq 5 ]; then
                    LOOPP2=0
                 fi
                 sleep 0.7
+                if [ -e $TERM_ALL ] ; then 
+                    SHELL_CANCEL=1 
+                    break 
+                fi
              done
 
-             echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-             echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
-             echo
-             echo
-             echo INFO processing data pass 2 of 2 done
-             echo
-             LOOP=0
+             if [ "$SHELL_CANCEL" == "0" ] ; then 
+                 echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                 echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+                 echo
+                 echo
+                 echo INFO processing data pass 2 of 2 done
+                 echo
+                 LOOP=0
+             fi 
          fi
       fi
+
       sleep 0.7
+
+      # Terminate Looping -> Main-Process was killed 
+
+      if [ -e $TERM_ALL ] ; then 
+         SHELL_CANCEL=1 
+         LOOP=0
+      fi
     done
 fi
 
+###########################################################
 
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 2 audio-track                           #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 2 audio-tracks                       #
+#                                                         #
+###########################################################
+
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-a ]] ; then
        AUDIO1=$(($5 +  1))
        AUDIO2=$(($7 +  1))
 
-       echo
-       echo INFO transcode job with 2 audio-tracks
-
-       echo $1 > $JOBFILE
-       echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
-
-       echo 32152 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
-       echo 32153 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
-
-       echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
-       echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
-
-
-       echo
+       echo  
        echo INFO starting HandBrakeCLI
 
        (
@@ -326,19 +412,33 @@ if [ $# -eq 7 ]; then
        -R auto,auto -6 auto,auto -E ac3,acc &
        ) > $OUT_TRANS 2>&1 &
 
-
        echo INFO HandBrakeCLI command executed
-       echo
 
-       sleep 10
+       sleep 6
 
-       echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-       ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+       echo $PID > $PWATCH
 
-       echo $PID > $PWATCH 
+       if [ -z "$PID" ] ; then
+          echo
+          echo HandBrakeCLI is not running after 6 secounds. Please check your
+          echo settings and log-files.
+          echo
+          exit $E_HANDBRAKE
+       fi
 
-       echo
+       echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid   
+       ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+
+       echo INFO transcode job with 2 audio-tracks
+
+       echo $1 > $JOBFILE
+       echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
+       echo 32152 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
+       echo 32153 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
+       echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+       echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
+
        echo INFO processing data pass 1 of 2
        echo
 
@@ -365,22 +465,22 @@ if [ $# -eq 7 ]; then
                      LOOPP2=0
                   fi
                   sleep 0.7
+                  if [ -e $TERM_ALL ] ; then 
+                    SHELL_CANCEL=1 
+                    break 
+                  fi
                done
 
-               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-
-               echo
-               echo
-               echo INFO processing data pass 1 of 2 done
-               echo
-
-               echo
-               echo INFO processing data pass 2 of 2
-               echo
-
-               sleep 1
-               echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+               if [ "$SHELL_CANCEL" == "0" ] ; then   
+                  echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  echo  
+                  echo
+                  echo INFO processing data pass 1 of 2 done
+                  echo INFO processing data pass 2 of 2
+                  echo
+                  echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+               fi 
             fi
          fi
 
@@ -399,36 +499,80 @@ if [ $# -eq 7 ]; then
                      LOOPP2=0
                    fi
                    sleep 0.7
+                   if [ -e $TERM_ALL ] ; then 
+                      SHELL_CANCEL=1 
+                      break 
+                   fi
                done
-
-               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
-               echo
-               echo
-               echo INFO processing data pass 2 of 2 done
-               echo
-               LOOP=0
+               if [ "$SHELL_CANCEL" == "0" ] ; then 
+                   echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                   echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+                   echo
+                   echo
+                   echo INFO processing data pass 2 of 2 done
+                   echo  
+                   LOOP=0
+               fi
             fi
          fi
+
          sleep 0.7
+
+         # Terminate Looping -> Main-Process was killed 
+
+         if [ -e $TERM_ALL ] ; then 
+            SHELL_CANCEL=1 
+            LOOP=0
+         fi
        done
     fi
 fi
 
+###########################################################
 
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 1 audio-track and 1 subtitle            #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 1 audio-track and 1 subtitle         #
+#                                                         #
+###########################################################
+
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-s ]] ; then
        AUDIO1=$(($5 + 1))
 
-       echo
+       echo  
+       echo INFO starting mencoder
+
+       (
+        mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $7 -vobsubout $2/$3 &
+       ) > $OUT_TRANS 2>&1 &
+
+       echo INFO mencoder command executed
+
+       sleep 6
+
+       PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
+       echo $PID > $PWATCH
+
+       if [ -z "$PID" ] ; then
+          echo
+          echo mencoder is not running after 6 secounds. Please check your
+          echo settings and log-files.
+          echo
+          exit $E_MENCODER
+       fi
+
+       echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid   
+       echo $PID >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+
        echo INFO transcode job with 1 audio-track and 1 subtitle
 
        echo $1 > $JOBFILE
@@ -437,32 +581,12 @@ if [ $# -eq 7 ]; then
        echo 32151 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
        echo 32152 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
        echo 32153 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
-
        echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+       echo $2/$3.idx > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files        
+       echo $2/$3.sub >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files    
 
-
-       echo
-       echo INFO starting mencoder
-
-       (
-        mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $7 -vobsubout $2/$3 &
-       ) > $OUT_TRANS 2>&1 &
-
-       echo INFO mencoder command executed
-       echo
-
-       sleep 1
-
-       echo
        echo INFO processing data pass 1 of 3
-       echo
-
-
-       echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-       ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-       PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
-
-       echo $PID > $PWATCH  
+       echo  
 
        LOOP=1
        while [ $LOOP -eq '1'  ];
@@ -473,7 +597,6 @@ if [ $# -eq 7 ]; then
          if [ -n "$PASS1" ] ; then
             echo $PASS1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS1 -eq 99 ] ; then
-
                LOOPP2=0
                while [ $LOOPP2 -eq '0' ];
                do
@@ -485,23 +608,39 @@ if [ $# -eq 7 ]; then
                      LOOPP2=0
                    fi
                    sleep 0.7
+                   if [ -e $TERM_ALL ] ; then 
+                      SHELL_CANCEL=1 
+                      break 
+                   fi
                done
-
-               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               sleep 2
-               echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
-               echo
-               echo
-               echo INFO processing data pass 1 of 3 done
-               echo
-               LOOP=0
+               if [ "$SHELL_CANCEL" == "0" ] ; then  
+                  echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  sleep 2
+                  echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+                  echo 
+                  echo
+                  echo INFO processing data pass 1 of 3 done
+                  LOOP=0
+               fi
             fi
          fi
-         sleep 0.3
-       done
 
-       echo
+         sleep 0.7
+
+         if [ -e $TERM_ALL ] ; then 
+            echo
+            echo
+            echo INFO processing task have ben killed or ended unexpected !!! 
+            echo
+            SHELL_CANCEL=1 
+            LOOP=0
+         fi
+
+       done
+       
+       if [ "$SHELL_CANCEL" == "0" ] ; then   
+
        echo INFO starting HandBrakeCLI
 
        (
@@ -511,19 +650,26 @@ if [ $# -eq 7 ]; then
        ) > $OUT_TRANS 2>&1 &
 
        echo INFO HandBrakeCLI command executed
-       echo
 
-       sleep 10
+       sleep 6
 
-       echo
+       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+       echo $PID > $PWATCH
+
+       if [ -z "$PID" ] ; then
+          echo
+          echo HandBrakeCLI is not running after 6 secounds. Please check your
+          echo settings and log-files.
+          echo
+          exit $E_HANDBRAKE
+       fi
+
        echo INFO processing data pass 2 of 3
        echo
 
        echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
        ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
-
-       echo $PID > $PWATCH
+       echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files 
 
        LOOP=1
        while [ $LOOP -eq '1'  ];
@@ -546,22 +692,26 @@ if [ $# -eq 7 ]; then
                      LOOPP2=0
                   fi
                   sleep 0.7
+                  if [ -e $TERM_ALL ] ; then 
+                     SHELL_CANCEL=1 
+                     break 
+                  fi
                done
 
-               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               sleep 1
-               echo
-               echo
-               echo INFO processing data pass 2 of 3 done
-               echo
-               echo
-               echo INFO processing data pass 3 of 3
-               echo
-
-               echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+               if [ "$SHELL_CANCEL" == "0" ] ; then 
+                  echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  sleep 1
+                  echo
+                  echo
+                  echo INFO processing data pass 2 of 3 done
+                  echo INFO processing data pass 3 of 3
+                  echo
+                  echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+               fi
             fi
          fi
+
          if [ -n "$PASS3" ] ; then
             echo $PASS3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             if [ $PASS3 -eq 98 ] ; then
@@ -577,38 +727,82 @@ if [ $# -eq 7 ]; then
                      LOOPP2=0
                    fi
                    sleep 0.7
+                   if [ -e $TERM_ALL ] ; then 
+                      SHELL_CANCEL=1 
+                      break 
+                   fi
                done
 
-               echo
-               echo
-               echo INFO processing data pass 3 of 3 done
-               echo
-               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
-               echo
-               echo processing data done
-               LOOP=0
+               if [ "$SHELL_CANCEL" == "0" ] ; then
+                  echo
+                  echo
+                  echo INFO processing data pass 3 of 3 done
+                  echo 
+                  echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+                  LOOP=0
+               fi
             fi
          fi
+
          sleep 0.7
+         
+         if [ "$SHELL_CANCEL" == "0" ] ; then  
+            if [ -e $TERM_ALL ] ; then 
+               SHELL_CANCEL=1 
+               LOOP=0
+            fi
+         fi  
        done
+       fi  
     fi
 fi
 
+###########################################################
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 2 audio-track and 1 subtitle            #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 2 audio-tracks and 1 subtitle        #
+#                                                         #
+###########################################################
+
 if [ $# -eq 9 ]; then
      AUDIO1=$(($5 +  1))
      AUDIO2=$(($7 +  1))
 
-     echo
-     echo INFO transcode job with 2 audio-tracks and 1 subtitle
+     echo  
+     echo INFO starting mencoder
+
+     (
+      mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $9 -vobsubout $2/$3 &
+     ) > $OUT_TRANS 2>&1 &
+
+     echo INFO mencoder command executed
+     sleep 6
+
+     PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
+     echo $PID > $PWATCH
+
+     if [ -z "$PID" ] ; then
+        echo
+        echo mencoder is not running after 6 secounds. Please check your
+        echo settings and log-files.
+        echo
+        exit $E_MENCODER
+     fi
+
+     echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid   
+     echo $PID >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+
+     echo INFO transcode job with 2 audio-track and 1 subtitle
 
      echo $1 > $JOBFILE
      echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
@@ -618,28 +812,12 @@ if [ $# -eq 9 ]; then
      echo 32153 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-descriptions
 
      echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+ 
+     echo $2/$3.idx > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files        
+     echo $2/$3.sub >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files    
 
-     echo
-     echo INFO starting mencoder
-
-     (
-      mencoder dvd://$4 -dvd-device $1 -ovc frameno -nosound -o /dev/null -sid $9 -vobsubout $2/$3 &
-     ) > $OUT_TRANS 2>&1 &
-
-     echo INFO mencoder command executed
-     echo
-
-     sleep 1
-
-     echo
      echo INFO processing data pass 1 of 3
-     echo
-
-     echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-     ps axu | grep mencoder | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-     PID=$(ps axu | grep mencoder | grep -v grep |awk '{print $2}')
-
-     echo $PID > $PWATCH 
+     echo  
 
      LOOP=1
      while [ $LOOP -eq '1'  ];
@@ -662,23 +840,27 @@ if [ $# -eq 9 ]; then
                      LOOPP2=0
                    fi
                    sleep 0.7
+                   if [ -e $TERM_ALL ] ; then 
+                      SHELL_CANCEL=1 
+                      break 
+                   fi
              done
-
-             echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-             sleep 2
-             echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-             echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
-             echo
-             echo
-             echo INFO processing data pass 1 of 3 done
-             echo
-             LOOP=0
+             if [ "$SHELL_CANCEL" == "0" ] ; then  
+                echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                echo 2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+                echo
+                echo
+                echo INFO processing data pass 1 of 3 done
+                LOOP=0
+             fi
           fi
        fi
        sleep .3
      done
 
-     echo
+     if [ "$SHELL_CANCEL" == "0" ] ; then   
+ 
      echo INFO starting HandBrakeCLI
 
      (
@@ -688,11 +870,9 @@ if [ $# -eq 9 ]; then
      ) > $OUT_TRANS 2>&1 &
 
        echo INFO HandBrakeCLI command executed
-       echo
 
        sleep 10
 
-       echo
        echo INFO processing data pass 2 of 3
        echo
 
@@ -723,20 +903,22 @@ if [ $# -eq 9 ]; then
                      LOOPP2=0
                   fi
                   sleep 0.7
+                  if [ -e $TERM_ALL ] ; then 
+                     SHELL_CANCEL=1 
+                     break 
+                  fi
                done
-
-               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               sleep 1
-               echo
-               echo
-               echo INFO processing data pass 2 of 3 done
-               echo
-               echo
-               echo INFO processing data pass 3 of 3
-               echo
-
-               echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+               if [ "$SHELL_CANCEL" == "0" ] ; then
+                  echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  sleep 1
+                  echo
+                  echo
+                  echo INFO processing data pass 2 of 3 done
+                  echo INFO processing data pass 3 of 3
+                  echo
+                  echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
+               fi 
             fi
          fi
          if [ -n "$PASS3" ] ; then
@@ -754,36 +936,101 @@ if [ $# -eq 9 ]; then
                      LOOPP2=0
                    fi
                    sleep 0.7
+                   if [ -e $TERM_ALL ] ; then 
+                      SHELL_CANCEL=1 
+                      break 
+                   fi
                done
-
-               echo
-               echo
-               echo INFO processing data pass 3 of 3 done
-               echo
-               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-               echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
-               echo
-               echo processing data done
-               LOOP=0
+               if [ "$SHELL_CANCEL" == "0" ] ; then 
+                  echo
+                  echo
+                  echo INFO processing data pass 3 of 3 done
+                  echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                  echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+                  LOOP=0
+               fi
             fi
          fi
+
          sleep 0.7
+
+         if [ "$SHELL_CANCEL" == "0" ] ; then  
+            if [ -e $TERM_ALL ] ; then 
+               SHELL_CANCEL=1 
+               LOOP=0
+            fi
+         fi 
+
        done
+
+    fi  
 fi
 
-
-# Delete jobfile
-
-rm $JOBFILE > /dev/null 2>&1
+###########################################################
 
 
-sleep 1
-rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
-rm $PWATCH > /dev/null 2>&1
 
-echo
-echo ----------------------- script rc=0 -----------------------------
-echo -----------------------------------------------------------------
 
-exit
+
+
+
+
+
+###########################################################
+#                                                         #
+# We are done / Desition depends on success or error      #
+#                                                         #
+###########################################################
+
+if [ "$SHELL_CANCEL" == "0" ] ; then
+
+   rm $JOBFILE > /dev/null 2>&1
+
+   sleep 1
+
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   eject $1
+ 
+   echo
+   echo ----------------------- script rc=0 -----------------------------
+   echo -----------------------------------------------------------------
+
+   exit 0
+
+else
+
+   echo
+   echo
+   echo INFO processing task have ben killed or ended unexpected !!! 
+   echo
+
+   # ups ... something was going very wrong    
+   # we only erase file depend on the setttings of the addon
+
+   if [ -e $KILL_FILES ] ; then
+      rm $2/$3.mkv > /dev/null 2>&1
+
+      # In the case we have a subtitle-file it will also be deleted ...
+
+      rm $2/$3.idx > /dev/null 2>&1 
+      rm $2/$3.sub > /dev/null 2>&1 
+   fi
+
+   rm $JOBFILE > /dev/null 2>&1
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   echo
+   echo ERROR : This job was not successsfully  
+   echo
+   echo ----------------------- script rc=100 ---------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TERMINATE
+fi
+
+###########################################################
+
+
 

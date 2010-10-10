@@ -41,9 +41,8 @@
         <string id="32077">Répertoire par défaut pour gravure-transcodage</string> 
         <string id="32078">Répertoire par défaut pour iphone-transcodage</string>  
         <string id="32079">Répertoire par défaut pour psp-transcodage</string> 
-        <string id="32080">Delete all files if processing fails</string>        
+        <string id="32080">Supprimer tous les fichiers si le traitement échoue</string>        
  
-
         <!--              --> 
         <!-- Window-Names -->
         <!--              --> 
