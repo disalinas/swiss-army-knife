@@ -196,7 +196,8 @@ Changes:
 - After a successfull operation the dvd-drive will be opened
 - Integrate worker-thread into dvd-iso.sh (testet successfully)
 - Intergate worker-thread into dvd-resque.sh (testet successfully)
-- Integrate worker-thread inti dvd-vcopy.sh (testet successfully)  
+- Integrate worker-thread into dvd-vcopy.sh (testet successfully) 
+- Integrate worker-thread into dvd-mkv.sh  (testet successfully) 
  
 Fixes: 
 
