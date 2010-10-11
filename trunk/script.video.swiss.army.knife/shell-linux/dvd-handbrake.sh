@@ -641,119 +641,115 @@ if [ $# -eq 7 ]; then
        
        if [ "$SHELL_CANCEL" == "0" ] ; then   
 
-       echo INFO starting HandBrakeCLI
+          echo INFO starting HandBrakeCLI
+          (
+           HandBrakeCLI -i $1 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
+           -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=$
+           -a $AUDIO1 -E ac3 &
+          ) > $OUT_TRANS 2>&1 &
 
-       (
-       HandBrakeCLI -i $1 -o $2/$3.mkv -t $4 -f mkv -m -S 1200 -e x264 -2 \
-       -T -x ref=3:mixed-refs:bframes=6:b-pyramid=1:bime=1:b-rdo=1:weightb=1:analyse=all:8x8dct=1:subme=6:me=um h:merange=24:filter=-2,-2:ref=6:mixed-refs=$
-       -a $AUDIO1 -E ac3 &
-       ) > $OUT_TRANS 2>&1 &
+          echo INFO HandBrakeCLI command executed
 
-       echo INFO HandBrakeCLI command executed
+          sleep 6
 
-       sleep 6
+          PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+          echo $PID > $PWATCH
 
-       PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
-       echo $PID > $PWATCH
+          if [ -z "$PID" ] ; then
+             echo
+             echo HandBrakeCLI is not running after 6 secounds. Please check your
+             echo settings and log-files.
+             echo
+             exit $E_HANDBRAKE
+          fi
 
-       if [ -z "$PID" ] ; then
+          echo INFO processing data pass 2 of 3
           echo
-          echo HandBrakeCLI is not running after 6 secounds. Please check your
-          echo settings and log-files.
-          echo
-          exit $E_HANDBRAKE
-       fi
 
-       echo INFO processing data pass 2 of 3
-       echo
+          echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+          ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+          echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files 
 
-       echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-       ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-       echo $2/$3.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files 
+          LOOP=1
+          while [ $LOOP -eq '1'  ];
+          do
+            echo -n .
+            PASS2=$(strings $OUT_TRANS | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+            PASS3=$(strings $OUT_TRANS | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+            if [ -n "$PASS2" ] ; then
+               echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+               if [ $PASS2 -eq 98 ] ; then
+                  LOOPP2=0
+                  while [ $LOOPP2 -eq '0' ];
+                  do
+                        PASS2=$(strings $OUT_TRANS | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
+                        echo -n .
+                        if [ -n "$PASS2" ] ; then
+                           LOOPP2=1
+                        else
+                           LOOPP2=0
+                        fi
+                        sleep 0.7
+                        if [ -e $TERM_ALL ] ; then 
+                           SHELL_CANCEL=1 
+                           break 
+                        fi
+                  done
 
-       LOOP=1
-       while [ $LOOP -eq '1'  ];
-       do
-         echo -n .
-         PASS2=$(strings $OUT_TRANS | grep Encoding | grep "1 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         PASS3=$(strings $OUT_TRANS | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-         if [ -n "$PASS2" ] ; then
-            echo $PASS2 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-            if [ $PASS2 -eq 98 ] ; then
-
-               LOOPP2=0
-               while [ $LOOPP2 -eq '0' ];
-               do
-                  PASS2=$(strings $OUT_TRANS | grep Encoding | grep "2 of 2" | tail -1 | awk '{print $6}' | cut -d '.' -f1 )
-                  echo -n .
-                  if [ -n "$PASS2" ] ; then
-                     LOOPP2=1
-                  else
-                     LOOPP2=0
+                  if [ "$SHELL_CANCEL" == "0" ] ; then 
+                     echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                     echo
+                     echo
+                     echo INFO processing data pass 2 of 3 done
+                     echo INFO processing data pass 3 of 3
+                     echo
+                     echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                     echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
                   fi
-                  sleep 0.7
-                  if [ -e $TERM_ALL ] ; then 
-                     SHELL_CANCEL=1 
-                     break 
-                  fi
-               done
-
-               if [ "$SHELL_CANCEL" == "0" ] ; then 
-                  echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-                  sleep 1
-                  echo
-                  echo
-                  echo INFO processing data pass 2 of 3 done
-                  echo INFO processing data pass 3 of 3
-                  echo
-                  echo 0 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-                  echo 3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
                fi
             fi
-         fi
 
-         if [ -n "$PASS3" ] ; then
-            echo $PASS3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-            if [ $PASS3 -eq 98 ] ; then
+            if [ -n "$PASS3" ] ; then
+               echo $PASS3 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+               if [ $PASS3 -eq 98 ] ; then
+                  LOOPP2=0
+                  while [ $LOOPP2 -eq '0' ];
+                  do
+                        PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+                        echo -n .
+                        if [ -n "$PID" ] ; then
+                           LOOPP2=1
+                        else
+                           LOOPP2=0
+                        fi
+                        sleep 0.7
+                        if [ -e $TERM_ALL ] ; then 
+                           SHELL_CANCEL=1 
+                           break 
+                        fi
+                  done
 
-               LOOPP2=0
-               while [ $LOOPP2 -eq '0' ];
-               do
-                   PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
-                   echo -n .
-                   if [ -n "$PID" ] ; then
-                     LOOPP2=1
-                   else
-                     LOOPP2=0
-                   fi
-                   sleep 0.7
-                   if [ -e $TERM_ALL ] ; then 
-                      SHELL_CANCEL=1 
-                      break 
-                   fi
-               done
+                  if [ "$SHELL_CANCEL" == "0" ] ; then
+                     echo
+                     echo
+                     echo INFO processing data pass 3 of 3 done
+                     echo 
+                     echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+                     echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+                     LOOP=0
+                  fi
+               fi
+            fi
 
-               if [ "$SHELL_CANCEL" == "0" ] ; then
-                  echo
-                  echo
-                  echo INFO processing data pass 3 of 3 done
-                  echo 
-                  echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-                  echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+            sleep 0.7
+         
+            if [ "$SHELL_CANCEL" == "0" ] ; then  
+               if [ -e $TERM_ALL ] ; then 
+                  SHELL_CANCEL=1 
                   LOOP=0
                fi
-            fi
-         fi
-
-         sleep 0.7
-         
-         if [ "$SHELL_CANCEL" == "0" ] ; then  
-            if [ -e $TERM_ALL ] ; then 
-               SHELL_CANCEL=1 
-               LOOP=0
-            fi
-         fi  
-       done
+            fi  
+          done
        fi  
     fi
 fi
