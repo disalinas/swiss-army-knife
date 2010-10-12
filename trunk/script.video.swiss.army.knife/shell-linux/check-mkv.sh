@@ -19,7 +19,7 @@ SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 ###########################################################
 #                                                         #
-# Check that not user root is not running this script     #
+# Check that not user root is running this script         #
 #                                                         #
 ###########################################################
 

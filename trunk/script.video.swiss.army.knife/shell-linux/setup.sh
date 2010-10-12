@@ -12,7 +12,6 @@
 # description :                                           #
 # Setup all files and directorys for the addon            #
 ###########################################################
-
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 SHELLTEST="/bin/bash"
@@ -389,6 +388,8 @@ echo -----------------------------------------------------------
 echo If you allreaday installed a previous version of this addon
 echo and have used ssh with the addon you can answer no.
 echo Inside this section the ssh-system will be configured.
+echo Warning : The local ssh must be configured or this addon is 
+echo not running as expected.
 echo
 echo -n "Do you want to configure ssh for the addon (y/n)"
 read ans

@@ -13,6 +13,7 @@
 # description :                                           #
 # Reads all subtitles and audio-languages form a track    #
 ###########################################################
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 if [ "$UID" == 0 ] ; then
    clear
@@ -24,8 +25,6 @@ if [ "$UID" == 0 ] ; then
    echo -----------------------------------------------------------------
    exit 254
 fi
-
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -52,9 +51,6 @@ echo ---------------------------------------------------------------------------
 # Define the counting commands we expect inside the script
 
 EXPECTED_ARGS=2
-
-# Error-codes
-
 E_BADARGS=1
 E_TOOLNOTF=50
 
