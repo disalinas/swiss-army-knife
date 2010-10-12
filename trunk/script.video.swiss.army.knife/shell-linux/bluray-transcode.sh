@@ -19,6 +19,12 @@ SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 
 
+###########################################################
+#                                                         #
+# Check that not user root is not running this script     #
+#                                                         #
+###########################################################
+
 if [ "$UID" == 0 ] ; then
    clear
    echo This script should not be executed as user root !
@@ -30,7 +36,16 @@ if [ "$UID" == 0 ] ; then
    exit 254
 fi
 
+###########################################################
 
+
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -44,6 +59,16 @@ if [ $SHELL != $SHELLTEST ] ; then
    exit 255
 fi
 
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
+
 clear
 echo
 echo ----------------------------------------------------------------------------
@@ -53,17 +78,15 @@ cat version
 echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
+###########################################################
 
-# Define the counting commands we expect inside the script
 
-EXPECTED_ARGS=4
 
-# Error-codes
-
-E_BADARGS=1
-E_TOOLNOTF=50
-E_TERMINATE=100
-E_MAKEMKV=253
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
@@ -76,6 +99,32 @@ if [ -e $TERM_ALL ] ; then
    rm $TERM_ALL > /dev/null 2>&1
 fi
 
+EXPECTED_ARGS=4
+E_BADARGS=1
+E_TOOLNOTF=50
+E_TERMINATE=100
+E_MAKEMKV=253
+E_SUID0=254
+E_WRONG_SHELL=255
+
+REQUIRED_TOOLS=`cat << EOF
+nohup
+sed
+sort
+makemkvcon
+eject
+EOF`
+
+###########################################################
+
+
+
+
+###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: bluray-transcode.sh p1 p2 p3 p4"
@@ -92,17 +141,15 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   exit $E_BADARGS
 fi
 
+###########################################################
 
-# Define the commands we will be using inside the script ...
 
-REQUIRED_TOOLS=`cat << EOF
-nohup
-sed
-sort
-makemkvcon
-eject
-EOF`
 
+###########################################################
+#                                                         #
+# We must be certain that all software is installed       #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -120,31 +167,45 @@ do
    fi
 done
 
+###########################################################
+
+
+
+
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# We generate the mkv-container from the inserted bluray  #
+#                                                         #
+###########################################################
 
 if [ $1 == '/dev/sr0' ] ; then
    PARA="disc:0"
 fi
-
 if [ $1 == '/dev/sr1' ] ; then
    PARA="disc:1"
 fi
-
 if [ $1 == '/dev/sr2' ] ; then
    PARA="disc:2"
 fi
-
 
 if [ -e bluray.progress ] ; then
    rm bluray.progress > /dev/null 2>&1 
 fi
 
+echo
+echo "INFO makemkv was started ... please be patient."
+
 (
 makemkvcon --messages=/dev/null --progress=bluray.progress mkv $PARA $4 $2 > /dev/null 2>&1  &
 ) > /dev/null 2>&1
 
-echo
-echo INFO wait 30 secounds
-echo
+echo INFO wait 30 secounds until the makekmkv is running 
 
 sleep 30
 
@@ -173,7 +234,6 @@ echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stag
 if [ $4 -lt '10' ] ; then
    echo -n $2/title0$4.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
 fi
-
 if [ $4 -gt '10' ] ; then
    echo -n $2/title$4.mkv > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
 fi
@@ -181,10 +241,8 @@ fi
 echo $SCRIPTDIR/bluray.progress >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
 
 echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-ps axu | grep makemkvcon | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+echo $PID1 >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 
-
-echo
 echo INFO processing data
 echo
 
@@ -194,7 +252,6 @@ do
    progress=$(cat bluray.progress | tail -1 | awk '{print $4}'| sed "s/[^0-9]//g")
    echo $progress > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
    sleep 2
-
    if [ $progress -eq "100"  ] ; then
        rm bluray.progress > /dev/null 2>&1
        echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
@@ -211,14 +268,24 @@ do
 
    if [ -e $TERM_ALL ] ; then 
       echo
-      echo
-      echo INFO processing task have ben killed or ended unexpected ..... 
-      echo
       SHELL_CANCEL=1 
       break
    fi
 done
 
+
+
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# We are done / Decition depends on success or error      #
+#                                                         #
+###########################################################
 
 if [ "$SHELL_CANCEL" == "0" ] ; then
  
@@ -228,8 +295,6 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
    if [ $4 -gt '10' ] ; then
       mv $2/title$4.mkv $2/$3.mkv
    fi
-
-   # Delete jobfile
 
    rm $JOBFILE > /dev/null 2>&1
 
@@ -247,6 +312,10 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
    exit 0
 
 else
+
+   echo
+   echo INFO processing task have ben killed or ended unexpected !!! 
+   echo
 
    # ups ... something was going very wrong    
    # we only erase file depend on the setttings of the addon
