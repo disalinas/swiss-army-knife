@@ -201,6 +201,7 @@ Changes:
 - Integrate worker-thread into bluray-transcode.sh (testet successfully)
 - Integrate worker-thread inti dvd-handbrake.sh testet successfully)
   including a few little optimisations an cosmetics 
+- New commiter to the project <kaveh.ahmadian@gmail.com> 
 
 Fixes: 
 

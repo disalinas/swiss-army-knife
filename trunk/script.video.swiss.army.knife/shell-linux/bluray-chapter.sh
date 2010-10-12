@@ -12,6 +12,15 @@
 # description :                                           #
 # Reads all chapters from inserted bluray                 #
 ###########################################################
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+
+
+
+###########################################################
+#                                                         #
+# Check that not user root is not running this script     #
+#                                                         #
+###########################################################
 
 if [ "$UID" == 0 ] ; then
    clear
@@ -23,8 +32,15 @@ if [ "$UID" == 0 ] ; then
    echo -----------------------------------------------------------------
    exit 254
 fi
+###########################################################
 
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -38,6 +54,16 @@ if [ $SHELL != $SHELLTEST ] ; then
    exit 255
 fi
 
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
+
 clear
 echo
 echo ----------------------------------------------------------------------------
@@ -48,37 +74,28 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
-# Define the counting commands we expect inside the script
+###########################################################
 
-EXPECTED_ARGS=1
 
-# Error-codes
 
-E_BADARGS=1
-E_TOOLNOTF=50
-E_NOCHAPERS=3
-E_VOLUMEERROR=4
-E_TO_OLD=5
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
 OUTPUT="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/bluray-chapter"
 
-
-if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: bluray-chapter.sh p1"
-  echo "                            "
-  echo "[p1] device"
-  echo "                            "
-  echo "bluray-chapter.sh was called with wrong arguments" > $OUTPUT_ERROR
-  echo
-  echo ----------------------- script rc=1 -----------------------------
-  echo -----------------------------------------------------------------
-  exit $E_BADARGS
-fi
-
-
-# Define the commands we will be using inside the script ...
+EXPECTED_ARGS=1
+E_BADARGS=1
+E_NOCHAPTERS=3
+E_VOLUMEERROR=4
+E_WEBERROR=5
+E_TOOLNOTF=50
+E_SUID0=254
+E_WRONG_SHELL=255
 
 REQUIRED_TOOLS=`cat << EOF
 awk
@@ -93,8 +110,49 @@ tail
 makemkvcon
 EOF`
 
+###########################################################
 
-# Check if all commands are found on your system ...
+
+
+###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
+
+if [ $# -lt $EXPECTED_ARGS ]; then
+  echo "Usage: bluray-chapter.sh p1"
+  echo "                            "
+  echo "[p1] device"
+  echo "                            "
+  echo "bluray-chapter.sh was called with wrong arguments" > $OUTPUT_ERROR
+  echo
+  echo ----------------------- script rc=1 -----------------------------
+  echo -----------------------------------------------------------------
+  exit $E_BADARGS
+fi
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Cleanup a few files on startup of the script            #
+#                                                         #
+###########################################################
+
+rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/* >/dev/null 2>&1
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We must be certain that all software is installed       #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -112,23 +170,32 @@ do
    fi
 done
 
+###########################################################
 
-rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/* >/dev/null 2>&1
 
+
+
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# We read the chapters and returning back the list        #
+#                                                         #
+###########################################################
 
 if [ $1 == '/dev/sr0' ] ; then
    PARA="disc:0"
 fi
-
 if [ $1 == '/dev/sr1' ] ; then
    PARA="disc:1"
 fi
-
 if [ $1 == '/dev/sr2' ] ; then
    PARA="disc:2"
 fi
-
-#echo  "This application version is too old"
 
 # We need the chapters (counting)
 
@@ -138,12 +205,8 @@ if [ $# -eq 0 ]; then
   echo
   echo ----------------------- script rc=3 -----------------------------
   echo -----------------------------------------------------------------
-  exit $E_NOCHAPERS
+  exit $E_NOCHAPTERS
 fi
-
-
-# We do not like noise about terminated jobs
-# But now it works like I would .......
 
 (
 makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
@@ -151,20 +214,28 @@ makemkvcon --messages=/dev/null stream $PARA & >/dev/null 2>&1
 
 echo
 echo "INFO generating track-list ... please be patient."
-echo
-
 
 # Wait until webserver is ready
 
+TIMOUT=0
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
     SUCCESS=$(netstat -lt | grep 51000)
+    sleep 0.5
     if [ -n "$SUCCESS" ] ; then
-        echo
         echo INFO webserver on port 51000 ready
         echo
         LOOP=0
+    fi
+    TIMEOUT=`expr $TIMEOUT + 1`
+    if [ $TIMEOUT -eq "45" ] ; then
+        echo  
+        echo ERROR webserver on port 51000 is not ready
+        echo
+        echo ----------------------- script rc=5 -----------------------------
+        echo -----------------------------------------------------------------
+        exit $E_WEBERROR
     fi
 done
 
@@ -178,18 +249,14 @@ do
       index=`expr $index + 1`
 done
 
+# We do not longer needd the makemkvcon process ...
 
 kill -15 $(ps axu | grep makemkvcon | grep -v grep | awk '{print $2}') > /dev/null 2>&1
 
-
 VOLNAME=$(cat ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/brmain.000 | grep name | tail -1 | awk '{print $2}' | tr -dc ‘[:alnum:]‘ )
-
-
 echo $VOLNAME > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/BR_VOLUME
 
-
 Tindex=0
-
 
 if [ -e ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_HELP ] ; then
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_HELP > /dev/null 2>&1
@@ -199,7 +266,6 @@ if [ -e ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/BR_TRAC
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/BR_TRACKS  > /dev/null 2>&1
 fi
 
-echo
 while [ $chapter -gt $Tindex ]
 do
     TITLE=~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/br$Tindex.000
@@ -214,11 +280,10 @@ do
     Tindex=`expr $Tindex + 1`
 done
 
-
 LONGTRACK=$(cat $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_HELP | sort -r | head -1 | awk '{print $2}')
 LONGDURATION=$(cat $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_HELP | sort -r | head -1 | awk '{print $1}')
 
-echo
+echo "INFO track summery"
 echo "INFO [track:[$LONGTRACK]  duration:[$LONGDURATION]]"
 echo "INFO [volname:[$VOLNAME]]"
 echo
@@ -226,6 +291,16 @@ echo $1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $LONGTRACK >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $LONGDURATION >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $VOLNAME >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
+
+###########################################################
+
+
+
+
+
+
+
+
 
 echo
 echo ----------------------- script rc=0 -----------------------------
