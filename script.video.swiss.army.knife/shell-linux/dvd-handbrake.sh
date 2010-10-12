@@ -352,7 +352,7 @@ if [ $# -eq 5 ]; then
                    LOOPP2=0
                 fi
                 sleep 0.7
-                if [ -e $TERM_ALL ] ; then 
+                if [ -e $TERM_ALL ] ; then
                     SHELL_CANCEL=1 
                     break 
                 fi
@@ -369,15 +369,12 @@ if [ $# -eq 5 ]; then
              fi 
          fi
       fi
-
       sleep 0.7
-
-      # Terminate Looping -> Main-Process was killed 
-
       if [ -e $TERM_ALL ] ; then 
+         echo
          SHELL_CANCEL=1 
          LOOP=0
-      fi
+      fi 
     done
 fi
 
@@ -466,8 +463,8 @@ if [ $# -eq 7 ]; then
                   fi
                   sleep 0.7
                   if [ -e $TERM_ALL ] ; then 
-                    SHELL_CANCEL=1 
-                    break 
+                     SHELL_CANCEL=1 
+                     break 
                   fi
                done
 
@@ -499,7 +496,7 @@ if [ $# -eq 7 ]; then
                      LOOPP2=0
                    fi
                    sleep 0.7
-                   if [ -e $TERM_ALL ] ; then 
+                   if [ -e $TERM_ALL ] ; then
                       SHELL_CANCEL=1 
                       break 
                    fi
@@ -515,15 +512,12 @@ if [ $# -eq 7 ]; then
                fi
             fi
          fi
-
-         sleep 0.7
-
-         # Terminate Looping -> Main-Process was killed 
-
-         if [ -e $TERM_ALL ] ; then 
+         sleep 0.7  
+         if [ -e $TERM_ALL ] ; then
+            echo 
             SHELL_CANCEL=1 
             LOOP=0
-         fi
+         fi 
        done
     fi
 fi
@@ -630,15 +624,11 @@ if [ $# -eq 7 ]; then
 
          if [ -e $TERM_ALL ] ; then 
             echo
-            echo
-            echo INFO processing task have ben killed or ended unexpected !!! 
-            echo
             SHELL_CANCEL=1 
             LOOP=0
          fi
-
        done
-       
+      
        if [ "$SHELL_CANCEL" == "0" ] ; then   
 
           echo INFO starting HandBrakeCLI
@@ -738,11 +728,10 @@ if [ $# -eq 7 ]; then
                fi
             fi
             sleep 0.7 
-            if [ "$SHELL_CANCEL" == "0" ] ; then  
-               if [ -e $TERM_ALL ] ; then 
-                  SHELL_CANCEL=1 
-                  LOOP=0
-               fi
+            if [ -e $TERM_ALL ] ; then
+               echo  
+               SHELL_CANCEL=1 
+               LOOP=0
             fi  
           done
        fi  
@@ -847,7 +836,12 @@ if [ $# -eq 9 ]; then
              fi
           fi
        fi
-       sleep .3
+       sleep 0.7
+       if [ -e $TERM_ALL ] ; then 
+          echo
+          SHELL_CANCEL=1 
+          LOOP=0
+       fi
      done
 
      if [ "$SHELL_CANCEL" == "0" ] ; then   
@@ -949,13 +943,12 @@ if [ $# -eq 9 ]; then
                     fi
                  fi
               fi
-              sleep 0.7
-              if [ "$SHELL_CANCEL" == "0" ] ; then  
-                 if [ -e $TERM_ALL ] ; then 
+              sleep 0.7  
+              if [ -e $TERM_ALL ] ; then 
+                    echo   
                     SHELL_CANCEL=1 
                     LOOP=0
-                 fi
-              fi 
+              fi
         done
     fi  
 fi
@@ -996,7 +989,6 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
 
 else
 
-   echo
    echo
    echo INFO processing task have ben killed or ended unexpected !!! 
    echo

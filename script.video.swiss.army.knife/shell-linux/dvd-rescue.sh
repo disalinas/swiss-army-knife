@@ -345,6 +345,7 @@ do
   # Terminate Looping -> Main-Process was killed 
 
   if [ -e $TERM_ALL ] ; then 
+     echo
      LOOP=0
      SHELL_CANCEL=1
   fi
@@ -387,6 +388,10 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
    exit 0
 
 else
+
+   echo
+   echo INFO processing task have ben killed or ended unexpected !!! 
+   echo
 
    # ups ... something was going very wrong    
    # we only erase file depend on the setttings of the addon
