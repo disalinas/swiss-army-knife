@@ -17,6 +17,14 @@
 ###########################################################
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
+
+
+###########################################################
+#                                                         #
+# Check that not user root is running this script         #
+#                                                         #
+###########################################################
+
 if [ "$UID" == 0 ] ; then
    clear
    echo This script should not be executed as user root !
@@ -28,6 +36,16 @@ if [ "$UID" == 0 ] ; then
    exit 254
 fi
 
+###########################################################
+
+
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -41,7 +59,15 @@ if [ $SHELL != $SHELLTEST ] ; then
    exit 255
 fi
 
+###########################################################
 
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
 
 clear
 echo
@@ -53,16 +79,15 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
-# Define the counting commands we expect inside the script
+###########################################################
 
-EXPECTED_ARGS=1
 
-# Error-codes
 
-E_BADARGS=1
-E_TOOLNOTF=50
-E_INACTIVE=3
-E_CRC_ERROR=4
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/media-error.log"
 MEDIA_TYPE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/media.log"
@@ -71,6 +96,30 @@ MEDIA_NOT_PROPER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/
 DVD_CRC_ERRRORS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/lsdvd_error"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
 
+EXPECTED_ARGS=1
+E_BADARGS=1
+E_INACTIVE=3
+E_CRC_ERROR=4
+E_TOOLNOTF=50
+E_SUID0=254
+E_WRONG_SHELL=255
+
+REQUIRED_TOOLS=`cat << EOF
+dvd+rw-mediainfo
+awk
+head
+lsdvd
+EOF`
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage  : state.sh p1"
@@ -84,14 +133,30 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   exit $E_BADARGS
 fi
 
-REQUIRED_TOOLS=`cat << EOF
-dvd+rw-mediainfo
-awk
-head
-lsdvd
-EOF`
+###########################################################
 
-# Check if all commands are found on your system ...
+
+
+###########################################################
+#                                                         #
+# Cleanup a few files on startup of the script            #
+#                                                         #
+###########################################################
+
+if [ -e $MEDIA_NOT_PROPER ] ; then 
+    rm $MEDIA_NOT_PROPER > /dev/null 2>&1
+    rm $DVD_CRC_ERRRORS > /dev/null 2>&1
+fi
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We must be certain that all software is installed       #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -109,14 +174,22 @@ do
    fi
 done
 
+###########################################################
 
 
-# cleanup
 
-if [ -e $MEDIA_NOT_PROPER ] ; then 
-    rm $MEDIA_NOT_PROPER > /dev/null 2>&1
-    rm $DVD_CRC_ERRRORS > /dev/null 2>&1
-fi
+
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# We try to detect the inserted medium                    #
+#                                                         #
+###########################################################
 
 OUTPUT=$(dvd+rw-mediainfo $1 > $MEDIA_TYPE 2>/dev/null)
 RETVAL1=$?
@@ -136,6 +209,7 @@ if [ $RETVAL1 -eq 0 ] ; then
        # If the filesystem of the inserted dvd is incorrect we should not copy the dvd with dd
        # or try to transcode this inserted dvd. From my point of view the lsdvd command is one 
        # of the best indicators that a dvd has fooled or invalid file-system.
+       # In this case it may the best to copy this dvd with ddrescue .-) 
 
        # A little note to the users of my script.If you have a few strings to add here ....
        
@@ -165,7 +239,7 @@ if [ $RETVAL1 -eq 0 ] ; then
            echo It is a guess that transcoding and dd-copy will not work on this 
            echo DVD.It is recommandet to use resque-copy with this disk.
            echo Even with a rescue-copy it is not certain that this disk can be 
-           echo duplicated.
+           echo duplicated. 
            echo  
            echo ----------------------- script rc=4 -----------------------------
            echo -----------------------------------------------------------------
@@ -183,7 +257,6 @@ if [ $RETVAL1 -eq 0 ] ; then
        echo
        exit $E_INACTIVE 
    fi 
-
 
    # If the command makemkvcon is not installed during the execution of 
    # setup.sh and the bluray function is enabled we stop now .....
@@ -238,10 +311,11 @@ if [ $RETVAL1 -eq 0 ] ; then
    echo "INFO [media:[!unknown!]]"
    echo
 
-
    echo ----------------------- script rc=1 -----------------------------
    echo -----------------------------------------------------------------
 
    exit 1
 fi
+
+###########################################################
 
