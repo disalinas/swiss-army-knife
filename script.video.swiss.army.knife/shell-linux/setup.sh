@@ -14,6 +14,32 @@
 ###########################################################
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
+
+
+###########################################################
+#                                                         #
+# We must be root for this script                         #
+#                                                         #
+###########################################################
+if [ "$UID" -ne 0 ] ; then
+   clear
+   echo "you must be root to run this script !"
+   echo "sudo ./setup.sh"
+   echo
+   echo ----------------------- script rc=3 -----------------------------
+   echo -----------------------------------------------------------------
+   exit 3
+fi
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
+
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
    clear
@@ -23,6 +49,17 @@ if [ $SHELL != $SHELLTEST ] ; then
    echo
    exit 255
 fi
+
+###########################################################
+
+
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
 
 clear
 echo
@@ -34,14 +71,17 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
+###########################################################
 
 
-# Define the counting commands we expect inside the script
+
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
 
 EXPECTED_ARGS=1
-
-# Error-codes
-
 E_BADARGS=1
 E_TOOLNOTF=50
 E_NOROOT=3
@@ -50,10 +90,25 @@ E_LICENCE_NOT_ACCEPTED=5
 E_DPKG=6
 E_WRONG_SHELL=255
 
+REQUIRED_TOOLS=`cat << EOF
+echo
+apt-get
+awk
+tar
+gunzip
+wget
+EOF`
 
 ###########################################################
-#            Check-Arguments to Script                    #
+
+
+
 ###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
+
 if [ $# -ne $EXPECTED_ARGS ] ; then
   clear
   echo "Usage: setup.sh p1"
@@ -67,22 +122,16 @@ if [ $# -ne $EXPECTED_ARGS ] ; then
   echo -----------------------------------------------------------------
   exit $E_BADARGS
 fi
-###########################################################
-
-
-
 
 ###########################################################
-#            Check installed software                     #
+
+
+
 ###########################################################
-REQUIRED_TOOLS=`cat << EOF
-echo
-apt-get
-awk
-tar
-gunzip
-wget
-EOF`
+#                                                         #
+# We must be certain that all software is installed       #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -97,38 +146,30 @@ do
       exit $E_TOOLNOTF
    fi
 done
+
 ###########################################################
 
 
 
 
-###########################################################
-#            Who is running the script ?                  #
-###########################################################
-if [ "$UID" -ne 0 ] ; then
-   clear
-   echo "you must be root to run this script !"
-   echo "sudo ./setup.sh"
-   echo
-   echo ----------------------- script rc=3 -----------------------------
-   echo -----------------------------------------------------------------
-   exit $E_NOROOT
-fi
-###########################################################
+
 
 
 
 
 
 ###########################################################
-#            Is licence-file allready local ?             #
+#                                                         #
+# Is licence-file 0.6.16 allready local ?                 #
+#                                                         #
 ###########################################################
+
 if [ ! -e EULA-0.6.16 ] ; then
    clear
    echo
    echo download licence file from google-code
    echo
-   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.15
+   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.16
 fi
 
 if [ -e EULA-0.6.16 ] ; then
@@ -154,26 +195,32 @@ else
    clear
    echo The EULA-FILE can not be downloaded and therefore you must
    echo use a svn release of this addon.
-   echo You do this at you own risk .....
+   echo You do this at your own risk .....
    echo the last stable puplic released version was 0.6.15
    echo
    echo -n press any key to continue or ctrl-c to abort..
    read any
 fi
-###########################################################
-
-
 
 ###########################################################
-#       Set all +x attributes for the shell-folder        #
+
+
+
+###########################################################
+#                                                         #
+# Set all +x attributes for the shell-folder              #
+#                                                         #
 ########################################################### 
 
 chmod +x *sh > /dev/null 2>&1
 
+###########################################################
+
 
 
 ###########################################################
-#            Create directorys                            #
+#                                                         #
+# Create local directorys                                 #
 ###########################################################
 
 clear
@@ -297,7 +344,6 @@ if [ $ans == "y" ] ; then
       mkdir /dvdrip/portable/psp
       chown -R $1:$1 /dvdrip/portable/psp
    fi
-
 fi
 
 if [ $ans == "n" ] ; then
@@ -317,7 +363,9 @@ fi
 
 
 ###########################################################
-#            Install Software for all parts               #
+#                                                         #
+# Install Software for all parts of this addon            #
+#                                                         #
 ###########################################################
 if [ ! -e /etc/apt/sources.list.d/medibuntu.list ] ; then
    sudo wget http://www.medibuntu.org/sources.list.d/$(lsb_release -cs).list \
@@ -331,15 +379,17 @@ apt-get install dvd+rw-tools lsdvd vobcopy
 apt-get install submux-dvd subtitleripper transcode mjpegtools libdvdcss2 openssh-server openssh-client
 apt-get install liba52-0.7.4 libfaac0 libmp3lame0 libmp4v2-0 libogg0 libsamplerate0 libx264-85 libxvidcore4
 apt-get install libbz2-1.0 libgcc1 libstdc++6 zlib1g
-###########################################################
-
-
-
-
 
 ###########################################################
-#            Section Bluray                               #
+
+
+
 ###########################################################
+#                                                         #
+# Section Bluray only needed if makemkv should used       #
+#                                                         #
+###########################################################
+
 clear
 echo
 echo -----------------------------------------------------------
@@ -374,14 +424,19 @@ if [ $ans == "n" ] ; then
    read any
    BL=0
 fi
-###########################################################
-
-
-
 
 ###########################################################
+
+
+
+
+
+###########################################################
+#                                                         #
 #            Section SSH                                  #
+#                                                         #
 ###########################################################
+
 clear
 echo
 echo -----------------------------------------------------------
@@ -437,15 +492,18 @@ if [ $ans == "n" ] ; then
    echo -n press any key to continue ..
    read any
 fi
-###########################################################
-
-
-
-
-
 
 ###########################################################
-#            Section Handbrake                            #
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# Section Handbrake                                       #
+#                                                         #
 ###########################################################
 
 # We test if the command HandBrakeCLI is allready installed ...
@@ -585,15 +643,18 @@ else
       read any
    fi
 fi
-###########################################################
-
-
-
-
-
 
 ###########################################################
-#            Section makemkvcon                           #
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# Section makemkvcon                                      #
+#                                                         #
 ###########################################################
 
 # Test command makemkvcon ...
@@ -707,7 +768,9 @@ if [ $? -eq 1 ] ; then
       echo -n press any key to continue ..
       read any
    fi
+
 else
+
    MINSTALLED=$(makemkvcon info /dev/null | head -1 | awk '{print $2}')
    clear
    echo The command makemkvcon was found on your system.
@@ -815,12 +878,17 @@ else
       read any
    fi
 fi
+
 ###########################################################
 
 
+
 ###########################################################
-#            Section setup.done                           #
+#                                                         #
+# Section setup.done                                      #
+#                                                         #
 ###########################################################
+
 clear
 cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
 if [ ! -e 0.6.16-setup.done ] ; then
@@ -837,6 +905,16 @@ if [ ! -e EULA-0.6.16 ] ; then
    chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.16
 fi
 
+###########################################################
+
+
+
+
+###########################################################
+#                                                         #
+# Setup is now finished                                   #
+#                                                         #
+###########################################################
 
 clear
 echo
@@ -848,6 +926,7 @@ echo - Do not forget to replace the default name xbmc@localhost
 echo   if your username is not xbmc.
 echo - If you did not created the directorys. You have to create them
 echo   now and to change all directorys inside the settings.
+echo - Without a configured ssh system this addon is not working.
 echo - Please remember that no "spaces" inside the directory-names
 echo   are allowed.
 echo - Please be sure that the user has full write permissions to all
@@ -865,5 +944,6 @@ echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 echo
 echo
+
 ###########################################################
 

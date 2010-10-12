@@ -1622,6 +1622,7 @@ class GUIMain01Class(xbmcgui.Window):
                         GUIlog('menu jobs activated')
                      JobWindow = GUIJobWinClass()
                      del JobWindow        
+                     
                  if (choice == 4): 
                      if (__verbose__):
                          GUIlog('menu exit activated')
