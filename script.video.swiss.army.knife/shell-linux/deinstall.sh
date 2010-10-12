@@ -12,8 +12,34 @@
 # description :                                           #
 # Remove all sofwtare that was installed during setup.sh  #
 ###########################################################
-
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+
+
+
+
+###########################################################
+#                                                         #
+# We must be root for this script                         #
+#                                                         #
+###########################################################
+if [ "$UID" -ne 0 ] ; then
+   clear
+   echo "you must be root to run this script !"
+   echo "sudo ./setup.sh"
+   echo
+   echo ----------------------- script rc=3 -----------------------------
+   echo -----------------------------------------------------------------
+   exit 3
+fi
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -25,6 +51,16 @@ if [ $SHELL != $SHELLTEST ] ; then
    exit 255
 fi
 
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
+
 clear
 echo
 echo ----------------------------------------------------------------------------
@@ -35,33 +71,61 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
+###########################################################
 
 
 
-# Error-codes
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
 
-E_BADARGS=1
+E_BADARGS=0
 E_TOOLNOTF=50
 E_NOROOT=3
-E_SSHKEY=4
-E_LICENCE_NOT_ACCEPTED=5
 E_DPKG=6
 E_WRONG_SHELL=255
 
-
-
-
-###########################################################
-#            Check installed software                     #
-###########################################################
 REQUIRED_TOOLS=`cat << EOF
 echo
+dpkg 
 apt-get
 awk
 tar
 gunzip
 wget
 EOF`
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
+
+if [ $# -lt $EXPECTED_ARGS ]; then
+  echo "Usage: deinstall.sh"
+  echo 
+  echo "deinstall.sh was called with wrong arguments" > $OUTPUT_ERROR
+  echo
+  echo ----------------------- script rc=1 -----------------------------
+  echo -----------------------------------------------------------------
+  exit $E_BADARGS
+fi
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We must be certain that all software is installed       #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -76,66 +140,10 @@ do
       exit $E_TOOLNOTF
    fi
 done
-###########################################################
-
-
-
 
 ###########################################################
-#            Who is running the script ?                  #
-###########################################################
-if [ "$UID" -ne 0 ] ; then
-   clear
-   echo "you must be root to run this script !"
-   echo "sudo ./setup.sh"
-   echo
-   echo ----------------------- script rc=3 -----------------------------
-   echo -----------------------------------------------------------------
-   exit $E_NOROOT
-fi
-###########################################################
 
 
-
-
-
-###########################################################
-#            Is licence-file allready local ?             #
-###########################################################
-if [ ! -e EULA-0.6.15 ] ; then
-   clear
-   echo
-   echo download licence file from google-code
-   echo
-   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.15
-fi
-
-if [ -e EULA-0.6.15 ] ; then
-   clear
-   cat EULA-0.6.15
-   echo
-   echo -n "Do you want to accept this enduser-licnce ? (y)"
-   read ans
-   if [ $ans == "y" ] ; then
-      clear
-      echo "EULA 0.6.15 accepted"
-      echo
-      echo all software-installations from setup.sh will be removed !!!!
-      echo all data-containers are not touched or a single file removed !!!
-      echo the ssh-keys remaining on the system and have to be deleted by you !!
-      echo
-      echo -n press any key to continue ..
-      echo
-      read any
-   else
-      echo "licence was not accepted !"
-      echo
-      echo ----------------------- script rc=5 -----------------------------
-      echo -----------------------------------------------------------------
-      exit $E_LICENCE_NOT_ACCEPTED
-   fi
-fi
-###########################################################
 
 
 apt-get remove --purge  mencoder
@@ -149,7 +157,6 @@ apt-get remove --purge  build-essential lynx libc6-dev libssl-dev libgl1-mesa-de
 packets1=$(dpkg -l | grep ^ii | grep handbr | awk '{print $2}')
 packets2=$(dpkg -l | grep ^ii | grep makemkv | awk '{print $2}')
 
-
 clear
 echo the following packets from setup.sh have ben found.
 echo $packets1 $packets2
@@ -158,5 +165,5 @@ echo You should remove them with the command dpkg -r
 echo You should also remove the directory ~./ssh
 echo
 echo by by ..
-
+exit 0
 

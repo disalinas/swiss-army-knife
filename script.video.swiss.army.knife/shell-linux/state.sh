@@ -15,6 +15,7 @@
 # 1              Media not reconized                      #
 # 4              Media inserted with copy-protection      #
 ###########################################################
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 if [ "$UID" == 0 ] ; then
    clear
@@ -27,7 +28,6 @@ if [ "$UID" == 0 ] ; then
    exit 254
 fi
 
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -40,6 +40,8 @@ if [ $SHELL != $SHELLTEST ] ; then
    echo -----------------------------------------------------------------
    exit 255
 fi
+
+
 
 clear
 echo
