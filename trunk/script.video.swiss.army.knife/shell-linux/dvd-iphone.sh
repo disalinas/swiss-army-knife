@@ -20,6 +20,15 @@
 # description :                                           #
 # generates a h264 container of a dvd for iPhone          #
 ###########################################################
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+
+
+
+###########################################################
+#                                                         #
+# Check that not user root is running this script         #
+#                                                         #
+###########################################################
 
 if [ "$UID" == 0 ] ; then
    clear
@@ -32,7 +41,15 @@ if [ "$UID" == 0 ] ; then
    exit 254
 fi
 
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -46,6 +63,17 @@ if [ $SHELL != $SHELLTEST ] ; then
    exit 255
 fi
 
+###########################################################
+
+
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
+
 clear
 echo
 echo ----------------------------------------------------------------------------
@@ -56,20 +84,55 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
+###########################################################
+
+
+
+
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
+
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/handbrake-error.log"
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 JOBERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/iphone-transcode.log"
 PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
-# Define the counting commands we expect inside the script
+SHELL_CANCEL=0
+TERM_ALL="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL"
+KILL_FILES="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES"
+if [ -e $TERM_ALL ] ; then 
+   rm $TERM_ALL > /dev/null 2>&1
+fi
 
 EXPECTED_ARGS=5
-
-# Error-codes
-
 E_BADARGS=1
 E_TOOLNOTF=50
+E_TERMINATE=100
+E_HANDBRAKE=253
+E_SUID0=254
+E_WRONG_SHELL=255
+
+REQUIRED_TOOLS=`cat << EOF
+HandBrakeCLI
+sed
+tr
+strings
+sleep
+mencoder
+nohup
+EOF`
+
+###########################################################
+
+
+
+
+
+
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-iphone.sh p1 p2 p3 p4 p5"
@@ -126,19 +189,6 @@ if [ $# -eq 9 ]; then
 fi
 
 
-# Define the commands we will be using inside the script ...
-
-REQUIRED_TOOLS=`cat << EOF
-HandBrakeCLI
-sed
-tr
-strings
-sleep
-mencoder
-nohup
-EOF`
-
-# clean-up
 
 
 if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR" ] ; then
@@ -151,7 +201,7 @@ fi
 
 
 
-# Check if all commands are found on your system ...
+
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do

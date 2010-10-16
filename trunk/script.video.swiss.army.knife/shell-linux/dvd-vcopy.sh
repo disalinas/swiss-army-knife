@@ -301,8 +301,7 @@ else
    # ups ... something was going very wrong    
    # we only erase file depend on the setttings of the addon
 
-   if [ -e $KILL_FILES ] ; then
-      cd $2
+   if [ -e $KILL_FILES ] ; then  
       rm -rf $2/$VOLNAME >/dev/null 2>&1  
    fi
 
