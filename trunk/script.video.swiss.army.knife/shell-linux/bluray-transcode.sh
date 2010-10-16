@@ -147,6 +147,24 @@ fi
 
 ###########################################################
 #                                                         #
+# Cleanup a few files on startup of the script            #
+#                                                         #
+###########################################################
+
+if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR" ] ; then
+    rm "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR" > /dev/null 2>&1
+fi
+
+if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" ] ; then
+    rm "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" > /dev/null 2>&1
+fi
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
 # We must be certain that all software is installed       #
 #                                                         #
 ###########################################################

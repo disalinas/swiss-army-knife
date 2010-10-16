@@ -124,6 +124,7 @@ strings
 sleep
 mencoder
 nohup
+eject
 EOF`
 
 ###########################################################
@@ -434,6 +435,7 @@ if [ $# -eq 7 ]; then
     fi
 fi
 
+###########################################################
 
 
 
@@ -725,16 +727,69 @@ if [ $# -eq 9 ]; then
        done
 fi
 
-# Delete jobfile
 
-rm $JOBFILE > /dev/null 2>&1
 
-sleep 1
-rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
-rm $PWATCH > /dev/null 2>&1
 
-echo
-echo ----------------------- script rc=0 -----------------------------
-echo -----------------------------------------------------------------
 
-exit
+
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# We are done / Decition depends on success or error      #
+#                                                         #
+###########################################################
+
+if [ "$SHELL_CANCEL" == "0" ] ; then
+
+   rm $JOBFILE > /dev/null 2>&1
+
+   sleep 1
+
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   eject $1
+ 
+   echo
+   echo ----------------------- script rc=0 -----------------------------
+   echo -----------------------------------------------------------------
+
+   exit 0
+
+else
+
+   echo
+   echo INFO processing task have ben killed or ended unexpected !!! 
+   echo
+
+   # ups ... something was going very wrong    
+   # we only erase file depend on the setttings of the addon
+
+   if [ -e $KILL_FILES ] ; then
+      rm $2/$3.mkv > /dev/null 2>&1
+
+      # In the case we have a subtitle-file it will also be deleted ...
+
+      rm $2/$3.idx > /dev/null 2>&1 
+      rm $2/$3.sub > /dev/null 2>&1 
+   fi
+
+   rm $JOBFILE > /dev/null 2>&1
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   echo
+   echo ERROR : This job was not successsfully  
+   echo
+   echo ----------------------- script rc=100 ---------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TERMINATE
+fi
+
+###########################################################
+
