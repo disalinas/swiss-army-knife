@@ -1501,8 +1501,6 @@ class GUIMain01Class(xbmcgui.Window):
 
                   # There must be something wrong ....
                   # The main-process is not running ...
- 
-                  GUIInfo(1,"Ups ....shit happens on a svn-release sometimes ...") 
                    
                   removal = OSRemoveLock()
                   state = OSKillProc()
@@ -1655,10 +1653,10 @@ class GUIWorkerThread(threading.Thread):
                          exit = False
                    time.sleep(1)
                    GUIlog('[W-Thread] is active and running ...')
-#                   if (__ProgressView__ == False):
-#                       if (__jobs__ == True):
-#                          if (__verbose__ == "true"):   
-#                             GUIlog('[W-Thread] active jobe is running .....') 
+                   if (__ProgressView__ == False):
+                       if (__jobs__ == True):
+                           if (__verbose__ == "true"):   
+                              GUIlog('[W-Thread] active jobe is running .....') 
 
             if (__verbose__ == "true"):   
                 GUIlog('[W-Thread] do exit now ...')
