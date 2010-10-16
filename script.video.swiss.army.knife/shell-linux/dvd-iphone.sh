@@ -131,8 +131,11 @@ EOF`
 
 
 
-
-
+###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-iphone.sh p1 p2 p3 p4 p5"
@@ -188,8 +191,16 @@ if [ $# -eq 9 ]; then
     fi
 fi
 
+###########################################################
 
 
+
+
+###########################################################
+#                                                         #
+# Cleanup a few files on startup of the script            #
+#                                                         #
+###########################################################
 
 if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR" ] ; then
     rm "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR" > /dev/null 2>&1
@@ -199,9 +210,15 @@ if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" ] ; 
     rm "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" > /dev/null 2>&1
 fi
 
+###########################################################
 
 
 
+###########################################################
+#                                                         #
+# We must be certain that all software is installed       #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -218,20 +235,25 @@ do
    fi
 done
 
+###########################################################
 
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 1 audio-track                           #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 1 audio-track                        #
+#                                                         #
+###########################################################
+
 if [ $# -eq 5 ]; then
     AUDIO1=$(($5 +  1))
-
-    echo
-    echo INFO transcode job with 1 audio-track
 
     echo $1 > $JOBFILE
     echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
@@ -241,7 +263,7 @@ if [ $# -eq 5 ]; then
     echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-current
     echo $2/$3.mp4 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-files
 
-    echo
+    echo 
     echo INFO starting HandBrakeCLI
 
     (
@@ -250,17 +272,25 @@ if [ $# -eq 5 ]; then
     ) > $OUT_TRANS 2>&1 &
 
     echo INFO HandBrakeCLI command executed
-    echo
 
-    sleep 10
+    sleep 6
+
+    PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+    echo $PID > $PWATCH
+
+    if [ -z "$PID" ] ; then
+       echo
+       echo HandBrakeCLI is not running after 6 secounds. Please check your
+       echo settings and log-files.
+       echo
+       exit $E_HANDBRAKE
+    fi
 
     echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-    ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-    PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
-
+    echo $PID >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
     echo $PID > $PWATCH 
 
-    echo
+    echo INFO transcode job with 1 audio-track
     echo INFO processing data pass 1 of 1
     echo
 
@@ -284,6 +314,10 @@ if [ $# -eq 5 ]; then
                    LOOPP2=0
                 fi
                 sleep 0.7
+                if [ -e $TERM_ALL ] ; then 
+                    SHELL_CANCEL=1 
+                    break 
+                fi
             done
 
             echo
@@ -293,24 +327,35 @@ if [ $# -eq 5 ]; then
 
             echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
             echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
-            echo
-            echo
             LOOP=0
          fi
       fi
       sleep 0.7
+      if [ -e $TERM_ALL ] ; then 
+         echo
+         SHELL_CANCEL=1 
+         LOOP=0
+      fi 
     done
 fi
 
+###########################################################
 
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 2 audio-track                           #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 2 audio-tracks                       #
+#                                                         #
+###########################################################
+
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-a ]] ; then
        AUDIO1=$(($5 +  1))
