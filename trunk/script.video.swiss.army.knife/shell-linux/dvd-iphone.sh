@@ -321,14 +321,16 @@ if [ $# -eq 5 ]; then
                 fi
             done
 
-            echo
-            echo
-            echo INFO processing data pass 1 of 1 done
-            echo
-
-            echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-            echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
-            LOOP=0
+            if [ "$SHELL_CANCEL" == "0" ] ; then  
+               echo
+               echo
+               echo INFO processing data pass 1 of 1 done
+               echo
+ 
+               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+               echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+               LOOP=0
+            fi
          fi
       fi
       sleep 0.7
@@ -440,11 +442,18 @@ fi
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 1 audio-track and 1 subtitle            #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 1 audio-track and 1 subtitle         #
+#                                                         #
+###########################################################
+
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-s ]] ; then
        AUDIO1=$(($5 + 1))
@@ -583,13 +592,23 @@ if [ $# -eq 7 ]; then
     fi
 fi
 
+###########################################################
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 2 audio-track and 1 subtitle            #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 2 audio-tracks                       #
+#                                                         #
+###########################################################
+
 if [ $# -eq 9 ]; then
      AUDIO1=$(($5 +  1))
      AUDIO2=$(($7 +  1))
@@ -724,9 +743,15 @@ if [ $# -eq 9 ]; then
             fi
          fi
          sleep 0.7
+         if [ -e $TERM_ALL ] ; then 
+            echo  
+            SHELL_CANCEL=1 
+            LOOP=0
+         fi
        done
 fi
 
+###########################################################
 
 
 
