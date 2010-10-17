@@ -140,7 +140,7 @@ def OSConfiguration(index):
     config[50] = __settings__.getSetting("id-iphone")
     config[51] = __settings__.getSetting("id-psp")   
     config[55] = __settings__.getSetting("id-delete")   
- 
+    config[56] = __settings__.getSetting("id-eject")   
 
     # Modul-global variable to detect if debug-log is active
 
@@ -233,6 +233,15 @@ def OSConfiguration(index):
     else:
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES > /dev/null 2>&1"
         status = os.system("%s" % (command))
+
+    if (config[56] == 'true'):
+        sys.platform.startswith('linux')
+        command = "echo -n EJECT MEIDUM AFTER SUCCESS ! > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EJECT"
+        status = os.system("%s" % (command))
+    else:
+        command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EJECT > /dev/null 2>&1"
+        status = os.system("%s" % (command))
+
 
 
     # All the options that can be enabled or disabled over settings or during the execution of setup.sh 

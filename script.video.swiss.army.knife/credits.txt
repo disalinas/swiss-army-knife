@@ -1,6 +1,6 @@
 linuxluemmel.ch@gmail.ch 	creator of thr project 
 kaveh.ahmadian@gmail.com        translator of wiki-pages and project commiter ...
-ddekani@gmail.com		translator of the french part
+ddekani@gmail.com		translator of the french part and project commiter 
 cherni@lennon.org               creator of the luxeria-logo
 
 All my special thanks go the countless devs of the following 
