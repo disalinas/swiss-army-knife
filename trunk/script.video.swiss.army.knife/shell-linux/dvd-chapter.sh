@@ -16,6 +16,15 @@
 # - 2. Every track has a own audio-list                   #
 # - 3. Every track has a own subtitle-list                #
 ###########################################################
+SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+
+
+
+###########################################################
+#                                                         #
+# Check that not user root is running this script         #
+#                                                         #
+###########################################################
 
 if [ "$UID" == 0 ] ; then
    clear
@@ -28,7 +37,15 @@ if [ "$UID" == 0 ] ; then
    exit 254
 fi
 
-SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -42,6 +59,16 @@ if [ $SHELL != $SHELLTEST ] ; then
    exit 255
 fi
 
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
+
 clear
 echo
 echo ----------------------------------------------------------------------------
@@ -52,13 +79,20 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
+###########################################################
 
-# Define the counting commands we expect inside the script
+
+
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
+
+OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/dvd-error.log"
+GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD_GUI"
 
 EXPECTED_ARGS=2
-
-# Error-codes
-
 E_BADARGS=1
 E_TOOLNOTF=50
 E_NOCHAPERS=3
@@ -67,8 +101,25 @@ E_AUDIO1_ERROR=5
 E_AUDIO2_ERROR=6
 E_SUB_ERROR=7
 
-OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/dvd-error.log"
-GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD_GUI"
+REQUIRED_TOOLS=`cat << EOF
+lsdvd
+volname
+awk
+cut
+sed
+tr
+tail
+EOF`
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-chapter.sh p1 p2"
@@ -83,21 +134,15 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   exit $E_BADARGS
 fi
 
-
-# Define the commands we will be using inside the script ...
-
-REQUIRED_TOOLS=`cat << EOF
-lsdvd
-volname
-awk
-cut
-sed
-tr
-tail
-EOF`
+###########################################################
 
 
-# Check if all commands are found on your system ...
+
+###########################################################
+#                                                         #
+# Cleanup a few files on startup of the script            #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -115,6 +160,10 @@ do
    fi
 done
 
+###########################################################
+
+
+
 
 rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/* >/dev/null 2>&1
 
@@ -129,7 +178,6 @@ lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f3 >  ~/.xb
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $6}' | sed  's/,//g' > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvdc
 
 chapter=$(lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | wc -l)
-
 
 index=0
 track=0
@@ -263,9 +311,7 @@ if [ $2 -eq "1" ] ; then
 fi
 
 
-
 if [ $2 -eq "0" ] ; then
-
      echo automode is inactive
 fi
 

@@ -15,6 +15,14 @@
 ###########################################################
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
+
+
+###########################################################
+#                                                         #
+# Check that not user root is running this script         #
+#                                                         #
+###########################################################
+
 if [ "$UID" == 0 ] ; then
    clear
    echo This script should not be executed as user root !
@@ -25,6 +33,16 @@ if [ "$UID" == 0 ] ; then
    echo -----------------------------------------------------------------
    exit 254
 fi
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# We can only run with bash as default shell              #
+#                                                         #
+###########################################################
 
 SHELLTEST="/bin/bash"
 if [ $SHELL != $SHELLTEST ] ; then
@@ -38,6 +56,16 @@ if [ $SHELL != $SHELLTEST ] ; then
    exit 255
 fi
 
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Show disclaimer / copyright note on top of the screen   #
+#                                                         #
+###########################################################
+
 clear
 echo
 echo ----------------------------------------------------------------------------
@@ -48,18 +76,46 @@ echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
-# Define the counting commands we expect inside the script
+###########################################################
 
-EXPECTED_ARGS=2
-E_BADARGS=1
-E_TOOLNOTF=50
 
+
+###########################################################
+#                                                         #
+# Definition of files and internal variables              #
+#                                                         #
+###########################################################
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/dvd-error.log"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD_GUI"
 ADVD="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/ADVD"
 SDVD="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/SDVD"
 
+EXPECTED_ARGS=2
+E_BADARGS=1
+E_TOOLNOTF=50
+E_SUID0=254
+E_WRONG_SHELL=255
+
+REQUIRED_TOOLS=`cat << EOF
+lsdvd
+volname
+awk
+cut
+sed
+tr
+tail
+EOF`
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+# Check startup-parameters and show usage if needed       #
+#                                                         #
+###########################################################
 
 if [ $# -lt $EXPECTED_ARGS ]; then
   echo "Usage: dvd-atrack.sh p1 p2"
@@ -74,21 +130,15 @@ if [ $# -lt $EXPECTED_ARGS ]; then
   exit $E_BADARGS
 fi
 
-
-# Define the commands we will be using inside the script ...
-
-REQUIRED_TOOLS=`cat << EOF
-lsdvd
-volname
-awk
-cut
-sed
-tr
-tail
-EOF`
+###########################################################
 
 
-# Check if all commands are found on your system ...
+
+###########################################################
+#                                                         #
+# We must be certain that all software is installed       #
+#                                                         #
+###########################################################
 
 for REQUIRED_TOOL in ${REQUIRED_TOOLS}
 do
@@ -105,6 +155,10 @@ do
         exit $E_TOOLNOTF
    fi
 done
+
+###########################################################
+
+
 
 echo
 echo INFO audio-tracks from dvd-track [$2]

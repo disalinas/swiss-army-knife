@@ -96,6 +96,7 @@ OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/
 JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 JOBERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB.ERROR"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd-transcode.log"
+EJECT="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EJECT"
 PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
 
 SHELL_CANCEL=0
@@ -979,8 +980,10 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
    rm $PWATCH > /dev/null 2>&1
 
-   eject $1
- 
+   if [ -e $EJECT ] ; then 
+      eject $1
+   fi  
+
    echo
    echo ----------------------- script rc=0 -----------------------------
    echo -----------------------------------------------------------------
