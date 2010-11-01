@@ -17,15 +17,14 @@ ssh or manually.In the case of a unexpected error I would try to run them in a t
  * Description : Do detect if a DVD or a Bluray is inside the device (par.1) 
  * Sample : *./state.sh /dev/sr0*
  * Output :
-{{{
-user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./state.sh /dev/sr0
 
----------------------------------------------------------------------
+{{{
+----------------------------------------------------------------------------
 script    : state.sh
-version   : 0.6.11 [swiss-army-knife addon]
+version   : 0.6.16 [swiss-army-knife addon]
 copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
 changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
----------------------------------------------------------------------
+----------------------------------------------------------------------------
 
 INFO [media:[DVD-ROM]]
 
