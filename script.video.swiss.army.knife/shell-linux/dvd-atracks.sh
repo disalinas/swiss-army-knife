@@ -91,8 +91,9 @@ GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/
 ADVD="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/ADVD"
 SDVD="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/SDVD"
 
-EXPECTED_ARGS=2
+ZERO=0
 E_BADARGS=1
+EXPECTED_ARGS=2
 E_TOOLNOTF=50
 E_SUID0=254
 E_WRONG_SHELL=255
@@ -178,4 +179,4 @@ echo
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 
-exit 0
+exit $ZERO
