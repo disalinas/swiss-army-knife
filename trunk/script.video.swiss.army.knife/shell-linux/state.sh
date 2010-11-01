@@ -145,7 +145,7 @@ fi
 #                                                         #
 ###########################################################
 
-if [ -e $MEDIA_NOT_PROPER ] ; then 
+if [ -e $MEDIA_NOT_PROPER ] ; then
     rm $MEDIA_NOT_PROPER > /dev/null 2>&1
     rm $DVD_CRC_ERRRORS > /dev/null 2>&1
 fi
@@ -170,7 +170,7 @@ do
         echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate." > $OUTPUT_ERROR
         echo "Please install \"${REQUIRED_TOOL}\"." > $OUTPUT_ERROR
         echo
-        echo ----------------------- script rc=2 -----------------------------
+        echo ----------------------- script rc=50 ----------------------------
         echo -----------------------------------------------------------------
         exit $E_TOOLNOTF
    fi
@@ -209,58 +209,57 @@ if [ $RETVAL1 -eq 0 ] ; then
        cat $MEDIA_TYPE | head -3 | tail -1 | awk '{print $4}' > $MEDIA_RETURN
 
        # If the filesystem of the inserted dvd is incorrect we should not copy the dvd with dd
-       # or try to transcode this inserted dvd. From my point of view the lsdvd command is one 
+       # or try to transcode this inserted dvd. From my point of view the lsdvd command is one
        # of the best indicators that a dvd has fooled or invalid file-system.
-       # In this case it may the best to copy this dvd with ddrescue .-) 
+       # In this case it may the best to copy this dvd with ddrescue .-)
 
        # A little note to the users of my script.If you have a few strings to add here ....
-       
+
        echo
        echo "INFO [media:[DVD-ROM]]"
        echo
 
-       CRC_COUNTER=0 
-       
+       CRC_COUNTER=0
        CRC=$(cat $DVD_CRC_ERRRORS | grep "Zero check failed")
-       if [ -n "$CRC" ] ; then 
-           CRC_COUNTER=1  
+       if [ -n "$CRC" ] ; then
+           CRC_COUNTER=1
        fi
 
        CRC=$(cat $DVD_CRC_ERRRORS | grep "CHECK_VALUE failed")
-       if [ -n "$CRC" ] ; then 
-           CRC_COUNTER=1  
+       if [ -n "$CRC" ] ; then
+           CRC_COUNTER=1
        fi
 
-       if [ $CRC_COUNTER -eq 0 ] ; then 
+       if [ $CRC_COUNTER -eq 0 ] ; then
            echo ----------------------- script rc=0 -----------------------------
            echo -----------------------------------------------------------------
            exit $ZERO
        else
            echo
-           echo This DVD seeems to be very good copy-protected. 
-           echo It is a guess that transcoding and dd-copy will not work on this 
+           echo This DVD seeems to be very good copy-protected.
+           echo It is a guess that transcoding and dd-copy will not work on this
            echo DVD.It is recommandet to use resque-copy with this disk.
-           echo Even with a rescue-copy it is not certain that this disk can be 
-           echo duplicated. 
-           echo  
+           echo Even with a rescue-copy it is not certain that this disk can be
+           echo duplicated.
+           echo
            echo ----------------------- script rc=4 -----------------------------
            echo -----------------------------------------------------------------
            echo 1 > $MEDIA_NOT_PROPER
-           exit $E_CRC_ERROR 
-       fi 
+           exit $E_CRC_ERROR
+       fi
    fi
 
    # In the case the bluray function are not enabled we do exit the script now
    # if the script is not allready finished over the above dvd-part
- 
-   if [ -e  $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_DISABLED ] ; then 
-       echo
-       echo bluray-functions are disabled 
-       echo
-       exit $E_INACTIVE 
-   fi 
 
-   # If the command makemkvcon is not installed during the execution of 
+   if [ -e  $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_DISABLED ] ; then
+       echo
+       echo bluray-functions are disabled
+       echo
+       exit $E_INACTIVE
+   fi
+
+   # If the command makemkvcon is not installed during the execution of
    # setup.sh and the bluray function is enabled we stop now .....
 
    which makemkvcon >/dev/null 2>&1
@@ -268,8 +267,8 @@ if [ $RETVAL1 -eq 0 ] ; then
         echo "ERROR! \" makemkvcon is missing. ${0} requires it to operate."
         echo "Please install \"makemkvcon\"."
         echo
-        echo Please run setup.sh again to install makemkv 
-        echo 
+        echo Please run setup.sh again to install makemkv
+        echo
         echo ----------------------- script rc=2 -----------------------------
         echo -----------------------------------------------------------------
         exit $E_TOOLNOTF

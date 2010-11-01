@@ -92,14 +92,18 @@ echo ---------------------------------------------------------------------------
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/dvd-error.log"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD_GUI"
 
-EXPECTED_ARGS=2
+ZERO=0
 E_BADARGS=1
-E_TOOLNOTF=50
+EXPECTED_ARGS=2
 E_NOCHAPERS=3
 E_VOLUMEERROR=4
 E_AUDIO1_ERROR=5
 E_AUDIO2_ERROR=6
 E_SUB_ERROR=7
+E_TOOLNOTF=50
+E_SUID0=254
+E_WRONG_SHELL=255
+
 
 REQUIRED_TOOLS=`cat << EOF
 lsdvd
@@ -154,7 +158,7 @@ do
         echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate." > $OUTPUT_ERROR
         echo "Please install \"${REQUIRED_TOOL}\"." > $OUTPUT_ERROR
         echo
-        echo ----------------------- script rc=2 -----------------------------
+        echo ----------------------- script rc=50 ----------------------------
         echo -----------------------------------------------------------------
         exit $E_TOOLNOTF
    fi
