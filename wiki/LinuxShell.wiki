@@ -47,6 +47,7 @@ E_SUID0                      254
 E_WRONG_SHELL                255
 }}}
 
+
 ----------------------------------------------------------------------------------------
 == bluray-chapter.sh  ==
 ----------------------------------------------------------------------------------------
@@ -199,11 +200,9 @@ user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$
  * Sample : *./dvd-atracks.sh /dev/sr0 1*
  * Output :
 {{{
-user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ ./dvd-atracks.sh /dev/sr0 1
-
 ----------------------------------------------------------------------------
 script    : dvd-atracks.sh
-version   : 0.6.11 [swiss-army-knife addon]
+version   : 0.6.16 [swiss-army-knife addon]
 copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>
 changed to /home/user/.xbmc/addons/script.video.swiss.army.knife/shell-linux
 ----------------------------------------------------------------------------
@@ -212,22 +211,64 @@ INFO audio-tracks from dvd-track [1]
 
 Audio: 1 Language: en - English
 Audio: 2 Language: de - Deutsch
-Audio: 3 Language: en - English
+Audio: 3 Language: es - Espanol
 Audio: 4 Language: en - English
+Audio: 5 Language: en - English
+Audio: 6 Language: en - English
+Audio: 7 Language: en - English
+Audio: 8 Language: en - English
 
 
 INFO subtitles-tracks from dvd-track [1]
 
 Subtitle: 01 Language: en - English
 Subtitle: 02 Language: de - Deutsch
-Subtitle: 03 Language: en - English
-Subtitle: 04 Language: de - Deutsch
+Subtitle: 03 Language: es - Espanol
+Subtitle: 04 Language: xx - Unknown
+Subtitle: 05 Language: xx - Unknown
+Subtitle: 06 Language: xx - Unknown
+Subtitle: 07 Language: xx - Unknown
+Subtitle: 08 Language: xx - Unknown
+Subtitle: 09 Language: xx - Unknown
+Subtitle: 10 Language: xx - Unknown
+Subtitle: 11 Language: xx - Unknown
+Subtitle: 12 Language: xx - Unknown
+Subtitle: 13 Language: xx - Unknown
+Subtitle: 14 Language: xx - Unknown
+Subtitle: 15 Language: xx - Unknown
+Subtitle: 16 Language: xx - Unknown
+Subtitle: 17 Language: xx - Unknown
+Subtitle: 18 Language: xx - Unknown
+Subtitle: 19 Language: xx - Unknown
+Subtitle: 20 Language: xx - Unknown
+Subtitle: 21 Language: xx - Unknown
+Subtitle: 22 Language: xx - Unknown
+Subtitle: 23 Language: xx - Unknown
+Subtitle: 24 Language: xx - Unknown
+Subtitle: 25 Language: xx - Unknown
+Subtitle: 26 Language: xx - Unknown
+Subtitle: 27 Language: xx - Unknown
+Subtitle: 28 Language: xx - Unknown
+Subtitle: 29 Language: xx - Unknown
+Subtitle: 30 Language: xx - Unknown
+Subtitle: 31 Language: xx - Unknown
+Subtitle: 32 Language: xx - Unknown
 
 
 ----------------------- script rc=0 -----------------------------
 -----------------------------------------------------------------
 user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
+}}}
 
+The following codes are returned :
+
+{{{
+ZERO                         0
+E_BADARGS                    1
+EXPECTED_ARGS                2
+E_TOOLNOTF                   50
+E_SUID0                      254
+E_WRONG_SHELL                255
 }}}
 
 ----------------------------------------------------------------------------------------
