@@ -295,7 +295,7 @@ if [ $2 -eq "1" ] ; then
         echo none >> $GUI_RETURN
      fi
 
-     # Warning : do not send <LF> after the last parameter 
+     # Warning : do not send <LF> after the last parameter
      # or the python reads a line to much ...
 
      if [ -n "$SUB1_SELECT" ] ; then
@@ -310,7 +310,7 @@ if [ $2 -eq "1" ] ; then
      echo
      echo ----------------------- script rc=0 -----------------------------
      echo -----------------------------------------------------------------
-     exit 0
+     exit $ZERO
 
 fi
 
@@ -363,5 +363,5 @@ echo
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 
-exit 0
+exit $ZERO
 
