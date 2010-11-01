@@ -151,7 +151,7 @@ do
         echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate." > $OUTPUT_ERROR
         echo "Please install \"${REQUIRED_TOOL}\"." > $OUTPUT_ERROR
         echo
-        echo ----------------------- script rc=2 -----------------------------
+        echo ----------------------- script rc=50 ----------------------------
         echo -----------------------------------------------------------------
         exit $E_TOOLNOTF
    fi
