@@ -204,6 +204,7 @@ Changes:
 - New commiter to the project <kaveh.ahmadian@gmail.com> 
 - New commiter to the project <dekani@gmail.com>
 - Added eject parameter to settings
+- Non puplic test of makemkv binarys release 1.6.2
 
 Fixes: 
 
