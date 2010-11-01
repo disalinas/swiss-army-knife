@@ -33,6 +33,19 @@ INFO [media:[DVD-ROM]]
 -----------------------------------------------------------------
 user@xbmcdev:~/.xbmc/addons/script.video.swiss.army.knife/shell-linux$ 
 }}}
+
+The following codes are returned :
+{{{
+ZERO                         0
+EXPECTED_ARGS                1
+E_BADARGS                    1  
+E_INACTIVE                   3
+E_CRC_ERROR                  4
+E_TOOLNOTF                   50
+E_SUID0                      254
+E_WRONG_SHELL                255
+}}}
+
 ----------------------------------------------------------------------------------------
 == bluray-chapter.sh  ==
 ----------------------------------------------------------------------------------------
