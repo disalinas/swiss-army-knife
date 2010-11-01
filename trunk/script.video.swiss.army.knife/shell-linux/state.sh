@@ -96,10 +96,12 @@ MEDIA_NOT_PROPER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/
 DVD_CRC_ERRRORS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/lsdvd_error"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
 
+ZERO=0
 EXPECTED_ARGS=1
 E_BADARGS=1
 E_INACTIVE=3
 E_CRC_ERROR=4
+E_UNKNOWN_MEDIA=5
 E_TOOLNOTF=50
 E_SUID0=254
 E_WRONG_SHELL=255
@@ -232,9 +234,9 @@ if [ $RETVAL1 -eq 0 ] ; then
        if [ $CRC_COUNTER -eq 0 ] ; then 
            echo ----------------------- script rc=0 -----------------------------
            echo -----------------------------------------------------------------
-           exit 0
+           exit $ZERO
        else
-           echo 
+           echo
            echo This DVD seeems to be very good copy-protected. 
            echo It is a guess that transcoding and dd-copy will not work on this 
            echo DVD.It is recommandet to use resque-copy with this disk.
@@ -302,7 +304,7 @@ if [ $RETVAL1 -eq 0 ] ; then
       echo ----------------------- script rc=0 -----------------------------
       echo -----------------------------------------------------------------
 
-      exit 0
+      exit $ZERO
    fi
 
    # The ripper script do only support dvd and bluray .....
@@ -314,7 +316,7 @@ if [ $RETVAL1 -eq 0 ] ; then
    echo ----------------------- script rc=1 -----------------------------
    echo -----------------------------------------------------------------
 
-   exit 1
+   exit $E_UNKNOWN_MEDIA
 fi
 
 ###########################################################
