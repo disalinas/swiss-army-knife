@@ -844,7 +844,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
                      execlist = []
 
-                     savedir = GUISelectDir() 
+                     savedir = __configuration__[50]
                      volname = OSDVDVolume()
                      volname = GUIEditExportName(volname)                      
  
@@ -963,7 +963,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
                      execlist = []
 
-                     savedir = GUISelectDir() 
+                     savedir = __configuration__[51]
                      volname = OSDVDVolume()
                      volname = GUIEditExportName(volname)                      
  
@@ -1706,6 +1706,19 @@ if __name__ == '__main__':
       
    GUIlog ("Transcoding   : [" +  str(__default_dvd_tr__) + "]")      
  
+   # For all confirmed operations we have a default directory 
+   # Until release 0.6.15 we used a dialog to select the destination 
+   # folder, up release 0.6.16 the dialog will not be used longer
+
+   # Format choosen 			Default directory to store the generated file(s)
+   # -> 264-high			/dvdrip/dvd 		
+   # -> iso				/dvdrip/iso	
+   # -> h264-low                        /dvdrip/transcode 
+   # -> mkv                             /dvdrip/transcode 
+   # -> vobcopy                         /dvdrip/vobcopy  
+   # -> mpeg2                           /dvdrip/transcode    
+   # -> iphone                          /dvdrip/portable/ip
+   # -> psp                             /dvdrip/portable/psp
 
    # check that setup.sh was run prior to starting the addon 
  

@@ -205,6 +205,8 @@ Changes:
 - New commiter to the project <dekani@gmail.com>
 - Added eject parameter to settings
 - Non puplic test of makemkv binarys release 1.6.2
+- build debian packages for 32 / 64 of makemkv 1.6.2
+- New parameter to use a file as a source
 
 Fixes: 
 

@@ -13,7 +13,7 @@
 # test if makemkv is using a old licence-key              #
 ###########################################################
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
-
+cd "$SCRIPTDIR"
 
 
 
