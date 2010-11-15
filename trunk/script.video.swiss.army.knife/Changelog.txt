@@ -207,7 +207,8 @@ Changes:
 - Non puplic test of makemkv binarys release 1.6.2
 - build debian packages for 32 / 64 of makemkv 1.6.2
 - New parameter to use a file as a source
-- psp and iphone transcoding do not longer ask for directory to store.
+- psp and iphone transcoding do not longer ask for a directory to store.
+- mkv and h264-low transcoding do not longer ask for a directory to store.
 
 Fixes: 
 

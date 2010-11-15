@@ -635,6 +635,11 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      GUIInfo(0,__language__(33328)) 
 
              if (choice == 2):
+
+                 # 
+                 # Transcoding dvd-low selected 
+                 # 
+
                  selected_done = False
                  append_pars = []
  
@@ -754,6 +759,10 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
              if (choice == 3):
 
+                 # 
+                 # Transcoding iphone selected 
+                 # 
+
                  selected_done = False
                  append_pars = []
  
@@ -872,6 +881,10 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          __jobs__ = True
 
              if (choice == 4):
+
+                 # 
+                 # Transcoding psp selected 
+                 # 
 
                  selected_done = False
                  append_pars = []
@@ -1716,9 +1729,9 @@ if __name__ == '__main__':
    # -> h264-low                        /dvdrip/transcode 
    # -> mkv                             /dvdrip/transcode 
    # -> vobcopy                         /dvdrip/vobcopy  
-   # -> mpeg2                           /dvdrip/transcode    
-   # -> iphone                          /dvdrip/portable/ip
-   # -> psp                             /dvdrip/portable/psp
+   # -> mpeg2                           /dvdrip/transcode      
+   # -> iphone                          /dvdrip/portable/ip   index [50]
+   # -> psp                             /dvdrip/portable/psp  index [51]
 
    # check that setup.sh was run prior to starting the addon 
  
