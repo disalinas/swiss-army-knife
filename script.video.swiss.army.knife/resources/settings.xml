@@ -44,5 +44,6 @@
         <setting id="id-t3" type="text" label="32076" default="100"/>  
         <setting id="id-delete" type="bool" label="32080" default="true"/>  
         <setting id="id-eject" type="bool" label="32081" default="true"/>             
-                  
+        <setting id="" type="bool" label="32082" default="false"/>
+          
 </settings>
