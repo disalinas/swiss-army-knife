@@ -340,11 +340,17 @@ fi
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 2 audio-track                           #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 2 audio-tracks                       #
+#                                                         #
+###########################################################
+
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-a ]] ; then
        AUDIO1=$(($5 +  1))
@@ -422,15 +428,23 @@ if [ $# -eq 7 ]; then
     fi
 fi
 
+###########################################################
 
 
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 1 audio-track and 1 subtitle            #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 1 audio-track and 1 subtitle         #
+#                                                         #
+###########################################################
+
 if [ $# -eq 7 ]; then
     if [[ "$6" =~ ^-s ]] ; then
        AUDIO1=$(($5 + 1))
@@ -569,13 +583,23 @@ if [ $# -eq 7 ]; then
     fi
 fi
 
+###########################################################
 
 
-####################################################################################
-#                                                                                  #
-#                       transcode job with 2 audio-track and 1 subtitle            #
-#                                                                                  #
-####################################################################################
+
+
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# transcode job with 2 audio-tracks and 1 subtitle        #
+#                                                         #
+###########################################################
+
 if [ $# -eq 9 ]; then
      AUDIO1=$(($5 +  1))
      AUDIO2=$(($7 +  1))
@@ -713,17 +737,78 @@ if [ $# -eq 9 ]; then
        done
 fi
 
-# Delete jobfile
-
-rm $JOBFILE > /dev/null 2>&1
+###########################################################
 
 
-sleep 1
-rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
-rm $PWATCH > /dev/null 2>&1
 
-echo
-echo ----------------------- script rc=0 -----------------------------
-echo -----------------------------------------------------------------
 
-exit
+
+
+
+
+
+
+
+
+###########################################################
+#                                                         #
+# We are done / Decition depends on success or error      #
+#                                                         #
+###########################################################
+
+if [ "$SHELL_CANCEL" == "0" ] ; then
+
+   rm $JOBFILE > /dev/null 2>&1
+
+   sleep 1
+
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   if [ -e $EJECT ] ; then 
+      eject $1
+   fi  
+
+   echo
+   echo ----------------------- script rc=0 -----------------------------
+   echo -----------------------------------------------------------------
+
+   exit 0
+
+else
+
+   echo
+   echo INFO processing task have ben killed or ended unexpected !!! 
+   echo
+
+   # ups ... something was going very wrong    
+   # we only erase file depend on the setttings of the addon
+
+   if [ -e $KILL_FILES ] ; then
+      rm $2/$3.mp4 > /dev/null 2>&1
+
+      # In the case we have subtitle-files we delete them as well
+
+      if [ -e $2/$3.idx ] ; then 
+         rm $2/$3.idx > /dev/null 2>&1
+      fi 
+ 
+      if [ -e $2/$3.sub ] ; then 
+         rm $2/$3.sub > /dev/null 2>&1
+      fi
+ 
+   fi
+
+   rm $JOBFILE > /dev/null 2>&1
+   rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
+   rm $PWATCH > /dev/null 2>&1
+
+   echo
+   echo ERROR : This job was not successsfully  
+   echo
+   echo ----------------------- script rc=100 ---------------------------
+   echo -----------------------------------------------------------------
+   exit $E_TERMINATE
+fi
+
+##########################################################
