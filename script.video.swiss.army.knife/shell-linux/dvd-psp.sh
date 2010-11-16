@@ -117,6 +117,7 @@ EXPECTED_ARGS=5
 E_BADARGS=1
 E_TOOLNOTF=50
 E_TERMINATE=100
+E_HANDBRAKE=253
 E_SUID0=254
 E_WRONG_SHELL=25
 
@@ -186,13 +187,13 @@ if [ $4 -eq 0 ]; then
 fi
 
 if [ $# -eq 9 ]; then
-    if [[ "$6" =~ ^-s ]] ; then
-       echo "with 9 parameters the subtitle -s must be the last !"
-       echo
-       echo ----------------------- script rc=1 -----------------------------
-       echo -----------------------------------------------------------------
-       exit $E_BADARGS
-    fi
+   if [[ "$6" =~ ^-s ]] ; then
+      echo "with 9 parameters the subtitle -s must be the last !"
+      echo
+      echo ----------------------- script rc=1 -----------------------------
+      echo -----------------------------------------------------------------
+      exit $E_BADARGS
+   fi
 fi
 
 ###########################################################
@@ -262,9 +263,6 @@ done
 if [ $# -eq 5 ]; then
     AUDIO1=$(($5 +  1))
 
-    echo
-    echo INFO transcode job with 1 audio-track
-
     echo $1 > $JOBFILE
     echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
 
@@ -278,20 +276,29 @@ if [ $# -eq 5 ]; then
 
     (
      HandBrakeCLI -i $1 -o $2/$3.mp4 -t $4 -a $AUDIO1 b 1024 -E faac -B 128 -R 48 -6 dpl2 -f mp4 -X 368 -Y 208 -m &
-    ) > $OUT_TRANS 2>&1 &
+    ) > > $OUT_TRANS 2>&1 &
 
     echo INFO HandBrakeCLI command executed
     echo
 
-    sleep 10
+    sleep 6
+
+    PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}')
+    echo $PID > $PWATCH
+
+    if [ -z "$PID" ] ; then
+       echo
+       echo HandBrakeCLI is not running after 6 secounds. Please check your
+       echo settings and log-files.
+       echo
+       exit $E_HANDBRAKE
+    fi
 
     echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-    ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}' >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
-    PID=$(ps axu | grep HandBrakeCLI | grep -v grep |awk '{print $2}') 
+    echo $PID >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
+    echo $PID > $PWATCH
 
-    echo $PID > $PWATCH 
-
-    echo
+    echo INFO transcode job with 1 audio-track
     echo INFO processing data pass 1 of 1
     echo
 
@@ -315,21 +322,30 @@ if [ $# -eq 5 ]; then
                    LOOPP2=0
                 fi
                 sleep 0.7
+                if [ -e $TERM_ALL ] ; then 
+                    SHELL_CANCEL=1 
+                    break 
+                fi
             done
 
-            echo
-            echo
-            echo INFO processing data pass 1 of 1 done
-            echo
-
-            echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-            echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
-            echo
-            echo
-            LOOP=0
+            if [ "$SHELL_CANCEL" == "0" ] ; then  
+               echo
+               echo
+               echo INFO processing data pass 1 of 1 done
+               echo
+ 
+               echo 100 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
+               echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+               LOOP=0
+            fi
          fi
       fi
       sleep 0.7
+      if [ -e $TERM_ALL ] ; then 
+         echo
+         SHELL_CANCEL=1 
+         LOOP=0
+      fi 
     done
 fi
 
