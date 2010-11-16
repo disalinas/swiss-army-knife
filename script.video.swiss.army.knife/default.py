@@ -576,10 +576,10 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                  GUIInfo(1,__language__(33205))  
                  exit = True    
              if (choice == 1):
-  
-                 # We transcode a dvd but this function 
-                 # needs the same configuration like the 
-                 # bluray-part
+ 
+                 # 
+                 # Transcoding dvd to mkv selected 
+                 # 
                                
                  Lock = OSCheckLock(__configuration__[1])
                  if (__enable_bluray__ == 'true'):
@@ -607,7 +607,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                                  if (tracklist[0] != 'none'):
                                       execlist = []
 
-                                      savedir = GUISelectDir() 
+                                      savedir = __configuration__[13] 
                                       volname = OSDVDVolume()
                                       volname = GUIEditExportName(volname) 
  
@@ -730,7 +730,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
                      execlist = []
 
-                     savedir = GUISelectDir() 
+                     savedir = __configuration__[13]
                      volname = OSDVDVolume()
                      volname = GUIEditExportName(volname)                      
  
@@ -1102,7 +1102,7 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                                      executeList = OSBlurayExecuteList(False)
                                      track = GUISelectList(__language__(33202),tracklist)
-                                     savedir = GUISelectDir() 
+                                     savedir = __configuration__[5] 
                                      volname = OSBlurayVolume()
                                      volname = GUIEditExportName(volname)
 
@@ -1217,7 +1217,7 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                      execlist = []
 
-                     savedir = GUISelectDir() 
+                     savedir = __configuration__[4] 
                      volname = OSDVDVolume()
                      volname = GUIEditExportName(volname)                      
  
@@ -1269,7 +1269,7 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                                  execlist = []
 
-                                 savedir = GUISelectDir() 
+                                 savedir = __configuration__[3]
                                  volname = OSDVDVolume()
                                  volname = GUIEditExportName(volname)                      
  
@@ -1314,7 +1314,7 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                                  execlist = []
 
-                                 savedir = GUISelectDir() 
+                                 savedir = __configuration__[3]
                                  volname = OSDVDVolume()
                                  volname = GUIEditExportName(volname)                      
  
@@ -1364,7 +1364,7 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                                  execlist = []
 
-                                 savedir = GUISelectDir() 
+                                 savedir = __configuration__[21]
                       
                                  # Update parameters for the OS-Part DVD
 
@@ -1444,9 +1444,15 @@ class GUIJobWinClass(xbmcgui.Window):
           global __jobs__ 
           exit = True
 
-          menu = []     
+          menu = []   
+
+           # We generate the menu-list over a loop ,-)
+  
           for i in range(32170,32174):
 	      menu.append(__language__(i))
+          
+          # We stay inside menu until exit ....
+
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32091) ,menu)
@@ -1522,9 +1528,13 @@ class GUIMain01Class(xbmcgui.Window):
           if (job_state == 0):
               __jobs__ = False
 
+          # We generate the menu-list over a loop ,-)
+
           menu = []      
           for i in range(32100,32105):
 	      menu.append(__language__(i))
+
+          # We stay inside menu until exit ....
 
           exit_script = True 
           while (exit_script): 
@@ -1723,13 +1733,13 @@ if __name__ == '__main__':
    # Until release 0.6.15 we used a dialog to select the destination 
    # folder, up release 0.6.16 the dialog will not be used longer
 
-   # Format choosen 			Default directory to store the generated file(s)
-   # -> 264-high			/dvdrip/dvd 		
-   # -> iso				/dvdrip/iso	
-   # -> h264-low                        /dvdrip/transcode 
-   # -> mkv                             /dvdrip/transcode 
-   # -> vobcopy                         /dvdrip/vobcopy  
-   # -> mpeg2                           /dvdrip/transcode      
+   # bluray mkv                         /dvdrip/bluray        index [5]	     
+   # -> 264-high			/dvdrip/dvd           index [4]		
+   # -> iso				/dvdrip/iso           index [3]	
+   # -> h264-low                        /dvdrip/transcode     index [13]
+   # -> mkv                             /dvdrip/transcode     index [13]
+   # -> vobcopy                         /dvdrip/vobcopy       index [21]
+   # -> mpeg2                           /dvdrip/transcode     index [13] 
    # -> iphone                          /dvdrip/portable/ip   index [50]
    # -> psp                             /dvdrip/portable/psp  index [51]
 

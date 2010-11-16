@@ -333,7 +333,8 @@ into the addon.There are a lot of options that can resolved with this user-scrip
 Possible Actions than can be made with this integration.
 
 - Start & Stop a vpn connection
-- Copy files to a nas
+- Copy files to a nas location 
+- Running modified transcoding-scripts.
 
 All user-scripts called user1.sh to user9.sh must be placed inside 
 

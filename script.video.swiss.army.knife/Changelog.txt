@@ -209,6 +209,9 @@ Changes:
 - New parameter to use a file as a source
 - psp and iphone transcoding do not longer ask for a directory to store.
 - mkv and h264-low transcoding do not longer ask for a directory to store.
+- remaing processes do not longer ask for directory to store.
+- dvd-psp.sh changes to the code / cancel detection 
+
 
 Fixes: 
 
