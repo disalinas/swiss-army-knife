@@ -210,7 +210,6 @@ Changes:
 - psp and iphone transcoding do not longer ask for a directory to store.
 - mkv and h264-low transcoding do not longer ask for a directory to store.
 - remaing processes do not longer ask for directory to store.
-
 - dvd-psp.sh changes to the code / cancel detection 
 - dvd-iphone.sh changes to the code / cancel detection 
 - dvd-low.sh changes to the code / cancel detection
@@ -224,5 +223,8 @@ Fixes:
 - Fixed ugly bug with dvd-vcopy.sh and dvd volume-names 
   that have spaces inside the name (fixed and tested)
 - Typo inside setup.sh fixed for 32 makemkv (thanks to Chip2786)
+- Before we exit the script we have to be sure that thread2 is not 
+  longer running.
+
 
 

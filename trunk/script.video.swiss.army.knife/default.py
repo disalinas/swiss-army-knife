@@ -1647,8 +1647,9 @@ class GUIMain01Class(xbmcgui.Window):
                  if (choice == 4): 
                      if (__verbose__):
                          GUIlog('menu exit activated')
-                     exit_script = False
+                     exit_script = False    
           self.close()
+          
 
 #########################################################
 
@@ -1670,18 +1671,21 @@ class GUIWorkerThread(threading.Thread):
             exit = True
             if (__verbose__ == "true"):   
                 GUIlog('[W-Thread] starting ...')
+            else: 
+                GUIlog('[W-Thread] starting ...')
             while (exit):  
-                   if (__exitFlag__ == 1):
-                      if (__verbose__ == "true"):    
-                         exit = False
+                   if (__exitFlag__ == 1): 
+                       exit = False
                    time.sleep(1)
-                   GUIlog('[W-Thread] is active and running ...')
+                   if (__verbose__ == "true"):   
+                       GUIlog('[W-Thread] is active and running ...')
                    if (__ProgressView__ == False):
                        if (__jobs__ == True):
                            if (__verbose__ == "true"):   
                               GUIlog('[W-Thread] active jobe is running .....') 
-
             if (__verbose__ == "true"):   
+                GUIlog('[W-Thread] do exit now ...')
+            else:
                 GUIlog('[W-Thread] do exit now ...')
             thread.exit()          
                      
@@ -1699,6 +1703,7 @@ if __name__ == '__main__':
    
    xbmc_version = xbmc.getInfoLabel("System.BuildVersion")
    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
 
    GUIlog ("Release xbmc  : [" +  xbmc_version + "]")     
    GUIlog ("Release Addon : [" + __version__ + "]")
@@ -1908,19 +1913,21 @@ if __name__ == '__main__':
                    thread2.start()
 
                    GUIlog ("create main-menu")
-                   xbmc.executebuiltin("Dialog.Close(busydialog)")
-                   time.sleep(1) 
+                   xbmc.executebuiltin("Dialog.Close(busydialog)") 
                    menu01 = GUIMain01Class()
                    del menu01
                    __exitFlag__ = 1
-                   time.sleep(2)     
 
+                   # By now, we must wait until thread2 do exit 
+
+                   while thread2.isAlive():
+                         time.sleep(1) 
+                         GUIlog ("waiting for termination of thread2")  
                else:
                     if (__verbose__ == "true"):      
                         GUIlog ("This addon do not start until all errors on startup are resolved ....") 
                         GUIlog ("Addon do exit now ...")
-                        xbmc.executebuiltin("Dialog.Close(busydialog)")
-               time.sleep(1)     
+                        xbmc.executebuiltin("Dialog.Close(busydialog)")     
                GUIlog ("addon-ended")
    
    
