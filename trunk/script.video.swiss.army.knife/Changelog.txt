@@ -210,7 +210,12 @@ Changes:
 - psp and iphone transcoding do not longer ask for a directory to store.
 - mkv and h264-low transcoding do not longer ask for a directory to store.
 - remaing processes do not longer ask for directory to store.
+
 - dvd-psp.sh changes to the code / cancel detection 
+- dvd-iphone.sh changes to the code / cancel detection 
+- dvd-low.sh changes to the code / cancel detection
+- dvd-mkv.sh changes to the code / cancel detection
+- All shell-scripts from Transcoding Window portet 
 
 
 Fixes: 

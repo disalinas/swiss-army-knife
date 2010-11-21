@@ -101,6 +101,7 @@ if [ -e $TERM_ALL ] ; then
    rm $TERM_ALL > /dev/null 2>&1
 fi
 
+ZERO=0
 EXPECTED_ARGS=3
 E_BADARGS=1
 E_BADB=2
