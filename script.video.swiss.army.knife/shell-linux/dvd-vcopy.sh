@@ -8,7 +8,7 @@
 ###########################################################
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
-# $1 dvd-device                                           #
+# $1 device or local saved iso-file                       #
 # $2 directory to store vob-copys                         #
 #                                                         #
 # description :                                           #
@@ -75,6 +75,15 @@ echo "script    :" $SCRIPT
 cat version
 echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
+if [ -z "$1" ] ; then
+   echo no parameters to script detected
+else
+   if [ -f $1 ] ; then
+      echo scipt is using a iso-file as source [$1]
+   else
+      echo scipt is using a device as source [$1]
+   fi
+fi
 echo ----------------------------------------------------------------------------
 
 ###########################################################
@@ -99,6 +108,7 @@ if [ -e $TERM_ALL ] ; then
    rm $TERM_ALL > /dev/null 2>&1
 fi
 
+ZERO=0
 EXPECTED_ARGS=2
 E_BADARGS=1
 E_BADB=2
@@ -199,7 +209,7 @@ done
 
 ###########################################################
 #                                                         #
-# We generate a vobcopy from the inserted bluray          #
+# We generate a vobcopy from the inserted dvd             #
 #                                                         #
 ###########################################################
 
@@ -221,12 +231,10 @@ mkdir $2/$VOLNAME > /dev/null 2>&1
 cd $2/$VOLNAME > /dev/null 2>&1
 
 echo
-echo INFO volume-name[$VOLNAME]
-echo VOB-DIRECTORY [$2/$VOLNAME]
 echo INFO starting vobcopy
 
 (
-vobcopy > $OUT_TRANS 2>&1
+vobcopy > $OUT_TRANS 2>&1 &
 ) > $OUT_TRANS 2>&1 &
 echo INFO vobcopy started
 
@@ -241,9 +249,8 @@ if [ -z "$PID" ] ; then
     exit $E_VOBCOPY 
 fi
 
-echo INFO processing data
+echo INFO processing data pass 1 of 1
 echo
-
 
 echo $1 > $JOBFILE
 echo 1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/stages-counter
@@ -262,7 +269,7 @@ do
   if [ $PROGRESS  == "100" ] ; then
      echo
      echo
-     echo INFO processing data done
+     echo INFO processing data pass 1 of 1 done
      echo
      LOOP=0
   fi
@@ -270,6 +277,7 @@ do
   sleep 3
 
   if [ -e $TERM_ALL ] ; then
+     echo 
      LOOP=0
      SHELL_CANCEL=1
   fi
@@ -301,27 +309,33 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
    rm $PWATCH > /dev/null 2>&1
 
-   eject $1
+   if [ -e $EJECT ] ; then
+      if [ -f $1 ] ; then
+          echo eject command can no be used with a regular file as source
+      else
+          eject $1
+      fi
+   fi
 
- 
    echo
    echo ----------------------- script rc=0 -----------------------------
    echo -----------------------------------------------------------------
 
-   exit 0
+   exit $ZERO
 
 else
 
    echo
-   echo
-   echo INFO processing task have ben killed or ended unexpected !!! 
+   echo INFO processing task have ben killed or ended unexpected !!!
    echo
 
-   # ups ... something was going very wrong    
+   # ups ... something was going very wrong
    # we only erase file depend on the setttings of the addon
 
-   if [ -e $KILL_FILES ] ; then  
+   if [ -e $KILL_FILES ] ; then
+
       rm -rf $2/$VOLNAME >/dev/null 2>&1  
+
    fi
 
    rm $JOBFILE > /dev/null 2>&1
@@ -329,11 +343,15 @@ else
    rm $PWATCH > /dev/null 2>&1
 
    echo
-   echo ERROR : This job was not successsfully  
+   echo ERROR : This job was not successsfully
    echo
    echo ----------------------- script rc=100 ---------------------------
    echo -----------------------------------------------------------------
    exit $E_TERMINATE
 fi
+
+######################################################
+
+
 
 

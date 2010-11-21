@@ -1909,16 +1909,18 @@ if __name__ == '__main__':
 
                    GUIlog ("create main-menu")
                    xbmc.executebuiltin("Dialog.Close(busydialog)")
+                   time.sleep(1) 
                    menu01 = GUIMain01Class()
                    del menu01
+                   __exitFlag__ = 1
+                   time.sleep(2)     
+
                else:
                     if (__verbose__ == "true"):      
                         GUIlog ("This addon do not start until all errors on startup are resolved ....") 
                         GUIlog ("Addon do exit now ...")
-
-               xbmc.executebuiltin("Dialog.Close(busydialog)")
-               __exitFlag__ = 1
-               time.sleep(2)     
+                        xbmc.executebuiltin("Dialog.Close(busydialog)")
+               time.sleep(1)     
                GUIlog ("addon-ended")
    
    

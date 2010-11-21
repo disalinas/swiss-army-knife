@@ -122,6 +122,7 @@ if [ -e $TERM_ALL ] ; then
    rm $TERM_ALL > /dev/null 2>&1
 fi
 
+ZERO=0
 EXPECTED_ARGS=5
 E_BADARGS=1
 E_TOOLNOTF=50
@@ -884,7 +885,7 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
    echo ----------------------- script rc=0 -----------------------------
    echo -----------------------------------------------------------------
 
-   exit 0
+   exit $ZERO
 
 else
 
