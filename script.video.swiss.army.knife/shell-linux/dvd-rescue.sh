@@ -223,8 +223,6 @@ if test "$blockcount" = ""; then
 fi
 
 SIZE1=$(($blocksize * $blockcount))
-echo
-echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
 
 ###########################################################
 
@@ -295,25 +293,25 @@ do
      echo the rescue process may run longer...
      echo
      echo wait now until the main-process is terminated.
-     echo 
+     echo
      LOOP=0
 
      # we do wait until the rescue process is finsished 
      # I saw a few times this process needs longer to finish ....
- 
+
      LOOP2=1
      while [ $LOOP2 -eq '1'  ];
      do
        PID=$(ps axu | grep "ddrescue" | head -1 |  grep -v grep |awk '{print $2}' )
        echo -n .
        if [ -n "$PID" ] ; then
-           LOOPP2=1
+           LOOP2=1
        else
            echo 
            echo 
            echo INFO processing data done and process terminated 
            echo
-           LOOPP2=0
+           LOOP2=0
        fi
        sleep 0.7
      done
