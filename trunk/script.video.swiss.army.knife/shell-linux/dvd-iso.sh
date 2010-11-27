@@ -76,6 +76,15 @@ echo "script    :" $SCRIPT
 cat version
 echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
+if [ -z "$1" ] ; then
+   echo no parameters to script detected
+else
+   if [ -f $1 ] ; then
+      echo scipt is using a iso-file as source [$1]
+   else
+      echo scipt is using a device as source [$1]
+   fi
+fi
 echo ----------------------------------------------------------------------------
 
 ###########################################################
@@ -89,7 +98,7 @@ echo ---------------------------------------------------------------------------
 ###########################################################
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/iso-error.log"
-="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
+JOBFILE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB"
 OUT_TRANS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/dvd-dd.log"
 EJECT="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EJECT"
 PWATCH="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH"
@@ -101,6 +110,7 @@ if [ -e $TERM_ALL ] ; then
    rm $TERM_ALL > /dev/null 2>&1
 fi
 
+ZERO=0
 EXPECTED_ARGS=3
 E_BADARGS=1
 E_BADB=2
@@ -214,11 +224,8 @@ if test "$blockcount" = ""; then
 fi
 
 SIZE1=$(($blocksize * $blockcount))
-echo
-echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
 
 ###########################################################
-
 
 
 
@@ -230,13 +237,13 @@ echo INFO expected iso-size in bytes [$(($blocksize * $blockcount))]
 
 ###########################################################
 #                                                         #
-# Copy dvd with dd after css was breaked with force.      #
-# Info : Do not copy special copy protected dvd's this    #
-# way -> the result would not be very pleasant.           #
+# Copy dvd with dd                                        #
 #                                                         #
 ###########################################################
+
 
 lsdvd -a $1 1>/dev/null 2>&1
+echo
 echo INFO starting dd
 
 (
@@ -264,7 +271,7 @@ echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/pro
 echo $PID >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 echo $PID > $PWATCH
 
-echo INFO processing data
+echo INFO processing data pass 1 of 1
 echo
 
 T1=$(bc -l <<< "scale=0; ($SIZE1 / 100)")
@@ -279,9 +286,10 @@ do
   if [ $SIZE1 == $SIZE2 ] ; then
      echo
      echo
-     echo INFO processing data done
+     echo INFO processing data pass 1 of 1 done
      echo
      LOOP=0
+     echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
   fi
 
   sleep 4
@@ -289,10 +297,11 @@ do
   # Terminate Looping -> Main-Process was killed 
 
   if [ -e $TERM_ALL ] ; then 
-     echo 
+     echo
      LOOP=0
      SHELL_CANCEL=1
   fi
+
 done
 
 ###########################################################
@@ -311,7 +320,7 @@ done
 #                                                         #
 ###########################################################
 
-if [ "$SHELL_CANCEL" == "0" ] ; then 
+if [ "$SHELL_CANCEL" == "0" ] ; then
 
    rm $JOBFILE > /dev/null 2>&1
 
@@ -320,39 +329,44 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
    rm $PWATCH > /dev/null 2>&1
 
-   if [ -e $EJECT ] ; then 
-      eject $1
-   fi  
- 
+   if [ -e $EJECT ] ; then
+      if [ -f $1 ] ; then
+          echo eject command can no be used with a regular file as source
+      else
+          eject $1
+      fi
+   fi
+
    echo
    echo ----------------------- script rc=0 -----------------------------
    echo -----------------------------------------------------------------
 
-   exit 0
+   exit $ZERO
 
 else
 
    echo
-   echo INFO processing task have ben killed or ended unexpected !!! 
+   echo INFO processing task have ben killed or ended unexpected !!!
    echo
 
-   # ups ... something was going very wrong    
+   # ups ... something was going very wrong
    # we only erase file depend on the setttings of the addon
 
    if [ -e $KILL_FILES ] ; then
-      rm $2/$3.iso > /dev/null 2>&1  
+      rm $2/$3.iso > /dev/null 2>&1   
    fi
 
    rm $JOBFILE > /dev/null 2>&1
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
    rm $PWATCH > /dev/null 2>&1
 
-   echo 
-   echo ERROR : This job was not successsfully   
+   echo
+   echo ERROR : This job was not successsfully
    echo
    echo ----------------------- script rc=100 ---------------------------
    echo -----------------------------------------------------------------
    exit $E_TERMINATE
-fi 
+fi
 
-###########################################################
+#####################################################
+
