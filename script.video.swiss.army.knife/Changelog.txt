@@ -227,6 +227,7 @@ Fixes:
 - Typo inside setup.sh fixed for 32 makemkv (thanks to Chip2786)
 - Before we exit the script we have to be sure that thread2 is not 
   longer running.
+- Variable JOBFILE was wrong insid dvd-iso.sh
 
 
 
