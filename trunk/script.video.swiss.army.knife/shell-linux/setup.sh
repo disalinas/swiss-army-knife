@@ -118,6 +118,8 @@ if [ $# -ne $EXPECTED_ARGS ] ; then
   echo
   echo "setup.sh was called without arguments"
   echo
+  echo example of usage :
+  echo ./setup.sh xbmc 
   echo
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------
@@ -228,7 +230,7 @@ clear
 echo
 echo Would you like to create the default directorys
 echo inside /dvdrip and the default user-script directory
-echo inside the home-folder of /home/$1
+echo inside the home-folder of /home/$1 ?
 echo All directorys inside the addon-directorys itself are
 echo created as well.
 echo If you answer "no" you have to create all directorys

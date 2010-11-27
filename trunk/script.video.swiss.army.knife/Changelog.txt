@@ -216,6 +216,7 @@ Changes:
 - dvd-mkv.sh changes to the code / cancel detection
 - All shell-scripts from Transcoding Window portet 
 - dvd-resque.sh changes to the code / cancel detection
+- Uploaded Licence-File 0.6.16 
 
 
 Fixes: 
