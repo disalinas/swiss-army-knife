@@ -19,7 +19,7 @@ As you may know until now, we had a few things inside xbmc like
 and many more 
 
 After the release xbmc version 10.0 or higher anything is called a addon.
-I used the switch to to the new addon-system  to make complete rewrite  of  
+I used the switch to to the new addon-system  to make a complete rewrite  of  
 the old code from my previous script called "luemmels-dvd-ripper".
 My old script was running .... but had a few down-sides...
 
@@ -219,15 +219,13 @@ user@xbmcdev:~/.MakeMKV$ cat settings.conf
 # MakeMKV settings file, written by MakeMKV v1.6.1 linux(x86-release)
 #
 
-app_Key = "T-Sitx5LxEXqP3UVcXWEbszE4Aj24b2k1XXGvAWFqXb5P11X42ECO_e2UpLcjS^6EaS@"
+app_Key = "T-Sitx5LxEXqP3UVcBBbszE4Aj24b2k1XXGvAWFqXb5P11X42ECO_e2UpLcjS^6EaS@"
 app_UpdateLastCheck = "14882"
 
 user@xbmcdev:~/.MakeMKV$ 
 
 Of course the above key is not a valid for makemkv.
-
 Pleas do not try to remove the makemkv files and reinstall them.
-
 If your licence key is expired you see the following message inside the addon
 
 "Licence-key for makemkv expired"
