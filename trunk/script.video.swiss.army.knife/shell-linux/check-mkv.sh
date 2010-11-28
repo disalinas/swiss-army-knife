@@ -91,6 +91,7 @@ OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
 OUTPUT="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/bluray-chapter"
 
+ZERO=0
 EXPECTED_ARGS=0
 E_BADARGS=1
 E_INVALID_LICENCE=2
@@ -193,7 +194,7 @@ echo
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 
-exit 0
+exit $ZERO
 
 ###########################################################
 
