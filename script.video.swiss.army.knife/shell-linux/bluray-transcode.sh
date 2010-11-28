@@ -77,6 +77,15 @@ echo "script    :" $SCRIPT
 cat version
 echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
+if [ -z "$1" ] ; then
+   echo no parameters to script detected
+else
+   if [ -f $1 ] ; then
+      echo scipt is using a iso-file as source [$1]
+   else
+      echo scipt is using a device as source [$1]
+   fi
+fi
 echo ----------------------------------------------------------------------------
 ###########################################################
 
@@ -100,6 +109,7 @@ if [ -e $TERM_ALL ] ; then
    rm $TERM_ALL > /dev/null 2>&1
 fi
 
+ZERO=0
 EXPECTED_ARGS=4
 E_BADARGS=1
 E_TOOLNOTF=50

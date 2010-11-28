@@ -72,6 +72,15 @@ echo "script    :" $SCRIPT
 cat version
 echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
+if [ -z "$1" ] ; then
+   echo no parameters to script detected
+else
+   if [ -f $1 ] ; then
+      echo scipt is using a iso-file as source [$1]
+   else
+      echo scipt is using a device as source [$1]
+   fi
+fi
 echo ----------------------------------------------------------------------------
 
 ###########################################################
@@ -88,6 +97,7 @@ OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
 OUTPUT="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/bluray-chapter"
 
+ZERO=0
 EXPECTED_ARGS=1
 E_BADARGS=1
 E_NOCHAPTERS=3
@@ -306,6 +316,6 @@ echo
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
 
-exit 0
+exit $ZERO
 
 

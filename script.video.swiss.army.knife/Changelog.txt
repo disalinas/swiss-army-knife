@@ -217,7 +217,7 @@ Changes:
 - All shell-scripts from Transcoding Window portet 
 - dvd-resque.sh changes to the code / cancel detection
 - Uploaded Licence-File 0.6.16 
-
+- dvd-iso-sh changes to the code / cancel detection 
 
 Fixes: 
 

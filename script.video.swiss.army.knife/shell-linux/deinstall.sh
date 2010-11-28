@@ -81,6 +81,7 @@ echo ---------------------------------------------------------------------------
 #                                                         #
 ###########################################################
 
+ZERO=0
 E_BADARGS=0
 E_TOOLNOTF=50
 E_NOROOT=3
@@ -99,25 +100,6 @@ EOF`
 
 ###########################################################
 
-
-
-###########################################################
-#                                                         #
-# Check startup-parameters and show usage if needed       #
-#                                                         #
-###########################################################
-
-if [ $# -lt $EXPECTED_ARGS ]; then
-  echo "Usage: deinstall.sh"
-  echo 
-  echo "deinstall.sh was called with wrong arguments" > $OUTPUT_ERROR
-  echo
-  echo ----------------------- script rc=1 -----------------------------
-  echo -----------------------------------------------------------------
-  exit $E_BADARGS
-fi
-
-###########################################################
 
 
 
@@ -165,5 +147,5 @@ echo You should remove them with the command dpkg -r
 echo You should also remove the directory ~./ssh
 echo
 echo by by ..
-exit 0
+exit $ZERO
 
