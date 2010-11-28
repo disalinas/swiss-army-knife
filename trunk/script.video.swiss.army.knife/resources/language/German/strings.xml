@@ -43,7 +43,7 @@
         <string id="32079">Standard PSP-Transcode Verzeichniss</string>
         <string id="32080">Lösche Dateien bei Fehler</string>
         <string id="32081">Medium auswerfen sofern Job erfolgreich war</string>         
-        <string id="32082">Datei benutzen anstelle eines Device</string>
+        <string id="32082">ISO-Datei benutzen anstelle eines Device</string>
 
         <!--              --> 
         <!-- Window-Names -->
