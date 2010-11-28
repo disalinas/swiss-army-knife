@@ -975,6 +975,8 @@ fi
 
 
 
+
+
 ###########################################################
 #                                                         #
 # We are done / Decition depends on success or error      #
@@ -990,23 +992,27 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
    rm $PWATCH > /dev/null 2>&1
 
-   if [ -e $EJECT ] ; then 
-      eject $1
-   fi  
+   if [ -e $EJECT ] ; then
+      if [ -f $1 ] ; then
+          echo eject command can no be used with a regular file as source
+      else
+          eject $1
+      fi
+   fi
 
    echo
    echo ----------------------- script rc=0 -----------------------------
    echo -----------------------------------------------------------------
 
-   exit 0
+   exit $ZERO
 
 else
 
    echo
-   echo INFO processing task have ben killed or ended unexpected !!! 
+   echo INFO processing task have ben killed or ended unexpected !!!
    echo
 
-   # ups ... something was going very wrong    
+   # ups ... something was going very wrong
    # we only erase file depend on the setttings of the addon
 
    if [ -e $KILL_FILES ] ; then
@@ -1016,6 +1022,7 @@ else
 
       rm $2/$3.idx > /dev/null 2>&1 
       rm $2/$3.sub > /dev/null 2>&1 
+
    fi
 
    rm $JOBFILE > /dev/null 2>&1
@@ -1023,14 +1030,11 @@ else
    rm $PWATCH > /dev/null 2>&1
 
    echo
-   echo ERROR : This job was not successsfully  
+   echo ERROR : This job was not successsfully
    echo
    echo ----------------------- script rc=100 ---------------------------
    echo -----------------------------------------------------------------
    exit $E_TERMINATE
 fi
 
-###########################################################
-
-
-
+#########################################################
