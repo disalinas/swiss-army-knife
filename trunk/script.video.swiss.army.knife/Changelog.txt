@@ -218,6 +218,7 @@ Changes:
 - dvd-resque.sh changes to the code / cancel detection
 - Uploaded Licence-File 0.6.16 
 - dvd-iso-sh changes to the code / cancel detection 
+- Add parameter <string id="32083"> to the settings
 
 Fixes: 
 
