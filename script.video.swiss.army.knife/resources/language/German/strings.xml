@@ -44,6 +44,7 @@
         <string id="32080">Lösche Dateien bei Fehler</string>
         <string id="32081">Medium auswerfen sofern Job erfolgreich war</string>         
         <string id="32082">ISO-Datei benutzen anstelle eines Device</string>
+        <string id="32083">Allways use default directorys to store</string>
 
         <!--              --> 
         <!-- Window-Names -->
