@@ -200,16 +200,11 @@
 
 === ===
 === ===
-===The addon speaks only English. Could my own native language be added ?===
+===The addon speaks only English / French and German . Could my own native language be added ?===
 -----------------------------------------------------------------------------------------
 ===                            ==== 
   * send me a diff-file 
-  * *But until my addon reached beta-level .... do not send anything ...  *
-
-Please do not send diffs or patches to my personal email linuxluemmel.ch@gmail.com 
-because I use this email on my personal cell-phone.
-
-Use this instead : (http://code.google.com/p/swiss-army-knife/issues/list)      
+      
 === ===
 ===To run makemkvcon do I neeed to purchase a licence-key  ?===
 -----------------------------------------------------------------------------------------
