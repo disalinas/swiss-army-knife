@@ -142,8 +142,9 @@ def OSConfiguration(index):
     config[55] = __settings__.getSetting("id-delete")   
     config[56] = __settings__.getSetting("id-eject")   
     config[57] = __settings__.getSetting("id-file-source")
-
-
+    config[58] = __settings__.getSetting("id-use-allways-default")   
+    config[59] = __settings__.getSetting("id-disable-protect")
+ 
     # Modul-global variable to detect if debug-log is active
 
     __verbose__ = config[17]
@@ -308,7 +309,6 @@ def OSConfiguration(index):
     config[53] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH'
     config[54] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL'
    
-
     # With a list the delete of multiple files is very easy ;-)
 
     __temp_files__.append(config[30])

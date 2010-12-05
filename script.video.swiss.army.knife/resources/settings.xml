@@ -45,6 +45,7 @@
         <setting id="id-delete" type="bool" label="32080" default="true"/>  
         <setting id="id-eject" type="bool" label="32081" default="true"/>             
         <setting id="id-alternate" type="bool" label="32082" default="false"/>
-        <setting id="id-use-allways-default" type="bool" label="32083" default="false"/>  
+        <setting id="id-use-allways-default" type="bool" label="32083" default="true"/>
+        <setting id="id-disable-protect" type="bool" label="32084" default="true"/>    
           
 </settings>
