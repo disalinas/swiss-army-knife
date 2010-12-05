@@ -985,78 +985,9 @@ def OSKillProc():
     global __verbose__
 
     if (os.path.exists(__configLinux__[45])):
-        if (os.path.exists(__configLinux__[32])):
-
-            pid_list = []
-            file_list = []
-            dir_list = []
-
-            PidFile = open(__configLinux__[32],'r')
-
-            for line in PidFile.readlines():
-                line = int(line.strip())
-                pid_list.append(line)
-            PidFile.close
-
-            # Reverse order because we kill from botton to the top
-
-            pid_list.reverse()
-
-            # Kill the processes
-
-            pcounter = 0
-            pfailed = 0
-            for pid in pid_list:
-                try:
-                   os.kill(pid,0)
-                   pfailed = 0 
-                except OSError, err:
-                   pfailed = 1
-                if (pfailed == 0):
-                   try: 
-                       os.kill(pid,9) 
-                   except OSError, err:
-                       pcounter = pcounter + 1                  
-                else:
-                    pcounter = pcounter + 1                    
-
-            if (pcounter == 0):  
-                if (__verbose__ == 'true'):
-                   OSlog("all processes terminated with kill -9 now we deleting files ...")
-            else:
-                if (__verbose__ == 'true'):
-                   OSlog("some processes can not terminated with kill -9 ...") 
-
-            # Delete files 
-
-            if (os.path.exists(__configLinux__[35])):
-
-                # Until version 0.6.12 we had only file-names to remove 
-                # In the case of a vobcopy-process we also need to remove 
-                # a directory  
-
-                ProcessFile = open(__configLinux__[35],'r')
-                for line in ProcessFile.readlines():
-                    line = line.strip()
-                    file_list.append(line)
-                PidFile.close
-
-                for FileDel in file_list:
-                    if (os.path.exists(FileDel)):
-                        if (os.isfile(FileDel)):
-                            os.remove(FileDel)
-                            OSlog("delete-file : " + FileDel)
-                        else:
-                            os.rmdir(FileDel)                            
-                            OSlog("delete-directory : " + FileDel)  
-                             
-            # Clean-up
-
-            OSCleanTemp()
-
-            return (0)
-        else:
-            return (1)
+        OSRun("kill-job.sh ",True,False)                          
+        OSCleanTemp()
+        return (0) 
     else:
         return (1)
 
@@ -2599,7 +2530,7 @@ def OSDVDTranscodeDefault(Paramlist):
 # 0           default main-process is running           #
 # 1           default main-process is not running       #
 # 2           pid for main-process is not set           #
-#             (the pid-file could not be readed         #
+#             (the pid-file could not be readed)        #
 #########################################################
 def OSCheckMainProcess():
 
