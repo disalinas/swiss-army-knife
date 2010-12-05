@@ -239,7 +239,7 @@ echo
 echo INFO starting vobcopy
 
 (
-vobcopy > $OUT_TRANS 2>&1 &
+vobcopy > $OUT_TRANS &
 ) > $OUT_TRANS 2>&1 &
 echo INFO vobcopy started
 
@@ -251,7 +251,7 @@ if [ -z "$PID" ] ; then
     echo vobcopy is not running after 10 secounds. Please check your
     echo settings and configuration.
     echo
-    exit $E_VOBCOPY 
+    exit $E_VOBCOPY
 fi
 
 echo INFO processing data pass 1 of 1
@@ -268,21 +268,23 @@ echo $PID > $PWATCH
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
-  echo -n .
+  # echo -n .
+  strings $OUT_TRANS | grep "of"
   PROGRESS=$(strings $OUT_TRANS | grep of | tail -1 | awk '{print $5}' | tr -dc ‘[:digit:]‘)
   echo $PROGRESS > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-  if [ $PROGRESS  == "100" ] ; then
-     echo
-     echo
-     echo INFO processing data pass 1 of 1 done
-     echo
-     LOOP=0
-  fi
+  echo $PROGRESS
+  #if [ $PROGRESS -eq 100 ] ; then
+  #   echo
+  #   echo
+  #   echo INFO processing data pass 1 of 1 done
+  #   echo
+  #   LOOP=0
+  #fi
 
   sleep 3
 
   if [ -e $TERM_ALL ] ; then
-     echo 
+     echo
      LOOP=0
      SHELL_CANCEL=1
   fi
