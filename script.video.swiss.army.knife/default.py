@@ -80,11 +80,13 @@ __enable_burning__  = 'false'
 __enable_customer__ = 'false'
 __enable_pw_mode__  = 'false'
 __verbose__         = 'false'
+__disable_cp_trancode__ = 'false'
+__allways_default__ = 'false'
+__ProgressView__ = False
 __pw__ = ''
 __jobs__ = False
 __linebreak__ = 0
 __exitFlag__ = 0
-__ProgressView__ = False
 
 CWD = os.getcwd().rstrip(";")
 sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
@@ -1585,10 +1587,28 @@ class GUIMain01Class(xbmcgui.Window):
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
                              if (DVDState == 3):
-                                 GUIlog('dvd-copy protection detected !!') 
-                                 selection = GUIYesNo(1,__language__(33334))
-                                 if (selection):
-                                     DVDState = 0              
+
+                                 # There is a copy protected dvd inside the the drive 
+                                 # Depending on the settings we do continue now or we 
+                                 # pepare to exit this menu-point.
+
+                                 if (__disable_cp_trancode__ == 'true'):
+
+                                     # Show Info that copy protected dvd'a can not be transcoded 
+                                     # because the settings prevent this ...
+
+                                     GUIInfo(0,__language__(33237))
+   
+                                 else:
+                                     GUIlog('dvd-copy protection detected !!') 
+
+                                     # Ask to continue operation even if a copy protected dvd is 
+                                     # detectec inside the drive 
+
+                                     selection = GUIYesNo(1,__language__(33334))
+                                     if (selection):
+                                         DVDState = 0
+              
                              if (DVDState == 2):
                                  GUIInfo(0,__language__(33302)) 
                              if (DVDState == 1):
@@ -1732,6 +1752,8 @@ if __name__ == '__main__':
    __verbose__         = __configuration__[17]
    __enable_pw_mode__  = __configuration__[19]
    __pw__              = __configuration__[20]
+   __allways_default__ = __configuration__[58]   
+   __disable_cp_trancode__ = __configuration__[59]
       
    GUIlog ("Transcoding   : [" +  str(__default_dvd_tr__) + "]")      
  
