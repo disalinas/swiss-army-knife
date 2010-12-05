@@ -45,7 +45,7 @@
         <string id="32081">Ejecter le média inséré si le travail est terminé avec succès</string>          
         <string id="32082">Utiliser les fichiers ISO à la place du lecteur</string>
         <string id="32083">Utiliser toujours les répertoires par défaut pour stocker</string>             
-        <string id="32084">Disable transcoding copy protected dvd's from main-menu</string> 
+        <string id="32084">Désactiver le transcodage de la copie protégée du dvd à partir du menu principal</string> 
   
         <!--              --> 
         <!-- Window-Names -->
@@ -195,7 +195,7 @@
         <string id="33234">Veuillez insérer un dvd simple-couche vide</string> 
         <string id="33235">Veuillez insérer un dvd simple-couche vide</string>
         <string id="33236">Ce menu est visible uniquement s'il y a des fonctions utilisateur</string>
-        <string id="33237">Transcoding protected dvd's from main-menu is disabled by configuration</string>        
+        <string id="33237">Le transcodage de dvd protégé à partir du menu principal est désactivé par la configuration</string>        
  
         <!--               -->
         <!-- Error         -->
