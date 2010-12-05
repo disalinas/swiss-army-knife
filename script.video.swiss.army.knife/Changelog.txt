@@ -232,6 +232,8 @@ Fixes:
 - Before we exit the script we have to be sure that thread2 is not 
   longer running.
 - Variable JOBFILE was wrong insid dvd-iso.sh
+- Error inside dvd-vcopy.sh on line 274
+
 
 
 
