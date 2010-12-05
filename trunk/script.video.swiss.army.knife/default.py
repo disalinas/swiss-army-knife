@@ -1535,6 +1535,7 @@ class GUIMain01Class(xbmcgui.Window):
 	      menu.append(__language__(i))
 
           # We stay inside menu until exit ....
+          # after this loop the addon wil be closed.
 
           exit_script = True 
           while (exit_script): 

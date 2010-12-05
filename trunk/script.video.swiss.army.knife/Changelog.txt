@@ -219,6 +219,8 @@ Changes:
 - Uploaded Licence-File 0.6.16 
 - dvd-iso-sh changes to the code / cancel detection 
 - Add parameter <string id="32083"> to the settings
+- All shell-scripts are now integrated into the working-thread
+- Add parameter <string id="32084"> to the settings
 
 Fixes: 
 
