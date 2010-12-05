@@ -33,7 +33,7 @@
         <string id="32069">Erweitertertes Loggen</string>
         <string id="32070">Standard Untertitel (DVD)</string> 
         <string id="32071">Erlaube Benutzer Shell-Skripte</string>  
-        <string id="32072">Standard vobcopy Verzeicniss</string> 
+        <string id="32072">Standard vobcopy Verzeichniss</string> 
         <string id="32073">Standard Master Netzwerk Verzeichniss</string>  
         <string id="32074">Standard Timeout 1: Status-Datei</string>
         <string id="32075">Standard Timeout 2: Kapitel-DVD</string> 
@@ -44,8 +44,8 @@
         <string id="32080">Lösche Dateien bei Fehler</string>
         <string id="32081">Medium auswerfen sofern Job erfolgreich war</string>         
         <string id="32082">ISO-Datei benutzen anstelle eines Device</string>
-        <string id="32083">Allways use default directorys to store</string>
-
+        <string id="32083">Immer Standard-Verzeichnisse zum speichern benutzen</string>
+        <string id="32084">Transcodierung von Kopiergeschützten DVD'S aus dem Hauptmenü verhindern</string>       
         <!--              --> 
         <!-- Window-Names -->
         <!--              --> 
@@ -195,6 +195,7 @@
         <string id="33234">Bitte leere Single-Layer-DVD einlegen</string> 
         <string id="33235">Bitte leere Dual-Layer DVD einlegen</string>
         <string id="33236">Dieses Menü ist nur sichtbar bei vorhandenen User-Funktionen</string>
+        <string id="33237">Transcodierung von Kopiergeschützten DVD'S im Hauptmenü ist deaktiviert</string>
         
         <!--               -->
         <!-- Error         -->
