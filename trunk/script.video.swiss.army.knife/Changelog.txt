@@ -221,6 +221,7 @@ Changes:
 - Add parameter <string id="32083"> to the settings
 - All shell-scripts are now integrated into the working-thread
 - Add parameter <string id="32084"> to the settings
+- Disable automatic transcode of dvd's inside main-menu
 
 Fixes: 
 
