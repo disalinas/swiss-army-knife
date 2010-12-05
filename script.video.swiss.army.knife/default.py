@@ -127,7 +127,7 @@ else:
 def GUINotification(Info):
 
     if (__verbose__ == "true"):
-        GUIlog('notificatio : [' + Info + "]")
+        GUIlog('notification : [' + Info + "]")
     xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),Info,10) ")
     return 
      
@@ -609,7 +609,11 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                                  if (tracklist[0] != 'none'):
                                       execlist = []
 
-                                      savedir = __configuration__[13] 
+                                      if ( __allways_default__ == 'true'):
+                                         savedir = __configuration__[13]
+                                      else:
+                                         savedir = GUISelectDir()
+
                                       volname = OSDVDVolume()
                                       volname = GUIEditExportName(volname) 
  
@@ -732,7 +736,11 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
                      execlist = []
 
-                     savedir = __configuration__[13]
+                     if ( __allways_default__ == 'true'):
+                        savedir = __configuration__[13]
+                     else:
+                        savedir = GUISelectDir()
+
                      volname = OSDVDVolume()
                      volname = GUIEditExportName(volname)                      
  
@@ -855,7 +863,11 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
                      execlist = []
 
-                     savedir = __configuration__[50]
+                     if ( __allways_default__ == 'true'):
+                        savedir = __configuration__[50]
+                     else:
+                        savedir = GUISelectDir()
+
                      volname = OSDVDVolume()
                      volname = GUIEditExportName(volname)                      
  
@@ -978,7 +990,11 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
                      execlist = []
 
-                     savedir = __configuration__[51]
+                     if ( __allways_default__ == 'true'):
+                        savedir = __configuration__[51]
+                     else:
+                        savedir = GUISelectDir()
+
                      volname = OSDVDVolume()
                      volname = GUIEditExportName(volname)                      
  
@@ -1104,7 +1120,12 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                                      executeList = OSBlurayExecuteList(False)
                                      track = GUISelectList(__language__(33202),tracklist)
-                                     savedir = __configuration__[5] 
+
+                                     if ( __allways_default__ == 'true'):
+                                        savedir = __configuration__[5]
+                                     else:
+                                        savedir = GUISelectDir()
+ 
                                      volname = OSBlurayVolume()
                                      volname = GUIEditExportName(volname)
 
@@ -1219,7 +1240,11 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                      execlist = []
 
-                     savedir = __configuration__[4] 
+                     if ( __allways_default__ == 'true'):
+                        savedir = __configuration__[4] 
+                     else:
+                        savedir = GUISelectDir()
+ 
                      volname = OSDVDVolume()
                      volname = GUIEditExportName(volname)                      
  
@@ -1271,7 +1296,11 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                                  execlist = []
 
-                                 savedir = __configuration__[3]
+                                 if ( __allways_default__ == 'true'):
+                                    savedir = __configuration__[3] 
+                                 else:
+                                    savedir = GUISelectDir()
+
                                  volname = OSDVDVolume()
                                  volname = GUIEditExportName(volname)                      
  
@@ -1316,7 +1345,11 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                                  execlist = []
 
-                                 savedir = __configuration__[3]
+                                 if ( __allways_default__ == 'true'):
+                                    savedir = __configuration__[3] 
+                                 else:
+                                    savedir = GUISelectDir()
+
                                  volname = OSDVDVolume()
                                  volname = GUIEditExportName(volname)                      
  
@@ -1366,8 +1399,11 @@ class GUIExpertWinClass(xbmcgui.Window):
 
                                  execlist = []
 
-                                 savedir = __configuration__[21]
-                      
+                                 if ( __allways_default__ == 'true'):
+                                     savedir = __configuration__[21]
+                                 else:
+                                     savedir = GUISelectDir()
+     
                                  # Update parameters for the OS-Part DVD
 
                                  execlist.append(__configuration__[1])
@@ -1600,6 +1636,7 @@ class GUIMain01Class(xbmcgui.Window):
                                      GUIInfo(0,__language__(33237))
    
                                  else:
+
                                      GUIlog('dvd-copy protection detected !!') 
 
                                      # Ask to continue operation even if a copy protected dvd is 
@@ -1721,10 +1758,11 @@ class GUIWorkerThread(threading.Thread):
 #########################################################
 
 if __name__ == '__main__':
+
+   # Get the current build of xbmc   
    
    xbmc_version = xbmc.getInfoLabel("System.BuildVersion")
    xbmc.executebuiltin("ActivateWindow(busydialog)")
-
 
    GUIlog ("Release xbmc  : [" +  xbmc_version + "]")     
    GUIlog ("Release Addon : [" + __version__ + "]")
@@ -1741,6 +1779,8 @@ if __name__ == '__main__':
 
    GUIlog ("Linebreak     : [" +  str(__linebreak__) + "]")      
    
+   # Load configuration settings from addon
+
    GUIlog ("loading-configuration")
    __configuration__ = OSConfiguration(__index_config__)
    
@@ -1903,7 +1943,6 @@ if __name__ == '__main__':
                         GUIlog('read the file called README.Linux or shorter RTFM')
 
 
-
                # portable directory 2 (psp)
 
                if (Enable_Startup_Addon == 0): 
@@ -1941,11 +1980,12 @@ if __name__ == '__main__':
                    del menu01
                    __exitFlag__ = 1
 
-                   # By now, we must wait until thread2 do exit 
+                   # We must wait until thread2 do exit 
 
                    while thread2.isAlive():
                          time.sleep(1) 
-                         GUIlog ("waiting for termination of thread2")  
+                         GUIlog ("waiting for termination of thread2")
+                   GUIlog ("thread2 has been terminated and was detected inside main-loop")
                else:
                     if (__verbose__ == "true"):      
                         GUIlog ("This addon do not start until all errors on startup are resolved ....") 
