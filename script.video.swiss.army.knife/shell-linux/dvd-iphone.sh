@@ -225,6 +225,10 @@ if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" ] ; 
    rm "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" > /dev/null 2>&1
 fi
 
+if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done" ] ; then
+   rm  "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done" > /dev/null 2>&1
+fi
+
 ###########################################################
 
 
