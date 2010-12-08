@@ -46,6 +46,7 @@
         <string id="32082">Utiliser les fichiers ISO à la place du lecteur</string>
         <string id="32083">Utiliser toujours les répertoires par défaut pour stocker</string>             
         <string id="32084">Désactiver le transcodage de la copie protégée du dvd à partir du menu principal</string> 
+        <string id="32085">Disable checking for expired makemkv licence</string>
   
         <!--              --> 
         <!-- Window-Names -->

@@ -311,6 +311,7 @@ do
        if [ -n "$PID" ] ; then
            LOOP2=1
        else
+           echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
            echo 
            echo 
            echo INFO processing data done and process terminated 
@@ -397,6 +398,7 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
 
    sleep 1
 
+   
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
    rm $PWATCH > /dev/null 2>&1
 

@@ -294,6 +294,7 @@ do
        echo
        echo INFO processing data done
        echo
+       echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done  
        break
    fi
 

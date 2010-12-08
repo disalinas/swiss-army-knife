@@ -14,7 +14,7 @@
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
 # VERSION : 0.6.16                                      #
-# DATE    : 10-08-10                                    #
+# DATE    : 12-08-10                                    #
 # STATE   : Beta 2                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -38,11 +38,11 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "10-02-2010"
-__version__ 		= "0.6.15"
-__code_name__           = "Godzilla"
+__date__ 		= "12-08-2010"
+__version__ 		= "0.6.16"
+__code_name__           = "24-Season-5"
 __XBMC_Revision__ 	= "31953"
-__index_config__        = 60 
+__index_config__        = 65
  
 
 xbmc.output(__script__ + " Version: " + __version__  + "\n")
@@ -486,6 +486,8 @@ class GUIExpertUserfunctionsClass(xbmcgui.Window):
           index = 1 
           found = 0 
      
+          # We generate the menu-list over a loop ,-)
+
           for i in range(32190,32200):
               userdescription = OSGetUserDesc(index)
               if (userdescription == " "):
@@ -504,6 +506,9 @@ class GUIExpertUserfunctionsClass(xbmcgui.Window):
                GUIlog ("no user-functions found.Read the documenation how to use them")     
             self.close()
           else:
+
+              # We stay inside menu until exit ....
+
               while (exit): 
                      dialog = xbmcgui.Dialog()
                      choice  = dialog.select(__language__(32094) ,menu)
@@ -568,9 +573,15 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
           global __jobs__ 
           exit = True
 
-          menu = []       
+          menu = []
+
+          # We generate the menu-list over a loop ,-)
+       
           for i in range(32180,32186):
 	      menu.append(__language__(i))
+
+          # We stay inside menu until exit ....
+
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32095) ,menu)
@@ -1049,9 +1060,15 @@ class GUIExpertNetworkClass(xbmcgui.Window):
           global __jobs__ 
           exit = True
 
-          menu = []       
+          menu = []
+
+          # We generate the menu-list over a loop ,-)
+       
           for i in range(32140,32145):
 	      menu.append(__language__(i))
+
+          # We stay inside menu until exit ....
+
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32093) ,menu)
@@ -1093,9 +1110,15 @@ class GUIExpertWinClass(xbmcgui.Window):
           global __jobs__ 
           exit = True
 
-          menu = []       
+          menu = [] 
+
+          # We generate the menu-list over a loop ,-)
+      
           for i in range(32120,32131):
 	      menu.append(__language__(i))
+
+          # We stay inside menu until exit ....
+
           while (exit): 
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32092) ,menu)
@@ -1484,7 +1507,7 @@ class GUIJobWinClass(xbmcgui.Window):
 
           menu = []   
 
-           # We generate the menu-list over a loop ,-)
+          # We generate the menu-list over a loop ,-)
   
           for i in range(32170,32174):
 	      menu.append(__language__(i))
@@ -1873,15 +1896,26 @@ if __name__ == '__main__':
                   # The check for a valid mkv licence is only executed 
                   # if the bluray part is enabled ..  
 
-                  state = OSCheckLicence()
-                  if (state == 1):
-                      if (OSCheckContainerID(2)):
-                          Enable_Startup_Addon = Enable_Startup_Addon + 1  
-                          GUIInfo(1,__language__(33307))
-                  else:
-                       __enable_bluray__ = "false"
-                       GUIInfo(1,__language__(33315))
+                  # A user that purchased a makemkv licence can configure the addon 
+                  # over the settings that this check is not executed on startup .....
 
+                  if ( __configuration__[60] == 'false'):
+                     if (__verbose__ == "true"):        
+                         GUIlog ("checking for expired makemkv licence is executed")
+                      state = OSCheckLicence()
+                      if (state == 1):
+                          if (OSCheckContainerID(2)):
+                              Enable_Startup_Addon = Enable_Startup_Addon + 1  
+                              GUIInfo(1,__language__(33307))
+                      else:
+                          __enable_bluray__ = "false"
+                          GUIInfo(1,__language__(33315))
+                  else:
+                       if (__verbose__ == "true"):        
+                         GUIlog ("checking for expired makemkv licence is not executed because addon-configuration")
+                       if (OSCheckContainerID(2)):
+                           Enable_Startup_Addon = Enable_Startup_Addon + 1  
+                           GUIInfo(1,__language__(33307))   
                else:
                     
                     # In the case that someone would like to transcode a dvd to mkv  
