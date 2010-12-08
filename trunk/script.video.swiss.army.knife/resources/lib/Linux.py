@@ -11,8 +11,8 @@
 # TASKS   : This python code contains only os-dependet  #
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
-# VERSION : 0.6.15                                      #
-# DATE    : 10-08-10                                    #
+# VERSION : 0.6.16                                      #
+# DATE    : 12-08-10                                    #
 # STATE   : Beta 2                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -144,7 +144,8 @@ def OSConfiguration(index):
     config[57] = __settings__.getSetting("id-file-source")
     config[58] = __settings__.getSetting("id-use-allways-default")   
     config[59] = __settings__.getSetting("id-disable-protect")
- 
+    config[60] = __settings__.getSetting("id-disable-mkv-licence")
+  
     # Modul-global variable to detect if debug-log is active
 
     __verbose__ = config[17]

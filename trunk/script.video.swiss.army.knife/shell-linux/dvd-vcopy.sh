@@ -125,6 +125,7 @@ isoinfo
 mount
 vobcopy
 tr
+cp
 bc
 awk
 eject
@@ -219,6 +220,7 @@ done
 ###########################################################
 
 DVDDIR=$(mount | grep $1 | awk '{print $3}')
+cd "$DVDDIR/VIDEO_TS"
 
 if [ -z $DVDDIR ] ; then
    echo
@@ -229,26 +231,34 @@ if [ -z $DVDDIR ] ; then
    exit $E_NOMOUNT
 fi
 
+
+
+SIZE1=$(du -b | tail -1 | awk '{print $1}')
+T1=$(bc -l <<< "scale=0; ($SIZE1 / 100)")
+
+echo [$DVDDIR] [$SIZE1] [$T1]
+
+
 VOLNAME=$(volname $1 | tr -dc ‘[:alnum:]‘)
 
 rm -rf $2/$VOLNAME >/dev/null 2>&1
-mkdir $2/$VOLNAME > /dev/null 2>&1
-cd $2/$VOLNAME > /dev/null 2>&1
+mkdir -p $2/$VOLNAME/VIDEO_TS > /dev/null 2>&1
+
 
 echo
-echo INFO starting vobcopy
+echo INFO starting cp process 
 
 (
-vobcopy > $OUT_TRANS &
+cp * $2/$VOLNAME/VIDEO_TS & 
 ) > $OUT_TRANS 2>&1 &
-echo INFO vobcopy started
+echo INFO cp started
 
 sleep 10
 
-PID=$(ps axu | grep "vobcopy" | grep -v grep |awk '{print $2}')
+PID=$(ps axu | grep "cp " | grep $2 | grep -v grep | awk '{print $2}')
 if [ -z "$PID" ] ; then
     echo
-    echo vobcopy is not running after 10 secounds. Please check your
+    echo cp is not running after 10 secounds. Please check your
     echo settings and configuration.
     echo
     exit $E_VOBCOPY
@@ -265,21 +275,26 @@ echo $$ > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/pro
 echo $PID >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid
 echo $PID > $PWATCH
 
+
+
 LOOP=1
 while [ $LOOP -eq '1'  ];
 do
-  # echo -n .
-  strings $OUT_TRANS | grep "of"
-  PROGRESS=$(strings $OUT_TRANS | grep of | tail -1 | awk '{print $5}' | tr -dc ‘[:digit:]‘)
+
+  echo -n .
+  SIZE2=$(cd $2/$VOLNAME/VIDEO_TS && du -b | tail -1 | awk '{print $1}')
+  PROGRESS=$(bc -l <<< "scale=0; ($SIZE2 / $T1)")
+  echo [$T1] [$PROGRESS] [$SIZE2]
   echo $PROGRESS > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
-  echo $PROGRESS
-  #if [ $PROGRESS -eq 100 ] ; then
-  #   echo
-  #   echo
-  #   echo INFO processing data pass 1 of 1 done
-  #   echo
-  #   LOOP=0
-  #fi
+
+  if [ $PROGRESS -eq 100 ] ; then
+     echo
+     echo
+     echo INFO processing data pass 1 of 1 done
+     echo
+     LOOP=0
+     echo DONE > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-done
+  fi
 
   sleep 3
 

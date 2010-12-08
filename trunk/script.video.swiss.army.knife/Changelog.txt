@@ -222,6 +222,10 @@ Changes:
 - All shell-scripts are now integrated into the working-thread
 - Add parameter <string id="32084"> to the settings
 - Disable automatic transcode of dvd's inside main-menu
+- Add parameter <string id="32085"> to the settings
+- Disable check for expired makemkv licence 
+  (This should only be set for users that have a regular licence and do not 
+   use the beta key !!!!!)
 
 Fixes: 
 

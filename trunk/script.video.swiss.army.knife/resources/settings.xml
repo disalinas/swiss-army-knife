@@ -47,5 +47,6 @@
         <setting id="id-alternate" type="bool" label="32082" default="false"/>
         <setting id="id-use-allways-default" type="bool" label="32083" default="true"/>
         <setting id="id-disable-protect" type="bool" label="32084" default="true"/>    
-          
+        <setting id="id-disable-mkv-licence" type="bool" label="32085" default="false"/>          
+  
 </settings>

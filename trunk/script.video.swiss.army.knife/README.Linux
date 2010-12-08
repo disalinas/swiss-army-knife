@@ -417,7 +417,8 @@ The following table shows the current configuration settings for the addon 0.6.1
         <setting id="id-eject" type="bool" label="32081" default="true"/>             
         <setting id="id-alternate" type="bool" label="32082" default="false"/>
         <setting id="id-use-allways-default" type="bool" label="32083" default="true"/>
-        <setting id="id-disable-protect" type="bool" label="32084" default="true"/>    
+        <setting id="id-disable-protect" type="bool" label="32084" default="true"/> 
+        <setting id="id-disable-mkv-licence" type="bool" label="32085" default="false"/>   
           
 </settings>
 
@@ -463,12 +464,21 @@ id-delete                       If a operation is not successfull or is canceld 
                                 deleted.   
 id-eject                        After a successfull operation do eject the medium (dvd or bluray)
 id-alternate                    Use a iso-file from the harddisk instead of using allways a dvd or 
-                                bluray device.In release 0.6.16 this setting has no affect.  
+                                bluray device.In release 0.6.16 this setting has no affect. 
+ 
 id-use-allways-default          Allways use default directorys for storing. If this entry is set to false 
                                 the destination directory has to be selected over the addon.
                                 The default dvd-transcode from main-menu do not ask where to store 
                                 the file even if this setting is disabled.  
 id-disable-protect		Disable the transcoding of copy-protected dvd's from the main-menu 
+id-disable-mkv-licence          Every user that a use a beta serialkey for makemkv should set this entry 
+                                to the default value <false>.
+
+                                Warning : 
+                                Do not enable this feature as long you do not have a valid licence-key !
+
+                                A user that purchased a makemkv licence can set this values to <true>
+ 
  
 
 
