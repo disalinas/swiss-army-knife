@@ -219,6 +219,9 @@ done
 #                                                         #
 ###########################################################
 
+
+lsvd -a $1 > /dev/null 2>&1
+
 DVDDIR=$(mount | grep $1 | awk '{print $3}')
 cd "$DVDDIR/VIDEO_TS"
 
@@ -255,7 +258,7 @@ echo INFO cp started
 
 sleep 10
 
-PID=$(ps axu | grep "cp " | grep $2 | grep -v grep | awk '{print $2}')
+PID=$(ps axu | grep " cp " | grep $2 | grep -v grep | awk '{print $2}')
 if [ -z "$PID" ] ; then
     echo
     echo cp is not running after 10 secounds. Please check your
