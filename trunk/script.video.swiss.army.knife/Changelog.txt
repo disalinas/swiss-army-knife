@@ -229,6 +229,10 @@ Changes:
 - Added parameter for notifications progress
 - XBMC 10.0 Dharma today published.The current release will be tested extremly 
   on this release. All future releases of this addon need a least XBMC 10.0 Dharma.
+- Added ourc-code of makemkv 1.6.3 on the project-download url. 
+- Added makemkv-swiss-army-knife-32-12-19-2010.tar.gz (Debian 32 bit makemkv 1.6.3)
+  on the project-download url. 	
+- Integrate makemkv 1.6.3 32 bit into setup.sh 
 
 Fixes: 
 
@@ -241,6 +245,7 @@ Fixes:
 - Variable JOBFILE was wrong insid dvd-iso.sh
 - Error inside dvd-vcopy.sh on line 274
 - Addon needs release 35650 of xbmc 
+
 
 
 
