@@ -233,6 +233,7 @@ Changes:
 - Added makemkv-swiss-army-knife-32-12-19-2010.tar.gz (Debian 32 bit makemkv 1.6.3)
   on the project-download url. 	
 - Integrate makemkv 1.6.3 32 bit into setup.sh 
+- Integrate makemkv 1.6.3 64 bit into setup.sh
 
 Fixes: 
 
