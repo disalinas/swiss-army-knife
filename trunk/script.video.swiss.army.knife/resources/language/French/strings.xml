@@ -47,6 +47,8 @@
         <string id="32083">Utiliser toujours les répertoires par défaut pour stocker</string>             
         <string id="32084">Désactiver le transcodage de la copie protégée du dvd à partir du menu principal</string> 
         <string id="32085">Désactiver la vérification pour la licence makemkv expirée</string>
+        <string id="32086">Enable notifications about current progress</string>         
+ 
   
         <!--              --> 
         <!-- Window-Names -->
