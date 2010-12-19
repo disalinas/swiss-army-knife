@@ -46,7 +46,9 @@
         <string id="32082">ISO-Datei benutzen anstelle eines Device</string>
         <string id="32083">Immer Standard-Verzeichnisse zum speichern benutzen</string>
         <string id="32084">Transcodierung von Kopiergeschützten DVD'S aus dem Hauptmenü verhindern</string> 
-        <string id="32085">Verhindere Prüfung der abgelaufenen makemkv Lizenz</string>         
+        <string id="32085">Verhindere Prüfung der abgelaufenen makemkv Lizenz</string> 
+        <string id="32086">Erlaube Kurzmeldungen über deb aktuellen Vorgang</string>         
+        
         
         <!--              --> 
         <!-- Window-Names -->

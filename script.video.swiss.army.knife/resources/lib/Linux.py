@@ -145,7 +145,8 @@ def OSConfiguration(index):
     config[58] = __settings__.getSetting("id-use-allways-default")   
     config[59] = __settings__.getSetting("id-disable-protect")
     config[60] = __settings__.getSetting("id-disable-mkv-licence")
-  
+    config[61] = __settings__.getSetting("id-notifications") 
+      
     # Modul-global variable to detect if debug-log is active
 
     __verbose__ = config[17]

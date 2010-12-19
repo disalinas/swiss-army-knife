@@ -226,6 +226,9 @@ Changes:
 - Disable check for expired makemkv licence 
   (This should only be set for users that have a regular licence and do not 
    use the beta key !!!!!)
+- Added parameter for notifications progress
+- XBMC 10.0 Dharma today published.The current release will be tested extremly 
+  on this release. All future releases of this addon need a least XBMC 10.0 Dharma.
 
 Fixes: 
 

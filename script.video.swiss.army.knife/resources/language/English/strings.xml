@@ -47,7 +47,8 @@
         <string id="32083">Allways use default directorys to store</string>  
         <string id="32084">Disable transcoding copy protected dvd's from main-menu</string> 
         <string id="32085">Disable checking for expired makemkv licence</string>       
-      
+        <string id="32086">Enable notifications about current progress</string>         
+
         <!--              --> 
         <!-- Window-Names -->
         <!--              --> 
