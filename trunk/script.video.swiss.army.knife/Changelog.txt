@@ -240,7 +240,7 @@ Fixes:
   longer running.
 - Variable JOBFILE was wrong insid dvd-iso.sh
 - Error inside dvd-vcopy.sh on line 274
-
+- Addon needs release 35650 of xbmc 
 
 
 
