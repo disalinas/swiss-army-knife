@@ -41,7 +41,7 @@ __platform__ 		= "xbmc media center, [LINUX]"
 __date__ 		= "12-08-2010"
 __version__ 		= "0.6.16"
 __code_name__           = "24-Season-5"
-__XBMC_Revision__ 	= "31953"
+__XBMC_Revision__ 	= "35650"
 __index_config__        = 65
  
 
@@ -1902,12 +1902,12 @@ if __name__ == '__main__':
                   if ( __configuration__[60] == 'false'):
                      if (__verbose__ == "true"):        
                          GUIlog ("checking for expired makemkv licence is executed")
-                      state = OSCheckLicence()
-                      if (state == 1):
-                          if (OSCheckContainerID(2)):
-                              Enable_Startup_Addon = Enable_Startup_Addon + 1  
-                              GUIInfo(1,__language__(33307))
-                      else:
+                     state = OSCheckLicence()
+                     if (state == 1):
+                         if (OSCheckContainerID(2)):
+                             Enable_Startup_Addon = Enable_Startup_Addon + 1  
+                             GUIInfo(1,__language__(33307))
+                     else:
                           __enable_bluray__ = "false"
                           GUIInfo(1,__language__(33315))
                   else:
