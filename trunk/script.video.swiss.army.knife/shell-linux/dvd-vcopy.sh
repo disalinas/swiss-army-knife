@@ -123,7 +123,7 @@ E_WRONG_SHELL=255
 REQUIRED_TOOLS=`cat << EOF
 isoinfo
 mount
-vobcopy
+dvdbackup
 tr
 cp
 bc
@@ -223,7 +223,7 @@ done
 lsvd -a $1 > /dev/null 2>&1
 
 DVDDIR=$(mount | grep $1 | awk '{print $3}')
-cd "$DVDDIR/VIDEO_TS"
+cd $DVDDIR/VIDEO_TS
 
 if [ -z $DVDDIR ] ; then
    echo
@@ -243,25 +243,27 @@ echo [$DVDDIR] [$SIZE1] [$T1]
 
 
 VOLNAME=$(volname $1 | tr -dc ‘[:alnum:]‘)
-
 rm -rf $2/$VOLNAME >/dev/null 2>&1
 mkdir -p $2/$VOLNAME/VIDEO_TS > /dev/null 2>&1
+cd $2/$VOLNAME/VIDEO_TS
 
+echo [SOURCE-DIR] $DVDDIR/VIDEO_TS 
+echo [DESTINATION-DIR] $2/$VOLNAME/VIDEO_TS  
 
 echo
 echo INFO starting cp process 
 
 (
-cp * $2/$VOLNAME/VIDEO_TS & 
+dvdbackup -i $1 -M -n $VOLNAME -o $2 & 
 ) > $OUT_TRANS 2>&1 &
-echo INFO cp started
+echo INFO dvdbackup started
 
 sleep 10
 
-PID=$(ps axu | grep " cp " | grep $2 | grep -v grep | awk '{print $2}')
+PID=$(ps axu | grep " dvdbackup " | grep $2 | grep -v grep | awk '{print $2}')
 if [ -z "$PID" ] ; then
     echo
-    echo cp is not running after 10 secounds. Please check your
+    echo dvdbackup is not running after 10 secounds. Please check your
     echo settings and configuration.
     echo
     exit $E_VOBCOPY
