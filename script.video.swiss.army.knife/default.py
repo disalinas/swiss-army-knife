@@ -131,7 +131,7 @@ def GUINotification(Info):
         GUIlog('notification : [' + Info + "]")
 
     Command = '"xbmc.Notification((Swiss-Army-Knife),' + Info + ',10)"'
-    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",2000) ")
+    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",2500) ")
  
     if (__verbose__ == "true"):
        GUIlog('notification-command : [' + Command + "]") 
@@ -1593,7 +1593,15 @@ class GUIMain01Class(xbmcgui.Window):
                    
                   removal = OSRemoveLock()
                   state = OSKillProc()
-                  __jobs__ = False                 
+                  __jobs__ = False 
+
+        
+                  # Inform that we clean-up 
+                            
+                  if (__notifications__ == "true"):
+                     GUINotification(__language__(33244))
+
+
 
           if (job_state == 0):
               __jobs__ = False
@@ -1783,6 +1791,21 @@ class GUIWorkerThread(threading.Thread):
                        GUIlog('[W-Thread] is active and running ...')
                    if (__ProgressView__ == False):
                        if (__jobs__ == True):
+
+                           # We do check that the main-process is running .... 
+
+                           mainprocess = OSCheckMainProcess()
+                           if (mainprocess == 0):
+
+                               # We kill the process 
+  
+                               removal = OSRemoveLock()
+                               state = OSKillProc()
+                               __jobs__ = False 
+
+                               if (__notifications__ == "true"):
+                                  GUINotification(__language__(33243))
+
                            if (__verbose__ == "true"):   
                               GUIlog('[W-Thread] active jobe is running .....')
 

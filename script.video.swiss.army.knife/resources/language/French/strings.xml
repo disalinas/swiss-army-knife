@@ -204,7 +204,9 @@
         <string id="33240">Active job on startup found</string>  
         <string id="33241">Active job on exit found</string> 
         <string id="33242">Exit</string>   
-         
+        <string id="33243">Job ended with error</string> 
+        <string id="33244">Clean-up</string>        
+            
   
         <!--               -->
         <!-- Error         -->

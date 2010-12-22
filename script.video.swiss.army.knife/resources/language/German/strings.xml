@@ -205,6 +205,9 @@
         <string id="33240">Aktiver Job gefunden</string>  
         <string id="33241">Aktiver Job beim beenden</string> 
         <string id="33242">Beenden</string>   
+        <string id="33243">Job wurde unerwartet terminiert</string> 
+        <string id="33244">Aufräumen</string>        
+       
 
         
         <!--               -->
