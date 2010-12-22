@@ -47,7 +47,7 @@
         <string id="32083">Immer Standard-Verzeichnisse zum speichern benutzen</string>
         <string id="32084">Transcodierung von Kopiergeschützten DVD'S aus dem Hauptmenü verhindern</string> 
         <string id="32085">Verhindere Prüfung der abgelaufenen makemkv Lizenz</string> 
-        <string id="32086">Erlaube Kurzmeldungen über deb aktuellen Vorgang</string>         
+        <string id="32086">Erlaube Kurzmeldungen über den aktuellen Vorgang</string>         
         
         
         <!--              --> 
@@ -200,6 +200,12 @@
         <string id="33235">Bitte leere Dual-Layer DVD einlegen</string>
         <string id="33236">Dieses Menü ist nur sichtbar bei vorhandenen User-Funktionen</string>
         <string id="33237">Transcodierung von Kopiergeschützten DVD'S im Hauptmenü ist deaktiviert</string>
+        <string id="33238">Job erfolgreich beendet</string> 
+        <string id="33239">Kein aktiver Job gefunden</string>  
+        <string id="33240">Aktiver Job gefunden</string>  
+        <string id="33241">Aktiver Job beim beenden</string> 
+        <string id="33242">Beenden</string>   
+
         
         <!--               -->
         <!-- Error         -->

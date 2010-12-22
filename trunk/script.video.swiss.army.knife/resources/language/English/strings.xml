@@ -199,6 +199,13 @@
         <string id="33235">Please insert empty dual-layer-dvd</string>
         <string id="33236">This menu is only visible if there are any user-functions</string>
         <string id="33237">Transcoding protected dvd's from main-menu is disabled by configuration</string>
+        <string id="33238">Job finished successfully</string>
+        <string id="33239">No active job on startup found</string>  
+        <string id="33240">Active job on startup found</string>  
+        <string id="33241">Active job on exit found</string> 
+        <string id="33242">Exit</string>   
+       
+           
         
         <!--               -->
         <!-- Error         -->

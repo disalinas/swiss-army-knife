@@ -199,7 +199,13 @@
         <string id="33235">Veuillez insérer un dvd simple-couche vide</string>
         <string id="33236">Ce menu est visible uniquement s'il y a des fonctions utilisateur</string>
         <string id="33237">Le transcodage de dvd protégé à partir du menu principal est désactivé par la configuration</string>        
- 
+        <string id="33238">Job finished successfully</string>  
+        <string id="33239">No active job on startup found</string> 
+        <string id="33240">Active job on startup found</string>  
+        <string id="33241">Active job on exit found</string> 
+        <string id="33242">Exit</string>   
+         
+  
         <!--               -->
         <!-- Error         -->
         <!--               -->
