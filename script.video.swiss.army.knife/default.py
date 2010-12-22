@@ -81,6 +81,7 @@ __enable_customer__ = 'false'
 __enable_pw_mode__  = 'false'
 __verbose__         = 'false'
 __disable_cp_trancode__ = 'false'
+__notifications__ = 'false'
 __allways_default__ = 'false'
 __ProgressView__ = False
 __pw__ = ''
@@ -120,7 +121,7 @@ else:
 #########################################################
 # Parameter :                                           #
 #                                                       #
-# Info        String to be shown inside Dialog-Box      #
+# Info        Text to be shown inside Notification-Box  #
 #                                                       # 
 # Returns   : none                                      #
 #########################################################
@@ -128,7 +129,13 @@ def GUINotification(Info):
 
     if (__verbose__ == "true"):
         GUIlog('notification : [' + Info + "]")
-    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife),Info,10) ")
+
+    Command = '"xbmc.Notification((Swiss-Army-Knife),' + Info + ',10)"'
+    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",2000) ")
+ 
+    if (__verbose__ == "true"):
+       GUIlog('notification-command : [' + Command + "]") 
+
     return 
      
 #########################################################
@@ -1577,6 +1584,8 @@ class GUIMain01Class(xbmcgui.Window):
               mainprocess = OSCheckMainProcess()
               if (mainprocess == 0): 
                   __jobs__ = True
+                  if (__notifications__ == "true"):
+                      GUINotification(__language__(33240))
               else:
 
                   # There must be something wrong ....
@@ -1588,6 +1597,9 @@ class GUIMain01Class(xbmcgui.Window):
 
           if (job_state == 0):
               __jobs__ = False
+              if (__notifications__ == "true"):
+                  GUINotification(__language__(33239))
+
 
           # We generate the menu-list over a loop ,-)
 
@@ -1728,7 +1740,16 @@ class GUIMain01Class(xbmcgui.Window):
                  if (choice == 4): 
                      if (__verbose__):
                          GUIlog('menu exit activated')
-                     exit_script = False    
+                     if (job_state == 1):
+                         if (__notifications__ == "true"):
+                            GUINotification(__language__(33241))
+                     else:
+                         if (__notifications__ == "true"):
+                            GUINotification(__language__(33242))
+
+ 
+                     exit_script = False   
+
           self.close()
           
 
@@ -1763,7 +1784,28 @@ class GUIWorkerThread(threading.Thread):
                    if (__ProgressView__ == False):
                        if (__jobs__ == True):
                            if (__verbose__ == "true"):   
-                              GUIlog('[W-Thread] active jobe is running .....') 
+                              GUIlog('[W-Thread] active jobe is running .....')
+
+                           # Get % from the process 
+
+                           progress = OSGetProgressVal()
+                           if (progress == 100):
+                               if (OSDetectLastStage() == True):
+                                   __jobs__ == False
+          
+
+                                   # We are done -> Show Message 
+ 
+                                   if (__notifications__ == "true"):
+                                       GUINotification(__language__(33238))
+
+                           else:
+                               if (__notifications__ == "true"):
+                                   modula = progress % 5
+                                   if (modula == 0): 
+                                       GUINotification(str(progress) + " %")
+    
+  
             if (__verbose__ == "true"):   
                 GUIlog('[W-Thread] do exit now ...')
             else:
@@ -1817,7 +1859,8 @@ if __name__ == '__main__':
    __pw__              = __configuration__[20]
    __allways_default__ = __configuration__[58]   
    __disable_cp_trancode__ = __configuration__[59]
-      
+   __notifications__ = __configuration__[61]
+       
    GUIlog ("Transcoding   : [" +  str(__default_dvd_tr__) + "]")      
  
    # For all confirmed operations we have a default directory 

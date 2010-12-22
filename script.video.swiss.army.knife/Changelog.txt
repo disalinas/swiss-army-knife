@@ -235,6 +235,7 @@ Changes:
 - Integrate makemkv 1.6.3 32 bit into setup.sh 
 - Integrate makemkv 1.6.3 64 bit into setup.sh
 - Replace vobcopy with dvdbackup inside setup.sh
+- Tested dvd-vcopy.sh 
 
 
 Fixes: 
@@ -248,6 +249,7 @@ Fixes:
 - Variable JOBFILE was wrong insid dvd-iso.sh
 - Error inside dvd-vcopy.sh on line 274
 - Addon needs release 35650 of xbmc 
+- Fixed GUINotification inside default.py
 
 
 
