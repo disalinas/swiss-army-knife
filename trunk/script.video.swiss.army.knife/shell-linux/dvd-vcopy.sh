@@ -239,19 +239,15 @@ fi
 SIZE1=$(du -b | tail -1 | awk '{print $1}')
 T1=$(bc -l <<< "scale=0; ($SIZE1 / 100)")
 
-echo [$DVDDIR] [$SIZE1] [$T1]
-
 
 VOLNAME=$(volname $1 | tr -dc ‘[:alnum:]‘)
 rm -rf $2/$VOLNAME >/dev/null 2>&1
 mkdir -p $2/$VOLNAME/VIDEO_TS > /dev/null 2>&1
 cd $2/$VOLNAME/VIDEO_TS
 
-echo [SOURCE-DIR] $DVDDIR/VIDEO_TS 
-echo [DESTINATION-DIR] $2/$VOLNAME/VIDEO_TS  
-
+ 
 echo
-echo INFO starting cp process 
+echo INFO starting dvdbackup process 
 
 (
 dvdbackup -i $1 -M -n $VOLNAME -o $2 & 
@@ -289,7 +285,6 @@ do
   echo -n .
   SIZE2=$(cd $2/$VOLNAME/VIDEO_TS && du -b | tail -1 | awk '{print $1}')
   PROGRESS=$(bc -l <<< "scale=0; ($SIZE2 / $T1)")
-  echo [$T1] [$PROGRESS] [$SIZE2]
   echo $PROGRESS > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress
 
   if [ $PROGRESS -eq 100 ] ; then

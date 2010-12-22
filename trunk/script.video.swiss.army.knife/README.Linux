@@ -1,8 +1,8 @@
 Readme.Linux for xbmc addon swiss-army-knife 0.6.16 (Beta 2) 
 ------------------------------------------------------------
 
-1.0 Welcome to my first addon swiss-army-knife
-----------------------------------------------
+1.0 Welcome to my first addon called swiss-army-knife
+-----------------------------------------------------
 
 Please do excuse my poor writen english. My native language 
 is german and I do speak a few others imho very good, but speaking 
@@ -419,6 +419,7 @@ The following table shows the current configuration settings for the addon 0.6.1
         <setting id="id-use-allways-default" type="bool" label="32083" default="true"/>
         <setting id="id-disable-protect" type="bool" label="32084" default="true"/> 
         <setting id="id-disable-mkv-licence" type="bool" label="32085" default="false"/>   
+        <setting id="id-notifications" type="bool" label="32086" default="true"/> 
           
 </settings>
 
@@ -460,12 +461,13 @@ id-verbose                      This entry do activate verbose log inside ~./xbm
 id-t1                           Time-out value 5
 id-t2                           Time-out value 10 
 id-t3                           Time-out value 100 
-id-delete                       If a operation is not successfull or is canceld all files are 
+id-delete                       If a operation is not successfull or is canceld all working files are 
                                 deleted.   
 id-eject                        After a successfull operation do eject the medium (dvd or bluray)
 id-alternate                    Use a iso-file from the harddisk instead of using allways a dvd or 
-                                bluray device.In release 0.6.16 this setting has no affect. 
- 
+                                bluray device.In release 0.6.16 this setting has no affect.
+                                In a later release you can select between iso-file and device. 
+
 id-use-allways-default          Allways use default directorys for storing. If this entry is set to false 
                                 the destination directory has to be selected over the addon.
                                 The default dvd-transcode from main-menu do not ask where to store 
@@ -478,6 +480,12 @@ id-disable-mkv-licence          Every user that a use a beta serialkey for makem
                                 Do not enable this feature as long you do not have a valid licence-key !
 
                                 A user that purchased a makemkv licence can set this values to <true>
+                                if you only use a beta-key do never set this value to true .....
+
+id-notifications                Show notifications about current progress in info-area of xbmc.
+
+    
+                               
  
  
 
