@@ -73,6 +73,26 @@ fi
 
 ###########################################################
 #                                                         #
+# Only one job is supported with gui-interaction          #
+#                                                         #
+###########################################################
+
+if [ -e "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/JOB" ] ; then
+   clear
+   echo
+   echo There is allready a other job runnung.
+   echo
+   echo ----------------------- script rc=101 ---------------------------
+   echo -----------------------------------------------------------------
+   exit 101
+fi
+
+###########################################################
+
+
+
+###########################################################
+#                                                         #
 # Show disclaimer / copyright note on top of the screen   #
 #                                                         #
 ###########################################################
@@ -127,6 +147,7 @@ EXPECTED_ARGS=5
 E_BADARGS=1
 E_TOOLNOTF=50
 E_TERMINATE=100
+E_JOBRUNNING=101
 E_HANDBRAKE=253
 E_SUID0=254
 E_WRONG_SHELL=255

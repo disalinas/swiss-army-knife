@@ -185,7 +185,7 @@ Fixes:
 
 
 ----------------------------------------------------------------------------------------------------
-Date : 10.08.2010 | Release : 0.6.16    | Author  : H.Weber | CVS:366
+Date : 12.24.2010 | Release : 0.6.16    | Author  : H.Weber | CVS:366-450
 ----------------------------------------------------------------------------------------------------
 
 Changes:
@@ -227,7 +227,7 @@ Changes:
   (This should only be set for users that have a regular licence and do not 
    use the beta key !!!!!)
 - Added parameter for notifications progress
-- XBMC 10.0 Dharma today published.The current release will be tested extremly 
+- XBMC 10.0 Dharma was today published.The current release will be tested extremly 
   on this release. All future releases of this addon need a least XBMC 10.0 Dharma.
 - Added ourc-code of makemkv 1.6.3 on the project-download url. 
 - Added makemkv-swiss-army-knife-32-12-19-2010.tar.gz (Debian 32 bit makemkv 1.6.3)
@@ -235,8 +235,8 @@ Changes:
 - Integrate makemkv 1.6.3 32 bit into setup.sh 
 - Integrate makemkv 1.6.3 64 bit into setup.sh
 - Replace vobcopy with dvdbackup inside setup.sh
-- Tested dvd-vcopy.sh 
-
+- Tested dvd-vcopy.sh successfully 
+- Integrate test into shell-scripts that no other script is running.
 
 Fixes: 
 
@@ -250,6 +250,11 @@ Fixes:
 - Error inside dvd-vcopy.sh on line 274
 - Addon needs release 35650 of xbmc 
 - Fixed GUINotification inside default.py
+- Dharma is Revision R35648 and not R35650
+- In the case that ssh-server was not configured properly the busy 
+  dialog was not killed.
+
+
 
 
 

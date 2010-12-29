@@ -12,7 +12,7 @@
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
 # VERSION : 0.6.16                                      #
-# DATE    : 12-08-10                                    #
+# DATE    : 12-24-10                                    #
 # STATE   : Beta 2                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -353,8 +353,8 @@ def OSConfiguration(index):
 # command     command to execute over ssh               #
 # backg       boolean :                                 #
 #             - true  command is put into background &  #
-#             - false command is not startet in         #
-#               background (very dangerous .... )       #
+#             - false command is not startet over ssh   #
+#               (very dangerous .... )                  #
 # busys       boolean :                                 #
 #             - show busy-dialog during the operation   #
 #                                                       #
@@ -372,33 +372,30 @@ def OSRun(command,backg,busys):
         xbmc.executebuiltin("ActivateWindow(busydialog)")
     sys.platform.startswith('linux')
 
-
-    sshlog ="echo \"" + command + "\" >> " + __configLinux__[38]
-    status = os.system("%s" % (sshlog))
+    if (backg == True):
+        sshlog ="echo \"" + command + "\" >> " + __configLinux__[38]
+        status = os.system("%s" % (sshlog))
 
     if (__verbose__ == 'true'):
         OSlog("Command to log inside ssh:" + sshlog)
         OSlog ("OSRun start")
 
-
-    commandssh = "ssh " + __configLinux__[6] + " " + __configLinux__[40] + command + " "
-
-    if (backg):
-        commandssh = commandssh + " > /dev/null 2>&1 &"
-
-    status = os.system("%s" % (command))
-
-    if (__verbose__ == 'true'):
-        OSlog("Command to run :" + commandssh)
-
-    # No we execute the command  ...
-    # over ssh
-
-    status = os.system("%s" % (commandssh))
-
-    if (__verbose__ == 'true'):
-        OSlog("status command [" + commandssh + "] is rc:=[" + str(status) +"]")
-        OSlog ("OSRun end")
+    if (backg == True):
+        commandexec = "ssh " + __configLinux__[6] + " " + __configLinux__[40] + command + " "
+        commandexec = commandexec + " > /dev/null 2>&1 &"
+        status = os.system("%s" % (commandexec))
+        if (__verbose__ == 'true'):
+            OSlog("Command to run :" + commandexec)
+            OSlog("status command [" + commandexec + "] is rc:=[" + str(status) +"]")
+            OSlog ("OSRun end")
+    else:
+        commandexec = "/bin/bash  " + __configLinux__[40] + command + " "
+        commandexec = commandexec + " > /dev/null 2>&1"
+        status = os.system("%s" % (commandexec))
+        if (__verbose__ == 'true'):
+            OSlog("Command to run :" + commandexec)
+            OSlog("status command [" + commandexec + "] is rc:=[" + str(status) +"]")
+            OSlog ("OSRun end") 
 
     if (busys):
         xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -423,7 +420,7 @@ def OSRun(command,backg,busys):
 # 0           Checked media is inside drive             #
 # 1           No media found inside drive               #
 # 2           State file do not exist                   #
-# 3           DVD has a invalid file-system used as     #
+# 3           DVD has a invalid file-system or use a    #
 #             copy prevention !!!                       # 
 #                                                       #
 #########################################################
@@ -1382,28 +1379,6 @@ def OSRemoveLock():
     global __configLinux__
     global __verbose__
 
-
-    PidList = []
-    PidList = OSGetpids()
-
-    # The Lock-file should only removed in the case
-    # a process died unexpected ...
-
-    if (PidList[0] != 'none' ):
-        x = 0
-        for item in PidList:
-            OSlog("PID-list:" + str(item))
-            try:
-                pid = int(item)
-                os.kill(pid,0)
-                running = True
-            except OSError, err:
-                running = False
-            if (running):
-                return 0
-    else:
-        return 0
-
     if (os.path.exists(__configLinux__[45])):
         os.remove(__configLinux__[45])
         if (__verbose__):
@@ -1411,6 +1386,37 @@ def OSRemoveLock():
         return 1
     else:
         return 0
+
+#########################################################
+
+
+
+
+#########################################################
+# Function  : OSGetStageCurrentIndex                    #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# 1-X         Current stage in progress                 #
+# -1          File could not be opened                  #
+#                                                       #
+#########################################################
+def OSGetStageCurrentIndex():
+
+    global __configLinux__
+    global __verbose__
+
+    if (os.path.exists(__configLinux__[37])):
+        ProgressFile = open(__configLinux__[37],'r')
+        line =  ProgressFile.readline()
+        ProgressFile.close
+        line = line.strip()
+        rvalue = int(line)
+        return rvalue
+    else:
+        return -1
 
 #########################################################
 
@@ -1514,7 +1520,11 @@ def OSCheckSSH():
     global __configLinux__
     global __verbose__
 
-    OSRun( "echo 1 > " + __configLinux__[39],False,False)
+    if (os.path.exists(__configLinux__[39])):
+        os.remove(__configLinux__[39])
+
+    OSRun( "check-ssh.sh ",True,False)
+    time.sleep(1) 
 
     if (os.path.exists(__configLinux__[39])):
         return 0
@@ -1832,7 +1842,11 @@ def OSCheckLicence():
     global __configLinux__
     global __verbose__
 
-    OSRun("check-mkv.sh ",False,False)   
+    if (os.path.exists(__configLinux__[27])):
+        os.remove(__configLinux__[27])
+
+    OSRun("check-mkv.sh ",False,False)
+  
     if (os.path.exists(__configLinux__[27])):
         return 1
     else:
@@ -1952,10 +1966,12 @@ def OSCheckUser():
             OSlog("SSH-user expected : [" + name + "]")
         index = name.find(CurrentUser)
         if (index == -1):
-            OSlog("Warning current user and ssh-command mismatch !!!!!")
+            if (__verbose__ == 'true'): 
+               OSlog("Warning current user and ssh-command mismatch !!!!!")
             return 0
         else:  
-            OSlog("current user is listed inside the ssh-command")
+            if (__verbose__ == 'true'): 
+               OSlog("current user is listed inside the ssh-command")
             return 1  
     else:
         return 0
