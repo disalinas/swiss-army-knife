@@ -14,7 +14,7 @@
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
 # VERSION : 0.6.16                                      #
-# DATE    : 12-08-10                                    #
+# DATE    : 12-24-10                                    #
 # STATE   : Beta 2                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -38,11 +38,12 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "12-08-2010"
+__date__ 		= "12-24-2010"
 __version__ 		= "0.6.16"
 __code_name__           = "24-Season-5"
-__XBMC_Revision__ 	= "35650"
+__XBMC_Revision__ 	= "35648"
 __index_config__        = 65
+__credits__             = "a bunch of gpl-devs"
  
 
 xbmc.output(__script__ + " Version: " + __version__  + "\n")
@@ -87,7 +88,7 @@ __ProgressView__ = False
 __pw__ = ''
 __jobs__ = False
 __linebreak__ = 0
-__exitFlag__ = 0
+__exitFlag__ = False
 
 CWD = os.getcwd().rstrip(";")
 sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
@@ -131,7 +132,7 @@ def GUINotification(Info):
         GUIlog('notification : [' + Info + "]")
 
     Command = '"xbmc.Notification((Swiss-Army-Knife),' + Info + ',10)"'
-    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",2500) ")
+    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",1000) ")
  
     if (__verbose__ == "true"):
        GUIlog('notification-command : [' + Command + "]") 
@@ -326,24 +327,25 @@ def GUIProgressbar(InfoText):
            progress = OSGetProgressVal()
            if (progress == 100):
 
-               # We could have multiple passes and therefore 
-               # only in the last pass we do close and send back 
-               # Job is finished ...
+                  # We could have multiple passes and therefore 
+                  # only in the last pass we do close and send back 
+                  # Job is finished ...
                 
-               if (OSDetectLastStage() == True):
-                   if (__verbose__):
-                      GUIlog('active job finished')
-                   dp.close() 
-                   exit = False
-                   retval = 1
-                   time.sleep(3)
+                  if (OSDetectLastStage() == True):
+                      if (__verbose__):
+                          GUIlog('active job finished')
+                      dp.close() 
+                      exit = False
+                      retval = 1
+                      time.sleep(3)
 
            dp.update(progress,OSGetStageText())
            if dp.iscanceled():
               dp.close() 
               exit = False
-              retval = 0 
+              retval = 0
            time.sleep(1)
+
     __ProgressView__ = False
     return (retval)             
 
@@ -597,9 +599,9 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                  exit = True    
              if (choice == 1):
  
-                 # 
-                 # Transcoding dvd to mkv selected 
-                 # 
+                 ############################################## 
+                 # Transcoding dvd to mkv selected            # 
+                 ############################################## 
                                
                  Lock = OSCheckLock(__configuration__[1])
                  if (__enable_bluray__ == 'true'):
@@ -660,9 +662,10 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
              if (choice == 2):
 
-                 # 
-                 # Transcoding dvd-low selected 
-                 # 
+
+                 ############################################## 
+                 # Transcoding dvd-low selected               # 
+                 ##############################################
 
                  selected_done = False
                  append_pars = []
@@ -787,9 +790,9 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
              if (choice == 3):
 
-                 # 
-                 # Transcoding iphone selected 
-                 # 
+                 ############################################## 
+                 # Transcoding dvd-iphone selected            # 
+                 ##############################################
 
                  selected_done = False
                  append_pars = []
@@ -914,9 +917,9 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
 
              if (choice == 4):
 
-                 # 
-                 # Transcoding psp selected 
-                 # 
+                 ############################################## 
+                 # Transcoding dvd-psp selected               # 
+                 ##############################################
 
                  selected_done = False
                  append_pars = []
@@ -1458,21 +1461,21 @@ class GUIExpertWinClass(xbmcgui.Window):
              if (choice == 5):
                  if (__enable_burning__ == 'true'):                
                      TranscodeWindow = GUIExpertTranscodeClass()
-                     del TranscodeWindow 
+                     del TranscodeWindow
                  else:
                      GUIInfo(0,__language__(33325))   
 
              if (choice == 6):
                  if (__enable_network__ == 'true'):                
                      NetworkWindow = GUIExpertNetworkClass()
-                     del NetworkWindow 
+                     del NetworkWindow
                  else:
                      GUIInfo(0,__language__(33320))                            
                   
              if (choice == 7):
                  if (__enable_customer__ == 'true'):                
                      UserfunctionsWindow = GUIExpertUserfunctionsClass()
-                     del UserfunctionsWindow 
+                     del UserfunctionsWindow
                  else:
                      GUIInfo(0,__language__(33322)) 
 
@@ -1545,8 +1548,6 @@ class GUIJobWinClass(xbmcgui.Window):
              if (choice == 2):  
                  removal = OSRemoveLock()  
              if (choice == 3):  
-                 if (__verbose__ == "true"):      
-                     GUIlog('menu job-window exit')
                  exit = False
           self.close()
 
@@ -1576,10 +1577,8 @@ class GUIMain01Class(xbmcgui.Window):
           job_state = OSGetJobState()
           if (job_state == 1):
 
-              # The real-job files do exist.
-              # Prior to set the job-state to active we have 
-              # to be sure that the main-process of every 
-              # shell-script is running ....
+              # The real-job files do exist. Prior to set the job-state to active we have 
+              # to be sure that the main-process of every shell-script is running ....
  
               mainprocess = OSCheckMainProcess()
               if (mainprocess == 0): 
@@ -1738,24 +1737,17 @@ class GUIMain01Class(xbmcgui.Window):
                                  GUIInfo(2,__language__(33213))    
                      else:
                           ExpertWindow = GUIExpertWinClass()
-                          del ExpertWindow         
+                          del ExpertWindow                          
+
                  if (choice == 3): 
                      if (__verbose__ == "true"):      
                         GUIlog('menu jobs activated')
-                     JobWindow = GUIJobWinClass()
-                     del JobWindow        
+                     JobWindow = GUIJobWinClass()  
+                     del JobWindow    
                      
                  if (choice == 4): 
-                     if (__verbose__):
+                     if (__verbose__ == "true"):
                          GUIlog('menu exit activated')
-                     if (job_state == 1):
-                         if (__notifications__ == "true"):
-                            GUINotification(__language__(33241))
-                     else:
-                         if (__notifications__ == "true"):
-                            GUINotification(__language__(33242))
-
- 
                      exit_script = False   
 
           self.close()
@@ -1774,65 +1766,58 @@ class GUIMain01Class(xbmcgui.Window):
 # Returns   : none                                      #
 #########################################################
 class GUIWorkerThread(threading.Thread):
-
+  
         def __init__(self):
-            threading.Thread.__init__(self)        
+            threading.Thread.__init__(self)
+        
         def run(self):
+
+            global __ProgressView__ 
+            global __jobs__ 
+            global __exitFlag__
+
             exit = True
-            if (__verbose__ == "true"):   
-                GUIlog('[W-Thread] starting ...')
-            else: 
-                GUIlog('[W-Thread] starting ...')
             while (exit):  
-                   if (__exitFlag__ == 1): 
+                   time.sleep(1) 
+                   if (__exitFlag__ == True): 
                        exit = False
-                   time.sleep(1)
-                   if (__verbose__ == "true"):   
-                       GUIlog('[W-Thread] is active and running ...')
-                   if (__ProgressView__ == False):
-                       if (__jobs__ == True):
+                   else:
+                       if ( __ProgressView__ == False) and (__exitFlag__ == True):
+                           if (__jobs__ == True):
 
-                           # We do check that the main-process is running .... 
+                              # We do check that the main-process is running .... 
 
-                           mainprocess = OSCheckMainProcess()
-                           if (mainprocess == 0):
+                              mainprocess = OSCheckMainProcess()
+                              progress = OSGetProgressVal() 
 
-                               # We kill the process 
-  
-                               removal = OSRemoveLock()
-                               state = OSKillProc()
-                               __jobs__ = False 
-
-                               if (__notifications__ == "true"):
-                                  GUINotification(__language__(33243))
-
-                           if (__verbose__ == "true"):   
-                              GUIlog('[W-Thread] active jobe is running .....')
-
-                           # Get % from the process 
-
-                           progress = OSGetProgressVal()
-                           if (progress == 100):
-                               if (OSDetectLastStage() == True):
-                                   __jobs__ == False
-          
-
-                                   # We are done -> Show Message 
+                              if (mainprocess == 1 ) and (progress <= 99):
  
-                                   if (__notifications__ == "true"):
-                                       GUINotification(__language__(33238))
+                                 #  removal = OSRemoveLock()
+                                 #  state = OSKillProc()
+                                 # __jobs__ = False 
 
-                           else:
-                               if (__notifications__ == "true"):
-                                   modula = progress % 5
-                                   if (modula == 0): 
-                                       GUINotification(str(progress) + " %")
-    
-  
-            if (__verbose__ == "true"):   
-                GUIlog('[W-Thread] do exit now ...')
-            else:
-                GUIlog('[W-Thread] do exit now ...')
+                                 if (__notifications__ == "true"):
+                                    GUINotification(__language__(33243))
+
+                              if (mainprocess == 0):    
+
+                                 # MainProcess is running   
+                                 # Get % from the process 
+
+                                 if (progress == 100):
+                                     if (OSDetectLastStage() == True):
+                                        __jobs__ == False
+          
+                                        # We are done -> Show Message 
+ 
+                                        if (__notifications__ == "true"):
+                                           GUINotification(__language__(33238))
+                                 else:
+                                      if (__notifications__ == "true"):
+                                         modula = progress % 5
+                                         if (modula == 0): 
+                                             GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
+
             thread.exit()          
                      
 #########################################################
@@ -1847,17 +1832,24 @@ class GUIWorkerThread(threading.Thread):
 
 if __name__ == '__main__':
 
+
+   Enable_Startup_Addon = 0
+
    # Get the current build of xbmc   
    
    xbmc_version = xbmc.getInfoLabel("System.BuildVersion")
+
+   # Busy-Dialog open
+
    xbmc.executebuiltin("ActivateWindow(busydialog)")
 
-   GUIlog ("Release xbmc  : [" +  xbmc_version + "]")     
-   GUIlog ("Release Addon : [" + __version__ + "]")
-   GUIlog ("Addon url     : [" + __url__ + "]")
-   GUIlog ("Author Addon  : [" + __author__  + "]")      
-
-   GUIlog ("addon-startet")
+   if (__verbose__ == "true"):    
+      GUIlog ("Release xbmc  : [" +  xbmc_version + "]")     
+      GUIlog ("Release Addon : [" + __version__ + "]")
+      GUIlog ("Addon url     : [" + __url__ + "]")
+      GUIlog ("Author Addon  : [" + __author__  + "]")
+      
+   GUIlog ("addon-starting")
   
    # Because we do not need to calulate the linebreak-position 
    # on every function call we calculate them now global once
@@ -1865,13 +1857,21 @@ if __name__ == '__main__':
    reference =  __language__(34000)    
    __linebreak__ = reference.find("Line-2")
 
-   GUIlog ("Linebreak     : [" +  str(__linebreak__) + "]")      
+   if (__verbose__ == "true"):                  
+      GUIlog ("Linebreak     : [" +  str(__linebreak__) + "]")      
    
    # Load configuration settings from addon
 
-   GUIlog ("loading-configuration")
+   if (__verbose__ == "true"):    
+       GUIlog ("loading-configuration")
+
    __configuration__ = OSConfiguration(__index_config__)
    
+   
+   # Busy-Dialog close 
+
+   # xbmc.executebuiltin("Dialog.Close(busydialog)") 
+
    __default_dvd_tr__  = int(__configuration__[9]) 
    __enable_bluray__   = __configuration__[10]
    __enable_network__  = __configuration__[11]
@@ -1883,15 +1883,17 @@ if __name__ == '__main__':
    __allways_default__ = __configuration__[58]   
    __disable_cp_trancode__ = __configuration__[59]
    __notifications__ = __configuration__[61]
-       
-   GUIlog ("Transcoding   : [" +  str(__default_dvd_tr__) + "]")      
+
+
+   if (__verbose__ == "true"):        
+       GUIlog ("Transcoding   : [" +  str(__default_dvd_tr__) + "]")      
  
    # For all confirmed operations we have a default directory 
    # Until release 0.6.15 we used a dialog to select the destination 
-   # folder, up release 0.6.16 the dialog will not be used longer
+   # folder, with release 0.6.16 and later the dialog will not be used longer
 
    # bluray mkv                         /dvdrip/bluray        index [5]	     
-   # -> 264-high			/dvdrip/dvd           index [4]		
+   # -> 264-high °			/dvdrip/dvd           index [4]		
    # -> iso				/dvdrip/iso           index [3]	
    # -> h264-low                        /dvdrip/transcode     index [13]
    # -> mkv                             /dvdrip/transcode     index [13]
@@ -1908,192 +1910,183 @@ if __name__ == '__main__':
        # setup.sh was not executed -> exit addon 
 
        GUIInfo(0,__language__(33300))
-       xbmc.executebuiltin("Dialog.Close(busydialog)")
-
+       Enable_Startup_Addon = Enable_Startup_Addon + 1
+   
    else:
 
-       # We do set all default values for multiple dvd transcoding 
-       # functions 
+       # We do set all default values for multiple dvd transcoding functions 
 
        if (__verbose__ == "true"):      
             GUIlog ("Transcoding   : [" +  "read default values tr" + "]")       
        __dvd_values__ = GUISelectDVDTranscode() 
- 
        if (__verbose__ == "true"):                
           GUIlog ("Default DVD   : [" + __dvd_values__[__default_dvd_tr__] + "]")      
-
        if (__verbose__ == "true"):      
           GUIlog ("Transcoding   : [" +  "read default values done" + "]")           
          
-       # if we would have the wrong user for the ssh-command 
-       # we would have a funny mess .... 
-
+   
+   if ( Enable_Startup_Addon == 0):
        Userstate = OSCheckUser()
-
        if (Userstate == 0):
 
            # As long the ssh-user inside the settings is not 
            # the same as the current user we do not start ....          
 
            GUIInfo(0,__language__(33316))
-           xbmc.executebuiltin("Dialog.Close(busydialog)")
+           Enable_Startup_Addon = 1 
 
-       else:
+   if ( Enable_Startup_Addon == 0):   
 
-           Enable_Startup_Addon = 0  
-
-           # We have a ssh configuration that should work ....
-           # But should working and working properly are two diffrent things ,-)
+       # We have a ssh configuration that should work ....
+       # But should working and working properly are two diffrent things ,-)
             
-           state_ssh = OSCheckSSH()
-           if (state_ssh == 1):
+       state_ssh = OSCheckSSH()
+       if (state_ssh == 1):
                GUIInfo(0,__language__(33321))
                if (__verbose__ == "true"):        
                    GUIlog ("please do configure ssh-server for login without any passwords")
                    GUIlog ("This addon do not start until ssh communication is working properly for the current user") 
                    GUIlog ("Addon do exit now ...")
-           else:                       
-                
-               # Check that directory exists and could be written 
-               # Bluray-directory is only included if the functions are enabled
-
-               if (__enable_bluray__ == "true"):
-
-                  # The check for a valid mkv licence is only executed 
-                  # if the bluray part is enabled ..  
-
-                  # A user that purchased a makemkv licence can configure the addon 
-                  # over the settings that this check is not executed on startup .....
-
-                  if ( __configuration__[60] == 'false'):
-                     if (__verbose__ == "true"):        
-                         GUIlog ("checking for expired makemkv licence is executed")
-                     state = OSCheckLicence()
-                     if (state == 1):
-                         if (OSCheckContainerID(2)):
-                             Enable_Startup_Addon = Enable_Startup_Addon + 1  
-                             GUIInfo(1,__language__(33307))
-                     else:
-                          __enable_bluray__ = "false"
-                          GUIInfo(1,__language__(33315))
-                  else:
-                       if (__verbose__ == "true"):        
-                         GUIlog ("checking for expired makemkv licence is not executed because addon-configuration")
-                       if (OSCheckContainerID(2)):
-                           Enable_Startup_Addon = Enable_Startup_Addon + 1  
-                           GUIInfo(1,__language__(33307))   
-               else:
-                    
-                    # In the case that someone would like to transcode a dvd to mkv  
-                    # the bluray-part must be active !!!!!
-                     
-                    if (__default_dvd_tr__ == 3):
-                      GUIInfo(1,__language__(33333))
-                      Enable_Startup_Addon = Enable_Startup_Addon + 1   
-     
-               if (Enable_Startup_Addon == 0):      
-                   if (OSCheckContainerID(1)):
-                       GUIInfo(1,__language__(33306))
-                       Enable_Startup_Addon = Enable_Startup_Addon + 1
-   
-               if (Enable_Startup_Addon == 0):
-                   if (OSCheckContainerID(0)):
-                       GUIInfo(1,__language__(33305))
-                       Enable_Startup_Addon = Enable_Startup_Addon + 1
-
-               if (Enable_Startup_Addon == 0): 
-                   if (OSCheckContainerID(3)):
-                       GUIInfo(1,__language__(33318))
-                       Enable_Startup_Addon = Enable_Startup_Addon + 1
-               
-               # Network container is only tested if the function is enabled ...
-       
-               if (Enable_Startup_Addon == 0): 
-                   if (__enable_network__ == "true"):         
-                       if (OSCheckContainerID(4)):
-                           GUIInfo(1,__language__(33319))
-               
-                           # We do not enable a option in the case the container is not 
-                           # writeable 
-      
-                           Enable_Startup_Addon = Enable_Startup_Addon + 1
-                           __enable_network__ == "false" 
+               Enable_Startup_Addon = Enable_Startup_Addon + 1 
  
-               # Transcode and burning container is only tested if the function is enabled ....  
+  
+   if ( Enable_Startup_Addon == 0):                           
+       if (__enable_bluray__ == "true"):
 
-               if (Enable_Startup_Addon == 0): 
-                   if (__enable_burning__ == "true"):         
-                       if (OSCheckContainerID(5)):
-                           GUIInfo(1,__language__(33306))
+           # The check for a valid mkv licence is a startup-parameter 
+
+           if ( __configuration__[60] == 'false'):
+              if ( __verbose__ == "true"):        
+                 GUIlog ("checking for expired makemkv licence is executed")
+              state = OSCheckLicence()
+              if (state == 1):
+                 if (OSCheckContainerID(2)):
+                    Enable_Startup_Addon = Enable_Startup_Addon + 1  
+                    GUIInfo(1,__language__(33307))
+              else:
+                  __enable_bluray__ = "false"
+                  GUIInfo(1,__language__(33315))
+           else:
+              if (__verbose__ == "true"):        
+                 GUIlog ("checking for expired makemkv licence is not executed because addon-configuration")
+              if (OSCheckContainerID(2)):
+                 Enable_Startup_Addon = Enable_Startup_Addon + 1  
+                 GUIInfo(1,__language__(33307))   
+       else:                     
+           if (__default_dvd_tr__ == 3):
+              GUIInfo(1,__language__(33333))
+              Enable_Startup_Addon = Enable_Startup_Addon + 1   
+     
+
+   if ( Enable_Startup_Addon == 0): 
+      if (OSCheckContainerID(1)):
+         GUIInfo(1,__language__(33306))
+         Enable_Startup_Addon = Enable_Startup_Addon + 1
+
+
+   if ( Enable_Startup_Addon == 0): 
+      if (OSCheckContainerID(0)):
+         GUIInfo(1,__language__(33305))
+         Enable_Startup_Addon = Enable_Startup_Addon + 1
+
+
+   if ( Enable_Startup_Addon == 0): 
+      if (OSCheckContainerID(3)):
+         GUIInfo(1,__language__(33318))
+         Enable_Startup_Addon = Enable_Startup_Addon + 1
+
+
+   if ( Enable_Startup_Addon == 0):
+      if (__enable_network__ == "true"):         
+         if (OSCheckContainerID(4)):
+            GUIInfo(1,__language__(33319))
                
-                           # We do not enable a option in the case the container is not 
-                           # writeable 
+            # We do not enable a option in the case the container is not writeable 
       
-                           Enable_Startup_Addon = Enable_Startup_Addon + 1
-                           __enable_burning__ == "false" 
+            Enable_Startup_Addon = Enable_Startup_Addon + 1
+            __enable_network__ == "false" 
 
 
-               # portable directory 1 (iphone)
+   if ( Enable_Startup_Addon == 0):                   
+      if (__enable_burning__ == "true"):        
+         if (OSCheckContainerID(5)):
+            GUIInfo(1,__language__(33306))
+               
+             # We do not enable a option in the case the container is not writeable 
 
-               if (Enable_Startup_Addon == 0): 
-                  if (OSCheckContainerID(7)):
-                     Enable_Startup_Addon = Enable_Startup_Addon + 1
-                     GUIInfo(1,__language__(33331))
-                     if (__verbose__ == "true"):
-                        GUIlog('read the file called README.Linux or shorter RTFM')
+            Enable_Startup_Addon = Enable_Startup_Addon + 1
+            __enable_burning__ == "false" 
 
-
-               # portable directory 2 (psp)
-
-               if (Enable_Startup_Addon == 0): 
-                  if (OSCheckContainerID(8)):
-                     Enable_Startup_Addon = Enable_Startup_Addon + 1
-                     GUIInfo(1,__language__(33332))
-                     if (__verbose__ == "true"):
-                        GUIlog('read the file called README.Linux or shorter RTFM')
+   if ( Enable_Startup_Addon == 0):      
+      if (OSCheckContainerID(7)):
+         GUIInfo(1,__language__(33331))                     
+         Enable_Startup_Addon = Enable_Startup_Addon + 1
 
 
-               # Last Test prior to startup ....
-               # I guess I said it allready 100 times ...  "please execute setup.sh"
+   if ( Enable_Startup_Addon == 0):      
+      if (OSCheckContainerID(8)):
+         GUIInfo(1,__language__(33332))                     
+         Enable_Startup_Addon = Enable_Startup_Addon + 1
 
-               if (Enable_Startup_Addon == 0):
-                   if (OSCheckContainerID(6)):
-                       Enable_Startup_Addon = Enable_Startup_Addon + 1
-                       GUIInfo(1,__language__(33327))
-                       if (__verbose__ == "true"):
-                           GUIlog('read the file called README.Linux or shorter RTFM')
 
-               # New since release 0.6.15 if any error comes up we do not start .....
-               # Only without any error on startup we do create the menu.
-               # In this case I have to ask less questions .... If a error comes ...
+   if ( Enable_Startup_Addon == 0):      
+      if (OSCheckContainerID(6)):
+         GUIInfo(1,__language__(33327))                     
+         Enable_Startup_Addon = Enable_Startup_Addon + 1
 
-               if (Enable_Startup_Addon == 0):  
 
-                   # Starting worker-thread 
+   if ( Enable_Startup_Addon == 0):  
 
-                   thread2 = GUIWorkerThread()
-                   thread2.start()
+      __ProgressView__ = False
+      __jobs__ = False
+      __exitFlag__ = False
 
-                   GUIlog ("create main-menu")
-                   xbmc.executebuiltin("Dialog.Close(busydialog)") 
-                   menu01 = GUIMain01Class()
-                   del menu01
-                   __exitFlag__ = 1
+      xbmc.executebuiltin("Dialog.Close(busydialog)") 
+      time.sleep(1)
 
-                   # We must wait until thread2 do exit 
+      # Starting worker-thread 
 
-                   while thread2.isAlive():
-                         time.sleep(1) 
-                         GUIlog ("waiting for termination of thread2")
-                   GUIlog ("thread2 has been terminated and was detected inside main-loop")
-               else:
-                    if (__verbose__ == "true"):      
-                        GUIlog ("This addon do not start until all errors on startup are resolved ....") 
-                        GUIlog ("Addon do exit now ...")
-                        xbmc.executebuiltin("Dialog.Close(busydialog)")     
-               GUIlog ("addon-ended")
-   
-   
+      # thread2 = GUIWorkerThread()
+      # thread2.start()
+
+      menu01 = GUIMain01Class()
+      del menu01
+
+      # Signal Working-Thread to exit ...
+
+      if (__verbose__ == "true"):    
+         GUIlog ("Signal w-thread to exit from main-thread")  
+      __exitFlag__ = True
+
+      # We must wait until thread2 do exit 
+
+      # while thread2.isAlive():
+      #       if (__verbose__ == "true"):    
+      #          GUIlog ("waiting for termination of thread2")
+      #          if (__verbose__ == "true"):          
+      # GUIlog ("thread2 has been terminated and was detected to be running inside main-loop")
+
+
+      time.sleep(2)   
+      if ( __jobs__ == True):
+          if (__notifications__ == "true"):
+             GUINotification(__language__(33241))
+             time.sleep(1)  
+      else:
+          if (__notifications__ == "true"):
+             GUINotification(__language__(33242)) 
+             time.sleep(1)  
+   else:  
+       xbmc.executebuiltin("Dialog.Close(busydialog)") 
+       GUIlog ("This addon do not start until all errors on startup are resolved. read manual") 
+
+
+   # Exit the addon ... 
+     
+   GUIlog ("addon-terminate")
+   sys.modules.clear()
+
+       
 #########################################################
 #########################################################
 #########################################################

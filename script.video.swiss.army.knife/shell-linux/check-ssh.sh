@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# scriptname : check_mkv.sh                               #
+# scriptname : check_ssh.sh                               #
 ###########################################################
 # This script is part of the addon swiss-army-knife for   #
 # xbmc and is licenced under the gpl-licence              #
@@ -9,7 +9,7 @@
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters : none                                       #
 # description :                                           #
-# test if makemkv is using a old licence-key              #
+# test ssh connection                                     #
 ###########################################################
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 cd "$SCRIPTDIR"
@@ -86,90 +86,20 @@ echo ---------------------------------------------------------------------------
 #                                                         #
 ###########################################################
 
-OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
-GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
-OUTPUT="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/bluray-chapter"
-
 ZERO=0
-E_INVALID_LICENCE=2
-E_TOOLNOTF=50
 E_SUID0=254
 E_WRONG_SHELL=255
 
-REQUIRED_TOOLS=`cat << EOF
-tail
-makemkvcon
-EOF`
-
 ###########################################################
 
 
 
+# On startup we do clean the ssh-command directory 
 
+rm $HOME/swiss.army.knife/ssh/* > /dev/null 2>&1
+rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/ssh-test > /dev/null 2>&1
 
-
-
-
-
-###########################################################
-#                                                         #
-# We must be certain that all software is installed       #
-#                                                         #
-###########################################################
-
-for REQUIRED_TOOL in ${REQUIRED_TOOLS}
-do
-   which ${REQUIRED_TOOL} >/dev/null 2>&1
-   if [ $? -eq 1 ]; then
-        echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate."
-        echo "Please install \"${REQUIRED_TOOL}\"."
-        echo ----------------------------------------------------------------------------
-        echo "ERROR! \"${REQUIRED_TOOL}\" is missing. ${0} requires it to operate." > $OUTPUT_ERROR
-        echo "Please install \"${REQUIRED_TOOL}\"." > $OUTPUT_ERROR
-        echo
-        echo ----------------------- script rc=2 -----------------------------
-        echo -----------------------------------------------------------------
-        exit $E_TOOLNOTF
-   fi
-done
-
-###########################################################
-
-
-
-
-
-
-
-
-
-###########################################################
-#                                                         #
-# Check makekmkv licence key over commandline             #
-#                                                         #
-###########################################################
-
-rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv* > /dev/null 2>&1
-
-STATE=$(makemkvcon info | tail -1)
-
-INVALID=$(echo $STATE | grep -c "^This application")
-
-if [ $INVALID == "1" ] ; then
-   echo
-   echo makemkvcon is using a expired licence-key
-   echo 1 > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.invalid
-   echo
-   echo ----------------------- script rc=2 -----------------------------
-   echo -----------------------------------------------------------------
-   exit $E_INVALID_LICENCE
-fi
-
-if [ $INVALID == "0" ] ; then
-   echo
-   echo makemkvcon is using a valid licence-key
-   echo 1 > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/makemkv.valid
-fi
+echo 1 > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/ssh-test
 
 echo
 echo ----------------------- script rc=0 -----------------------------
