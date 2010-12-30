@@ -130,7 +130,7 @@ done
 
 apt-get remove --purge  mencoder
 apt-get remove --purge  netcat original-awk dvdauthor mkisofs gddrescue
-apt-get remove --purge  dvd+rw-tools lsdvd 
+apt-get remove --purge  dvd+rw-tools lsdvd dvdbackup
 apt-get remove --purge  submux-dvd subtitleripper transcode mjpegtools libdvdcss2 openssh-server openssh-client
 apt-get remove --purge  liba52-0.7.4 libfaac0 libmp3lame0 libmp4v2-0 libogg0 libsamplerate0 libx264-85 libxvidcore4
 apt-get remove --purge  libbz2-1.0 libgcc1 libstdc++6 zlib1g

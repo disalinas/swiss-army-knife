@@ -187,7 +187,17 @@ def OSConfiguration(index):
 
     # On startup we need to check that all data-containers are writeable
 
-    __data_container__.append(config[3])
+    # Index 0 : dvd-iso container 
+    # Index 1 : dvd-h264 container 
+    # Index 2 : bluray-mkv container 
+    # Index 3 : dvd-vobcopy container
+    # Index 4 : network container  
+    # Index 5 : transcode-dvd container 
+    # Index 6 : ssh-log directory
+    # Index 7 : iphone-dvd container 
+    # Index 8 : psp-dvd container 
+
+    __data_container__.append(config[3])  
     __data_container__.append(config[4])
     __data_container__.append(config[5])
     __data_container__.append(config[21])
@@ -246,8 +256,6 @@ def OSConfiguration(index):
     else:
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EJECT > /dev/null 2>&1"
         status = os.system("%s" % (command))
-
-
 
     # All the options that can be enabled or disabled over settings or during the execution of setup.sh 
     # are reported back to the shell-scripts.
