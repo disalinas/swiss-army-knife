@@ -13,9 +13,9 @@
 #           - transcode dvd to multiple formats         #
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
-# VERSION : 0.6.16                                      #
-# DATE    : 12-24-10                                    #
-# STATE   : Beta 2                                      #
+# VERSION : 0.6.18                                      #
+# DATE    : 01-02-11                                    #
+# STATE   : Beta 3                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -38,9 +38,9 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "12-24-2010"
-__version__ 		= "0.6.16"
-__code_name__           = "24-Season-5"
+__date__ 		= "01-02-2011"
+__version__ 		= "0.6.18"
+__code_name__           = "Kingdom of Heaven"
 __XBMC_Revision__ 	= "35648"
 __index_config__        = 65
 __credits__             = "a bunch of gpl-devs"
@@ -290,9 +290,11 @@ def GUISelectDir():
 # Returns   : none                                      #
 #########################################################
 def GUIlog(msg):
+     
+    if (__verbose__ == "true"):     
+       xbmc.output("[%s]: [GUIlog] %s\n" % ("swiss-army-knife",str(msg)))
 
-    xbmc.output("[%s]: [GUIlog] %s\n" % ("swiss-army-knife",str(msg))) 
-    return (0)
+    return
 
 #########################################################
 
@@ -332,7 +334,7 @@ def GUIProgressbar(InfoText):
                   # Job is finished ...
                 
                   if (OSDetectLastStage() == True):
-                      if (__verbose__):
+                      if (__verbose__ == "true"):
                           GUIlog('active job finished')
                       dp.close() 
                       exit = False
@@ -701,10 +703,14 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                                  # We have a video-track 
 
                                  append_pars.append(" " + str(track) + " ") 
+                                  
+                                 if (__verbose__ == "true"):    
+                                    GUIlog("Ready to start dvd4.sh")
 
-                                 GUIlog("Ready to start dvd4.sh")
                                  audio1 = OSDVDAudioTrack(track)
-                                 GUIlog("dvd4.sh executed")
+
+                                 if (__verbose__ == "true"):    
+                                    GUIlog("dvd4.sh executed")
 
                                  if (audio1[0] != 'none'):
                                      aselect1 = GUISelectList(__language__(33226),audio1)
@@ -776,7 +782,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      for item in range(0,attach_index):
                           execlist.append(append_pars[item]) 
                      
-                     if (__verbose__):   
+                     if (__verbose__ == "true"):   
                         for item in execlist:
                             GUIlog('dvd-parmater corrections :' + str(item))                                      
 
@@ -903,7 +909,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      for item in range(0,attach_index):
                           execlist.append(append_pars[item]) 
                      
-                     if (__verbose__):   
+                     if (__verbose__ == "true"):   
                         for item in execlist:
                             GUIlog('dvd-parmater corrections :' + str(item))                                      
 
@@ -1030,7 +1036,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                      for item in range(0,attach_index):
                           execlist.append(append_pars[item]) 
                      
-                     if (__verbose__):   
+                     if (__verbose__ == "true"):   
                         for item in execlist:
                             GUIlog('dvd-parmater corrections :' + str(item))                                      
 
@@ -1294,7 +1300,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                      for item in range(0,attach_index):
                           execlist.append(append_pars[item]) 
                      
-                     if (__verbose__):   
+                     if (__verbose__ == "true"):   
                         for item in execlist:
                             GUIlog('dvd-parmater corrections :' + str(item))                                      
 
@@ -1577,7 +1583,9 @@ class GUIMain01Class(xbmcgui.Window):
         
           global __jobs__
  
-          # Get current JobsState to act inside the addon ....
+          ############################################## 
+          # Get current jobstate for addon             # 
+          ##############################################
 
           job_state = OSGetJobState()
           if (job_state == 1):
@@ -1632,7 +1640,6 @@ class GUIMain01Class(xbmcgui.Window):
                      ############################################## 
                      # Convert Bluray                             # 
                      ##############################################
-
 
                      if (__verbose__ == "true"):      
                         GUIlog('menu bluray-transcode activated')
@@ -1750,12 +1757,12 @@ class GUIMain01Class(xbmcgui.Window):
                          if (kb.isConfirmed()):
                              password = kb.getText()
                              if (password == __pw__ ):
-                                 if (__verbose__):
+                                 if (__verbose__ == "true"):
                                      GUIlog('menu expert-mode starting -> password correct')
                                  ExpertWindow = GUIExpertWinClass()
                                  del ExpertWindow
                              else: 
-                                 if (__verbose__):
+                                 if (__verbose__ == "true"):
                                      GUIlog('menu expert-mode disabled -> password not correct')
                                  GUIInfo(2,__language__(33213))    
                      else:
@@ -1815,6 +1822,7 @@ class GUIWorkerThread(threading.Thread):
             global __jobs__ 
             global __exitFlag__
 
+
             exit = True
 
             ############################################## 
@@ -1830,49 +1838,43 @@ class GUIWorkerThread(threading.Thread):
  
                    if (__exitFlag__ == True): 
                        exit = False
-                   else:
-                       if ( __ProgressView__ == False) and (__exitFlag__ == True):
-                           if (__jobs__ == True):
+                                    
+                   if (__jobs__ == True):
 
-                              # We do check that the main-process is running .... 
+                       mainprocess = OSCheckMainProcess()
+                       progress = OSGetProgressVal() 
+                       modula = progress % 5                 
 
-                              mainprocess = OSCheckMainProcess()
-                              progress = OSGetProgressVal() 
+                       # Process is dead ... may a copy-protection of the inserted dvd ? 
 
-                              if (mainprocess == 1 ) and (progress <= 97):
- 
-                                 #  removal = OSRemoveLock()
-                                 #  state = OSKillProc()
-                                 # __jobs__ = False 
+                       if (mainprocess == 1 ):
+                          if (progress <= 97):  
+                             removal = OSRemoveLock()
+                             state = OSKillProc()
+                             __jobs__ = False 
+                             if (__notifications__ == "true"):
+                                GUINotification(__language__(33243))
 
-                                 if (__notifications__ == "true"):
-                                    GUINotification(__language__(33243))
+                       # Process is running like expected ...
 
-                              if (mainprocess == 0):    
-
-                                 # MainProcess is running   
-                                 # Get % from the process 
-
-                                 if (progress == 100):
-                                     if (OSDetectLastStage() == True):
-                                        __jobs__ == False
-          
-                                        # We are done -> Show Message 
- 
-                                        if (__notifications__ == "true"):
-                                           GUINotification(__language__(33238))
-                                 else:
-                                      if (__notifications__ == "true"):
-                                         modula = progress % 5
-                                         if (modula == 0): 
-                                             GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
-
+                       if (mainprocess == 0):
+                          if (__notifications__ == "true"):
+                             if (modula == 0): 
+                                GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
+   
+                          if (progress == 100):
+                             if (OSDetectLastStage() == True):
+                                __jobs__ == False
+                                if (__notifications__ == "true"):
+                                   GUINotification(__language__(33238))
+                     
 
             ############################################## 
             # Exit this worker-thread                    # 
             ##############################################
-
-            thread.exit()          
+ 
+            thread.exit() 
+        
                      
 #########################################################
 
@@ -1900,9 +1902,7 @@ if __name__ == '__main__':
       GUIlog ("Release Addon : [" + __version__ + "]")
       GUIlog ("Addon url     : [" + __url__ + "]")
       GUIlog ("Author Addon  : [" + __author__  + "]")
-      
-   GUIlog ("addon-starting")
-  
+        
    reference =  __language__(34000)    
    __linebreak__ = reference.find("Line-2")
 
@@ -2149,8 +2149,8 @@ if __name__ == '__main__':
       # Start a worker-thread for operations       # 
       ##############################################
 
-      # thread2 = GUIWorkerThread()
-      # thread2.start()
+      thread2 = GUIWorkerThread()
+      thread2.start()
 
       ############################################## 
       # Create main-menu for addon                 # 
@@ -2173,12 +2173,12 @@ if __name__ == '__main__':
       # Wait until worker-thread is stopped        # 
       ##############################################
 
-      # while thread2.isAlive():
-      #       time.sleep(1)  
-      #       if (__verbose__ == "true"):    
-      #          GUIlog ("waiting for termination of thread2")
-      #          if (__verbose__ == "true"):          
-      # GUIlog ("thread2 has been terminated and was detected to be running inside main-loop")
+      while thread2.isAlive():
+            time.sleep(1)  
+            if (__verbose__ == "true"):    
+               GUIlog ("waiting for termination of thread2")
+      if (__verbose__ == "true"):   
+         GUIlog ("thread2 has been terminated and was detected to be running inside main-loop")
 
       time.sleep(1)   
       if ( __jobs__ == True):
@@ -2191,14 +2191,12 @@ if __name__ == '__main__':
              time.sleep(1)  
    else:  
        xbmc.executebuiltin("Dialog.Close(busydialog)") 
-       GUIlog ("This addon do not start until all errors on startup are resolved. read manual") 
-
+       GUIlog ("This addon do not start until all errors on startup are resolved.Please read the manual") 
 
    ############################################## 
    # Exit the addon                             # 
    ##############################################
      
-   GUIlog ("addon-terminate")
    sys.modules.clear()
 
        

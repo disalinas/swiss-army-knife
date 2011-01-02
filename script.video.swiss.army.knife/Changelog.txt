@@ -255,6 +255,16 @@ Fixes:
   dialog was not killed.
 
 
+----------------------------------------------------------------------------------------------------
+Date : 01.02.2011 | Release : 0.6.18    | Author  : H.Weber
+----------------------------------------------------------------------------------------------------
+
+Changes:
+
+- After a few changes I decided to rename this release as 0.6.16 Beta 3
+- Create svn branch 0.6.18
+- Setup-file for 0.6.18
+
 
 
 
