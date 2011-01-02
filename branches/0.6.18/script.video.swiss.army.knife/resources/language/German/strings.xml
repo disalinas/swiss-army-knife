@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+        <!--              -->
+        <!-- General Main -->
+        <!--              -->  
+        
+        <string id="32000">Swiss-Army-Knife Addon</string>
+        <string id="32001">http://code.google.com/p/swiss-army-knife</string>
+
+        <!--          --> 
+        <!-- Settings -->
+        <!--          --> 
+
+        <string id="32050">Skript Geräte</string> 
+        <string id="32051">Standard DVD-device</string>
+        <string id="32052">Standard Bluray-device</string>   
+        <string id="32053">Benötigte Verzeichnisse</string> 
+        <string id="32054">Standard  ISO-Verzeichniss</string> 
+        <string id="32055">Standard  DVD-Transcode-h264 Verzeichniss</string> 
+        <string id="32056">Standard  Bluray MKV-Verzeichniss</string>
+        <string id="32057">Verschiedene Einstellungen</string> 
+        <string id="32058">Standard ssh-Kommando</string> 
+        <string id="32059">Standard 1. Audio Sprache (DVD)</string> 
+        <string id="32060">Standard 2. Audio Sprache (DVD)</string> 
+        <string id="32061">Standard Transcoding (DVD)</string> 
+        <string id="32062">Erlaube Bluray-Funktionen</string>
+        <string id="32063">Erlaube Netzwerk-Funktionen</string>
+        <string id="32064">Erlaube Transcode & Brenner Funktionen</string>
+        <string id="32065">Passwort Schutz für den Experten-Modus</string>
+        <string id="32066">Passwort</string>
+        <string id="32067">Standard Grösse Single-Layer DVD</string>  
+        <string id="32068">Standard netcat start-port (6 TCP ports)</string>
+        <string id="32069">Erweitertertes Loggen</string>
+        <string id="32070">Standard Untertitel (DVD)</string> 
+        <string id="32071">Erlaube Benutzer Shell-Skripte</string>  
+        <string id="32072">Standard vobcopy Verzeichniss</string> 
+        <string id="32073">Standard Master Netzwerk Verzeichniss</string>  
+        <string id="32074">Standard Timeout 1: Status-Datei</string>
+        <string id="32075">Standard Timeout 2: Kapitel-DVD</string> 
+        <string id="32076">Standard Timeout 3: Kapitel-Bluray</string>
+        <string id="32077">Standard Brenn bzw. Transcode Verzeichniss</string>  
+        <string id="32078">Standard Iphone-Transcode Verzeichniss</string>  
+        <string id="32079">Standard PSP-Transcode Verzeichniss</string>
+        <string id="32080">Lösche Dateien bei Fehler</string>
+        <string id="32081">Medium auswerfen sofern Job erfolgreich war</string>         
+        <string id="32082">ISO-Datei benutzen anstelle eines Device</string>
+        <string id="32083">Immer Standard-Verzeichnisse zum speichern benutzen</string>
+        <string id="32084">Keine Transkodierung von geschützten DVD'S aus dem Hauptmenü</string> 
+        <string id="32085">Keine Prüfung makemkv Lizenz</string> 
+        <string id="32086">Erlaube Kurzmeldungen</string>         
+        
+        
+        <!--              --> 
+        <!-- Window-Names -->
+        <!--              --> 
+
+        <string id="32090">Hauptmenü Schweizer-Armee-Messer</string> 
+        <string id="32091">Fenter Aufträge</string> 
+        <string id="32092">Hauptmenü Experten-Modus</string>   
+        <string id="32093">Hauptmenü Netzwerk</string>
+        <string id="32094">Hauptmenü Benutzer-Funktionen</string>
+        <string id="32095">Hauptmenü Transcode & Brennen</string>                
+       
+
+        <!--           -->
+        <!-- Main-Menu -->
+        <!--           --> 
+                
+        <string id="32100">Transcode BluRay zu MKV</string>
+        <string id="32101">Transcode DVD</string>     
+        <string id="32102">Experten-Modus</string>
+        <string id="32103">Aktive Aufträge</string>
+        <string id="32104">Verlassen</string>
+
+
+        <!--               --> 
+        <!-- Advanced-Menu -->
+        <!--               -->
+
+        <string id="32120">Transcode BluRay zu MKV (bestätigt)</string>
+        <string id="32121">Transcode DVD high-profile (bestätigt)</string>
+        <string id="32122">Rippe DVD zu ISO (bestätigt)</string>
+        <string id="32123">Rescue-Copy DVD zu ISO (bestätigt)</string>
+        <string id="32124">Kopiere Vob-Dateien von der DVD (bestätigt)</string>
+        <string id="32125">Transcode & Brennen</string>      
+        <string id="32126">Netzwerk-Funktionen</string>
+        <string id="32127">Benutzer-Funktionen</string>
+        <string id="32128">Teste SSH Verbindung</string>
+        <string id="32129">Info</string>
+        <string id="32130">Verlassen</string>
+
+
+        <!--               --> 
+        <!-- Network       -->
+        <!--               -->        
+
+        <string id="32140">Starte Master</string>
+        <string id="32141">Starte Slave [DVD zum Master]</string>
+        <string id="32142">Starte Slave [Bluray zum Master]</string>
+        <string id="32143">Res.</string>
+        <string id="32144">Verlassen</string>
+        <string id="32145">IP-Adresse des Masters</string>
+
+        <!--                    --> 
+        <!-- Progress-bar text  -->
+        <!--                    -->
+        <!-- They are only used --> 
+        <!-- inside the scripts --> 
+        
+        <string id="32150">Transcode Bluray zu MKV</string>
+        <string id="32151">Kopiere Untertitel</string>
+        <string id="32152">Transcode Durchgang 1</string>
+        <string id="32153">Transcode Druchgang 2</string>
+        <string id="32154">Kopiere DVD als ISO-Datei</string>
+        <string id="32155">Resque-copy DVD als ISO-Datei</string>
+        <string id="32156">Kopiere alle vobs zur HD</string>
+        <string id="32157">Kopiere vom Slave</string>
+        <string id="32158">Kopiere zum Master</string>
+        <string id="32159">Transcode DVD zu MKV</string>
+        <string id="32160">Transcode Durchgang 1/1 für mp4</string>
+
+        <!--                --> 
+        <!-- Joblist Window -->
+        <!--                -->
+        
+        <string id="32170">Fortschritts-Balken</string>
+        <string id="32171">Kille aktiven Auftrag</string>
+        <string id="32172">Lock-Datei löschen</string>     
+        <string id="32173">Verlassen</string>
+        <string id="32174">Durchgang : </string>
+        <string id="32175"> </string>
+        <string id="32176"> </string>
+        <string id="32177">Keine aktiven Aufträge gefunden</string>
+
+
+        <!--                  --> 
+        <!-- Transcode Window -->
+        <!--                  -->
+         
+        <string id="32180">DVD -> ISO zum Brennen</string>
+        <string id="32181">DVD -> MKV</string>
+        <string id="32182">DVD -> h264 low-profile</string>
+        <string id="32183">DVD -> Iphone</string>
+        <string id="32184">DVD -> PSP</string>
+        <string id="32185">Verlassen</string>
+ 
+        <!--                  --> 
+        <!-- User-Scripts     -->
+        <!--                  -->
+
+        <string id="32190"> </string>
+        <string id="32191"> </string>
+        <string id="32192"> </string>
+        <string id="32193"> </string>
+        <string id="32194"> </string>
+        <string id="32195"> </string>
+        <string id="32196"> </string>
+        <string id="32197"> </string>
+        <string id="32198"> </string>
+        <string id="32199">Verlassen</string>
+
+        <!--               --> 
+        <!-- Info          -->
+        <!--               -->
+
+        <string id="33201">Info-Fenster</string>
+        <string id="33202">Bitte den Bluray-Track zum exportieren auswählen</string>
+        <string id="33203">Bluray Transcoding erfolgreich gestartet</string>
+        <string id="33204">Bluray transcoding konnte nicht gestarted werden</string> 
+        <string id="33205">Kommt in einem späteren Release</string>
+        <string id="33206">Auftrag gelöscht durch den Benutzer</string>
+        <string id="33207">Bitte DVD-Track zum exportieren auswählen</string> 
+        <string id="33208">DVD transcoding efolgreich gestartet</string>
+        <string id="33209">DVD transcoding konnte nicht gestartet werden</string> 
+        <string id="33210">DVD ISO Kopie erfogreich gestartet</string>
+        <string id="33211">DVD iso Kopier konnte nicht gestartet werden</string> 
+        <string id="33212">Bitte Passwort für den Experten-Modus eingeben</string> 
+        <string id="33213">Das eingegebene Passwort war falsch</string>  
+        <string id="33214">INFO:</string>  
+        <string id="33215">WARNUNG:</string>
+        <string id="33216">FEHLER:</string>
+        <string id="33217"> </string>
+        <string id="33218">SSH-Test war erfolgreich</string>
+        <string id="33219">SSH-Test war nicht erolgreich</string>
+        <string id="33220">Bitte Verzeichniss zum speichern auswählen</string>
+        <string id="33221">Verzecihniss-Name enthält Leerschläge</string>
+        <string id="33222">Ausgewähltes Verzeichniss ist nicht beschreibbar</string>
+        <string id="33223">Export-Name ohne eine Dateierweiterung</string>
+        <string id="33224">Export-Name enthält unzulässige Charakter</string> 
+        <string id="33225">Sie müssen einen Namen auswählen</string> 
+        <string id="33226">Bitte die erste Standard Audio-Sprache angeben</string>
+        <string id="33227">Möchten Sie eine zweite Audio-Sprache verwenden ?</string> 
+        <string id="33228">Möchten Sie Untertitel verwenden ?</string>  
+        <string id="33229">Bitte die zweite Audio-Sprache angeben</string> 
+        <string id="33230">Bitten wählen Sie den Untertitel zur Benutzung</string> 
+        <string id="33231">DVD vobcopy erfolgreich  gestartet</string>
+        <string id="33232">DVD vobcopy konnte nicht gestartet werden</string> 
+        <string id="33233">Aktiver Auftrag erfolgreich gelöscht</string> 
+        <string id="33234">Bitte leere Single-Layer-DVD einlegen</string> 
+        <string id="33235">Bitte leere Dual-Layer DVD einlegen</string>
+        <string id="33236">Dieses Menü ist nur sichtbar bei vorhandenen User-Funktionen</string>
+        <string id="33237">Transcodierung von Kopiergeschützten DVD'S im Hauptmenü ist deaktiviert</string>
+        <string id="33238">Job erfolgreich beendet</string> 
+        <string id="33239">Kein aktiver Job gefunden</string>  
+        <string id="33240">Aktiver Job gefunden</string>  
+        <string id="33241">Aktiver Job beim beenden</string> 
+        <string id="33242">Beenden</string>   
+        <string id="33243">Job wurde unerwartet terminiert</string> 
+        <string id="33244">Aufräumen</string>        
+       
+
+        
+        <!--               -->
+        <!-- Error         -->
+        <!--               -->
+        
+        <string id="33300">Vor dem ausführen des Addons muss setup.sh ausgeführt</string> 
+        <string id="33301">Eingelegte Disk ist keine Bluray</string>
+        <string id="33302">Timeout t1 :  media/state konnte nicht geöffnet werden</string>
+        <string id="33303">Bluray-Funktionen sind deaktiviert.</string>
+        <string id="33304">Timeout t3 : Blueray-Kapitel</string>
+        <string id="33305">ISO-Verzeichniss nicht gefunden oder beschreibbar !</string>
+        <string id="33306">DVD-Verzeichniss nicht gefunden oder beschreibbar !</string> 
+        <string id="33307">Bluray-Verzeichniss gefunden oder beschreibbar !</string>
+        <string id="33308">Gerät ist blockiert durch einen aktiven Auftrag !</string>
+        <string id="33309">Gerät ist nicht bereit !</string>
+        <string id="33310">Auftrag konnte nicht gelöscht werden</string>  
+        <string id="33311">Eingelegte Disk ist keine DVD</string>    
+        <string id="33312">Timeout t2 : Kaptitel DVD</string>  
+        <string id="33313">Problem mit generierter Audio-Trackliste</string> 
+        <string id="33314">Problem mit generierter Untertitel-Trackliste</string>    
+        <string id="33315">Lizenz-Schlüssen für makemkv abgelaufen</string>  
+        <string id="33316">Konfigurierter SSH-Benutzer ist nicht aktueller Benutzer</string>  
+        <string id="33317">Die eingelegte DVD ist nicht gemounted</string> 
+        <string id="33318">Vobcopy-Verzeichniss nicht gefunden oder beschreibbar !</string>
+        <string id="33319">Netzwerk Master Verzeichnis nicht gefunden oder beschreibbar !</string>
+        <string id="33320">Network-Funktions sind deaktiviert.</string>
+        <string id="33321">Lokaler SSH-Server ist falsch konfiguriert</string>
+        <string id="33322">Benutzer-Funktionen sind deaktiviert</string>
+        <string id="33323">Fehler innerhalb des aktiven Aufrags</string>
+        <string id="33324">--</string>
+        <string id="33325">Brenn und Transcode Funktionen sind deaktiviert</string> 
+        <string id="33326">Brenn und Transcode Verzeichniss nicht gefunden oder beschreibbar !</string> 
+        <string id="33327">Ausführen von setup.sh um SSH-Verzeichniss zu erzeugen !</string>  
+        <string id="33328">Diese Trancode-Funktion benötigt makemkv !</string>
+        <string id="33329">Keine Verbindung zum Netzwerk Master möglich !</string>
+        <string id="33330">Keine Verbindung durch eine Client erstellt !</string> 
+        <string id="33331">IPHONE-Verzeichniss nicht gefunden oder beschreibbar !</string> 
+        <string id="33332">PSP-Verzeichniss nicht gefunden oder beschreibbar !</string> 
+        <string id="33333">Standard mkv benötigt Bluray-Funktionen</string> 
+        <string id="33334">Kopierschutz entdeckt. Trotzdem fortfahren ?</string>     
+ 
+         # Warning : do not modify this id !!!! 
+
+        <string id="34000">Line-1 1234567891123456789212345678931234567 Line-2 1234567891123456789212345678931234567</string>        
+ </strings>

@@ -1,0 +1,271 @@
+---------------------------------------------------------------------------------------------------
+Date : 07.24.2010 | Release : 0.6.11    | Author  : H.Weber | CVS:154-213 
+---------------------------------------------------------------------------------------------------
+
+Changes:
+
+- change script-id.
+- change script-name.
+- change revision-nummer to 0.6.11. 
+- remvoe any old path from code and scripts.
+- removed source-code from addon.
+- removed the debian-files for 32 and 64 Sytems.
+- setup.sh now do install handbrake or makemkv on request.
+- setup.sh do detect if the software should be install for 32 or 64
+- Detect old licence-key for makemkv and show a message inside addon.
+- Testing bluray-part after all changes. 
+- Added Resque-copy mode
+- Created svn branch 0.6.11 
+
+
+----------------------------------------------------------------------------------------------------
+Date : 08.15.2010 | Release : 0.6.12    | Author  : H.Weber | CVS:217-242
+----------------------------------------------------------------------------------------------------
+
+Changes:
+
+- created folder shell-linux/master and shell-linux/slave
+- shell-script master-save.sh added 
+- shell-script slave-dvdiso.sh added  
+- Added error-messages "current user is not configured ssh-user"
+- Added shell-script "dvd-vcopy.sh" to mirror all vob's from
+  a dvd.
+- Added vopcopy and master directory to settings
+- Check vobcopy and network directory for read / write access
+- Include vobcopy option inside expert-mode
+- Include EULA to be shown during execution of setup.sh 
+- Added messages for vobcopy process
+- Create svn branch 0.6.12
+
+Fixes:
+
+- setup.sh did not create directory /dvdrip/dvd (fixed 217)
+- Test if the ssh-user inside the settings is correct.
+  If the addon is started with a user that is not inside the settings
+  xbmc get a little hickup and crash .... (fixed 230)
+- Text-ID 33301 was definied twice (fixed 239)
+- directory .xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
+  was not created during setup (fixed 240)
+- wrong permissions for setup.done inside setup.sh (fixed 241)
+- PID-value from dvd-vcopy shell script was not correct
+
+
+----------------------------------------------------------------------------------------------------
+Date : 08.23.2010 | Release : 0.6.13    | Author  : H.Weber | CVS:244-252
+----------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Update makemkv to version 1.5.8 (32 and 64 bit)
+- break handbrak and makemkv installation into seperate sections  
+- Do check during setup if handbrake or makemkv is allready installed
+- Increased a few time-out values 
+- create svn branch 0.6.13
+
+Fixes:
+- rename setup.done to 0.X.Y-setup.done that allways after a upgrade
+  the setup file with all directorys and installations is passed.
+
+
+----------------------------------------------------------------------------------------------------
+Date : 09.05.2010 | Release : 0.6.14    | Author  : H.Weber | CVS:253-278
+----------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Added settings for multiple timeout values that are used inside python.
+  Timeout t1 : state-file default value 5 secounds 
+  Timeout t2 : dvd-chapter file value 10 secounds
+  Timeout t3 : bluray-chapter file value 100 secounds
+- add master.sh to svn 
+- add slave-dvdiso.sh to svn
+- Added network menu 
+- Check network container on startup if function is enabled
+- On startup do check ssh and if successfull never again.
+- Added ssh-server message hickup ,-) 
+- Disable network functions if container is not writeable.
+- Check Errorlevel after installation of software with dpkg.
+- Create branch 0.6.14
+
+Fixes:
+
+- The bluray.progress file was not added to the filelist to kill a job
+- setup.sh had a wrong entry for EULA-file 
+- directory master and slave removed
+- Fixed a BIG Bug.We should not check for software that is part of the bluray 
+  functions if the user do not install the bluray option during the execution of 
+  setup.sh
+- we should allwayas send data with tcp instead of udp. 
+
+
+----------------------------------------------------------------------------------------------------
+Date : 09.06.2010 | Release : 0.6.15    | Author  : H.Weber | CVS:279-365
+----------------------------------------------------------------------------------------------------
+
+
+Changes:
+
+- test $SHELL inside setup.sh prior to execute anything.
+- Print path if some or all paths do not exist inside the 
+  logs including not writeable.
+- All shell-shell scripts do check if shell is /bin/bash. 
+- Create Folder for user-shell scripts during the execution
+  of setup.sh 
+- added transcode folder for transcoding jobs into setup.sh
+- Added more strings including future messages. 
+  (In this case the addon can allready be translated to other languages)
+- Added Transcode & Burning menu to Expert-Mode
+- Added dvd-mpeg2.sh to svn. 
+- Added User-Shell Functions menu to Expert-Mode.
+- Print release version inside the log.
+- Print mutch more logs if verbose mode is active.
+- Prevent that user-uid 0 (root) can execute the shell-scripts.
+- Create ssh-folder with setup.sh
+- All commands that are executed over ssh are storend inside $HOME/swiss.army.knife/ssh/output
+- Added dvd-mkv.sh to svn 
+- Integrate dvd-mkv.sh into addon
+- Added dvd-low.sh to svn
+- First translation folder added German
+- Translated germans strings.xml and descriptions for addon.xml
+- Added French to addon (thanks to dekani from xbmc.org forum)
+- Replace makemkv 1.5.8 with version 1.6.0 (32 and 64 bits)
+- Change setup.sh for makemkv 1.6.0
+- Added directorys /dvdrip/portable/ip and /dvdrip/portable/psp
+  into settings and strings.xml
+- Added dvd-iphone.sh to svn
+- Addes dvd-psp.sh to svn 
+- Integrate dvd-iphone.sh and dvd-psp.sh into addon
+- Code cleaning 
+- Added deinstall.sh to svn
+- Added first steps in README.Linux 
+- Folder tools added to svn
+- Check that bluray-functions are set in the case a usr
+  wish to transcode all dvd's to mkv.
+- Integrate makemkv 1.6.1 for 32 bit into setup.sh 
+- Checked 1.6.1 for 64 bit 
+- Allow execution of user definded functions 1-9 over addon
+
+  example : - start a vpn connection 
+            and many more  
+
+- Add progress.sh to svn 
+- Add svn-checkout.sh to svn 
+- Remove iso function from main-menu
+- Remove mpeg2 function from transcoding-menu
+- Integrate makemkv 1.6.1 for 32 bit into setup.sh 
+- Checked 1.6.1 for 64 bit 
+- Test integrated tests to detect dvd's with crc-error copy protection 
+- integrate copy-protection inside dvd-transcode on main-menu.
+
+
+Fixes:
+
+- Until we have a Release Candidate the verbose flag will be set default to on.
+- Language-ID for network windows were wrong (fixed).
+- Range for Network messages moved.
+- same error-level for all shell-scripts "tool not found"
+- Typo inside shell-scripts.
+- Test if we use makemkvcon inside a script that the command is running.
+- Typo inside dvd-handbrake.sh / text about passes fixed.
+- In the case the +x attribut for the shell-scripts is not set, we set them for 
+  all shell-scripts.
+- Linebreaks for longer text inside dialog.ok function is needed.
+- it seems that makemkv 1.6.0 had a few problems .... I do test version 1.6.1 now
+- We should only have 1 bluray option file (thanks to dekani from xbmc.org forum)
+- removed mpeg2 transcoding from svn ... (comes in later release) this has not a 
+  important priority
+- I have a brand-new dvd "Illuminati" that seems to be very good protected.
+  A investigate more tests on this ....
+
+  - dd copy .... error after 7 %
+  - vobcopy error after 99 % 
+  - Transcoding with handbrake  .... exception ....
+
+  - rescue-copy do work but is very slow in execution.
+
+
+----------------------------------------------------------------------------------------------------
+Date : 12.24.2010 | Release : 0.6.16    | Author  : H.Weber | CVS:366-450
+----------------------------------------------------------------------------------------------------
+
+Changes:
+
+- Implement a working-thread
+- During a active job the main-process (dd/handbrake/makemkv( will be checked over 
+  the worker-thread.
+- After a successfull operation the dvd-drive will be opened
+- Integrate worker-thread into dvd-iso.sh (testet successfully)
+- Intergate worker-thread into dvd-resque.sh (testet successfully)
+- Integrate worker-thread into dvd-vcopy.sh (testet successfully) 
+- Integrate worker-thread into dvd-mkv.sh  (testet successfully)
+- Integrate worker-thread into bluray-transcode.sh (testet successfully)
+- Integrate worker-thread inti dvd-handbrake.sh testet successfully)
+  including a few little optimisations an cosmetics 
+- New commiter to the project <kaveh.ahmadian@gmail.com> 
+- New commiter to the project <dekani@gmail.com>
+- Added eject parameter to settings
+- Non puplic test of makemkv binarys release 1.6.2
+- build debian packages for 32 / 64 of makemkv 1.6.2
+- New parameter to use a file as a source
+- psp and iphone transcoding do not longer ask for a directory to store.
+- mkv and h264-low transcoding do not longer ask for a directory to store.
+- remaing processes do not longer ask for directory to store.
+- dvd-psp.sh changes to the code / cancel detection 
+- dvd-iphone.sh changes to the code / cancel detection 
+- dvd-low.sh changes to the code / cancel detection
+- dvd-mkv.sh changes to the code / cancel detection
+- All shell-scripts from Transcoding Window portet 
+- dvd-resque.sh changes to the code / cancel detection
+- Uploaded Licence-File 0.6.16 
+- dvd-iso-sh changes to the code / cancel detection 
+- Add parameter <string id="32083"> to the settings
+- All shell-scripts are now integrated into the working-thread
+- Add parameter <string id="32084"> to the settings
+- Disable automatic transcode of dvd's inside main-menu
+- Add parameter <string id="32085"> to the settings
+- Disable check for expired makemkv licence 
+  (This should only be set for users that have a regular licence and do not 
+   use the beta key !!!!!)
+- Added parameter for notifications progress
+- XBMC 10.0 Dharma was today published.The current release will be tested extremly 
+  on this release. All future releases of this addon need a least XBMC 10.0 Dharma.
+- Added ourc-code of makemkv 1.6.3 on the project-download url. 
+- Added makemkv-swiss-army-knife-32-12-19-2010.tar.gz (Debian 32 bit makemkv 1.6.3)
+  on the project-download url. 	
+- Integrate makemkv 1.6.3 32 bit into setup.sh 
+- Integrate makemkv 1.6.3 64 bit into setup.sh
+- Replace vobcopy with dvdbackup inside setup.sh
+- Tested dvd-vcopy.sh successfully 
+- Integrate test into shell-scripts that no other script is running.
+
+Fixes: 
+
+- Typo inside german description addon.xml
+- Fixed ugly bug with dvd-vcopy.sh and dvd volume-names 
+  that have spaces inside the name (fixed and tested)
+- Typo inside setup.sh fixed for 32 makemkv (thanks to Chip2786)
+- Before we exit the script we have to be sure that thread2 is not 
+  longer running.
+- Variable JOBFILE was wrong insid dvd-iso.sh
+- Error inside dvd-vcopy.sh on line 274
+- Addon needs release 35650 of xbmc 
+- Fixed GUINotification inside default.py
+- Dharma is Revision R35648 and not R35650
+- In the case that ssh-server was not configured properly the busy 
+  dialog was not killed.
+
+
+----------------------------------------------------------------------------------------------------
+Date : 01.02.2011 | Release : 0.6.18    | Author  : H.Weber
+----------------------------------------------------------------------------------------------------
+
+Changes:
+
+- After a few changes I decided to rename this release as 0.6.16 Beta 3
+- Create svn branch 0.6.18
+- Setup-file for 0.6.18
+
+
+
+
+

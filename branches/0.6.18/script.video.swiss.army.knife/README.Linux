@@ -1,0 +1,493 @@
+Readme.Linux for xbmc addon swiss-army-knife 0.6.18 (Beta 3) 
+------------------------------------------------------------
+
+1.0 Welcome to my first addon called swiss-army-knife
+-----------------------------------------------------
+
+Please do excuse my poor writen english. My native language 
+is german and I do speak a few others imho very good, but speaking 
+and writing are two completly diffrent things.If you would would like to
+improve the addon with your own language , patches are allways welcome.
+(Especialy to remove this typos from english) 
+
+As you may know until now, we had a few things inside xbmc like
+ 
+* Scripts
+* Programs 
+* Plugins for Video 
+* Plugins for Music
+and many more 
+
+After the release xbmc version 10.0 or higher anything is called a addon.
+I used the switch to to the new addon-system  to make a complete rewrite  of  
+the old code from my previous script called "luemmels-dvd-ripper".
+My old script was running .... but had a few down-sides...
+
+- it was very huge ... and btw my first ever written python script.
+- No support for blurays. 
+- all code for os and gui was in a single file.
+- it was hard to debug ..... and maintain.
+- I had no subversion controll for the script.
+- It was running on windows and linux but it was a pain to maintain both 
+  releases. 
+
+By this new addon I changed a few things.
+
+1.) There are 3 strict seperated parts ( GUI / OS / shell-script)
+2.) The code looks nicer .-)
+3.) The code is easyer to maintain.   
+4.) Subversion is now a important part of my work during the development of this 
+    addon .... (and saved my ass one time ;-))
+5.) For someone who wants to port the addon to windows or mac the work is easyer. 
+    Please feel free to send patches for windows and mac.
+    If you decide to port this addon to windows please be aware that 
+    binarys for 32 and 64 bits have to be build.
+    I do not use xbmc on this operating systems and I have therefore no intention 
+    do portinbg this addon by myself.
+
+
+1.1 What are the functions this addon provides ? 
+------------------------------------------------
+
+* create a exact iso copy of a dvd with dd.
+* try to copy crippled dvd's with ddrescue.
+* convert dvd to a h264 container. 
+* convert bluray to a mkv container.
+* convert dvd to a mkv container.
+* convert dvd to iphone compatible format.
+* convert dvd to psp compatible format. 
+* Execute up to 9 user-defined shell-scripts.
+* In a later release I plan to work  some of this features over the network. 
+
+
+2.0 Requierements for this addon 
+---------------------------------
+
+- a Ubuntu 10.04 LTS system or higher. (Test passed on Ubuntu 10.04 LTS). This System 
+  can be 32 or 64 bit. 
+- a SVN build of XBMC (at least SVN 31953) or higher.
+- a DVD-drive and optional a bluray if you would like to transcode BD-disk
+- a place where you can store ripps. Be prepared that this place must be very 
+  big. 
+
+3.0 What Software will be installed ? 
+-------------------------------------
+
+The list is to long but you can have a look inside the file 
+shell-linux/setup.sh 
+
+
+4.0 Where is the livcd.sh shell-script gone ? 
+---------------------------------------------
+The replacement is called setup.sh and is inside the shell-linux 
+directory.
+
+
+5.0 Upgrade from a previous version 
+-----------------------------------
+
+Please do remove any previous version of the addon including the addon-directory
+inside user-data. As long the addon remains alpha or beta a lot of changes do occur. 
+
+Very-Import as long this Addon is only ALPHA or BETA !!!!!
+
+ALLWAYS RUN THE SETUP PROGRAMM INSIDE THE LINUX-SHELL FOLDER !!!
+ALLWAYS REMOVE THE ADDON-FILES INCLUDING ADDON-DIRECTORY PRIOR 
+TO INSTALL A NEW VERSION OF THIS ADDON.
+
+6.0 Installation 
+----------------
+
+At first you have to extract the addon-zip inside the right place.
+
+~/.xbmc/addons
+
+If you did install this addon over the luxeria-repository then this 
+step was allready made for you.
+
+Change to the shell-linux directory inside tha addon.
+
+cd ~/.xbmc/addons/script.video.swiss.army.knife/shell-linux
+
+Run the following command as user root :
+
+./setup.sh xbmc
+
+If you do not run setup.sh the following messages comes up on
+starting the addon.
+
+"Prior to run this addon setup.sh must be executed" 
+
+Only after the execution of setup.sh this message never comes again.
+Please do read the instructions carefully.
+ 
+As long the eula is not accepted the script do not change any 
+settings of the system.
+
+If you are not using a stable release of this addon you see the 
+following message .....
+
+-----------------------------------------------------------------------
+The EULA-FILE can not be downloaded and therefore you must
+use a svn release of this addon.
+You do this at you own risk .....
+the last stable puplic released version was 0.6.15
+
+press any key to continue or ctrl-c to abort..
+-----------------------------------------------------------------------
+
+If your user name for the linux-system is something other than 
+xbmc, replace xbmc with your own username.(hint -> whoami[enter])
+   
+This shell-scripts do install all software for the addon 
+including  2 debian files.
+
+- It checks that the shell is /bin/bash.
+- It checks that user root is running the script.
+- It creates all directorys for ripping and transcoding 
+- It will prepare the ssh-server and client to login without 
+  any password.
+- Depend on your system handbrake and makemkv are installed
+  (32 or 64 bit).
+- If you plan to transcode dvd to mkv you have to install makemkv.
+- The script do check if handbrake or makemkv are allready installed.
+- The script do check witch versions of the tools makemkv and handbrake 
+  are installed.
+- If a error is detected during the installation of makemkv or handbrake 
+  the script do exit now.
+- Multiple parts of the script do now ask if they should be executed.
+- By this you can later run setup.sh and only execute the needed part 
+  again.
+ 
+After release 0.6.15 a deinstall.sh script is provided to uninstall all 
+software that was installed during the execution of setup.sh 
+This script do not remove any folder from the movie-containers !
+
+This debian-files for download  are only tested on Ubuntu 10.04 LTS.If you don't use 
+a debian based system, or your system is to old, you have to compile 
+this 2 packages for yourself. The full-source of the 2 packages  is provided 
+on the project-page to minimize the download-size.
+
+http://swiss-army-knife.googlecode.com/files/makemkv_1.6.1.src.tar.gz
+http://swiss-army-knife.googlecode.com/files/Handbrake-0.9.4-src.tar.gz
+
+The next step to running this addon is to complete the setup with valid 
+settings over xbmc. Open the xbmc addon-manager and enable the addon, if you 
+did not allready.
+Do change the settings to your needs like ...
+
+* the place where to store your iso copys
+* the directory to store the dvd transcoding files
+* the directory to store the bluray mkv files
+* the directory to store vob's  
+* the directory to store the files over the network
+* the directory to store the psp and iphone transcode files
+* the user for the ssh communication
+* Internal timeout values for the shell-scripts
+* Enable or disable some functions
+
+and many more .....
+
+Have a look to APPENDIX A.) to see all configurations-settings.
+
+6.1 Licence key for makekmv 
+---------------------------
+
+* Get a valid licence key for makemkv 
+ 
+http://www.makemkv.com/forum2/viewtopic.php?f=5&t=1053
+
+* Start makemkv an do the following :
+
+-> Help -> Register -> new code from above link
+
+If the addon finds a retired licence-key the addon bluray-functions
+are completly disabled. You must renew your makemmkv-licence key !!!
+ 
+Do set the computer to a previous date and do set a new key inside the gui :-) 
+or do edit this file over the commandline ....
+
+user@xbmcdev:~$ cd .MakeMKV/
+user@xbmcdev:~/.MakeMKV$ ls -al
+total 16
+drwxr-xr-x  2 root root   26 2010-07-10 18:01 .
+drwxr-xr-x 45 user user 8192 2010-08-23 21:58 ..
+-rw-r--r--  1 root root  187 2010-08-23 20:57 settings.conf
+user@xbmcdev:~/.MakeMKV$ 
+
+On my personal notebook this file looks like here .....
+
+user@xbmcdev:~/.MakeMKV$ cat settings.conf 
+#
+# MakeMKV settings file, written by MakeMKV v1.6.1 linux(x86-release)
+#
+
+app_Key = "T-Sitx5LxEXqP3UVcBBbszE4Aj24b2k1XXGvAWFqXb5P11X42ECO_e2UpLcjS^6EaS@"
+app_UpdateLastCheck = "14882"
+
+user@xbmcdev:~/.MakeMKV$ 
+
+Of course the above key is not a valid for makemkv.
+Pleas do not try to remove the makemkv files and reinstall them.
+If your licence key is expired you see the following message inside the addon
+
+"Licence-key for makemkv expired"
+
+6.2 What should you do if you have found a error ? 
+--------------------------------------------------
+
+- Be sure to read the logs ...
+- This addons write all logs to the xbmc.log inside ~/temp/xbmc.log.
+- All ssh-communication is logged to ~/swiss.army.knife/ssh/output
+- Be sure to have verbose log activated inside the settings.
+- By default this mode is activated.
+- Be sure that the ssh-communication is correct (test ssh-communication) inside 
+  the addon.
+- Check the permissions of the shell-script folder. 
+- Check the permissions of the data-containers. 
+- Have a cool drink ;-)
+- Have a look into the F.A.Q (http://code.google.com/p/swiss-army-knife/wiki/FAQ)
+- I also recommand to test the shell-functions inside a terminal with your current 
+  user.
+  
+  http://code.google.com/p/swiss-army-knife/wiki/LinuxShell
+
+- To collect all logs that are needed I created a little script inside the tool folder.
+
+6.3 Feedback 
+------------
+
+http://code.google.com/p/swiss-army-knife/wiki/Feedback
+
+6.4 Bugtracking 
+---------------
+
+http://code.google.com/p/swiss-army-knife/issues/list
+
+6.5 First steps with the addon 
+------------------------------
+
+If you are starting the addon the first time you see 5 Menu-Entrys.
+
+1. Transcode BluRay to MKV
+2. Transcode DVD
+3. Expert-Mode
+4. Job-Controll
+5. Exit
+
+
+1. Transcode BluRay to MKV
+---------------------------
+
+As the name suggest we transcode a bluray to a mkv-container with this 
+menu-point. All you have to do is to insert a bluray disc into device 
+specified inside the settings and press the button.
+
+All bluray transcoding parameters are not asked because this menu-point assumes 
+the following:
+
+- The longest movie on the bluray-disk will be converted to mkv.
+- All audio languages from the track will be converted 
+- The produced file will be stored by default on the directory /dvdrip/bluray  
+
+If you would to have more controll where to store the file you must use the expert-mode.
+
+
+2. Transcode DVD
+-----------------
+
+As it says it will transcode a dvd.The format under wich the transcoded file will be stored
+is depend from the settting : Default transcoding (dvd) 
+
+We have the following choices:
+
+Format choosen 			Default directory to store the generated file(s)
+
+-> 264-high			/dvdrip/dvd 		
+-> iso				/dvdrip/iso	
+-> h264-low                     /dvdrip/transcode 
+-> mkv                          /dvdrip/transcode 
+-> vobcopy                      /dvdrip/vobcopy  
+-> mpeg2                        /dvdrip/transcode    
+-> iphone                       /dvdrip/portable/ip
+-> psp                          /dvdrip/portable/psp
+
+What format you chose is up to you .....
+
+If you like a 1:1 copy select iso
+If you wish a high quality take h264-high
+If the rip should be very fast take h264-low
+If you like to watch a dvd with huble-teleskop resolution use psp :-) 
+ 
+By default I set the transcode profile to h264-high.
+The longest track will be ripped or transcoded automatic. 
+
+The default languages and subtitles are defined from the addon-settings.
+You can chose up to 2 audio-languages and 1 subtitle.
+
+
+6.6 User-Functions (up to 9 shell-scripts) 
+------------------------------------------
+
+With the release of 0.6.15 a user can integrate up to 9 shell-scripts 
+into the addon.There are a lot of options that can resolved with this user-scripts.
+
+Possible Actions than can be made with this integration.
+
+- Start & Stop a vpn connection
+- Copy files to a nas location 
+- Running modified transcoding-scripts.
+
+All user-scripts called user1.sh to user9.sh must be placed inside 
+
+~/swiss.army.knife 
+
+Every user-script needs a description-file (user1.desc to user9.desc)
+
+user@xbmcdev:~/swiss.army.knife$ cat user1.desc 
+vpn connection on
+user@xbmcdev:~/swiss.army.knife$ 
+
+Both files for every shell-script have to exist or the menu-point 
+will not be activated.
+
+
+7.O Using the addon and have fun 
+--------------------------------
+
+Lucern, Switzerland 
+10.08.2010 
+linuxluemmel.ch@gmail.ch alias Hans Weber 
+
+ 
+
+
+
+APPENDIX A.)
+-------------
+
+
+The following table shows the current configuration settings for the addon 0.6.16
+
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<setting id="info" type="text" label="32000" default="http://code.google.com/p/swiss-army-knife/" enable="false"/>
+	<setting id="first_time_use" type="bool" default="true" visible="false"/>
+
+	<!-- Device Settings -->
+
+	<setting id="separator" type="lsep" label="32050"/>
+        <setting id="id-device-dvd" type="text" label="32051" default="/dev/sr0" />
+        <setting id="id-device-bluray" type="text" label="32052" default="/dev/sr0" />       
+       
+        <!-- Directorys settings -->
+
+        <setting id="separator" type="lsep" label="32053"/> 
+        <setting id="id-iso" type="text" label="32054" default="/dvdrip/iso" />
+        <setting id="id-dvd" type="text" label="32055" default="/dvdrip/dvd" />    
+        <setting id="id-bluray" type="text" label="32056" default="/dvdrip/bluray" />  
+        <setting id="id-vobcopy" type="text" label="32072" default="/dvdrip/vobcopy" />
+        <setting id="id-network" type="text" label="32073" default="/dvdrip/network" />          
+        <setting id="id-transcode" type="text" label="32077" default="/dvdrip/transcode" /> 
+        <setting id="id-iphone" type="text" label="32078" default="/dvdrip/portable/ip" />
+        <setting id="id-psp" type="text" label="32079" default="/dvdrip/portable/psp" />                  
+         
+
+        <!-- Various Settings  -->
+
+        <setting id="separator" type="lsep" label="32057"/> 
+        <setting id="id-command" type="text" label="32058" default="xbmc@localhost"/>
+        <setting id="id-lang1" type="text" label="32059" default="en"/>    
+        <setting id="id-lang2" type="text" label="32060" default="none"/>
+        <setting id="id-dvd-subt" type="text" label="32070" default="none"/>
+        <setting id="id-def-dvd" type="enum" label="32061" values="h264-high|iso|h264-low|mkv|iphone|psp" default="0"/>
+        <setting id="id-show-bluray" type="bool" label="32062" default="true"/>
+        <setting id="id-show-network" type="bool" label="32063" default="false"/>
+        <setting id="id-show-burning" type="bool" label="32064" default="false"/> 
+        <setting id="id-expert" type="bool" label="32065" default="true"/> 
+        <setting id="id-password" type="text"label="32066" default="1234"/> 
+        <setting id="id-customer" type="bool" label="32071" default="false"/> 
+        <setting id="id-burn" type="text" label="32067" default="4706074624"/>
+        <setting id="id-netcat" type="text" label="32068" default="4000"/>
+        <setting id="id-verbose" type="bool" label="32069" default="true"/> 
+        <setting id="id-t1" type="text" label="32074" default="5"/> 
+        <setting id="id-t2" type="text" label="32075" default="10"/> 
+        <setting id="id-t3" type="text" label="32076" default="100"/>  
+        <setting id="id-delete" type="bool" label="32080" default="true"/>  
+        <setting id="id-eject" type="bool" label="32081" default="true"/>             
+        <setting id="id-alternate" type="bool" label="32082" default="false"/>
+        <setting id="id-use-allways-default" type="bool" label="32083" default="true"/>
+        <setting id="id-disable-protect" type="bool" label="32084" default="true"/> 
+        <setting id="id-disable-mkv-licence" type="bool" label="32085" default="false"/>   
+        <setting id="id-notifications" type="bool" label="32086" default="true"/> 
+          
+</settings>
+
+
+Device-Settings :
+
+id-device-dvd			This is the default device for dvd operation 
+id-device-bluray                This is the default device for bluray operation
+
+
+Directory-Settings :
+
+id-iso				Default directory for iso functions (iso copy / resque copy)
+id-dvd                          Default directory for h264-high transcoding 
+id-bluray                       Default directory to store bluray mkv 
+id-vobcopy                      Default directory for vobcopy transcoding  
+id-network                      Default directory to store jobs from remote computers          
+id-transcode                    Default directory for h264-low / mkv / mpeg2 transcoding  
+id-iphone			Default directory for iphone transcode 
+id-psp				Default directory for psp transcode                  
+ 
+
+Various Settings :
+
+id-command                     	Default ssh-command to execute over ssh "xbmc@localhost"
+id-lang1                        2 digit code for the default 1. language (like en or de)
+id-lang2                        2 digit code for the default 2. language (like en or none)
+id-dvd-subt                     2 digit code for the default subtitle (like en or none)                
+id-def-dvd                      Default trancode operation from main-menu 
+id-show-bluray                  Enable or disable bluray functions 
+id-show-network                 Enable or disable network functions
+id-show-burning  		Enable or disable network functions
+id-expert                       Enable or disable password protection for expert-mode 
+id-password                     Password to access the expert-mode inside addon
+id-customer                     Enable or disable user-functions  
+id-burn                         Default size of single-layer dvd 
+id-netcat                       Default start tcp port for netcat   
+id-verbose                      This entry do activate verbose log inside ~./xbmc/temp/xbmc.log
+id-t1                           Time-out value 5
+id-t2                           Time-out value 10 
+id-t3                           Time-out value 100 
+id-delete                       If a operation is not successfull or is canceld all working files are 
+                                deleted.   
+id-eject                        After a successfull operation do eject the medium (dvd or bluray)
+id-alternate                    Use a iso-file from the harddisk instead of using allways a dvd or 
+                                bluray device.In release 0.6.16 this setting has no affect.
+                                In a later release you can select between iso-file and device. 
+
+id-use-allways-default          Allways use default directorys for storing. If this entry is set to false 
+                                the destination directory has to be selected over the addon.
+                                The default dvd-transcode from main-menu do not ask where to store 
+                                the file even if this setting is disabled.  
+id-disable-protect		Disable the transcoding of copy-protected dvd's from the main-menu 
+id-disable-mkv-licence          Every user that a use a beta serialkey for makemkv should set this entry 
+                                to the default value <false>.
+
+                                Warning : 
+                                Do not enable this feature as long you do not have a valid licence-key !
+
+                                A user that purchased a makemkv licence can set this values to <true>
+                                if you only use a beta-key do never set this value to true .....
+
+id-notifications                Show notifications about current progress in info-area of xbmc.
+
+    
+                               
+ 
+ 
+
+
+

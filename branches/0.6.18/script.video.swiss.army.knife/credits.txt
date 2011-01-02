@@ -1,0 +1,11 @@
+linuxluemmel.ch@gmail.ch 	creator of thr project 
+ddekani@gmail.com		translator of the french part and project commiter 
+cherni@lennon.org               creator of the luxeria-logo
+
+All my special thanks go the countless devs of the following 
+applications which made this ripper possible ....
+
+xbmc-core team 
+python-dev team 
+handbrake-dev team 
+makemkv-dev team  
