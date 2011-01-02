@@ -45,9 +45,9 @@
         <string id="32081">Medium auswerfen sofern Job erfolgreich war</string>         
         <string id="32082">ISO-Datei benutzen anstelle eines Device</string>
         <string id="32083">Immer Standard-Verzeichnisse zum speichern benutzen</string>
-        <string id="32084">Transcodierung von Kopiergeschützten DVD'S aus dem Hauptmenü verhindern</string> 
-        <string id="32085">Verhindere Prüfung der abgelaufenen makemkv Lizenz</string> 
-        <string id="32086">Erlaube Kurzmeldungen über den aktuellen Vorgang</string>         
+        <string id="32084">Keine Transkodierung von geschützten DVD'S aus dem Hauptmenü</string> 
+        <string id="32085">Keine Prüfung makemkv Lizenz</string> 
+        <string id="32086">Erlaube Kurzmeldungen</string>         
         
         
         <!--              --> 
