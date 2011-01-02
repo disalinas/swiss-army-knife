@@ -45,9 +45,9 @@
         <string id="32081">Eject inserted medium if job successfull</string>  
         <string id="32082">Use ISO-Files instead of device</string>  
         <string id="32083">Allways use default directorys to store</string>  
-        <string id="32084">Disable transcoding copy protected dvd's from main-menu</string> 
-        <string id="32085">Disable checking for expired makemkv licence</string>       
-        <string id="32086">Enable notifications about current progress</string>         
+        <string id="32084">Disable copy protected dvd's from main-menu</string> 
+        <string id="32085">Disable checking for makemkv licence</string>       
+        <string id="32086">Enable notifications</string>         
 
         <!--              --> 
         <!-- Window-Names -->

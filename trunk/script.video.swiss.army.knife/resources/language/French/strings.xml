@@ -142,7 +142,7 @@
         <string id="32182">DVD -> h264 profil bas niveau</string>
         <string id="32183">DVD -> Iphone</string>
         <string id="32184">DVD -> PSP</string>
-        <string id="32185">Back</string>
+        <string id="32185">Retour</string>
  
         <!--                  --> 
         <!-- User-Scripts     -->
@@ -199,13 +199,13 @@
         <string id="33235">Veuillez insérer un dvd simple-couche vide</string>
         <string id="33236">Ce menu est visible uniquement s'il y a des fonctions utilisateur</string>
         <string id="33237">Le transcodage de dvd protégé à partir du menu principal est désactivé par la configuration</string>        
-        <string id="33238">Job finished successfully</string>  
-        <string id="33239">No active job on startup found</string> 
-        <string id="33240">Active job on startup found</string>  
-        <string id="33241">Active job on exit found</string> 
-        <string id="33242">Exit</string>   
-        <string id="33243">Job ended with error</string> 
-        <string id="33244">Clean-up</string>        
+        <string id="33238">Job a terminé avec succès</string>  
+        <string id="33239">Pas de travail actives au démarrage trouvés</string> 
+        <string id="33240">Active sur le démarrage d'emplois trouvés</string>  
+        <string id="33241">Active emploi à la sortie trouvé</string> 
+        <string id="33242">Retour</string>   
+        <string id="33243">Le travail s'est terminé avec l'erreur</string> 
+        <string id="33244">Nettoyer</string>        
             
   
         <!--               -->

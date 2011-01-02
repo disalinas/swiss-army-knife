@@ -11,9 +11,9 @@
 # TASKS   : This python code contains only os-dependet  #
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
-# VERSION : 0.6.16                                      #
-# DATE    : 12-24-10                                    #
-# STATE   : Beta 2                                      #
+# VERSION : 0.6.18                                      #
+# DATE    : 01-02-11                                    #
+# STATE   : Beta 3                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -66,8 +66,9 @@ __stage_last__     = False
 #########################################################
 def OSlog(msg):
 
-    xbmc.output("[%s]: [OSlog]  %s\n" % ("swiss-army-knife",str(msg)))
-    return (0)
+    if (__verbose__ == 'true'):     
+       xbmc.output("[%s]: [OSlog]  %s\n" % ("swiss-army-knife",str(msg)))
+    return
 
 #########################################################
 
@@ -289,7 +290,7 @@ def OSConfiguration(index):
 
     # Every release has a sepeperate setup.done file .....
 
-    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.16-setup.done'
+    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.18-setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
     config[32] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid'
@@ -392,7 +393,7 @@ def OSRun(command,backg,busys):
         commandexec = "ssh " + __configLinux__[6] + " " + __configLinux__[40] + command + " "
         commandexec = commandexec + " > /dev/null 2>&1 &"
         status = os.system("%s" % (commandexec))
-        if (__verbose__ == 'true'):
+        if (__verbose__ ==  "true"):
             OSlog("Command to run :" + commandexec)
             OSlog("status command [" + commandexec + "] is rc:=[" + str(status) +"]")
             OSlog ("OSRun end")
@@ -400,7 +401,7 @@ def OSRun(command,backg,busys):
         commandexec = "/bin/bash  " + __configLinux__[40] + command + " "
         commandexec = commandexec + " > /dev/null 2>&1"
         status = os.system("%s" % (commandexec))
-        if (__verbose__ == 'true'):
+        if (__verbose__ ==  "true"):
             OSlog("Command to run :" + commandexec)
             OSlog("status command [" + commandexec + "] is rc:=[" + str(status) +"]")
             OSlog ("OSRun end") 
@@ -443,20 +444,20 @@ def OSCheckMedia(Media):
     if (os.path.exists(__configLinux__[45])):
         if (os.path.exists(__configLinux__[30])):
             os.remove(__configLinux__[30])
-            if (__verbose__ == 'true'): 
+            if (__verbose__ ==  "true"): 
                OSlog("state-file do exist prior to loop and will be deleted")
     else:
         OSCleanTemp()
 
     # Execution of shell-script br0.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("state.sh command ready to start")
 
 
     if (os.path.exists(__configLinux__[30])):
        os.remove(__configLinux__[30])
-       if (__verbose__ == 'true'): 
+       if (__verbose__ ==  "true"): 
           OSlog("state-file do exist prio to loop and will be deleted")
  
     if (Media == 'BLURAY'):
@@ -464,7 +465,7 @@ def OSCheckMedia(Media):
     if (Media == 'DVD-ROM'):
         OSRun("dvd0.sh " +  __configLinux__[1],True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("state.sh command executed")
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
@@ -479,7 +480,7 @@ def OSCheckMedia(Media):
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[30])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ ==  "true"):
                    OSlog("state-files exist ...exit loop")
                    OSlog("WCycles Value :" + str(WCycles))
                    OSlog("Timeout t1 :" + str(__configLinux__[23]))
@@ -488,7 +489,7 @@ def OSCheckMedia(Media):
                WCycles = WCycles + 1
                time.sleep(1)
            if (WCycles >= __configLinux__[23]):
-               if (__verbose__ == 'true'):
+               if (__verbose__ ==  "true"):
                   OSlog("Timeout t1 reached for track-file  ...")
                   OSlog("increase timeout value for timeout t1")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -502,7 +503,8 @@ def OSCheckMedia(Media):
         f = open(__configLinux__[30],'r')
         media = f.readline()
         media = media.strip()
-        OSlog("Media detected")
+        if (__verbose__ ==  "true"):
+           OSlog("Media detected")
         f.close
 
         if (media == Media):
@@ -543,12 +545,12 @@ def OSChapterBluray():
 
     # Execution of shell-script br1.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("bluray-chapter.sh command ready to start")
 
     OSRun("br1.sh " +  __configLinux__[2],True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("bluray-chapter.sh command executed")
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
@@ -564,7 +566,7 @@ def OSChapterBluray():
     OSlog("Waiting until track-files exist ... WCycles:=" + str(WCycles))
     while (Waitexit):
            if (os.path.exists(__configLinux__[42])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("track-files exist ... WCycles:=" + str(WCycles))
                Waitexit = False
            else:
@@ -573,7 +575,7 @@ def OSChapterBluray():
            time.sleep(1)
 
            if (WCycles >= __configLinux__[25]):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                   OSlog("Timeout t3 reached for bluraytrack-file  ...")
                   OSlog("increase timeout value for timeout t3")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -582,7 +584,7 @@ def OSChapterBluray():
 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ ==  "true"):
         OSlog("track-files exist . Create list for GUI")
 
     # We should have the file with the state
@@ -623,7 +625,7 @@ def OSCleanTemp():
     for item in __temp_files__:
          if (os.path.exists(item)):
              os.remove(item)
-             if (__verbose__):
+             if (__verbose__ == "true"):
                  OSlog("file delete : " + item)
     time.sleep(1)
     xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -748,7 +750,7 @@ def OSBlurayTranscode():
 
     # Execution of shell-script br2.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("bluray-transcode.sh command ready to start")
         OSlog ("Bluray-paramter [0] : " + __exec_bluray__[0])
         OSlog ("Bluray-paramter [1] : " + __exec_bluray__[1])
@@ -758,7 +760,7 @@ def OSBlurayTranscode():
     OSRun("br2.sh " +  __exec_bluray__[0] + " " + __exec_bluray__[1] + " " + __exec_bluray__[2] + " " +  __exec_bluray__[3],True,False)
 
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("bluray-transcode.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -769,14 +771,14 @@ def OSBlurayTranscode():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 1
            time.sleep(1)
            if (WCycles >= 50):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout 50 secounds reached for pid-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 0
@@ -919,15 +921,15 @@ def OSCheckContainerID(index):
 
     if (os.path.exists(__data_container__[index])):
         if (os.access(__data_container__[index],os.W_OK) == False):
-           if (__verbose__ == 'true'):
+           if (__verbose__ == "true"):
                OSlog("Container path [" + __data_container__[index] + "] is not writeable !")
            return 1
         else:
-           if (__verbose__ == 'true'):
+           if (__verbose__ == "true"):
                OSlog("Container path [" + __data_container__[index] + "] is checked succesfull for writeable attribut")
            return 0
     else:
-        if (__verbose__ == 'true'):
+        if (__verbose__ == "true"):
             OSlog("Container path [" + __data_container__[index] + "] is not found !")
         return 1
 
@@ -1053,12 +1055,12 @@ def OSChapterDVD():
 
     # Execution of shell-script br1.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-chapter.sh command ready to start")
 
     OSRun("dvd1.sh " +  __configLinux__[1] + " 1 ",True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-chapter.sh command executed")
 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
@@ -1073,14 +1075,14 @@ def OSChapterDVD():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[46])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("track-files exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 1
                time.sleep(1)
            if (WCycles >= __configLinux__[24]):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout t2 reached for chapter-file")
                    OSlog("increase timeout value for timeout t2") 
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -1089,7 +1091,7 @@ def OSChapterDVD():
 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("track-files exist . Create list for GUI")
 
     # We should have the file with the state
@@ -1136,7 +1138,7 @@ def OSDVDTranscode():
 
     # Execution of shell-script dvd2.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-handbrake.sh command ready to start")
 
     # Prepare command string
@@ -1145,16 +1147,16 @@ def OSDVDTranscode():
     x = 0
     for number in __exec_dvd__:
         dvd_command = dvd_command + " " + __exec_dvd__[x]
-        if (__verbose__ == 'true'):
+        if (__verbose__ == "true"):
             OSlog("dvd-handbrake.sh Transcode para: [" + str(x) +  "]  " + __exec_dvd__[x])
         x = x + 1
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
 
     OSRun("dvd2.sh " + dvd_command,True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-handbrake.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -1165,14 +1167,14 @@ def OSDVDTranscode():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 20):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout reached for dvd-pid-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 0
@@ -1245,24 +1247,24 @@ def OSDVDExecuteList(auto_mode):
            __exec_dvd__.append(tmp[3])
 
            if (tmp[4] != 'none'):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("dvd-handbrake.sh Transcode parameter add : " + "-a " + tmp[4])
                    __exec_dvd__.append("-a " + tmp[4])
 
            if (tmp[5] != 'none'):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("dvd-handbrake.sh Transcode parameter add : " + "-s " + tmp[5])
                    __exec_dvd__.append("-s " + tmp[5])
 
        x = 0
        parameters = 0
        for number in __exec_dvd__:
-           if (__verbose__ == 'true'):
+           if (__verbose__ == "true"):
                OSlog("dvd-handbrake.sh para: [" + str(x) +  "]  " + __exec_dvd__[x])
                x = x + 1
            parameters = parameters + 1
 
-       if (__verbose__ == 'true'):
+       if (__verbose__ == "true"):
            OSlog("dvd-handbrake.sh is using : " + str(parameters) + " parameters")
 
        # Add device
@@ -1321,7 +1323,7 @@ def OSDVDcopyToIso():
 
     # Execution of shell-script dvd3.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd3.sh command ready to start")
 
     # Prepare command string
@@ -1329,12 +1331,12 @@ def OSDVDcopyToIso():
     dvd_command = ""
     dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2]
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
 
     OSRun("dvd3.sh " + dvd_command,True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-handbrake.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -1345,14 +1347,14 @@ def OSDVDcopyToIso():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 20):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout reached for dvd-iso-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
                return 0
@@ -1389,7 +1391,7 @@ def OSRemoveLock():
 
     if (os.path.exists(__configLinux__[45])):
         os.remove(__configLinux__[45])
-        if (__verbose__):
+        if (__verbose__ == "true"):
             OSlog("lock-file delete : " + __configLinux__[45])
         return 1
     else:
@@ -1652,8 +1654,9 @@ def OSDVDAudioTrack(track):
 
     audio = []
 
-    OSlog("dvd4.sh command ready to start")
-    OSlog("dvd4.sh para1=[" + __configLinux__[1] + "] para2=[" + str(track) + "]")
+    if (__verbose__ == "true"):
+       OSlog("dvd4.sh command ready to start")
+       OSlog("dvd4.sh para1=[" + __configLinux__[1] + "] para2=[" + str(track) + "]")
 
     OSRun("dvd4.sh " +  __configLinux__[1]  + " " + str(track),True,True)
     time.sleep(4)
@@ -1662,19 +1665,23 @@ def OSDVDAudioTrack(track):
         for line in ListF.readlines():
             line = line.strip()
             audio.append(line)
-            OSlog("OSReadList data to add :" + line)
-        OSlog("OSReadList file-close")
+            if (__verbose__ == "true"): 
+               OSlog("OSReadList data to add :" + line)
+        if (__verbose__ == "true"): 
+           OSlog("OSReadList file-close")
         ListF.close
 
         index = len(audio)
         if (index == 0):
-            OSlog("audio list is empty !!!!!!")
+            if (__verbose__ == "true"): 
+               OSlog("audio list is empty !!!!!!")
             audio.append('none')
             return (audio)
         else:
             return (audio)
     else:
-        OSlog("dvd-audio tracks could not be read !! :" + __configLinux__[48])
+        if (__verbose__ == "true"):
+           OSlog("dvd-audio tracks could not be read !! :" + __configLinux__[48])
         audio.append('none')
         return (audio)
 
@@ -1896,12 +1903,12 @@ def OSDVDcopyToIsoResque():
     dvd_command = ""
     dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2]
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
 
     OSRun("dvd5.sh " + dvd_command,True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-resque.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -1912,14 +1919,14 @@ def OSDVDcopyToIsoResque():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 20):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout reached 20 secounds for dvd-iso-file  ...")
                    OSlog("change value on line 1818 for dvd-iso-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -1969,16 +1976,16 @@ def OSCheckUser():
         CurrentUser = str(UsernameFile.readline())
         CurrentUser = CurrentUser.strip()   
         UsernameFile.close()
-        if (__verbose__ == 'true'):
+        if (__verbose__ == "true"):
             OSlog("Current-user      : [" + CurrentUser + "]")
             OSlog("SSH-user expected : [" + name + "]")
         index = name.find(CurrentUser)
         if (index == -1):
-            if (__verbose__ == 'true'): 
+            if (__verbose__ == "true"): 
                OSlog("Warning current user and ssh-command mismatch !!!!!")
             return 0
         else:  
-            if (__verbose__ == 'true'): 
+            if (__verbose__ == "true"): 
                OSlog("current user is listed inside the ssh-command")
             return 1  
     else:
@@ -2052,7 +2059,7 @@ def OSDVDvcopy():
 
     # Execution of shell-script dvd6.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd6.sh command ready to start")
 
     # Prepare command string
@@ -2060,12 +2067,12 @@ def OSDVDvcopy():
     dvd_command = ""
     dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1]
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
 
     OSRun("dvd6.sh " + dvd_command,True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-vcopy.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -2076,14 +2083,14 @@ def OSDVDvcopy():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 20):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout reached 20 secounds for vobcopy-file  ...")
                    OSlog("change timeout on line 1980 for vobcopy-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -2126,7 +2133,7 @@ def OSDVDtoMKV():
 
     # Execution of shell-script dvd9.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd9.sh command ready to start")
 
     # Prepare command string
@@ -2134,12 +2141,12 @@ def OSDVDtoMKV():
     dvd_command = ""
     dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2] + " " + str( __exec_dvd__[3])
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
 
     OSRun("dvd9.sh " + dvd_command,True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-mkv.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -2150,14 +2157,14 @@ def OSDVDtoMKV():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 30):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout reached 30 secounds for mkv-file  ...")
                    OSlog("change timeout on line 2124 for mkv-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -2199,7 +2206,7 @@ def OSDVDtoLOW():
 
     # Execution of shell-script dvd10.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd10.sh command ready to start")
 
     # Prepare command string
@@ -2208,16 +2215,16 @@ def OSDVDtoLOW():
     x = 0
     for number in __exec_dvd__:
         dvd_command = dvd_command + " " + __exec_dvd__[x]
-        if (__verbose__ == 'true'):
+        if (__verbose__ == "true"):
             OSlog("dvd-iphone.sh Transcode para: [" + str(x) +  "]  " + __exec_dvd__[x])
         x = x + 1
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
 
     OSRun("dvd10.sh " + dvd_command,True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-low.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -2228,14 +2235,14 @@ def OSDVDtoLOW():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 30):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout reached 30 secounds for low-file  ...")
                    OSlog("change timeout on line 2213 for low-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -2278,7 +2285,7 @@ def OSDVDtoIphone():
 
     # Execution of shell-script dvd10.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd11.sh command ready to start")
 
     # Prepare command string
@@ -2287,16 +2294,16 @@ def OSDVDtoIphone():
     x = 0
     for number in __exec_dvd__:
         dvd_command = dvd_command + " " + __exec_dvd__[x]
-        if (__verbose__ == 'true'):
+        if (__verbose__ == "true"):
             OSlog("dvd-iphone.sh Transcode para: [" + str(x) +  "]  " + __exec_dvd__[x])
         x = x + 1
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
 
     OSRun("dvd11.sh " + dvd_command,True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-iphone.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -2307,14 +2314,14 @@ def OSDVDtoIphone():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 30):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout reached 30 secounds for iphone-file  ...")
                    OSlog("change timeout on line 2287 for iphone-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -2357,7 +2364,7 @@ def OSDVDtoPSP():
 
     # Execution of shell-script dvd10.sh inside shell-linux
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd12.sh command ready to start")
 
     # Prepare command string
@@ -2366,16 +2373,16 @@ def OSDVDtoPSP():
     x = 0
     for number in __exec_dvd__:
         dvd_command = dvd_command + " " + __exec_dvd__[x]
-        if (__verbose__ == 'true'):
+        if (__verbose__ == "true"):
             OSlog("dvd-iphone.sh Transcode para: [" + str(x) +  "]  " + __exec_dvd__[x])
         x = x + 1
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
 
     OSRun("dvd12.sh " + dvd_command,True,False)
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("dvd-psp.sh command executed")
 
     # Now we do loop until the PID-file exists
@@ -2386,14 +2393,14 @@ def OSDVDtoPSP():
     Waitexit = True
     while (Waitexit):
            if (os.path.exists(__configLinux__[32])):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("pid-file exist ...")
                Waitexit = False
            else:
                WCycles = WCycles + 3
                time.sleep(3)
            if (WCycles >= 30):
-               if (__verbose__ == 'true'):
+               if (__verbose__ == "true"):
                    OSlog("Timeout reached 30 secounds for psp-file  ...")
                    OSlog("change timeout on line 2376 for psp-file  ...")
                xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -2435,7 +2442,7 @@ def OSGetUserDesc(index):
     UserScript = os.getenv("HOME") + '/swiss.army.knife/' + 'user' + str(index) + '.sh' 
     UserDescription = os.getenv("HOME") + '/swiss.army.knife/' + 'user' + str(index) + '.desc'
 
-    if (__verbose__ == 'true'):
+    if (__verbose__ == "true"):
         OSlog("Try to load user-function description : " + UserDescription)
 
     if (os.path.exists(UserDescription)):
@@ -2479,7 +2486,7 @@ def OSDVDTranscodeDefault(Paramlist):
     para = [] 
     for word in Paramlist.split(' '):
         para.append(word)
-        if (__verbose__ == 'true'): 
+        if (__verbose__ == "true"): 
            OSlog("Transcode value prior to execute : [" + word + "]") 
 
     # The para string contains all info for the default transcode-selection 
@@ -2489,7 +2496,7 @@ def OSDVDTranscodeDefault(Paramlist):
 
        # We can pass the arguments 1:1 
    
-       if (__verbose__ == 'true'): 
+       if (__verbose__ == "true"): 
           x = 0 
           dvd_command = ""
           for number in __exec_dvd__:
@@ -2497,7 +2504,7 @@ def OSDVDTranscodeDefault(Paramlist):
               x = x + 1  
           OSlog("__exec_dvd__ filds andvanced [" + dvd_command + "]")  
 
-       if (__verbose__ == 'true'):
+       if (__verbose__ == "true"):
           OSlog("advanced transcoding selected")   
        if (para[0] == 'h264-high'):
           state_tr = OSDVDTranscode() 
@@ -2523,7 +2530,7 @@ def OSDVDTranscodeDefault(Paramlist):
  
        __exec_dvd__ = new_exec
  
-       if (__verbose__ == 'true'): 
+       if (__verbose__ == "true"): 
           x = 0 
           dvd_command = ""
           for number in __exec_dvd__:
@@ -2531,7 +2538,7 @@ def OSDVDTranscodeDefault(Paramlist):
               x = x + 1  
           OSlog("__exec_dvd__ filds simple [" + dvd_command + "]")  
 
-       if (__verbose__ == 'true'): 
+       if (__verbose__ == "true"): 
           OSlog("simple transcoding selected")
        if (para[0] == 'iso'):
           state_tr = OSDVDcopyToIso()  
