@@ -199,12 +199,12 @@
         <string id="33235">Veuillez insérer un dvd simple-couche vide</string>
         <string id="33236">Ce menu est visible uniquement s'il y a des fonctions utilisateur</string>
         <string id="33237">Le transcodage de dvd protégé à partir du menu principal est désactivé par la configuration</string>        
-        <string id="33238">Job a terminé avec succès</string>  
-        <string id="33239">Pas de travail actives au démarrage trouvés</string> 
-        <string id="33240">Active sur le démarrage d'emplois trouvés</string>  
-        <string id="33241">Active emploi à la sortie trouvé</string> 
-        <string id="33242">Retour</string>   
-        <string id="33243">Le travail s'est terminé avec l'erreur</string> 
+        <string id="33238">Travail terminé avec succès</string>  
+        <string id="33239">Aucun travail actif trouvé au démarrage</string> 
+        <string id="33240">Travail actif trouvé au démarrage</string>  
+        <string id="33241">Travail actif trouvé en quittant</string> 
+        <string id="33242">Quitter</string>   
+        <string id="33243">Le travail est terminé avec des erreurs</string> 
         <string id="33244">Nettoyer</string>        
             
   
