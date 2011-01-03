@@ -67,7 +67,7 @@ echo ---------------------------------------------------------------------------
 SCRIPT=$(basename $0)
 echo "script    :" $SCRIPT
 cat version
-echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
+echo "copyright : (C) <2010-2011>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
@@ -167,23 +167,23 @@ done
 #                                                         #
 ###########################################################
 
-if [ ! -e EULA-0.6.16 ] ; then
+if [ ! -e EULA-0.6.19 ] ; then
    clear
    echo
    echo download licence file from google-code
    echo
-   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.18
+   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.19
 fi
 
-if [ -e EULA-0.6.18 ] ; then
+if [ -e EULA-0.6.19 ] ; then
    clear
-   cat EULA-0.6.18
+   cat EULA-0.6.19
    echo
    echo -n "Do you want to accept this enduser-licnce ? (y)"
    read ans
    if [ $ans == "y" ] ; then
       clear
-      echo "EULA 0.6.18 accepted"
+      echo "EULA 0.6.19 accepted"
       echo
       echo -n press any key to continue ..
       read any
@@ -199,7 +199,7 @@ else
    echo The EULA-FILE can not be downloaded and therefore you must
    echo use a svn release of this addon.
    echo You do this at your own risk .....
-   echo the last stable puplic released version was 0.6.15
+   echo the last stable puplic released version was 0.6.18
    echo
    echo -n press any key to continue or ctrl-c to abort..
    read any
@@ -897,18 +897,18 @@ fi
 
 clear
 cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
-if [ ! -e 0.6.18-setup.done ] ; then
+if [ ! -e 0.6.19-setup.done ] ; then
    echo
    echo -----------------------------------------------------------
    echo create setup.done and licence-file inside addon-data directory
    echo
-   echo "0.6.18" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.18-setup.done
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.18-setup.done
+   echo "0.6.19" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.19-setup.done
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.19-setup.done
 fi
 
-if [ ! -e EULA-0.6.18 ] ; then
-   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.18 EULA-0.6.18
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.18
+if [ ! -e EULA-0.6.19 ] ; then
+   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.18 EULA-0.6.19
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.19
 fi
 
 ###########################################################
@@ -924,7 +924,7 @@ fi
 
 clear
 echo
-echo Addon release 0.6.18 can now be running over xbmc  ......
+echo Addon release 0.6.19 can now be running over xbmc  ......
 echo
 echo
 echo - Please do updates the settings with the addon-manager.
