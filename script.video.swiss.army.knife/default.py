@@ -13,9 +13,9 @@
 #           - transcode dvd to multiple formats         #
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
-# VERSION : 0.6.18                                      #
-# DATE    : 01-02-11                                    #
-# STATE   : Beta 3                                      #
+# VERSION : 0.6.19                                      #
+# DATE    : 01-03-11                                    #
+# STATE   : Beta 4                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -38,9 +38,9 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "01-02-2011"
-__version__ 		= "0.6.18"
-__code_name__           = "Kingdom of Heaven"
+__date__ 		= "01-03-2011"
+__version__ 		= "0.6.19"
+__code_name__           = "Avatar"
 __XBMC_Revision__ 	= "35648"
 __index_config__        = 65
 __credits__             = "a bunch of gpl-devs"
