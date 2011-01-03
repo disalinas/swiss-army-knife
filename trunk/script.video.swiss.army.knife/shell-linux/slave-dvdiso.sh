@@ -52,7 +52,7 @@ echo ---------------------------------------------------------------------------
 SCRIPT=$(basename $0)
 echo "script    :" $SCRIPT
 cat version
-echo "copyright : (C) <2010>  <linuxluemmel.ch@gmail.com>"
+echo "copyright : (C) <2010-2011>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
 
