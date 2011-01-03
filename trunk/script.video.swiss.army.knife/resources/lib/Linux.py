@@ -384,6 +384,8 @@ def OSRun(command,backg,busys):
     if (backg == True):
         sshlog ="echo \"" + command + "\" >> " + __configLinux__[38]
         status = os.system("%s" % (sshlog))
+    else:
+        sshlog = ""
 
     if (__verbose__ == 'true'):
         OSlog("Command to log inside ssh:" + sshlog)
@@ -2584,15 +2586,21 @@ def OSCheckMainProcess():
 
         try: 
             os.kill(int(pid[0]), 0)
+            if (__verbose__ == "true"): 
+                OSlog("default transcode-process is running  : [" + str(pid) + "]") 
             return 0
         except OSError, err:
             
             # We send back the signal to stop all polling ....
             # and to terminae the scripts immediately
 
+            if (__verbose__ == "true"): 
+                OSlog("default transcode-process is not running  : [" + str(pid) + "]") 
             return 1  
     else:
-         return 2
+        if (__verbose__ == "true"): 
+            OSlog("default transcode-pid file could not be read") 
+        return 2
 #########################################################
 
 
