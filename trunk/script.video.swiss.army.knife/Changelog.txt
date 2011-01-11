@@ -272,7 +272,7 @@ Date : 01.03.2011 | Release : 0.6.19    | Author  : H.Weber | CVS:454
 Changes:
 
 - Initial-Work for release named "Avatar"
-
+- changes for release 0.6.19 inside setup.sh 
 
 Fixes:
 

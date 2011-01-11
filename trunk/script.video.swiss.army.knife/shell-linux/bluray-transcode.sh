@@ -350,6 +350,8 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
 
    rm $JOBFILE > /dev/null 2>&1
 
+   mv $2\$tr_file $2\$3 > /dev/null 2>&1
+
    sleep 1
 
    rm ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/* > /dev/null 2>&1
