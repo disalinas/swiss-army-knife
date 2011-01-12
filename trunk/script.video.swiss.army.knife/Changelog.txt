@@ -279,6 +279,7 @@ Fixes:
 - verbose-mode logging had a failure inside osrun
 - Inside bluray-transcode.sh and dvd-mkv.sh was a failure that occur after a succesfull operation
   the destination file was not renamed properly.
+- If rename we should also include a extension (fix for above fix)
 
 
 
