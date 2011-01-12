@@ -367,7 +367,8 @@ if [ "$SHELL_CANCEL" == "0" ] ; then
 
    rm $JOBFILE > /dev/null 2>&1
 
-   mv $2\$tr_file $2\$3 > /dev/null 2>&1
+   cd $2
+   mv $tr_file $3.mkv
 
    sleep 1
 
