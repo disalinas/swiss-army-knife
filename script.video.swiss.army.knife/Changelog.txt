@@ -273,13 +273,21 @@ Changes:
 
 - Initial-Work for release named "Avatar"
 - changes for release 0.6.19 inside setup.sh 
+- Integrate installation of Handbrake 0.9.5 into setup.sh 
+- Integrate upgrade of Handbrake 0.9.5 into setup.sh 
+
 
 Fixes:
 
 - verbose-mode logging had a failure inside osrun
 - Inside bluray-transcode.sh and dvd-mkv.sh was a failure that occur after a succesfull operation
   the destination file was not renamed properly.
-- If rename we should also include a extension (fix for above fix)
+- If we do rename we should also include a extension (fix for above fix)
+- With a heavy load the predefined delay value for the ssh-testcommand is may 
+  to small.(Incremented the value by 1).
+ 
+
+
 
 
 

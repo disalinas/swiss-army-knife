@@ -1536,7 +1536,7 @@ def OSCheckSSH():
         os.remove(__configLinux__[39])
 
     OSRun( "check-ssh.sh ",True,False)
-    time.sleep(1) 
+    time.sleep(2) 
 
     if (os.path.exists(__configLinux__[39])):
         return 0

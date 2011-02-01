@@ -376,12 +376,13 @@ if [ ! -e /etc/apt/sources.list.d/medibuntu.list ] ; then
    sudo apt-get --yes -q --allow-unauthenticated install medibuntu-keyring && sudo apt-get -q update
 fi
 
+
 apt-get install mencoder
 apt-get install netcat original-awk dvdauthor mkisofs gddrescue
 apt-get install dvd+rw-tools lsdvd dvdbackup
 apt-get install submux-dvd subtitleripper transcode mjpegtools libdvdcss2 openssh-server openssh-client
 apt-get install liba52-0.7.4 libfaac0 libmp3lame0 libmp4v2-0 libogg0 libsamplerate0 libx264-85 libxvidcore4
-apt-get install libbz2-1.0 libgcc1 libstdc++6 zlib1g
+apt-get install libbz2-1.0 libc6 libgcc1 libstdc++6 zlib1g
 
 ###########################################################
 
@@ -515,7 +516,7 @@ which HandBrakeCLI >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
    echo The command HandBrakeCLI was not found on your system.
-   echo Should HandBrakeCLI svn3416 be installed ?
+   echo Should HandBrakeCLI 0.9.5 be installed ?
    echo
    echo -n "Do you want to install HandbrakeCLI (y/n)"
    read ans
@@ -527,12 +528,12 @@ if [ $? -eq 1 ] ; then
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-32.tar.gz
-         tar xvzf handbrake-0.9.4-32.tar.gz
-         dpkg -i handbrake-cli_lucid1_i386.deb
+         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.5-32.tar.gz
+         tar xvzf handbrake-0.9.5-32.tar.gz
+         dpkg -i handbrake-cli_0.9.5ppa1~lucid1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of handbrake-cli_lucid1_i386.deb
+            echo the installation of handbrake-cli_0.9.5ppa1~lucid1_i386.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -540,7 +541,7 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          else
-            rm handbrake-cli_lucid1_i386.deb > /dev/null 2>&1
+            rm handbrake-cli_0.9.5ppa1~lucid1_i386.deb > /dev/null 2>&1
          fi
       else
          clear
@@ -548,12 +549,12 @@ if [ $? -eq 1 ] ; then
          echo download software for 64 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-64.tar.gz
-         tar xvzf handbrake-0.9.4-64.tar.gz
-         dpkg -i handbrake-cli_lucid1_amd64.deb
+         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.5-64.tar.gz
+         tar xvzf handbrake-0.9.5-64.tar.gz
+         dpkg -i handbrake-cli_0.9.5ppa1~lucid1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of handbrake-cli_lucid1_amd64.deb
+            echo the installation of handbrake-cli_0.9.5ppa1~lucid1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -561,7 +562,7 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          else
-            rm handbrake-cli_lucid1_amd64.deb > /dev/null 2>&1
+            rm handbrake-cli_0.9.5ppa1~lucid1_amd64.deb > /dev/null 2>&1
          fi
       fi
    fi
@@ -581,9 +582,9 @@ else
    echo The command HandBrakeCLI was found on your system.
    echo
    echo The release found on your system is : [$HINSTALLED]
-   echo The script can download and install : [svn3416]
+   echo The script can download and install : [0.9.5]
    echo
-   echo Should HandBrakeCLI [svn3416] be installed over
+   echo Should HandBrakeCLI [0.9.5] be installed over
    echo the existing release on your system ?
    echo
    echo Warning : This may make HandbrakeCLI unusable ...
@@ -598,12 +599,12 @@ else
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-32.tar.gz
-         tar xvzf handbrake-0.9.4-32.tar.gz
-         dpkg -i handbrake-cli_lucid1_i386.deb
+         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.5-32.tar.gz
+         tar xvzf handbrake-0.9.5-32.tar.gz
+         dpkg -i handbrake-cli_0.9.5ppa1~lucid1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of handbrake-cli_lucid1_i386.deb
+            echo the installation of handbrake-cli_0.9.5ppa1~lucid1_i386.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -611,7 +612,7 @@ else
             read any
             exit $E_DPKG
          else
-            rm handbrake-0.9.4-32.tar.gz
+            rm handbrake-0.9.5-32.tar.gz
          fi
       else
          clear
@@ -619,12 +620,12 @@ else
          echo download software for 64 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.4-64.tar.gz
-         tar xvzf handbrake-0.9.4-64.tar.gz
-         dpkg -i handbrake-cli_lucid1_amd64.deb
+         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.5-32.tar.gz
+         tar xvzf handbrake-0.9.5-32.tar.gz
+         dpkg -i handbrake-cli_0.9.5ppa1~lucid1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of handbrake-cli_lucid1_amd64.deb
+            echo the installation of handbrake-cli_0.9.5ppa1~lucid1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -632,7 +633,7 @@ else
             read any
             exit $E_DPKG
          else
-            rm handbrake-cli_lucid1_amd64.deb > /dev/null 2>&1
+            rm handbrake-0.9.5-32.tar.gz > /dev/null 2>&1
          fi
       fi
    fi

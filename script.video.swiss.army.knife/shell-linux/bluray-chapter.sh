@@ -239,8 +239,8 @@ do
         LOOP=0
     fi
     TIMEOUT=`expr $TIMEOUT + 1`
-    if [ $TIMEOUT -eq "45" ] ; then
-        echo  
+    if [ $TIMEOUT -eq "50" ] ; then
+        echo
         echo ERROR webserver on port 51000 is not ready
         echo
         echo ----------------------- script rc=5 -----------------------------
