@@ -625,7 +625,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                              if (DVDState == 0):
                                  tracklist = []
 
-                                 tracklist = OSChapterDVD()
+                                 tracklist = OSChapterDVD(True)
                                  track = GUISelectList(__language__(33207),tracklist)            
                      
                                  # makemkv is not starting with index 1
@@ -690,7 +690,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                              GUIInfo(0,__language__(33311))
                          if (DVDState == 0):
                              tracklist = []
-                             tracklist = OSChapterDVD()
+                             tracklist = OSChapterDVD(False)
                              if (tracklist[0] != 'none'):
                                  executeList = []
                                  audio1 = []
@@ -821,7 +821,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                              GUIInfo(0,__language__(33311))
                          if (DVDState == 0):
                              tracklist = []
-                             tracklist = OSChapterDVD()
+                             tracklist = OSChapterDVD(False)
                              if (tracklist[0] != 'none'):
                                  executeList = []
                                  audio1 = []
@@ -948,7 +948,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                              GUIInfo(0,__language__(33311))
                          if (DVDState == 0):
                              tracklist = []
-                             tracklist = OSChapterDVD()
+                             tracklist = OSChapterDVD(False)
                              if (tracklist[0] != 'none'):
                                  executeList = []
                                  audio1 = []
@@ -1212,7 +1212,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                              GUIInfo(0,__language__(33311))
                          if (DVDState == 0):
                              tracklist = []
-                             tracklist = OSChapterDVD()
+                             tracklist = OSChapterDVD(False)
                              if (tracklist[0] != 'none'):
                                  executeList = []
                                  audio1 = []
@@ -1332,7 +1332,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                              GUIInfo(0,__language__(33311))
                          if (DVDState == 0):
                              tracklist = []
-                             tracklist = OSChapterDVD()
+                             tracklist = OSChapterDVD(False)
                              if (tracklist[0] != 'none'):
                                  executeList = []
                                  executeList = OSDVDExecuteList(False)   
@@ -1381,7 +1381,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                              GUIInfo(0,__language__(33311))
                          if (DVDState == 0):
                              tracklist = []
-                             tracklist = OSChapterDVD()
+                             tracklist = OSChapterDVD(False)
                              if (tracklist[0] != 'none'):
                                  executeList = []
                                  executeList = OSDVDExecuteList(False)   
@@ -1435,7 +1435,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                              GUIInfo(0,__language__(33311))
                          if (DVDState == 0):
                              tracklist = []
-                             tracklist = OSChapterDVD()
+                             tracklist = OSChapterDVD(False)
                              if (tracklist[0] != 'none'):
                                  executeList = []
                                  executeList = OSDVDExecuteList(False)   
@@ -1723,7 +1723,12 @@ class GUIMain01Class(xbmcgui.Window):
                                  GUIInfo(0,__language__(33311))
                              if (DVDState == 0):
                                  tracklist = []
-                                 tracklist = OSChapterDVD()
+
+                                 if (__default_tr_mkv__ == True): 
+                                    tracklist = OSChapterDVD(True)
+                                 else:
+                                    tracklist = OSChapterDVD(False)
+
                                  if (tracklist[0] != 'none'):
                                      executeList = []
                                      executeList = OSDVDExecuteList(True)   

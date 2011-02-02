@@ -1045,7 +1045,10 @@ def OSGetJobState():
 #########################################################
 # Function  : OSChapterDVD                              #
 #########################################################
-# Parameter : none                                      #
+# Parameter : Boolean                                   #
+#                                                       #
+# True 	      Shell script is using makemkvcon          #
+# False       Shell script is using Handbrakecli	#
 #                                                       #
 # Returns   :                                           #
 #                                                       #
@@ -1054,7 +1057,7 @@ def OSGetJobState():
 #             only contains "none"                      #
 #                                                       #
 #########################################################
-def OSChapterDVD():
+def OSChapterDVD(UsingMKV_Tracks):
 
     global __configLinux__
     global __verbose__
