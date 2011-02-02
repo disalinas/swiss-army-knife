@@ -85,6 +85,7 @@ __disable_cp_trancode__ = 'false'
 __notifications__ = 'false'
 __allways_default__ = 'false'
 __ProgressView__ = False
+__default_tr_mkv__ = False
 __pw__ = ''
 __jobs__ = False
 __linebreak__ = 0
@@ -1689,14 +1690,16 @@ class GUIMain01Class(xbmcgui.Window):
                          if (dvd_info == 4):
                              DVDState = OSCheckMedia("DVD-ROM")
                              if (DVDState == 3):
-
-                                 # There is a copy protected dvd inside the the drive 
-                                 # Depending on the settings we do continue now or we 
-                                 # pepare to exit this menu-point.
+                                 
+                                 ######################################################
+                                 # There is a copy protected dvd inside the the drive #
+                                 # Depending on the settings we do continue now or we #
+                                 # pepare to exit this menu-point.                    #
+                                 ######################################################
 
                                  if (__disable_cp_trancode__ == 'true'):
 
-                                     # Show Info that copy protected dvd'a can not be transcoded 
+                                     # Show Info that copy protected dvd's can not be transcoded 
                                      # because the settings prevent this ...
 
                                      GUIInfo(0,__language__(33237))
@@ -1705,8 +1708,10 @@ class GUIMain01Class(xbmcgui.Window):
 
                                      GUIlog('dvd-copy protection detected !!') 
 
-                                     # Ask to continue operation even if a copy protected dvd is 
-                                     # detectec inside the drive 
+                                     #############################################################
+                                     # Ask to continue operation even if a copy protected dvd is #
+                                     # detectec inside the drive                                 #
+                                     #############################################################
 
                                      selection = GUIYesNo(1,__language__(33334))
                                      if (selection):
@@ -1844,8 +1849,10 @@ class GUIWorkerThread(threading.Thread):
                        mainprocess = OSCheckMainProcess()
                        progress = OSGetProgressVal() 
                        modula = progress % 5                 
-
-                       # Process is dead ... may a copy-protection of the inserted dvd ? 
+                 
+                       ####################################################################
+                       # Process is dead ... may a copy-protection of the inserted dvd ?  #
+                       ####################################################################
 
                        if (mainprocess == 1 ):
                           if (progress <= 97):  
@@ -1926,6 +1933,17 @@ if __name__ == '__main__':
    __allways_default__ = __configuration__[58]   
    __disable_cp_trancode__ = __configuration__[59]
    __notifications__ = __configuration__[61]
+
+
+   #############################################################
+   # DVD Tracklists are handled diffrent between handbrake and #
+   # makemkvcon.                                               #
+   #############################################################
+ 
+   if (__default_dvd_tr__ == 3):
+       __default_tr_mkv__ = True
+   else:
+       __default_tr_mkv__ = False  
 
 
    ############################################## 

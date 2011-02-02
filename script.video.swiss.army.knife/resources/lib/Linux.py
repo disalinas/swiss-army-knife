@@ -595,6 +595,12 @@ def OSChapterBluray():
         trackfile = open(__configLinux__[42],'r')
         for line in trackfile.readlines():
                 line = line.strip()
+
+                #######################################################################
+                # Warning : In the case we use makemkv it is not allowed to add       #
+                # a track that is shorter than 120 secounds or all indexes are wrong  #
+                #######################################################################
+
                 tracklist.append(line)
         trackfile.close
         return tracklist
@@ -1102,6 +1108,12 @@ def OSChapterDVD():
         trackfile = open(__configLinux__[46],'r')
         for line in trackfile.readlines():
                 line = line.strip()
+
+                #######################################################################
+                # Warning : In the case we use makemkv it is not allowed to add       #
+                # a track that is shorter than 120 secounds or all indexes are wrong  #
+                #######################################################################
+
                 tracklist.append(line)
         trackfile.close
         return tracklist
