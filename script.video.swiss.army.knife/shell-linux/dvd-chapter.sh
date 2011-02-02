@@ -189,6 +189,8 @@ lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f1 >  ~/.xb
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f2 >  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvdm
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | cut -d: -f3 >  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvds
 lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $6}' | sed  's/,//g' > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvdc
+lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $11}'| sed  's/,//g' > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvdac
+
 
 chapter=$(lsdvd -v $1 2>/dev/null | grep ^Title | awk  '{print $4}' | wc -l)
 
@@ -203,14 +205,15 @@ do
   MIN=$(head -$index ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvdm | tail -1)
   SEC=$(head -$index ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvds | tail -1)
   CAP=$(head -$index ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvdc | tail -1)
+  ACOUNTER=$(head -$index ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvdac | tail -1)
 
   if [ $track -lt 10 ] ; then
      echo INFO track-index:[0$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP]
-     echo track:[0$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP] >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_TRACKS
+     echo [$HOUR:$MIN:$SEC] chapters[$CAP] audio[$ACOUNTER] >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_TRACKS
   fi
   if [ $track -gt 9 ] ; then
      echo INFO track-index:[$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP]
-     echo track:[$track] length:[$HOUR:$MIN:$SEC] chapters:[$CAP] >>  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_TRACKS
+     echo [$HOUR:$MIN:$SEC] chapters[$CAP] audio[$ACOUNTER] >>  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_TRACKS
   fi
   track=`expr $track + 1`
 done < ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/dvdh

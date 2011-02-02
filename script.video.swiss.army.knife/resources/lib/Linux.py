@@ -1117,7 +1117,11 @@ def OSChapterDVD(UsingMKV_Tracks):
                 # a track that is shorter than 120 secounds or all indexes are wrong  #
                 #######################################################################
 
-                tracklist.append(line)
+
+                if (UsingMKV_Tracks == True):
+                    tracklist.append(line)
+                else:
+                    tracklist.append(line)
         trackfile.close
         return tracklist
     else:
