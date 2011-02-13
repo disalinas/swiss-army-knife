@@ -747,7 +747,7 @@ if [ $? -eq 1 ] ; then
           
          # Install bin part for makemkv   
 
-         dpkg -i akemkv-v1.6.3-bin_20101219-1_amd64.deb
+         dpkg -i makemkv-v1.6.3-bin_20101219-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
             echo the installation of akemkv-v1.6.3-bin_20101219-1_amd64.deb
