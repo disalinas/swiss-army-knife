@@ -667,9 +667,9 @@ which makemkvcon >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
    echo The command makemkvcon was not found on your system.
-   echo Should makemkv 1.6.3 to be installed ?
+   echo Should makemkv 1.6.4 to be installed ?
    echo Even if there is no bluray installed you have to answer
-   echo yes if you plan to transcode a dvd to mkv.
+   echo yes if you plan to transcode a dvd to the mkv format.
    echo
    echo -n "Do you want to install makemkv (y/n)"
    read ans
@@ -682,17 +682,17 @@ if [ $? -eq 1 ] ; then
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download release 1.6.3 from project url for 32 bit 
+         # Download release 1.6.4 from project url for 32 bit 
 
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32-12-19-2010.tar.gz
-         tar xvzf makemkv-swiss-army-knife-32-12-19-2010.tar.gz
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32-02-13-2011.tar.gz 
+         tar xvzf makemkv-swiss-army-knife-32-02-13-2011.tar.gz 
  
          # Install oss part for makemkv 
         
-         dpkg -i makemkv-v1.6.3-oss_20101219-1_i386.deb
+         dpkg -i makemkv-v1.6.4-oss_20110213-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.3-oss_20101219-1_i386.deb
+            echo the installation of makemkv-v1.6.4-oss_20110213-1_i386.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -703,10 +703,10 @@ if [ $? -eq 1 ] ; then
 
          # Install binary part for makemkv 
 
-         dpkg -i makemkv-v1.6.3-bin_20101219-1_i386.deb
+         dpkg -i makemkv-v1.6.4-bin_20110213-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.3-bin_20101219-1_i386.deb
+            echo the installation of makemkv-v1.6.4-bin_20110213-1_i386.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -717,7 +717,7 @@ if [ $? -eq 1 ] ; then
 
          # delete downloaded archive
 
-         rm makemkv-swiss-army-knife-32-12-19-2010.tar.gz
+         rm makemkv-swiss-army-knife-32-02-13-2011.tar.gz 
 
       else
          clear
@@ -726,17 +726,17 @@ if [ $? -eq 1 ] ; then
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download release 1.6.3 from project url for 64 bit 
+         # Download release 1.6.4 from project url for 64 bit 
          
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-12-19-2010.tar.gz
-         tar xvzf makemkv-swiss-army-knife-64-12-19-2010.tar.gz
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-02-13-2011.tar.gz 
+         tar xvzf makemkv-swiss-army-knife-64-02-13-2011.tar.gz 
 
          # Install oss part for makemkv  
 
-         dpkg -i makemkv-v1.6.3-oss_20101219-1_amd64.deb
+         dpkg -i makemkv-v1.6.4-oss_20110213-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.3-oss_20101219-1_amd64.deb
+            echo the installation of makemkv-v1.6.4-oss_20110213-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -747,10 +747,10 @@ if [ $? -eq 1 ] ; then
           
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.3-bin_20101219-1_amd64.deb
+         dpkg -i makemkv-v1.6.4-bin_20110213-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of akemkv-v1.6.3-bin_20101219-1_amd64.deb
+            echo the installation of makemkv-v1.6.4-bin_20110213-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -758,7 +758,7 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-         rm makemkv-swiss-army-knife-64-12-19-2010.tar.gz
+         rm makemkv-swiss-army-knife-64-02-13-2011.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
