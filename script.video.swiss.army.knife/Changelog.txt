@@ -286,6 +286,7 @@ Fixes:
 - With a heavy load the predefined delay value for the ssh-testcommand is may 
   to small.(Incremented the value by 1).
 - Do not remove openssh-server and openssh-client during the execution of deinstall.sh 
+- Fix issue 19 
 
  
 

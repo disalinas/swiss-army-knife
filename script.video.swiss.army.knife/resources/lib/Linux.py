@@ -290,7 +290,7 @@ def OSConfiguration(index):
 
     # Every release has a sepeperate setup.done file .....
 
-    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.18-setup.done'
+    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.19-setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
     config[32] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid'
