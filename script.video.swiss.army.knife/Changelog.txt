@@ -285,6 +285,8 @@ Fixes:
 - If we do rename we should also include a extension (fix for above fix)
 - With a heavy load the predefined delay value for the ssh-testcommand is may 
   to small.(Incremented the value by 1).
+- Do not remove openssh-server and openssh-client during the execution of deinstall.sh 
+
  
 
 
