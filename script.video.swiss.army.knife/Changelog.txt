@@ -276,6 +276,7 @@ Changes:
 - Integrate installation of Handbrake 0.9.5 into setup.sh 
 - Integrate upgrade of Handbrake 0.9.5 into setup.sh 
 - Integrate installation of makemkv 1.6.4 into setup.sh 
+- Integrate upgrade of makemkv 1.6.4 into setup.sh 
 
 Fixes:
 

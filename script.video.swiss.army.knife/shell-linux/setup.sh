@@ -781,9 +781,9 @@ else
    echo The command makemkvcon was found on your system.
    echo
    echo The release found on your system is : [$MINSTALLED]
-   echo The script can download and install : [v1.6.3]
+   echo The script can download and install : [v1.6.4]
    echo
-   echo Should makemkv [v1.6.3] be installed over
+   echo Should makemkv [v1.6.4] be installed over
    echo the existing release on your system ?
    echo
    echo Warning : This may make makemkv unusable ...
@@ -802,15 +802,15 @@ else
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32-12-19-2010.tar.gz
-         tar xvzf makemkv-swiss-army-knife-32-12-19-2010.tar.gz  
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32-02-13-2011.tar.gz 
+         tar xvzf makemkv-swiss-army-knife-32-02-13-2011.tar.gz 
 
          # Install oss part for makemkv           
 
-         dpkg -i makemkv-v1.6.3-oss_20101219-1_i386.deb
+         dpkg -i makemkv-v1.6.4-oss_20110213-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.3-oss_20101219-1_i386.deb
+            echo the installation of makemkv-v1.6.4-oss_20110213-1_i386.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -821,10 +821,10 @@ else
 
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.3-bin_20101219-1_i386.deb
+         dpkg -i makemkv-v1.6.4-bin_20110213-1_i386.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.3-bin_20101219-1_i386.deb
+            echo the installation of makemkv-v1.6.4-bin_20110213-1_i386.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -832,7 +832,9 @@ else
             read any
             exit $E_DPKG
          fi
-         rm makemkv-swiss-army-knife-32-12-19-2010.tar.gz
+
+         rm makemkv-swiss-army-knife-32-02-13-2011.tar.gz 
+
       else
          clear
          echo
@@ -840,15 +842,15 @@ else
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-12-19-2010.tar.gz
-         tar xvzf makemkv-swiss-army-knife-64-12-19-2010.tar.gz
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-02-13-2011.tar.gz
+         tar xvzf makemkv-swiss-army-knife-64-02-13-2011.tar.gz
 
          # Install oss part for makemkv  
 
-         dpkg -i makemkv-v1.6.3-oss_20101219-1_amd64.deb
+         dpkg -i makemkv-v1.6.4-oss_20110213-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.3-oss_20101219-1_amd64.deb
+            echo the installation of makemkv-v1.6.4-oss_20110213-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -859,10 +861,10 @@ else
           
          # Install bin part for makemkv   
 
-         dpkg -i akemkv-v1.6.3-bin_20101219-1_amd64.deb
+         dpkg -i makemkv-v1.6.4-bin_20110213-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of akemkv-v1.6.3-bin_20101219-1_amd64.deb
+            echo the installation of makemkv-v1.6.4-bin_20110213-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -871,14 +873,14 @@ else
             exit $E_DPKG
          fi
 
-         rm makemkv-swiss-army-knife-64-12-19-2010.tar.gz
+         rm makemkv-swiss-army-knife-64-02-13-2011.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
       clear
       echo
       echo -----------------------------------------------------------
-      echo current makemkv is not updated to release 1.6.3 and remains 
+      echo current makemkv is not updated to release 1.6.4 and remains 
       echo as it is.
       echo
       echo -n press any key to continue ..
