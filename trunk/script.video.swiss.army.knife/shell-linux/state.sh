@@ -230,6 +230,12 @@ if [ $RETVAL1 -eq 0 ] ; then
            CRC_COUNTER=1
        fi
 
+       CRC=$(cat $DVD_CRC_ERRRORS | grep "Ignored size of file indicated in UDF")
+       if [ -n "$CRC" ] ; then
+           CRC_COUNTER=1
+       fi
+
+
        if [ $CRC_COUNTER -eq 0 ] ; then
            echo ----------------------- script rc=0 -----------------------------
            echo -----------------------------------------------------------------
