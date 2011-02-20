@@ -278,6 +278,7 @@ Changes:
 - Integrate installation of makemkv 1.6.4 into setup.sh 
 - Integrate upgrade of makemkv 1.6.4 into setup.sh 
 - Added a single copy-protection detection string to state.sh
+- Integrate installation / upgrade of makemkv 1.6.5 into setup.sh
 
 Fixes:
 
