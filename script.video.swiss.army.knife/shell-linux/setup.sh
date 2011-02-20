@@ -726,17 +726,17 @@ if [ $? -eq 1 ] ; then
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download release 1.6.4 from project url for 64 bit 
+         # Download release 1.6.5 from project url for 64 bit 
          
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-02-13-2011.tar.gz 
-         tar xvzf makemkv-swiss-army-knife-64-02-13-2011.tar.gz 
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-02-20-2011.tar.gz 
+         tar xvzf makemkv-swiss-army-knife-64-02-20-2011.tar.gz 
 
          # Install oss part for makemkv  
 
-         dpkg -i makemkv-v1.6.4-oss_20110213-1_amd64.deb
+         dpkg -i makemkv-v1.6.5-oss_20110220-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.4-oss_20110213-1_amd64.deb
+            echo the installation of makemkv-v1.6.5-oss_20110220-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -747,10 +747,10 @@ if [ $? -eq 1 ] ; then
           
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.4-bin_20110213-1_amd64.deb
+         dpkg -i makemkv-v1.6.5-bin_20110220-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.4-bin_20110213-1_amd64.deb
+            echo the installation of makemkv-v1.6.5-bin_20110220-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -758,7 +758,7 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-         rm makemkv-swiss-army-knife-64-02-13-2011.tar.gz
+         rm makemkv-swiss-army-knife-64-02-20-2011.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -842,15 +842,15 @@ else
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-02-13-2011.tar.gz
-         tar xvzf makemkv-swiss-army-knife-64-02-13-2011.tar.gz
+         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-02-20-2011.tar.gz
+         tar xvzf makemkv-swiss-army-knife-64-02-20-2011.tar.gz
 
          # Install oss part for makemkv  
 
-         dpkg -i makemkv-v1.6.4-oss_20110213-1_amd64.deb
+         dpkg -i makemkv-v1.6.5-oss_20110220-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.4-oss_20110213-1_amd64.deb
+            echo the installation of makemkv-v1.6.5-oss_20110220-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -861,10 +861,10 @@ else
           
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.4-bin_20110213-1_amd64.deb
+         dpkg -i makemkv-v1.6.5-bin_20110220-1_amd64.deb
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.4-bin_20110213-1_amd64.deb
+            echo the installation of makemkv-v1.6.5-bin_20110220-1_amd64.deb
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -873,7 +873,7 @@ else
             exit $E_DPKG
          fi
 
-         rm makemkv-swiss-army-knife-64-02-13-2011.tar.gz
+         rm makemkv-swiss-army-knife-64-02-20-2011.tar.gz
       fi
    fi
    if [ $ans == "n" ] ; then
