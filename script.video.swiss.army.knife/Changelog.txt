@@ -280,6 +280,8 @@ Changes:
 - Added a single copy-protection detection string to state.sh
 - Integrate installation / upgrade of makemkv 1.6.5 into setup.sh (only 32)
 - Integrate installation / upgrade of makemkv 1.6.5 into setup.sh (only 64)
+- Thanks to chippyash2 english based documentation is finished.
+- Added README.de.linux 
 
 Fixes:
 
@@ -291,6 +293,9 @@ Fixes:
   to small.(Incremented the value by 1).
 - Do not remove openssh-server and openssh-client during the execution of deinstall.sh 
 - Fix issue 19 
+- README.linux replaced with README.en.linux 
+ 
+
 
  
 

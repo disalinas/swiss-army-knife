@@ -1,64 +1,66 @@
-Readme.Linux for XBMC addon swiss-army-knife 0.6.19 (Beta 4) 
+Readme.Linux für XBMC addon swiss-army-knife 0.6.19 (Beta 4) 
 ------------------------------------------------------------
 
-1.0 Welcome to my first addon called swiss-army-knife
------------------------------------------------------
+1.0 Wilkommen zu meinem ersten Addon namens swiss-army-knife
+------------------------------------------------------------
 
-Hi, my name is Hans.  My native language is German. I do speak a few other
-languages, but speaking and writing are two different things. I am having help
-to write this help file and all the other translations that the system supports.
-If you would would like to improve the addon with your own language, patches are 
-always welcome.  I'd really like someone to write this readme in French as well.
+Hallo, mein Name ist Hans. Meine Muttersprache ist Deutsch und ich spreche 
+auch noch ein paar andere Sprachen recht passabel.Ihr könnt mich so nebenbei 
+in Deutsch / Französich / Spanisch und English kontaktieren.
 
-Until V10.0 (dharma) version of XBMC we had a collection of different types of 
-object within XBMC
+Bis zur Version V10.0 (Dharma) von XBMC hatten wir eine grosse Menger verschiedener 
+Objekte innerhalb von XBMC.
  
-* Scripts
-* Programs 
-* Plugins for Video 
-* Plugins for Music
-and many more 
+* Scripte
+* Programme  
+* Plugins für Videos 
+* Plugins für Musik
+und viele mehr ...
 
-After the release XBMC version 10.0 or higher everyting is now called an addon.
-I used the switch to the new addon-system to make a complete rewrite  of  
-the old code from my previous script called "luemmels-DVD-ripper".
-My old script was running, but had a few down-sides...
+Nach der Veröffentlichung von XBMC Version 10.0 oder höher ist alles ein so genanntes
+Addon.Ich benutzte die Umstellung des alten Systems auf das neue Addon System um einen
+kompletten Neuanfang mit meinem alten Script namens "Luemmels DVD-Ripper" zu machen.
+Der alte Code lief eigentlich im Grossen und ganzen ganz gut aber mit ein paar 
+hässlichen Nebeneffekten.
 
-- it was very huge ... and BTW my first ever written python script.
-- No support for Blurays. 
-- all code for the OS and GUI was in a single file.
-- it was hard to debug ..... and maintain.
-- I had no subversion control for the script.
-- It was running on windows and Linux but it was a pain to maintain both 
-  releases. 
-
-For this new addon I changed a few things.
-
-1.) There are 3 strict separated parts ( GUI / OS / shell-script)
-2.) The code looks nicer .-)
-3.) The code is easier to maintain.   
-4.) Subversion is now a important part of my work during the development of this 
-    addon .... (and saved my ass one time ;-))
-5.) For someone who wants to port the addon to Windows or Mac the work is easier. 
-    Please feel free to send patches for Windows and Mac.
-    If you decide to port this addon to Windows please be aware that binaries 
-    for 32 and 64 bit architectures have to be build.
-    I don't use XBMC on Windows and I have therefore no intention porting this 
-    addon myself.
+- Die Codebasis war riesig und war mein erstes Python Skript überhaupt. 
+- Keine Bluray Unterstützung.
+- Der ganze Code für das OS bzw. GUI Handling war in einer einzigen Datei.
+- Es wahr sehr schwer Fehler zu finden.
+- Ich benutzte für die Entwicklung kein CVS-System.
+- Es war zwar lauffähing unter Windows und Linux, aber verdammt schwer zu unterhalten.
 
 
-1.1 What are the functions this addon provides ? 
--------------------------------------------------
+Bei diesem neuen Addon änderte ich ein paar Dinge.
 
-* create a exact ISO copy of a DVD using the dd program.
-* try to copy crippled DVD's with ddrescue.
-* convert DVD to a h264 container. 
-* convert Bluray to a MKV container.
-* convert DVD to a MKV container.
-* convert DVD to iPhone compatible format.
-* convert DVD to PSP compatible format. 
-* execute up to 9 user-defined shell-scripts.
-* in a later release I plan to work  some of this features over the network. 
+1.) Der Programmcode ist in 3 strikte voneinander getrennte Teile separiert ( GUI / OS / shell-script)
+2.) Der Code schaut besser aus.
+3.) Der Code ist besser zu warten.
+4.) Subversion (CVS) ist jetzt ein wichtiger Bestandteil der ganzen Entwicklung und hat mir
+    einmal wirklich geholfen.
+5.) Für jemanden der dieses Addon auf Windows oder Mac portieren möchte, wird die Arbeit durch 
+    die strikte Trennung der Module vereinfacht.
+    Patches für Windows und Mac sind immer wilkommen.
+    Solltest Du mit dem Gedanken spielen dieses Addon auf Windows oder Mac zu portieren, 
+    beachte bitte dass die bereitgestellten Binär Dateien für 32 und 64 Bit vorliegen müssen 
+    damit sie akzeptiert werden.
+    Ich brauche XBMC auschliesslich unter Linux und habe persönlich keine Intresse dieses Addon
+    auf Windows oder Mac zu portieren. 
+
+
+
+1.1 Was sind die Funktionen welches dieses Addon bietet ? 
+---------------------------------------------------------
+
+* Erzeugen einer exakten ISO Kopie einer DVD mittels dem Programm dd.
+* Kopiergeschützte DVD's werden probiert mittels ddrescue zu kopieren.
+* Konvertiert eine DVD in einen h264 Kontainer. 
+* Konvertiert eine Bluray in einen MKV Kontainer.
+* Konvertiert eine DVD in einen MKV Kontainer.
+* Konvertiert eine DVD in ein iPhone kompatibles Format.
+* Konvertiert eine DVD in ein PSP kompatibles Format. 
+* Ausführung von bis zu 9 user definierten Shell-Skripten über das GUI-Interface.
+* In einem späteren Release können gewisse Funktionen über das Netzwerk aufgerufen werden.  
 
 
 2.0 Requirements for this addon 
@@ -165,15 +167,13 @@ files.
 - If a error is detected during the installation of Makemkv or handbrake 
   the script will exit now.
 - Multiple parts of the script will now ask if they should be executed.
-- This means that you can later rerun setup.sh to carry out just the actions
+  - This means that you can later rerun setup.sh to carry out just the actions
     you need to carry out.
  
 As of release 0.6.15, a deinstall.sh script is provided to uninstall all 
 software that was installed during the execution of setup.sh.
 - the script will not remove SSH
 - this script do not remove any folders from the movie-containers !
-
-Even after a execution of deinstall.sh all your movies are not touched ! 
 
 This Debian-files for download  are only tested on Ubuntu 10.04 LTS.If you don't
 use a Debian based system, or your system is to old, you have to compile 
