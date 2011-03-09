@@ -2007,6 +2007,23 @@ if __name__ == '__main__':
 
            GUIInfo(0,__language__(33316))
            Enable_Startup_Addon = 1 
+   else:
+        GUILog("Error in startup-configuration")
+        exit   
+
+
+
+   ############################################## 
+   # Check container ssh-log files              # 
+   ##############################################
+
+   if ( Enable_Startup_Addon == 0):      
+      if (OSCheckContainerID(6)):
+         GUIInfo(1,__language__(33327))                     
+         Enable_Startup_Addon = Enable_Startup_Addon + 1
+   else:
+        GUILog("Error in startup-configuration")
+        exit 
 
 
    ############################################## 
@@ -2026,7 +2043,10 @@ if __name__ == '__main__':
                    GUIlog ("This addon do not start until ssh communication is working properly for the current user") 
                    GUIlog ("Addon do exit now ...")
                Enable_Startup_Addon = Enable_Startup_Addon + 1 
- 
+
+   else:
+        GUILog("Error in startup-configuration")
+        exit     
 
    ############################################## 
    # Check Bluray-Part of addon                 # 
@@ -2063,6 +2083,11 @@ if __name__ == '__main__':
            if (__default_dvd_tr__ == 3):
               GUIInfo(1,__language__(33333))
               Enable_Startup_Addon = Enable_Startup_Addon + 1   
+   else:
+        GUILog("Error in startup-configuration")
+        exit  
+
+
 
 
    ############################################## 
@@ -2073,6 +2098,9 @@ if __name__ == '__main__':
       if (OSCheckContainerID(1)):
          GUIInfo(1,__language__(33306))
          Enable_Startup_Addon = Enable_Startup_Addon + 1
+   else:
+        GUILog("Error in startup-configuration")
+        exit  
 
 
    ############################################## 
@@ -2083,7 +2111,9 @@ if __name__ == '__main__':
       if (OSCheckContainerID(0)):
          GUIInfo(1,__language__(33305))
          Enable_Startup_Addon = Enable_Startup_Addon + 1
-
+   else:
+        GUILog("Error in startup-configuration")
+        exit  
 
    ############################################## 
    # Check container dvd-iso files              # 
@@ -2093,7 +2123,9 @@ if __name__ == '__main__':
       if (OSCheckContainerID(3)):
          GUIInfo(1,__language__(33318))
          Enable_Startup_Addon = Enable_Startup_Addon + 1
-
+   else:
+        GUILog("Error in startup-configuration")
+        exit  
 
    ############################################## 
    # Check container network files              # 
@@ -2108,6 +2140,9 @@ if __name__ == '__main__':
       
             Enable_Startup_Addon = Enable_Startup_Addon + 1
             __enable_network__ == "false" 
+   else:
+        GUILog("Error in startup-configuration")
+        exit  
 
 
    ############################################## 
@@ -2123,7 +2158,9 @@ if __name__ == '__main__':
 
             Enable_Startup_Addon = Enable_Startup_Addon + 1
             __enable_burning__ == "false" 
-
+   else:
+        GUILog("Error in startup-configuration")
+        exit  
 
    ############################################## 
    # Check container iphone-transcode files     # 
@@ -2133,7 +2170,9 @@ if __name__ == '__main__':
       if (OSCheckContainerID(7)):
          GUIInfo(1,__language__(33331))                     
          Enable_Startup_Addon = Enable_Startup_Addon + 1
-
+   else:
+        GUILog("Error in startup-configuration")
+        exit  
 
    ############################################## 
    # Check container psp-transcode files        # 
@@ -2143,17 +2182,9 @@ if __name__ == '__main__':
       if (OSCheckContainerID(8)):
          GUIInfo(1,__language__(33332))                     
          Enable_Startup_Addon = Enable_Startup_Addon + 1
-
-
-   ############################################## 
-   # Check container ssh-log files              # 
-   ##############################################
-
-   if ( Enable_Startup_Addon == 0):      
-      if (OSCheckContainerID(6)):
-         GUIInfo(1,__language__(33327))                     
-         Enable_Startup_Addon = Enable_Startup_Addon + 1
-
+   else:
+        GUILog("Error in startup-configuration")
+        exit  
 
    ############################################## 
    # Start addon only in the case of no errors  # 
