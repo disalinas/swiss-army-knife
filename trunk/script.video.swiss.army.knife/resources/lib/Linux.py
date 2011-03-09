@@ -1552,15 +1552,31 @@ def OSCheckSSH():
     global __verbose__
 
     if (os.path.exists(__configLinux__[39])):
+
+        # Before we try to delete a existing file we should be certain to have 
+        # full write accesss to this file but inside the main-code we did allready 
+        # this test, therefore we can skip this test .-) 
+
         os.remove(__configLinux__[39])
 
     OSRun( "check-ssh.sh ",True,False)
-    time.sleep(2) 
 
-    if (os.path.exists(__configLinux__[39])):
-        return 0
-    else:
-        return 1
+    # We wait for at least 6 secounds ... after this timeout we leave 
+    # the function 
+
+    index = 0 
+    retcode = 1
+    Waitexit = True
+    while (Waitexit):
+          if (os.path.exists(__configLinux__[39])):
+              Waitexit = False  
+              retcode = 0
+          index = index + 1
+          if (index == 10):
+             Waitexit = False   
+          time.sleep(1) 
+
+    return retcode 
 
 #########################################################
 
