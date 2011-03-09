@@ -214,7 +214,7 @@
         <!-- Error         -->
         <!--               -->
         
-        <string id="33300">Vor dem ausführen des Addons muss setup.sh ausgeführt</string> 
+        <string id="33300">Vor dem ausführen des Addons muss setup.sh ausgeführt werden</string> 
         <string id="33301">Eingelegte Disk ist keine Bluray</string>
         <string id="33302">Timeout t1 :  media/state konnte nicht geöffnet werden</string>
         <string id="33303">Bluray-Funktionen sind deaktiviert.</string>

@@ -63,73 +63,78 @@ Bei diesem neuen Addon änderte ich ein paar Dinge.
 * In einem späteren Release können gewisse Funktionen über das Netzwerk aufgerufen werden.  
 
 
-2.0 Requirements for this addon 
--------------------------------
+2.0 Grundanforderungen für dieses Addon 
+---------------------------------------
 
-- a Ubuntu 10.04 LTS system or higher. (Test passed on Ubuntu 10.04 LTS). This 
-  System can be 32 or 64 bit. 
-- a SVN build of XBMC (at least SVN 31953) or higher.
-- a DVD drive and optionally a Bluray drive if you want to transcode BD-disk
-- a place where you can store rips. Be prepared, ripping DVD and Bluray disks
-  can take a very large amount of space (terrabyte disk drive prices are coming
-  down though.) 
+- Ein Ubuntu LTS System 10.04 oder höher. Es kann sich entweder um ein 32 Bit 
+  bzw. 64 Bit System handeln.
+- Ein XBMC System Version 10.0 oder höher.
+- Ein DVD-Laufwerk oder optional ein BLuray Laufwerk wenn Du Bluray Disk konvertieren möchtest.
+- Ein geeigneter Platz um die RIP-Dateien zu speichern. Der Platz welche für das rippen benötitgt wird, ist recht 
+  umfangreich und kann bis mehrere Terra-Bytes umfassen.
 
-3.0 What Software will be installed ? 
+
+3.0 Welche Software wird installiert ? 
 -------------------------------------
 
-The list is very long but you can have a look inside the file 
-shell-Linux/setup.sh 
+Die Liste der installierten Programme ist sehr lang, aber Du 
+kannst die installierten Programme im Shell-Skript setup.sh anschauen.
+
+ 
+
+4.0 Wohin ist das Shell-Skript livcd.sh verschwunden ? 
+-------------------------------------------------------
+
+Der Ersatz heisst setup.sh und befindet sich im Ordner shell-linux.
 
 
-4.0 Where is the livcd.sh shell-script gone ? 
----------------------------------------------
-The replacement is called setup.sh and is inside the shell-Linux 
-directory.
+
+5.0 Updaten von einer vorhergehenden Version 
+--------------------------------------------
+
+Bitte entferne alle Version des Addons inklusive des Addon-Verzeichnisses 
+im User Verzeichniss von XBMC.Solange dieses Addon als Beta-Version vorliegt,
+ist dieser Schritt absolut notwendig   
+
+Achtung sehr wichtig : 
+
+Immer das Programm setup.sh ausführen !!!! 
 
 
-5.0 Upgrade from a previous version 
------------------------------------
-
-Please do remove any previous version of the addon including the addon-directory
-inside user-data. As long the addon remains alpha or beta a lot of changes do 
-occur. 
-
-Very important - as long this Addon is only ALPHA or BETA !!!!!
-
-ALLWAYS RUN THE SETUP PROGRAM INSIDE THE LINUX-SHELL FOLDER !!!
-ALLWAYS REMOVE THE ADDON FILES INCLUDING ADDON DIRECTORY PRIOR 
-TO INSTALLATION OF A NEW VERSION OF THIS ADDON.
 
 6.0 Installation 
 ----------------
 
-At first you have to extract the addon-zip inside the right place.
+Als erstes muss das Addon im richtigen Verzeichniss entpackt werden.
 
 ~/.xbmc/addons
 
-If you did install this addon over the luxeria-repository then this 
-step was already made for you.
+Sofern das Addon über das luxeria-Repository installiert wurde, 
+ist dieser Schritt bereits ausgeführt.
 
-Change to the shell-Linux directory inside the addon.
+Wechsle in das Shell Verzeichniss innerhalb des Addons.
 
 cd ~/.xbmc/addons/script.video.swiss.army.knife/shell-Linux
 
-Run the following command as user root :
+Führe das folgende Kommando als Benutzer root aus :
 
 ./setup.sh xbmc
 
-or use sudo, i.e.
+oder benutze sudo wie folgt :
+
 sudo ./setup.sh xbmc
 
-[Replace xbmc in this command line with the name that XBMC is running under if 
-it is not the default 'xbmc'] (hint -> whoami[enter])
+[Ersetze xbmc in diesem Kommando mit dem Benutzernamen unter welchen XBMC ausgeführt wird,
+sofern nicht der Benutzername 'xbmc' verwendet wird] [Tip: -> whoami]
 
-If you fail to run setup.sh the following messages comes up on starting the 
-addon.
 
-"You must run setup.sh prior to starting this addon for the first time" 
+Sofern das Setup Shell-Skript nicht erfolgreich ausgeführt werden kann,erscheint beim Start 
+des Addons nachfolgende Meldung:
 
-and you will not be able use the addon.
+"Vor dem ausführen des Addons muss setup.sh ausgeführt werden"
+
+und das Addon kann nicht ausgeführt werden.
+
 
 The first thing that the script will do is to download the End User License 
 Agreement (EULA) and ask yo to accept its conditions. If you do not accepted the
@@ -400,11 +405,11 @@ linuxluemmel.ch@gmail.ch alias Hans Weber
 
 
 
-APPENDIX A.)
+Anhang A.)
 -------------
 
 
-The following table shows the current configuration settings for the addon 0.6.19
+Die nachfolgende Tabelle zeigt die aktuelle Konfiguration für das Addon 0.6.19
 
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>

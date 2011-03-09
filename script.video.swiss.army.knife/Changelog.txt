@@ -295,6 +295,7 @@ Fixes:
 - Fix issue 19 
 - README.linux replaced with README.en.linux
 - Possible fix that prevent occur of issue 17 ...
+- Fixed typo german language <string id="33300">
  
  
 
