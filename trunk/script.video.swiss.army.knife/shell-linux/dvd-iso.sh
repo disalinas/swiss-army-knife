@@ -276,6 +276,18 @@ lsdvd -a $1 1>/dev/null 2>&1
 echo
 echo INFO starting dd
 
+
+###############################################################
+# experimental replace the following lines ....
+###############################################################
+
+# (
+# dd if=$1 of=$2/$3.iso bs=2MB conv=noerror, sync & 
+# ) > $OUT_TRANS 2>&1 &
+
+
+# Normal dd operation
+
 (
 dd bs=2048 if=$1 of=$2/$3.iso &
 ) > $OUT_TRANS 2>&1 &
