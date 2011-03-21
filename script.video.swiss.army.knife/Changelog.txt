@@ -301,6 +301,9 @@ Fixes:
 - Fixed ugly bug inside dvd-chapter.sh 
   (there was no device for dvd on some calls to lsdvd)
   Thanks to fabrice.peiffer@convar.com
+- Fixed issue 22 with loging asci-code inside log.
+
+
 
   
 
