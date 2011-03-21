@@ -131,9 +131,10 @@ def GUINotification(Info):
 
     if (__verbose__ == "true"):
         GUIlog('notification : [' + Info + "]")
+  
 
-    Command = '"xbmc.Notification((Swiss-Army-Knife),' + Info + ',10)"'
-    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",1000) ")
+    # Command = '"xbmc.Notification((Swiss-Army-Knife),' + Info + ',10)"'
+    # xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",1000) ")
  
     if (__verbose__ == "true"):
        GUIlog('notification-command : [' + Command + "]") 
@@ -292,7 +293,7 @@ def GUISelectDir():
 #########################################################
 def GUIlog(msg):
      
-    if (__verbose__ == "true"):     
+    if (__verbose__ == "true"):   
        xbmc.output("[%s]: [GUIlog] %s\n" % ("swiss-army-knife",str(msg)))
 
     return
@@ -1900,9 +1901,15 @@ class GUIWorkerThread(threading.Thread):
 
 if __name__ == '__main__':
 
+   ############################################## 
+   # Load configurations settings               # 
+   ##############################################
+   
+   __configuration__ = OSConfiguration(__index_config__)
+   __verbose__         = __configuration__[17]
 
    ############################################## 
-   # Initial Addon / Load configuration         # 
+   # Initial Addon                              # 
    ##############################################
 
    Enable_Startup_Addon = 0   
@@ -1910,11 +1917,16 @@ if __name__ == '__main__':
    xbmc.executebuiltin("ActivateWindow(busydialog)")
 
    if (__verbose__ == "true"):    
-      GUIlog ("Release xbmc  : [" +  xbmc_version + "]")     
-      GUIlog ("Release Addon : [" + __version__ + "]")
-      GUIlog ("Addon url     : [" + __url__ + "]")
-      GUIlog ("Author Addon  : [" + __author__  + "]")
-        
+      GUIlog ("Release xbmc     : [" +  xbmc_version + "]")     
+      GUIlog ("Release Addon    : [" + __version__ + "]")
+      GUIlog ("Addon url        : [" + __url__ + "]")
+      GUIlog ("Author Addon     : [" + __author__  + "]")
+      GUIlog ("Default encoding : [" + sys.getdefaultencoding() + "]")
+      GUIlog ("Verbose log      : [" + "TRUE" + "]")
+   else:
+      GUIlog ("Release Addon    : [" + __version__ + "]")
+      GUIlog ("Verbose log      : [" + "TRUE" + "]")
+ 
    reference =  __language__(34000)    
    __linebreak__ = reference.find("Line-2")
 
@@ -1922,17 +1934,13 @@ if __name__ == '__main__':
       GUIlog ("Linebreak     : [" +  str(__linebreak__) + "]")      
 
    if (__verbose__ == "true"):    
-       GUIlog ("loading-configuration")
-
-   __configuration__ = OSConfiguration(__index_config__)
-   
+       GUIlog ("loading-configuration")   
   
    __default_dvd_tr__  = int(__configuration__[9]) 
    __enable_bluray__   = __configuration__[10]
    __enable_network__  = __configuration__[11]
    __enable_burning__  = __configuration__[12]
    __enable_customer__ = __configuration__[14]
-   __verbose__         = __configuration__[17]
    __enable_pw_mode__  = __configuration__[19]
    __pw__              = __configuration__[20]
    __allways_default__ = __configuration__[58]   

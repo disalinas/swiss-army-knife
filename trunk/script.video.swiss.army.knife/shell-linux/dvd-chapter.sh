@@ -224,7 +224,7 @@ if [ $2 -eq "1" ] ; then
 
      # Automode is activ
 
-     AUTO_SELECT_TRACK=$(lsdvd -v 2>/dev/null | grep "Longest" | awk '{print $3}')
+     AUTO_SELECT_TRACK=$(lsdvd -v $1 2>/dev/null | grep "Longest" | awk '{print $3}')
      echo
 
      echo INFO volume-name of the current inserted dvd is [$VOLNAME]
@@ -234,7 +234,7 @@ if [ $2 -eq "1" ] ; then
      if [ -e  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_LANG1 ] ; then
          LANG1=$(cat  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_LANG1)
          echo INFO default language 1 [$LANG1]
-         LANG1_SELECT=$(lsdvd -a -t $AUTO_SELECT_TRACK 2>/dev/null | grep "Language" | grep -m 1 -n " $LANG1 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
+         LANG1_SELECT=$(lsdvd -a -t $AUTO_SELECT_TRACK $1 2>/dev/null | grep "Language" | grep -m 1 -n " $LANG1 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
          if [ -z "$LANG1_SELECT" ] ; then
             echo INFO default language 1 [$LANG1] not found inside track [$AUTO_SELECT_TRACK]
             echo INFO default language 1 [$LANG1] not found inside track [$AUTO_SELECT_TRACK] > $OUTPUT_ERROR
@@ -252,7 +252,7 @@ if [ $2 -eq "1" ] ; then
      if [ -e  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_LANG2 ] ; then
          LANG2=$(cat  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_LANG2)
          echo INFO default language 2 [$LANG2]
-         LANG2_SELECT=$(lsdvd -a -t $AUTO_SELECT_TRACK 2>/dev/null | grep "Language" | grep -m 1 -n " $LANG2 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
+         LANG2_SELECT=$(lsdvd -a -t $AUTO_SELECT_TRACK $1 2>/dev/null | grep "Language" | grep -m 1 -n " $LANG2 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
          if [ -z "$LANG2_SELECT" ] ; then
             echo INFO default language 1 [$LANG2] not found inside track [$AUTO_SELECT_TRACK]
             echo INFO default language 1 [$LANG2] not found inside track [$AUTO_SELECT_TRACK] > $OUTPUT_ERROR
@@ -270,7 +270,7 @@ if [ $2 -eq "1" ] ; then
      if [ -e  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_SUB ] ; then
          SUB1=$(cat  ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_SUB)
          echo INFO default subtitle [$SUB1]
-         SUB1_SELECT=$(lsdvd -s -t $AUTO_SELECT_TRACK 2>/dev/null |  grep -n -m 1  " $SUB1 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
+         SUB1_SELECT=$(lsdvd -s -t $AUTO_SELECT_TRACK $1 2>/dev/null |  grep -n -m 1  " $SUB1 " | awk '{print $3}' | tr -dc ‘[:digit:]‘)
          if [ -z "$SUB1_SELECT" ] ; then
             echo INFO default subtitle [$SUB1] not found inside track [$AUTO_SELECT_TRACK]
             echo INFO default subtitle [$SUB1] not found inside track [$AUTO_SELECT_TRACK] > $OUTPUT_ERROR
@@ -343,7 +343,7 @@ do
 
   # echo $atrack $aindex
 
-  TMP=$(lsdvd -a -t $aindex 2>/dev/null | grep Audio: > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/chap)
+  TMP=$(lsdvd -a -t $aindex $1 2>/dev/null | grep Audio: > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/chap)
   AUDIOS=$(cat ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/chap | wc -l)
 
   atrack=`expr $atrack + 1`
@@ -362,7 +362,7 @@ do
 
   #   echo $atrack $aindex
 
-  TMP=$(lsdvd -s -t $aindex 2>/dev/null | grep Subtitle: > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/chap)
+  TMP=$(lsdvd -s -t $aindex $1 2>/dev/null | grep Subtitle: > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/chap)
   STITLES=$(cat ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp/chap | wc -l)
 
   atrack=`expr $atrack + 1`
