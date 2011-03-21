@@ -131,13 +131,8 @@ def GUINotification(Info):
 
     if (__verbose__ == "true"):
         GUIlog('notification : [' + Info + "]")
-  
 
-    # Command = '"xbmc.Notification((Swiss-Army-Knife),' + Info + ',10)"'
-    # xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",1000) ")
- 
-    if (__verbose__ == "true"):
-       GUIlog('notification-command : [' + Command + "]") 
+    xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",1000) ")
 
     return 
      
@@ -1900,6 +1895,10 @@ class GUIWorkerThread(threading.Thread):
 #########################################################
 
 if __name__ == '__main__':
+
+
+   reload(sys)
+   sys.setdefaultencoding("utf-8")
 
    ############################################## 
    # Load configurations settings               # 
