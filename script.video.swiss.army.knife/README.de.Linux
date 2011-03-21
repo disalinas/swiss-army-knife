@@ -127,7 +127,6 @@ sudo ./setup.sh xbmc
 [Ersetze xbmc in diesem Kommando mit dem Benutzernamen unter welchen XBMC ausgeführt wird,
 sofern nicht der Benutzername 'xbmc' verwendet wird] [Tip: -> whoami]
 
-
 Sofern das Setup Shell-Skript nicht erfolgreich ausgeführt werden kann,erscheint beim Start 
 des Addons nachfolgende Meldung:
 
@@ -135,32 +134,32 @@ des Addons nachfolgende Meldung:
 
 und das Addon kann nicht ausgeführt werden.
 
+Die erste Sache welche das Setup Skript erledigt, ist der Download der Endbenutzer 
+Lizenz (EULA) welche durch den Benutzer akzeptiert werden muss.Wird diese Benutzer 
+nicht akzeptiert führt das Skript keine weiteren Schritte durch und wird beendet.
 
-The first thing that the script will do is to download the End User License 
-Agreement (EULA) and ask yo to accept its conditions. If you do not accepted the
-conditions, the script will not carry out any further actions.
 
-If you are not using a stable release of this addon you will see the
-following message .....
+Sofern eine SVN Variante benützt wird, erscheint der nachfolgende Text 
+während der Ausführung.
 
 -----------------------------------------------------------------------
 The EULA-FILE can not be downloaded and therefore you must
 use a SVN release of this addon.
 You do this at you own risk .....
-the last stable public released version was 0.6.15
+the last stable public released version was 0.6.18
 
 press any key to continue or ctrl-c to abort..
 -----------------------------------------------------------------------
 
-This shell-scripts will install all software for the addon including 2 Debian 
-files.
+Das Shell-Skript installiert alle benötigte Software inklusive 2 Debian Packeten.
+von der Projekt-URL.
 
-- It checks that the shell is /bin/bash.
-- It checks that user root is running the script.
-- It creates all directories for ripping and transcoding 
-- It will prepare the ssh-server and client to login without 
-  any password.
-- Depending on your system handbrake is installed (32 or 64 bit).
+- Es wird geprüft das /bin/bash die aktuelle shell ist.
+- Es wird geprüft ob der Benutzer root das Skript ausführt.
+- Alle Verzeichnisse für die Datenablage werden erstellt.
+- Es wird der SSH-Server konfiguriert um ohne Passwort lokal 
+  einzuloggen.
+- Abhänging von der Konfiguration wird Handbrake installiert (32 oder 64 Bit)
 - You will be given the opportunity to install all the dependencies for Makemkv.
   Only do this if you want Makemkv installed for Bluray ripping and transcoding
   of DVD and Bluray files to MKV format files.  The script will install binary
