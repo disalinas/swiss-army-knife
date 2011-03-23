@@ -1119,7 +1119,10 @@ def OSChapterDVD(UsingMKV_Tracks):
 
 
                 if (UsingMKV_Tracks == True):
-                    tracklist.append(line)
+
+                    tcounter = line.count("[00:00")
+                    if (tcounter == 0): 
+                        tracklist.append(line)
                 else:
                     tracklist.append(line)
         trackfile.close
