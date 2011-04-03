@@ -15,6 +15,19 @@
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 
+###########################################################
+# Current version of makemkv for 32 and 64 bit            #
+###########################################################
+
+MAKEMKV="1.6.6"
+MAKEKMKV32="makemkv-swiss-army-knife-32-04-03-2011.tar.gz"
+MAKEMKVBIN="makemkv-v1.6.6-bin_20110403-1_i386.deb"
+MAKEMKVOSS="makemkv-v1.6.6-oss_20110403-1_i386.deb"
+
+###########################################################
+
+
+
 
 ###########################################################
 #                                                         #
@@ -667,7 +680,7 @@ which makemkvcon >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
    echo The command makemkvcon was not found on your system.
-   echo Should makemkv 1.6.5 to be installed ?
+   echo Should makemkv $MAKEMKV to be installed ?
    echo Even if there is no bluray installed you have to answer
    echo yes if you plan to transcode a dvd to the mkv format.
    echo
@@ -676,23 +689,28 @@ if [ $? -eq 1 ] ; then
    if [ $ans == "y" ] ; then
       architecture=`uname -m`
       if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
+
+
+         # Installation for a 32 bit-system 
+
+
          clear
          echo
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download release 1.6.5 from project url for 32 bit 
+         # Download the curremt release from project url for 32 bit 
 
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32-02-20-2011.tar.gz 
-         tar xvzf makemkv-swiss-army-knife-32-02-20-2011.tar.gz 
+         wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV32  
+         tar xvzf $MAKEKMKV32 
  
          # Install oss part for makemkv 
         
-         dpkg -i makemkv-v1.6.5-oss_20110219-1_i386.deb
+         dpkg -i $MAKEMKVOSS
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.5-oss_20110219-1_i386.deb
+            echo the installation of $MAKEMKVOSS
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -703,10 +721,10 @@ if [ $? -eq 1 ] ; then
 
          # Install binary part for makemkv 
 
-         dpkg -i makemkv-v1.6.5-bin_20110219-1_i386.deb
+         dpkg -i $MAKEMKVBIN
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.5-bin_20110219-1_i386.deb
+            echo the installation of $MAKEMKVBIN
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -717,9 +735,13 @@ if [ $? -eq 1 ] ; then
 
          # delete downloaded archive
 
-         rm makemkv-swiss-army-knife-32-02-20-2011.tar.gz 
+         rm $MAKEKMKV32
 
       else
+
+
+         # Installation for a 32 bit-system
+
          clear
          echo
          echo download software for 64 bit
@@ -781,9 +803,9 @@ else
    echo The command makemkvcon was found on your system.
    echo
    echo The release found on your system is : [$MINSTALLED]
-   echo The script can download and install : [v1.6.5]
+   echo The script can download and install : [$MAKEMKV]
    echo
-   echo Should makemkv [v1.6.5] be installed over
+   echo Should makemkv [$MAKEMKV] be installed over
    echo the existing release on your system ?
    echo
    echo Warning : This may make makemkv unuseable ...
@@ -802,15 +824,15 @@ else
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-32-02-20-2011.tar.gz 
-         tar xvzf makemkv-swiss-army-knife-32-02-20-2011.tar.gz 
+         wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV32
+         tar xvzf $MAKEKMKV32 
 
          # Install oss part for makemkv           
 
-         dpkg -i makemkv-v1.6.5-oss_20110219-1_i386.deb
+         dpkg -i $MAKEMKVOSS
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.5-oss_20110219-1_i386.deb
+            echo the installation of $MAKEMKVOSS
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -821,10 +843,10 @@ else
 
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.5-bin_20110219-1_i386.deb
+         dpkg -i $MAKEMKVBIN
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.5-bin_20110219-1_i386.deb
+            echo the installation of $MAKEMKVBIN
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -833,7 +855,7 @@ else
             exit $E_DPKG
          fi
 
-         rm makemkv-swiss-army-knife-32-02-20-2011.tar.gz 
+         rm $MAKEKMKV32
 
       else
          clear

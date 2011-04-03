@@ -154,20 +154,20 @@ press any key to continue or ctrl-c to abort..
 Das Shell-Skript installiert alle benötigte Software inklusive 2 Debian Packeten.
 von der Projekt-URL.
 
-- Es wird geprüft das /bin/bash die aktuelle shell ist.
+- Es wird geprüft ob /bin/bash die aktuelle shell ist.
 - Es wird geprüft ob der Benutzer root das Skript ausführt.
 - Alle Verzeichnisse für die Datenablage werden erstellt.
 - Es wird der SSH-Server konfiguriert um ohne Passwort lokal 
   einzuloggen.
-- Abhänging von der Konfiguration wird Handbrake installiert (32 oder 64 Bit)
-- You will be given the opportunity to install all the dependencies for Makemkv.
-  Only do this if you want Makemkv installed for Bluray ripping and transcoding
-  of DVD and Bluray files to MKV format files.  The script will install binary
-  versions of the two Makemkv distribution files (bin and oss).  You will need
-  to register it and/or install the registration key.
-- The script will check if handbrake or Makemkv are already installed.
-- The script will check which versions of the tools Makemkv and handbrake 
-  are installed.
+- Abhänging von der Konfiguration wird Handbrake installiert (32 oder 64 Bit).
+- Es besteht die Möglichkeit die Abhängigkeiten für Makemkv zu installieren,sofern die 
+  Bluray Unterstützung und mkv Export für DVD's benötigt wird. Für die korrekte Installation 
+  von Makemkv wird ein Registrations-Key benötitgt. 
+- Das Skript überprüft ob Makemkv bereits installiert ist.  
+- Das Skript überprüft welche Version von Makemkv und Handbrake lokal
+  auf dem installiert ist.
+
+
 - If a error is detected during the installation of Makemkv or handbrake 
   the script will exit now.
 - Multiple parts of the script will now ask if they should be executed.
