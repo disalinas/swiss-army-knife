@@ -283,6 +283,7 @@ Changes:
 - Thanks to chippyash2 english based documentation is finished.
 - Added README.de.linux 
 - Integrate installation / upgrade of makemkv 1.6.6 into setup.sh (only 32)
+- Added shell-script dvd-chapter-mkv.sh 
 
 Fixes:
 
