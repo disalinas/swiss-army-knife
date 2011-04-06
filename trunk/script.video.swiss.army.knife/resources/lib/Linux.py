@@ -1064,6 +1064,12 @@ def OSChapterDVD(UsingMKV_Tracks):
 
     tracklist = []
 
+    # Because we need a mkv tracklist 
+
+    if (UsingMKV_Tracks == True):     
+        tracklist =  OSChapterMKV()
+        return tracklist   
+
     # Execution of shell-script br1.sh inside shell-linux
 
     if (__verbose__ == "true"):
@@ -2642,3 +2648,84 @@ def OSCheckMainProcess():
 #########################################################
 
 
+
+
+
+#########################################################
+# Function  : OSChapterMKV                              #
+#########################################################
+# Parameter : none                                      #
+#                                                       #
+# Returns   :                                           #
+#                                                       #
+# tracklist   contains tracks or only "none"            #
+#                                                       #
+#########################################################
+def OSChapterMKV():
+
+    global __configLinux__
+    global __verbose__
+
+    tracklist = []
+
+    # Execution of shell-script dvd7.sh inside shell-linux
+
+    if (__verbose__ == "true"):
+        OSlog("dvd-chapter-mkv.sh command ready to start")
+
+    OSRun("dvd7.sh " +  __configLinux__[1],True,False)
+
+    if (__verbose__ == "true"):
+        OSlog("dvd-chapter-mkv.sh command executed")
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+
+    # We must wait until the file with the track-information could be read
+    # Without the list of tracks we can not select inside the list .....
+    # If someone knows a bettey way to get this list faster ... send me pm .-)
+
+    time.sleep(30)
+
+    WCycles = 30
+    Waitexit = True
+    OSlog("Waiting until track-files exist ... WCycles:=" + str(WCycles))
+    while (Waitexit):
+           if (os.path.exists(__configLinux__[42])):
+               if (__verbose__ == "true"):
+                   OSlog("track-files exist ... WCycles:=" + str(WCycles))
+               Waitexit = False
+           else:
+               WCycles = WCycles + 1
+               time.sleep(1)
+           time.sleep(1)
+
+           # The generation of track-list with makemkv needs a lot of time 
+           # in the case we have a copy protected dvd inserted. 
+           # In most cases it only needs a few scounds to parse the dvd...
+               
+           if (WCycles >= 600):
+               if (__verbose__ == "true"):
+                  OSlog("Timeout mkv 600 secounds reached ...")
+               xbmc.executebuiltin("Dialog.Close(busydialog)")
+               tracklist.append('none')
+               return tracklist
+
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+
+    if (__verbose__ ==  "true"):
+        OSlog("track-files exist . Create list for GUI")
+
+    # We should have the file with the state
+
+    if (os.path.exists(__configLinux__[42])):
+        trackfile = open(__configLinux__[42],'r')
+        for line in trackfile.readlines():
+                line = line.strip()
+                tracklist.append(line)
+        trackfile.close
+        return tracklist
+    else:
+        tracklist.append('none')
+        return tracklist
+
+#########################################################

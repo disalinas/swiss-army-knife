@@ -246,7 +246,7 @@ do
         echo -n .
     fi
     TIMEOUT=`expr $TIMEOUT + 1`
-    if [ $TIMEOUT -eq "480" ] ; then
+    if [ $TIMEOUT -eq "600" ] ; then
         echo
         echo
         echo ERROR webserver on port 51000 is not ready
@@ -311,6 +311,7 @@ echo $1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $LONGTRACK >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $LONGDURATION >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $VOLNAME >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
+echo $VOLNAME > /.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_VOLUME
 
 ###########################################################
 
