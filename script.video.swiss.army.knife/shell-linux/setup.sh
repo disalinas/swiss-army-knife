@@ -4,7 +4,7 @@
 ###########################################################
 # This script is part of the addon swiss-army-knife for   #
 # xbmc and is licenced under the gpl-licence              #
-# http://code.google.com/p/swiss-army-knife/              #
+# http://code.ggle.com/p/swiss-army-knife/              #
 ###########################################################
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
@@ -20,9 +20,16 @@ SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 ###########################################################
 
 MAKEMKV="1.6.6"
-MAKEKMKV32="makemkv-swiss-army-knife-32-04-03-2011.tar.gz"
-MAKEMKVBIN="makemkv-v1.6.6-bin_20110403-1_i386.deb"
-MAKEMKVOSS="makemkv-v1.6.6-oss_20110403-1_i386.deb"
+
+if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
+   MAKEKMKV32="makemkv-swiss-army-knife-32-04-03-2011.tar.gz"
+   MAKEMKVBIN="makemkv-v1.6.6-bin_20110403-1_i386.deb"
+   MAKEMKVOSS="makemkv-v1.6.6-oss_20110403-1_i386.deb"
+else
+   MAKEKMKV64="makemkv-swiss-army-knife-64-04-04-2011.tar.gz"
+   MAKEMKVBIN="makemkv-v1.6.6-bin_20110404-1_amd64.deb"
+   MAKEMKVOSS="makemkv-v1.6.6-oss_20110404-1_amd64.deb"
+fi
 
 ###########################################################
 
@@ -693,7 +700,6 @@ if [ $? -eq 1 ] ; then
 
          # Installation for a 32 bit-system 
 
-
          clear
          echo
          echo download software for 32 bit
@@ -739,8 +745,7 @@ if [ $? -eq 1 ] ; then
 
       else
 
-
-         # Installation for a 32 bit-system
+         # Installation for a 64 bit-system
 
          clear
          echo
@@ -748,17 +753,15 @@ if [ $? -eq 1 ] ; then
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download release 1.6.5 from project url for 64 bit 
-         
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-02-20-2011.tar.gz 
-         tar xvzf makemkv-swiss-army-knife-64-02-20-2011.tar.gz 
+         # Download the curremt release from project url for 32 bit 
 
-         # Install oss part for makemkv  
+         wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV64  
+         tar xvzf $MAKEKMKV64
 
-         dpkg -i makemkv-v1.6.5-oss_20110220-1_amd64.deb
+         dpkg -i $MAKEMKVOSS
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.5-oss_20110220-1_amd64.deb
+            echo the installation of $MAKEMKVOSS
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -766,13 +769,13 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-          
+
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.5-bin_20110220-1_amd64.deb
+         dpkg -i $MAKEMKVBIN
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.5-bin_20110220-1_amd64.deb
+            echo the installation of $MAKEMKVBIN
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -780,7 +783,12 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-         rm makemkv-swiss-army-knife-64-02-20-2011.tar.gz
+
+
+
+
+
+         rm $MAKEKMKV64
       fi
    fi
    if [ $ans == "n" ] ; then
@@ -864,15 +872,15 @@ else
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         wget http://swiss-army-knife.googlecode.com/files/makemkv-swiss-army-knife-64-02-20-2011.tar.gz
-         tar xvzf makemkv-swiss-army-knife-64-02-20-2011.tar.gz
+         wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV64
+         tar xvzf $MAKEKMKV64 
 
-         # Install oss part for makemkv  
+         # Install oss part for makemkv          
 
-         dpkg -i makemkv-v1.6.5-oss_20110220-1_amd64.deb
+         dpkg -i $MAKEMKVOSS
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.5-oss_20110220-1_amd64.deb
+            echo the installation of $MAKEMKVOSS
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -880,13 +888,13 @@ else
             read any
             exit $E_DPKG
          fi
-          
+
          # Install bin part for makemkv   
 
-         dpkg -i makemkv-v1.6.5-bin_20110220-1_amd64.deb
+         dpkg -i $MAKEMKVBIN
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of makemkv-v1.6.5-bin_20110220-1_amd64.deb
+            echo the installation of $MAKEMKVBIN
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -895,14 +903,14 @@ else
             exit $E_DPKG
          fi
 
-         rm makemkv-swiss-army-knife-64-02-20-2011.tar.gz
+         rm $MAKEKMKV64
       fi
    fi
    if [ $ans == "n" ] ; then
       clear
       echo
       echo -----------------------------------------------------------
-      echo current makemkv is not updated to release 1.6.5 and remains 
+      echo current makemkv is not updated to release $MAKEMKV and remains 
       echo as it is.
       echo
       echo -n press any key to continue ..
