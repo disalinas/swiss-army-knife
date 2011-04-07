@@ -570,8 +570,11 @@ class GUIExpertUserfunctionsClass(xbmcgui.Window):
                             GUINotification("user9.sh executed")     
                      if (choice == 9): 
                         exit = False
-                        time.sleep(1) 
+                        time.sleep(1)
+ 
+          __lock__.acquire(1)  
           self.close()
+          __lock__.release() 
 
 #########################################################
 
@@ -1069,7 +1072,9 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                  exit = False
                  time.sleep(1) 
 
+          __lock__.acquire(1)  
           self.close()
+          __lock__.release() 
 
 #########################################################
 
@@ -1119,8 +1124,11 @@ class GUIExpertNetworkClass(xbmcgui.Window):
                  exit = True 
              if (choice == 4): 
                  exit = False 
-                 time.sleep(1)                 
+                 time.sleep(1)
+
+          __lock__.acquire(1)                    
           self.close()
+          __lock__.release()  
 
 #########################################################
 
@@ -1532,7 +1540,10 @@ class GUIExpertWinClass(xbmcgui.Window):
              if (choice == 10):   
                  exit = False
                  time.sleep(1) 
+    
+          __lock__.acquire(1) 
           self.close()
+          __lock__.release() 
 
 #########################################################
 
@@ -1569,7 +1580,11 @@ class GUIJobWinClass(xbmcgui.Window):
              dialog = xbmcgui.Dialog()
              choice  = dialog.select(__language__(32091) ,menu)
              if (choice == 0):  
-                 if (__jobs__ == False):
+                 __lock__.acquire(1)  
+                 jobs = __jobs__ 
+                 __lock__.release()                   
+ 
+                 if (jobs == False):
                      state = GUIInfo(0,__language__(32177))
                  else:
                      state =  GUIProgressbar(__language__(32170)) 
@@ -1577,8 +1592,11 @@ class GUIJobWinClass(xbmcgui.Window):
                          __lock__.acquire(1) 
                          __jobs__ = False
                          __lock__.release() 
-             if (choice == 1): 
-                 if (__jobs__ == False):
+             if (choice == 1):
+                 __lock__.acquire(1)  
+                 jobs = __jobs__ 
+                 __lock__.release()  
+                 if (jobs == False):
                      GUIInfo(0,__language__(32177))
                  else:
                      state = OSKillProc()
@@ -1595,7 +1613,10 @@ class GUIJobWinClass(xbmcgui.Window):
              if (choice == 3):  
                  exit = False
                  time.sleep(1) 
+
+          __lock__.acquire(1)  
           self.close()
+          __lock__.release()       
 
 #########################################################
 
@@ -1629,8 +1650,11 @@ class GUIMain01Class(xbmcgui.Window):
               # to be sure that the main-process of every shell-script is running ....
  
               mainprocess = OSCheckMainProcess()
-              if (mainprocess == 0): 
+              if (mainprocess == 0):
+                  __lock__.acquire(1) 
                   __jobs__ = True
+                  __lock__.release()                    
+
                   if (__notifications__ == "true"):
                       GUINotification(__language__(33240))
                       time.sleep(1)
@@ -1650,7 +1674,6 @@ class GUIMain01Class(xbmcgui.Window):
                   if (__notifications__ == "true"):
                      GUINotification(__language__(33244))
                      time.sleep(1)
-
 
           if (job_state == 0):
               __lock__.acquire(1)  
@@ -1928,14 +1951,22 @@ class GUIWorkerThread(threading.Thread):
                              if (modula == 0): 
                                 GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
    
-                          if (progress == 100):
+                          __lock__.acquire(1)    
+                          ProgressView = __ProgressView_
+                          __lock__.release()     
+
+                          if ((progress == 100) and (ProgressView == False)):
                              if (OSDetectLastStage() == True):
                                 __lock__.acquire(1)   
                                 __jobs__ == False
                                 __lock__.release()
  
+                                # We show this event only if the progress-bar is not active ....
+  
                                 if (__notifications__ == "true"):
                                    GUINotification(__language__(33238))
+
+                                
                      
 
             ############################################## 
@@ -2260,9 +2291,11 @@ if __name__ == '__main__':
 
    if ( Enable_Startup_Addon == 0):  
 
+      __lock__.acquire(1)          
       __ProgressView__ = False
       __jobs__ = False
       __exitFlag__ = False
+      __lock__.release()
 
       xbmc.executebuiltin("Dialog.Close(busydialog)") 
       time.sleep(1)

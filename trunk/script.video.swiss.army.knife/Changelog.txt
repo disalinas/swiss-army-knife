@@ -307,6 +307,9 @@ Fixes:
   (there was no device for dvd on some calls to lsdvd)
   Thanks to fabrice.peiffer@convar.com
 - Fixed issue 22 with loging non asci-code inside log.
+- In the case the progress-bar is open and displayed, there is no 
+  need to show the same information inside the info-area.
+
 
 
 
