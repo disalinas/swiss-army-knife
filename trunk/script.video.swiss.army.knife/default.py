@@ -355,7 +355,9 @@ def GUIProgressbar(InfoText):
               retval = 0
            time.sleep(1)
 
+    __lock__.acquire(1)  
     __ProgressView__ = False
+    __lock__.release()  
     return (retval)             
 
 #########################################################
@@ -1194,7 +1196,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                                          GUIInfo(0,__language__(33203))
                                          __lock__.acquire(1)   
                                          __jobs__ = True
-                                         __lock__.acquire(1)  
+                                         __lock__.release()  
 
                                  else:
                                      GUIInfo(0,__language__(33304))
@@ -1328,7 +1330,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                          GUIInfo(0,__language__(33208))
                          __lock__.acquire(1)  
                          __jobs__ = True
-                         __lock__.acquire(1) 
+                         __lock__.release() 
 
 
              if (choice == 2):
@@ -1379,7 +1381,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                                      GUIInfo(0,__language__(33210))
                                      __lock__.acquire(1)  
                                      __jobs__ = True 
-                                     __lock__.acquire(1)                                 
+                                     __lock__.release()                                 
                              else:
                                  GUIInfo(0,__language__(33312)) 
                      else:
@@ -1430,7 +1432,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                                      GUIInfo(0,__language__(33210))
                                      __lock__.acquire(1)  
                                      __jobs__ = True
-                                     __lock__.acquire(1)                                  
+                                     __lock__.release()                                  
                              else:
                                  GUIInfo(0,__language__(33312)) 
                      else:
@@ -1482,7 +1484,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                                      GUIInfo(0,__language__(33231))
                                      __lock__.acquire(1)  
                                      __jobs__ = True
-                                     __lock__.acquire(1)                                 
+                                     __lock__.release()                                 
                              else:
                                  GUIInfo(0,__language__(33312)) 
                      else:
@@ -1493,21 +1495,27 @@ class GUIExpertWinClass(xbmcgui.Window):
              if (choice == 5):
                  if (__enable_burning__ == 'true'):                
                      TranscodeWindow = GUIExpertTranscodeClass()
+                     __lock__.acquire(1)  
                      del TranscodeWindow
+                     __lock__.release()  
                  else:
                      GUIInfo(0,__language__(33325))   
 
              if (choice == 6):
                  if (__enable_network__ == 'true'):                
                      NetworkWindow = GUIExpertNetworkClass()
+                     __lock__.acquire(1) 
                      del NetworkWindow
+                     __lock__.release()  
                  else:
                      GUIInfo(0,__language__(33320))                            
                   
              if (choice == 7):
                  if (__enable_customer__ == 'true'):                
                      UserfunctionsWindow = GUIExpertUserfunctionsClass()
+                     __lock__.acquire(1)  
                      del UserfunctionsWindow
+                     __lock__.release()  
                  else:
                      GUIInfo(0,__language__(33322)) 
 
@@ -1645,7 +1653,9 @@ class GUIMain01Class(xbmcgui.Window):
 
 
           if (job_state == 0):
+              __lock__.acquire(1)  
               __jobs__ = False
+              __lock__.release()  
               if (__notifications__ == "true"):
                   GUINotification(__language__(33239))
 
@@ -1801,14 +1811,18 @@ class GUIMain01Class(xbmcgui.Window):
                                  if (__verbose__ == "true"):
                                      GUIlog('menu expert-mode starting -> password correct')
                                  ExpertWindow = GUIExpertWinClass()
+                                 __lock__.acquire(1)  
                                  del ExpertWindow
+                                 __lock__.release()  
                              else: 
                                  if (__verbose__ == "true"):
                                      GUIlog('menu expert-mode disabled -> password not correct')
                                  GUIInfo(2,__language__(33213))    
                      else:
                           ExpertWindow = GUIExpertWinClass()
-                          del ExpertWindow                          
+                          __lock__.acquire(1) 
+                          del ExpertWindow
+                          __lock__.release()                           
 
                  if (choice == 3):
 
@@ -1820,7 +1834,9 @@ class GUIMain01Class(xbmcgui.Window):
                         GUIlog('menu jobs activated')
                      JobWindow = GUIJobWinClass()  
                      time.sleep(1)
-                     del JobWindow    
+                     __lock__.acquire(1)   
+                     del JobWindow
+                     __lock__.release() 
                      
                  if (choice == 4): 
 
@@ -1830,10 +1846,11 @@ class GUIMain01Class(xbmcgui.Window):
 
                      if (__verbose__ == "true"):
                          GUIlog('menu exit activated')
-                     exit_script = False   
-
+                     exit_script = False
+   
+          __lock__.acquire(1)   
           self.close()
-          
+          __lock__.release()  
 
 #########################################################
 
@@ -2263,7 +2280,9 @@ if __name__ == '__main__':
 
       menu01 = GUIMain01Class()
       time.sleep(1) 
+      __lock__.acquire(1) 
       del menu01
+      __lock__.release()  
 
       ############################################## 
       # Signal worker-thread to stop and exit      # 
