@@ -228,39 +228,57 @@ def OSConfiguration(index):
     if (config[7] != 'none'):
         sys.platform.startswith('linux')
         command ="echo -n " + config[7] + " > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_LANG1"
+        __lock__.acquire(1)   
         status = os.system("%s" % (command))
+        __lock__.release() 
 
     if (config[8] != 'none'):
-        sys.platform.startswith('linux')
+        sys.platform.startswith('linux')         
         command = "echo -n " + config[8] + " > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_LANG2"
+        __lock__.acquire(1)  
         status = os.system("%s" % (command))
+        __lock__.release()  
     else:
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_LANG2 > /dev/null 2>&1"
+        __lock__.acquire(1) 
         status = os.system("%s" % (command))
+        __lock__.release()  
 
     if (config[18] != 'none'):
         sys.platform.startswith('linux')
         command = "echo -n " + config[18] + " > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_SUB"
+        __lock__.acquire(1) 
         status = os.system("%s" % (command))
+        __lock__.release() 
     else:
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_SUB > /dev/null 2>&1"
+        __lock__.acquire(1) 
         status = os.system("%s" % (command))
+        __lock__.release()   
 
     if (config[55] == 'true'):
         sys.platform.startswith('linux')
         command = "echo -n DELETE ALL FILES IF PROCESS TERMINATE ! > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES"
+        __lock__.acquire(1) 
         status = os.system("%s" % (command))
+        __lock__.release() 
     else:
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/KILL_FILES > /dev/null 2>&1"
+        __lock__.acquire(1) 
         status = os.system("%s" % (command))
+        __lock__.release() 
 
     if (config[56] == 'true'):
         sys.platform.startswith('linux')
         command = "echo -n EJECT MEIDUM AFTER SUCCESS ! > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EJECT"
+        __lock__.acquire(1)  
         status = os.system("%s" % (command))
+        __lock__.release()  
     else:
         command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EJECT > /dev/null 2>&1"
+        __lock__.acquire(1) 
         status = os.system("%s" % (command))
+        __lock__.release() 
 
     # All the options that can be enabled or disabled over settings or during the execution of setup.sh 
     # are reported back to the shell-scripts.
@@ -268,23 +286,29 @@ def OSConfiguration(index):
     if (config[10] == 'true'):
         sys.platform.startswith('linux')
         command = "echo -n BLURAY ENABLED > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_ENABLED"
+        __lock__.acquire(1) 
         status = os.system("%s" % (command))
+        __lock__.release()   
 
         # If the file BLURAY_DISABLED exist we remove it now ....
 
         command = "rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_DISABLED >/dev/null 2>&1"
+        __lock__.acquire(1)  
         status = os.system("%s" % (command))
- 
+        __lock__.release()  
 
     else:
         command = "echo -n BLURAY DISABLED > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_DISABLED"
+        __lock__.acquire(1)  
         status = os.system("%s" % (command))
+        __lock__.release()  
 
         # If the file BLURAY_ENABLED exist we remove it now ....
 
         command = "rm $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/BLURAY_ENABLED >/dev/null 2>&1"
+        __lock__.acquire(1)  
         status = os.system("%s" % (command))
-
+        __lock__.release()  
 
     # All used internal files are stored inside after here ...
 
@@ -461,7 +485,6 @@ def OSCheckMedia(Media):
 
     if (__verbose__ == "true"):
         OSlog("state.sh command ready to start")
-
 
     if (os.path.exists(__configLinux__[30])):
        os.remove(__configLinux__[30])
@@ -1532,9 +1555,13 @@ def OSGetStageText():
 
 
                 if (StageCurr == Stages):
+                    __lock__.acquire(1) 
                     __stage_last__ = True
+                    __lock__.release() 
                 else:
+                    __lock__.acquire(1)  
                     __stage_last__ = False
+                    __lock__.release() 
 
                 return msg
             else:
@@ -1857,7 +1884,10 @@ def OSDetectLastStage():
 
     global __stage_last__
 
+    __lock__.acquire(1)  
     stage = __stage_last__
+    __lock__.release() 
+ 
     return (stage)
 
 #########################################################

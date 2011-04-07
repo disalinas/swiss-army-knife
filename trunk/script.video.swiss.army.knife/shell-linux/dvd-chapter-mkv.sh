@@ -311,7 +311,7 @@ echo $1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $LONGTRACK >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $LONGDURATION >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $VOLNAME >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
-echo $VOLNAME > /.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_VOLUME
+echo $VOLNAME > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_VOLUME
 
 ###########################################################
 
