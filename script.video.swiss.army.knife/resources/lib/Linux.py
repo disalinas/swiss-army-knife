@@ -49,6 +49,8 @@ __verbose__        = 'false'
 __stage_percent__  = 0
 __stage_last__     = False
 
+__lock__ = thread.allocate_lock()
+
 #########################################################
 
 
@@ -66,8 +68,10 @@ __stage_last__     = False
 #########################################################
 def OSlog(msg):
 
-    if (__verbose__ == 'true'):     
+    if (__verbose__ == 'true'):   
+       __lock__.acquire(1)    
        xbmc.output("[%s]: [OSlog]  %s\n" % ("swiss-army-knife",str(msg)))
+       __lock__.release()  
     return
 
 #########################################################
@@ -394,7 +398,9 @@ def OSRun(command,backg,busys):
     if (backg == True):
         commandexec = "ssh " + __configLinux__[6] + " " + __configLinux__[40] + command + " "
         commandexec = commandexec + " > /dev/null 2>&1 &"
+        __lock__.acquire(1)  
         status = os.system("%s" % (commandexec))
+        __lock__.release() 
         if (__verbose__ ==  "true"):
             OSlog("Command to run :" + commandexec)
             OSlog("status command [" + commandexec + "] is rc:=[" + str(status) +"]")

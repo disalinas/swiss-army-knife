@@ -285,6 +285,7 @@ Changes:
 - Integrate installation / upgrade of makemkv 1.6.6 into setup.sh (only 32)
 - Added shell-script dvd-chapter-mkv.sh 
 - Integrate installation / upgrade of makemkv 1.6.6 into setup.sh (only 64)
+- Locking sections implemented. 
 
 Fixes:
 
