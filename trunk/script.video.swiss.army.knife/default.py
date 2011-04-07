@@ -57,7 +57,7 @@ xbmc.output(__script__ + " Version: " + __version__  + "\n")
 ####################### IMPORTS #########################
 
 import xbmc, xbmcgui,xbmcaddon
-import os, sys, threading, stat, time, string, re
+import os, sys,thread, threading, stat, time, string, re
 import urllib, urlparse, urllib2, xml.dom.minidom
 
 #########################################################
@@ -90,6 +90,9 @@ __pw__ = ''
 __jobs__ = False
 __linebreak__ = 0
 __exitFlag__ = False
+
+__lock__ = thread.allocate_lock()
+
 
 CWD = os.getcwd().rstrip(";")
 sys.path.append(xbmc.translatePath(os.path.join(CWD,'resources','lib')))
@@ -132,8 +135,10 @@ def GUINotification(Info):
     if (__verbose__ == "true"):
         GUIlog('notification : [' + Info + "]")
 
+    __lock__.acquire(1)  
     xbmc.executebuiltin( "xbmc.Notification((Swiss-Army-Knife)," + Info + ",1000) ")
-
+    __lock__.release()
+   
     return 
      
 #########################################################
@@ -282,15 +287,16 @@ def GUISelectDir():
 #########################################################
 # Parameter :                                           #
 #                                                       #
-# msg         String to be shown inside GUI             # 
+# msg         String to be shown inside xbmc log        # 
 #                                                       # 
 # Returns   : none                                      #
 #########################################################
 def GUIlog(msg):
-     
+  
+    __lock__.acquire(1)     
     if (__verbose__ == "true"):   
        xbmc.output("[%s]: [GUIlog] %s\n" % ("swiss-army-knife",str(msg)))
-
+    __lock__.release()  
     return
 
 #########################################################
@@ -316,7 +322,11 @@ def GUIProgressbar(InfoText):
 
     global __ProgressView__   
 
+
+    __lock__.acquire(1)    
     __ProgressView__ = True
+    __lock__.release() 
+
     progress = OSGetProgressVal()
     dp = xbmcgui.DialogProgress()
     dp.create(InfoText)
@@ -650,7 +660,9 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                                           GUIInfo(2,__language__(33209))
                                       if (execstate == 1):
                                           GUIInfo(0,__language__(33208))
+                                          __lock__.acquire(1)   
                                           __jobs__ = True
+                                          __lock__.release() 
                                  else:
                                      GUIInfo(0,__language__(33312)) 
                          else:
@@ -790,8 +802,9 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          GUIInfo(2,__language__(33209))
                      if (execstate == 1):
                          GUIInfo(0,__language__(33208))
+                         __lock__.acquire(1)   
                          __jobs__ = True
-
+                         __lock__.release() 
              if (choice == 3):
 
                  ############################################## 
@@ -917,7 +930,9 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          GUIInfo(2,__language__(33209))
                      if (execstate == 1):
                          GUIInfo(0,__language__(33208))
+                         __lock__.acquire(1)  
                          __jobs__ = True
+                         __lock__.release()  
 
              if (choice == 4):
 
@@ -1044,8 +1059,9 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          GUIInfo(2,__language__(33209))
                      if (execstate == 1):
                          GUIInfo(0,__language__(33208))
+                         __lock__.acquire(1) 
                          __jobs__ = True
-
+                         __lock__.release()  
 
              if (choice == 5): 
                  exit = False
@@ -1176,7 +1192,9 @@ class GUIExpertWinClass(xbmcgui.Window):
                                          GUIInfo(2,__language__(33204))
                                      if (execstate == 1):
                                          GUIInfo(0,__language__(33203))
+                                         __lock__.acquire(1)   
                                          __jobs__ = True
+                                         __lock__.acquire(1)  
 
                                  else:
                                      GUIInfo(0,__language__(33304))
@@ -1308,7 +1326,9 @@ class GUIExpertWinClass(xbmcgui.Window):
                          GUIInfo(2,__language__(33209))
                      if (execstate == 1):
                          GUIInfo(0,__language__(33208))
+                         __lock__.acquire(1)  
                          __jobs__ = True
+                         __lock__.acquire(1) 
 
 
              if (choice == 2):
@@ -1357,7 +1377,9 @@ class GUIExpertWinClass(xbmcgui.Window):
                                      GUIInfo(2,__language__(33211))
                                  if (execstate == 1):
                                      GUIInfo(0,__language__(33210))
-                                     __jobs__ = True                                
+                                     __lock__.acquire(1)  
+                                     __jobs__ = True 
+                                     __lock__.acquire(1)                                 
                              else:
                                  GUIInfo(0,__language__(33312)) 
                      else:
@@ -1406,7 +1428,9 @@ class GUIExpertWinClass(xbmcgui.Window):
                                      GUIInfo(2,__language__(33211))
                                  if (execstate == 1):
                                      GUIInfo(0,__language__(33210))
-                                     __jobs__ = True                                
+                                     __lock__.acquire(1)  
+                                     __jobs__ = True
+                                     __lock__.acquire(1)                                  
                              else:
                                  GUIInfo(0,__language__(33312)) 
                      else:
@@ -1456,7 +1480,9 @@ class GUIExpertWinClass(xbmcgui.Window):
                                      GUIInfo(2,__language__(33232))
                                  if (execstate == 1):
                                      GUIInfo(0,__language__(33231))
-                                     __jobs__ = True                                
+                                     __lock__.acquire(1)  
+                                     __jobs__ = True
+                                     __lock__.acquire(1)                                 
                              else:
                                  GUIInfo(0,__language__(33312)) 
                      else:
@@ -1540,15 +1566,19 @@ class GUIJobWinClass(xbmcgui.Window):
                  else:
                      state =  GUIProgressbar(__language__(32170)) 
                      if (state == 1):
+                         __lock__.acquire(1) 
                          __jobs__ = False
+                         __lock__.release() 
              if (choice == 1): 
                  if (__jobs__ == False):
                      GUIInfo(0,__language__(32177))
                  else:
                      state = OSKillProc()
                      if (state == 0):
-                         GUIInfo(0,__language__(33206))     
+                         GUIInfo(0,__language__(33206))
+                         __lock__.acquire(1)      
                          __jobs__ = False
+                         __lock__.release()  
                          exit = False
                      if (state == 1):
                          GUIInfo(0,__language__(33310))     
@@ -1603,8 +1633,9 @@ class GUIMain01Class(xbmcgui.Window):
                    
                   removal = OSRemoveLock()
                   state = OSKillProc()
+                  __lock__.acquire(1)  
                   __jobs__ = False 
-
+                  __lock__.release()   
         
                   # Inform that we clean-up 
                             
@@ -1662,7 +1693,9 @@ class GUIMain01Class(xbmcgui.Window):
                                              GUIInfo(2,__language__(33204))
                                          if (execstate == 1):
                                              GUIInfo(0,__language__(33203))
+                                             __lock__.acquire(1)   
                                              __jobs__ = True
+                                             __lock__.release() 
                                      else:
                                           GUIInfo(0,__language__(33304))
                              else:
@@ -1733,7 +1766,9 @@ class GUIMain01Class(xbmcgui.Window):
                                          GUIInfo(2,__language__(33209))
                                      if (execstate == 1):
                                          GUIInfo(0,__language__(33208))
+                                         __lock__.acquire(1)  
                                          __jobs__ = True
+                                         __lock__.release()   
                                  else:
                                      GUIInfo(0,__language__(33312)) 
                          else:
@@ -1841,11 +1876,14 @@ class GUIWorkerThread(threading.Thread):
                    ############################################## 
                    # Should we exit the main-loop ?             # 
                    ##############################################
- 
-                   if (__exitFlag__ == True): 
+                      
+                   __lock__.acquire(1)  
+                   if  (__exitFlag__ == True): 
                        exit = False
-                                    
-                   if (__jobs__ == True):
+                   jrunning = __jobs__ 
+                   __lock__.release()                     
+                 
+                   if (jrunning == True):
 
                        mainprocess = OSCheckMainProcess()
                        progress = OSGetProgressVal() 
@@ -1859,7 +1897,10 @@ class GUIWorkerThread(threading.Thread):
                           if (progress <= 97):  
                              removal = OSRemoveLock()
                              state = OSKillProc()
-                             __jobs__ = False 
+                             __lock__.acquire(1)   
+                             __jobs__ = False
+                             __lock__.acquire(1)
+  
                              if (__notifications__ == "true"):
                                 GUINotification(__language__(33243))
 
@@ -1872,7 +1913,10 @@ class GUIWorkerThread(threading.Thread):
    
                           if (progress == 100):
                              if (OSDetectLastStage() == True):
+                                __lock__.acquire(1)   
                                 __jobs__ == False
+                                __lock__.release()
+ 
                                 if (__notifications__ == "true"):
                                    GUINotification(__language__(33238))
                      
@@ -2226,10 +2270,12 @@ if __name__ == '__main__':
       ##############################################
 
       if (__verbose__ == "true"):    
-         GUIlog ("Signal w-thread to exit from main-thread")  
+         GUIlog ("Signal w-thread to exit from main-thread")
+      
+      __lock__.acquire(1)     
       __exitFlag__ = True
-
-
+      __lock__.release()  
+ 
       ############################################## 
       # Wait until worker-thread is stopped        # 
       ##############################################
