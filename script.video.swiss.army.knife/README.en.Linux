@@ -180,8 +180,8 @@ use a Debian based system, or your system is to old, you have to compile
 these 2 packages for yourself. The full-source of the 2 packages  is provided 
 on the project-page to minimize the download-size.
 
-http://swiss-army-knife.googlecode.com/files/Makemkv_1.6.5.src.tar.gz
-http://swiss-army-knife.googlecode.com/files/Handbrake-0.9.4-src.tar.gz
+http://swiss-army-knife.googlecode.com/files/makemkv_1.6.6.src.tar.gz
+http://swiss-army-knife.googlecode.com/files/HandBrake-0.9.5.tar.bz2
 
 (Please note, we try to keep up to date with the releases of these programs, so 
 the exact version number may change.)
@@ -332,6 +332,10 @@ Format chosen 			Default directory to store the generated file(s)
 -> ISO				/dvdrip/ISO	
 -> h264-low                     /dvdrip/transcode 
 -> MKV                          /dvdrip/transcode 
+
+Note : The operation to generate a valid track list needs 
+very long. Please pe patient !
+
 -> vobcopy                      /dvdrip/vobcopy  
 -> mpeg2                        /dvdrip/transcode    
 -> iPhone                       /dvdrip/portable/ip

@@ -165,30 +165,24 @@ von der Projekt-URL.
   von Makemkv wird ein Registrations-Key benötitgt. 
 - Das Skript überprüft ob Makemkv bereits installiert ist.  
 - Das Skript überprüft welche Version von Makemkv und Handbrake lokal
-  auf dem installiert ist.
+  auf dem System installiert ist.
+- Mehrere Teil des Skripts können nun bei Bedarf zu einem späteren Zeitpunkt 
+  erneut ausgeführt werden, sofern der Bedarf besteht.
 
 
-- If a error is detected during the installation of Makemkv or handbrake 
-  the script will exit now.
-- Multiple parts of the script will now ask if they should be executed.
-  - This means that you can later rerun setup.sh to carry out just the actions
-    you need to carry out.
- 
-As of release 0.6.15, a deinstall.sh script is provided to uninstall all 
-software that was installed during the execution of setup.sh.
-- the script will not remove SSH
-- this script do not remove any folders from the movie-containers !
+Mit dem Release 0.6.15 wurde ein Skript zur Deinstallation eingeführt um
+die durch dieses Skript installierte Software zu entfernen.
 
-This Debian-files for download  are only tested on Ubuntu 10.04 LTS.If you don't
-use a Debian based system, or your system is to old, you have to compile 
-these 2 packages for yourself. The full-source of the 2 packages  is provided 
-on the project-page to minimize the download-size.
+- Das Skript entfernt SSH nicht.
+- Das Skript entfern keine Verzeichnisse mit Filmdaten !
 
-http://swiss-army-knife.googlecode.com/files/Makemkv_1.6.5.src.tar.gz
-http://swiss-army-knife.googlecode.com/files/Handbrake-0.9.4-src.tar.gz
+Die bereitgestellten Debian Dateien sind nur getestet unter Ubuntu 10.04 LTS.
+Sofern ein anderes bzw. älteres Linux System zum Einsatz kommt,müssen die beiden 
+Packete von Hand compiliert und installiert werden.Der komplette Source-Code steht 
+unter der nachfolgenden URL bereit.
 
-(Please note, we try to keep up to date with the releases of these programs, so 
-the exact version number may change.)
+http://swiss-army-knife.googlecode.com/files/makemkv_1.6.6.src.tar.gz
+http://swiss-army-knife.googlecode.com/files/HandBrake-0.9.5.tar.bz2
 
 The next step to running this addon is to complete the setup with valid 
 settings for XBMC. Open the XBMC addon-manager and enable the addon, if you 
