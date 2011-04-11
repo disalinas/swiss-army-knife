@@ -302,6 +302,28 @@ echo Would you like to create the default directorys
 echo inside /dvdrip and the default user-script directory
 echo inside the home-folder of /home/$1 ?
 echo
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
+echo /home/$1/swiss.army.knife
+echo /home/$1/swiss.army.knife/ssh
+echo
+echo /dvdrip
+echo /dvdrip/iso
+echo /dvdrip/dvd
+echo /dvdrip/bluray
+echo /dvdrip/network
+echo /dvdrip/vobcopy
+echo /dvdrip/transcode
+echo /dvdrip/portable
+echo /dvdrip/portable/ip
+echo /dvdrip/portable/psp
+echo
 echo All directorys inside the addon-directorys itself are
 echo created as well.
 echo
@@ -677,12 +699,12 @@ else
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.5-32.tar.gz
-         tar xvzf handbrake-0.9.5-32.tar.gz
-         dpkg -i handbrake-cli_0.9.5ppa1~lucid1_i386.deb
+         wget http://swiss-army-knife.googlecode.com/files/$HANDBRAKE32
+         tar xvzf $HANDBRAKE32
+         dpkg -i $HANDBRAKEBIN
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of handbrake-cli_0.9.5ppa1~lucid1_i386.deb
+            echo the installation of $HANDBRAKEBIN
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -690,7 +712,7 @@ else
             read any
             exit $E_DPKG
          else
-            rm handbrake-0.9.5-32.tar.gz
+            rm $HANDBRAKE32
          fi
       else
          clear
@@ -698,12 +720,12 @@ else
          echo download software for 64 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.5-32.tar.gz
-         tar xvzf handbrake-0.9.5-32.tar.gz
-         dpkg -i handbrake-cli_0.9.5ppa1~lucid1_amd64.deb
-         if [ $? -eq 1 ]; then
+         wget http://swiss-army-knife.googlecode.com/files/$HANDBRAKE64
+         tar xvzf $HANDBRAKE64
+         dpkg -i  $HANDBRAKEBIN
+         if [ $? -eq 1 ]; then 
             clear
-            echo the installation of handbrake-cli_0.9.5ppa1~lucid1_amd64.deb
+            echo the installation of $HANDBRAKEBIN
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -711,7 +733,7 @@ else
             read any
             exit $E_DPKG
          else
-            rm handbrake-0.9.5-32.tar.gz > /dev/null 2>&1
+            rm $HANDBRAKE64 > /dev/null 2>&1
          fi
       fi
    fi
