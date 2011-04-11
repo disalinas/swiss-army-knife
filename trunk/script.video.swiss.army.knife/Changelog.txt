@@ -266,7 +266,7 @@ Changes:
 - Setup-file for 0.6.18
 
 ----------------------------------------------------------------------------------------------------
-Date : 01.03.2011 | Release : 0.6.19    | Author  : H.Weber | CVS:454
+Date : 01.03.2011 | Release : 0.6.19    | Author  : H.Weber | CVS:454-496
 ----------------------------------------------------------------------------------------------------
 
 Changes:
@@ -287,6 +287,12 @@ Changes:
 - Integrate installation / upgrade of makemkv 1.6.6 into setup.sh (only 64)
 - Locking sections implemented. 
 - Added Section inside README about the long operation for dvd-chapter-mkv.sh 
+- Integrate installation / upgrade of makemkv 1.6.7 into setup.sh (only 32) 
+- Integrate installation / upgrade of makemkv 1.6.7 into setup.sh (only 64)
+- Added new parameter-id 32087 into settings of the addon.   
+
+  Warning : Parameter t1 was increased because the new parameter-id 32087 !!      
+
 
 Fixes:
 
@@ -311,7 +317,13 @@ Fixes:
   need to show the same information inside the info-area.
 
 
+----------------------------------------------------------------------------------------------------
+Date : 11.04.2011 | Release : 0.6.20    | Author  : H.Weber | CVS:497
+----------------------------------------------------------------------------------------------------
 
+Changes:
+
+- Initial-Work for release named "Jurassic Park"
 
   
 

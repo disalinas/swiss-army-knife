@@ -1,10 +1,10 @@
-#!/bin/bash
+$#!/bin/bash
 ###########################################################
 # scriptname : setup.sh                                   #
 ###########################################################
 # This script is part of the addon swiss-army-knife for   #
 # xbmc and is licenced under the gpl-licence              #
-# http://code.ggle.com/p/swiss-army-knife/              #
+# http://code.ggle.com/p/swiss-army-knife/                #
 ###########################################################
 # author     : linuxluemmel.ch@gmail.com                  #
 # parameters :                                            #
@@ -19,20 +19,33 @@ SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 # Current version of makemkv for 32 and 64 bit            #
 ###########################################################
 
-MAKEMKV="1.6.6"
+MAKEMKV="v1.6.7"
 
 if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
-   MAKEKMKV32="makemkv-swiss-army-knife-32-04-03-2011.tar.gz"
-   MAKEMKVBIN="makemkv-v1.6.6-bin_20110403-1_i386.deb"
-   MAKEMKVOSS="makemkv-v1.6.6-oss_20110403-1_i386.deb"
+   MAKEKMKV32="makemkv-swiss-army-knife-32-04-10-2011.tar.gz"
+   MAKEMKVBIN="makemkv-v1.6.7-bin_20110410-1_i386.deb"
+   MAKEMKVOSS="makemkv-v1.6.7-oss_20110410-1_i386.deb"
 else
-   MAKEKMKV64="makemkv-swiss-army-knife-64-04-04-2011.tar.gz"
-   MAKEMKVBIN="makemkv-v1.6.6-bin_20110404-1_amd64.deb"
-   MAKEMKVOSS="makemkv-v1.6.6-oss_20110404-1_amd64.deb"
+   MAKEKMKV64="makemkv-swiss-army-knife-64-04-10-2011.tar.gz"
+   MAKEMKVBIN="makemkv-v1.6.7-bin_20110410-1_amd64.deb"
+   MAKEMKVOSS="makemkv-v1.6.7-oss_20110410-1_amd64.deb"
 fi
 
 ###########################################################
 
+
+
+###########################################################
+# Current release of the addon                            #
+###########################################################
+
+EULA="0.6.20"
+LAST_STABLE="0.6.20"
+EULA_LOCAL="EULA-0.6.20"
+EULA_FILE="http://swiss-army-knife.googlecode.com/files/EULA-0.6.20"
+EULA_DONE="0.6.20-setup.done"
+
+###########################################################
 
 
 
@@ -90,6 +103,10 @@ cat version
 echo "copyright : (C) <2010-2011>  <linuxluemmel.ch@gmail.com>"
 cd "$SCRIPTDIR" && echo changed to $SCRIPTDIR
 echo ----------------------------------------------------------------------------
+echo
+echo All questions inside this shell-script have to be answered with a single keystroke
+echo with the char \<y\> for yes or \<n\> for no.
+echo
 
 ###########################################################
 
@@ -139,7 +156,7 @@ if [ $# -ne $EXPECTED_ARGS ] ; then
   echo "setup.sh was called without arguments"
   echo
   echo example of usage :
-  echo ./setup.sh xbmc 
+  echo ./setup.sh xbmc
   echo
   echo ----------------------- script rc=1 -----------------------------
   echo -----------------------------------------------------------------
@@ -183,27 +200,25 @@ done
 
 ###########################################################
 #                                                         #
-# Is licence-file 0.6.19 allready local ?                 #
+# Is licence-file allready local ?                        #
 #                                                         #
 ###########################################################
 
-if [ ! -e EULA-0.6.19 ] ; then
-   clear
+if [ ! -e $EULA_LOCAL ] ; then
    echo
-   echo download licence file from google-code
+   echo download licence file from google-code [$EULA]
    echo
-   wget http://swiss-army-knife.googlecode.com/files/EULA-0.6.19
+   wget $EULA_FILE
 fi
 
-if [ -e EULA-0.6.19 ] ; then
-   clear
-   cat EULA-0.6.19
+if [ -e $EULA_LOCAL ] ; then
+   cat $EULA_LOCAL
    echo
-   echo -n "Do you want to accept this enduser-licnce ? (y)"
+   echo -n "Do you want to accept this enduser-licnce ?  Answer:" 
    read ans
    if [ $ans == "y" ] ; then
       clear
-      echo "EULA 0.6.19 accepted"
+      echo "EULA $EULA accepted"
       echo
       echo -n press any key to continue ..
       read any
@@ -219,10 +234,23 @@ else
    echo The EULA-FILE can not be downloaded and therefore you must
    echo use a svn release of this addon.
    echo You do this at your own risk .....
-   echo the last stable puplic released version was 0.6.18
+   echo the latest stable released version was $LAST_STABLE
    echo
-   echo -n press any key to continue or ctrl-c to abort..
+   echo -n "Do you want to accept this enduser-licnce ?  Answer:" 
    read any
+   if [ $ans == "y" ] ; then
+      clear
+      echo "EULA that this is a svn-release was accepted"
+      echo
+      echo -n press any key to continue ..
+      read any
+   else
+      echo "licence was not accepted !"
+      echo
+      echo ----------------------- script rc=5 -----------------------------
+      echo -----------------------------------------------------------------
+      exit $E_LICENCE_NOT_ACCEPTED
+   fi
 fi
 
 ###########################################################
@@ -233,7 +261,7 @@ fi
 #                                                         #
 # Set all +x attributes for the shell-folder              #
 #                                                         #
-########################################################### 
+###########################################################
 
 chmod +x *sh > /dev/null 2>&1
 
@@ -251,13 +279,15 @@ echo
 echo Would you like to create the default directorys
 echo inside /dvdrip and the default user-script directory
 echo inside the home-folder of /home/$1 ?
+echo
 echo All directorys inside the addon-directorys itself are
 echo created as well.
+echo
 echo If you answer "no" you have to create all directorys
 echo by yourself and the shell-scripts may not working.
 echo You should let this script create them.
 echo
-echo -n "Should this setup script create all needed directorys ? (y/n)"
+echo -n "Should this setup script create all needed directorys ? Answer:"
 read ans
 
 if [ $ans == "y" ] ; then
@@ -301,7 +331,7 @@ if [ $ans == "y" ] ; then
       chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/tmp
    fi
 
-   # Do store all user defined functions ... because this directory is outside the addon 
+   # Do store all user defined functions ... because this directory is outside the addon
    # directory structure the functions inside this directory are save from being deleted.
 
    if [ ! -e /home/$1/swiss.army.knife ] ; then
@@ -396,7 +426,6 @@ if [ ! -e /etc/apt/sources.list.d/medibuntu.list ] ; then
    sudo apt-get --yes -q --allow-unauthenticated install medibuntu-keyring && sudo apt-get -q update
 fi
 
-
 apt-get install mencoder
 apt-get install netcat original-awk dvdauthor mkisofs gddrescue
 apt-get install dvd+rw-tools lsdvd dvdbackup
@@ -418,13 +447,15 @@ clear
 echo
 echo -----------------------------------------------------------
 echo If you allreaday installed a previous version of this addon
-echo and have used allready blurays with the addon you can answer no.
-echo This section do only install software to install succcessfull
-echo makekmkv.The software makemkv itself is not installed.
-echo If you would like to transcode a dvd to mkv you have to answer
-echo yes.
+echo and have used makemkvcon with the addon you save answer no.
 echo
-echo -n "Do you want to use bluray-discs inside the addon (y/n)"
+echo This section only installs the following software.
+echo [build-essential lynx libc6-dev libssl-dev libgl1-mesa-dev libqt4-dev]
+echo
+echo The software makemkvcon itself is not installed. This step comes later.
+echo Most people should anwser yes here .
+echo
+echo -n "Do you want to use makemkv inside the addon ? Answer:"
 read ans
 if [ $ans == "y" ] ; then
    echo
@@ -441,8 +472,10 @@ if [ $ans == "n" ] ; then
    clear
    echo
    echo -----------------------------------------------------------
-   echo software for installation of the bluray-functions is not installed.
+   echo software for the installation of the makemkv is not installed.
    echo If you later decide to use them then run setup.sh again.
+   echo Wihtout makemkvm it is not possible to detect structure protection for a dvd.
+   echo It is also not possible to transcode a dvd to a mkv container.
    echo
    echo -n press any key to continue ..
    read any
@@ -465,12 +498,15 @@ clear
 echo
 echo -----------------------------------------------------------
 echo If you allreaday installed a previous version of this addon
-echo and have used ssh with the addon you can answer no.
+echo and have used ssh with the addon you can save answer no.
+echo
 echo Inside this section the ssh-system will be configured.
-echo Warning : The local ssh must be configured or this addon is 
+echo
+echo Warning :
+echo The local ssh daemon must be configured or this addon is
 echo not running as expected.
 echo
-echo -n "Do you want to configure ssh for the addon (y/n)"
+echo -n "Do you want to configure ssh for the addon ? Answer:"
 read ans
 if [ $ans == "y" ] ; then
    clear
@@ -491,7 +527,7 @@ if [ $ans == "y" ] ; then
       echo "Important-Note for the next command !"
       echo "The command will ask for a password.This password is for the user $1"
       echo "and not the current root-password"
-      echo "If you don't give the password,the ssh-key that was created can not be transmitted."
+      echo "If you don't give the correct password,the ssh-key that was created can not be transmitted."
       echo ----------------------------------------------------------------
       sudo -u $1 ssh-copy-id -i /home/$1/.ssh/id_rsa.pub $1@localhost
       echo
@@ -538,7 +574,7 @@ if [ $? -eq 1 ] ; then
    echo The command HandBrakeCLI was not found on your system.
    echo Should HandBrakeCLI 0.9.5 be installed ?
    echo
-   echo -n "Do you want to install HandbrakeCLI (y/n)"
+   echo -n "Do you want to install Handbrake ? Answer:"
    read ans
    if [ $ans == "y" ] ; then
       architecture=`uname -m`
@@ -609,7 +645,7 @@ else
    echo
    echo Warning : This may make HandbrakeCLI unusable ...
    echo
-   echo -n "Do you want to update HandbrakeCLI (y/n)"
+   echo -n "Do you want to update HandbrakeCLI ?  Answer:"
    read ans
    if [ $ans == "y" ] ; then
       architecture=`uname -m`
@@ -681,24 +717,25 @@ fi
 #                                                         #
 ###########################################################
 
-# Test command makemkvcon ...
-
+clear
+echo
+echo please wait .....
+echo
 which makemkvcon >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
    echo The command makemkvcon was not found on your system.
    echo Should makemkv $MAKEMKV to be installed ?
    echo Even if there is no bluray installed you have to answer
-   echo yes if you plan to transcode a dvd to the mkv format.
+   echo yes if you plan to transcode a dvd to the mkv container.
    echo
-   echo -n "Do you want to install makemkv (y/n)"
+   echo -n "Do you want to install makemkv ? Answer:"
    read ans
    if [ $ans == "y" ] ; then
       architecture=`uname -m`
       if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
 
-
-         # Installation for a 32 bit-system 
+         # Installation for a 32 bit-system
 
          clear
          echo
@@ -706,13 +743,13 @@ if [ $? -eq 1 ] ; then
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download the curremt release from project url for 32 bit 
+         # Download the current release from project url for 32 bit
 
-         wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV32  
-         tar xvzf $MAKEKMKV32 
- 
-         # Install oss part for makemkv 
-        
+         wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV32
+         tar xvzf $MAKEKMKV32
+
+         # Install oss part for makemkv
+
          dpkg -i $MAKEMKVOSS
          if [ $? -eq 1 ]; then
             clear
@@ -725,7 +762,7 @@ if [ $? -eq 1 ] ; then
             exit $E_DPKG
          fi
 
-         # Install binary part for makemkv 
+         # Install binary part for makemkv
 
          dpkg -i $MAKEMKVBIN
          if [ $? -eq 1 ]; then
@@ -753,9 +790,9 @@ if [ $? -eq 1 ] ; then
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
 
-         # Download the curremt release from project url for 32 bit 
+         # Download the current release from project url for 32 bit
 
-         wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV64  
+         wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV64
          tar xvzf $MAKEKMKV64
 
          dpkg -i $MAKEMKVOSS
@@ -770,7 +807,7 @@ if [ $? -eq 1 ] ; then
             exit $E_DPKG
          fi
 
-         # Install bin part for makemkv   
+         # Install bin part for makemkv
 
          dpkg -i $MAKEMKVBIN
          if [ $? -eq 1 ]; then
@@ -783,10 +820,6 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          fi
-
-
-
-
 
          rm $MAKEKMKV64
       fi
@@ -819,9 +852,9 @@ else
    echo Warning : This may make makemkv unuseable ...
    echo It is may more save to remove the old release
    echo by the command dpkg -r or do not touch the
-   echo the current installed makekmkv release [$MINSTALLED] 
+   echo the current installed makekmkv release [$MINSTALLED]
    echo
-   echo -n "Do you want to update makemkv (y/n)"
+   echo -n "Do you want to update makemkv ?  Answer:"
    read ans
    if [ $ans == "y" ] ; then
       architecture=`uname -m`
@@ -835,7 +868,7 @@ else
          wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV32
          tar xvzf $MAKEKMKV32 
 
-         # Install oss part for makemkv           
+         # Install oss part for makemkv
 
          dpkg -i $MAKEMKVOSS
          if [ $? -eq 1 ]; then
@@ -849,7 +882,7 @@ else
             exit $E_DPKG
          fi
 
-         # Install bin part for makemkv   
+         # Install bin part for makemkv
 
          dpkg -i $MAKEMKVBIN
          if [ $? -eq 1 ]; then
@@ -875,7 +908,7 @@ else
          wget http://swiss-army-knife.googlecode.com/files/$MAKEKMKV64
          tar xvzf $MAKEKMKV64 
 
-         # Install oss part for makemkv          
+         # Install oss part for makemkv
 
          dpkg -i $MAKEMKVOSS
          if [ $? -eq 1 ]; then
@@ -889,7 +922,7 @@ else
             exit $E_DPKG
          fi
 
-         # Install bin part for makemkv   
+         # Install bin part for makemkv
 
          dpkg -i $MAKEMKVBIN
          if [ $? -eq 1 ]; then
@@ -910,7 +943,7 @@ else
       clear
       echo
       echo -----------------------------------------------------------
-      echo current makemkv is not updated to release $MAKEMKV and remains 
+      echo current makemkv is not updated to release $MAKEMKV and remains
       echo as it is.
       echo
       echo -n press any key to continue ..
@@ -930,18 +963,18 @@ fi
 
 clear
 cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
-if [ ! -e 0.6.19-setup.done ] ; then
+if [ ! -e $EULA_DONE ] ; then
    echo
    echo -----------------------------------------------------------
    echo create setup.done and licence-file inside addon-data directory
    echo
-   echo "0.6.19" > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.19-setup.done
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.19-setup.done
+   echo $EULA > /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/$EULA_DONE
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/$EULA_DONE
 fi
 
-if [ ! -e EULA-0.6.19 ] ; then
-   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/EULA-0.6.18 EULA-0.6.19
-   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/EULA-0.6.19
+if [ ! -e $EULA_LOCAL ] ; then
+   cp /home/$1/.xbmc/addons/script.video.swiss.army.knife/shell-linux/$EULA_LOCAL $EULA_LOCAL
+   chown $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/$EULA_LOCAL
 fi
 
 ###########################################################
@@ -957,8 +990,7 @@ fi
 
 clear
 echo
-echo Addon release 0.6.19 can now be running over xbmc  ......
-echo
+echo Addon release $EULA can now be running over xbmc  ......
 echo
 echo - Please do updates the settings with the addon-manager.
 echo - Do not forget to replace the default name xbmc@localhost
@@ -966,12 +998,12 @@ echo   if your username is not xbmc.
 echo - If you did not created the directorys. You have to create them
 echo   now and to change all directorys inside the settings.
 echo - Without a configured ssh system this addon is not working.
-echo - Please remember that no "spaces" inside the directory-names
+echo - Please remember that no \"spaces\" inside the directory-names
 echo   are allowed.
 echo - Please be sure that the user has full write permissions to all
 echo   folders !
 echo - A description of all addon-settings can be found within APPENDIX A
-echo   of the README.Linux 
+echo   of the README.en.Linux
 echo
 echo Have fun with this addon and I wish you happy ripping.
 echo Feel free to send me a few notes about your expirience with

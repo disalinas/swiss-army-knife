@@ -94,6 +94,8 @@ MEDIA_TYPE="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/
 MEDIA_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state"
 MEDIA_NOT_PROPER="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD-CRC"
 DVD_CRC_ERRRORS="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/lsdvd_error"
+DVD_STRUCTUR_OPTION="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_STRUCTUR_PROTECTION"
+DVD_STRUCTUR_PROTECTION="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD-STRUCTUR-OUTPUT"
 GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
 
 ZERO=0
@@ -145,10 +147,10 @@ fi
 #                                                         #
 ###########################################################
 
-if [ -e $MEDIA_NOT_PROPER ] ; then
-    rm $MEDIA_NOT_PROPER > /dev/null 2>&1
-    rm $DVD_CRC_ERRRORS > /dev/null 2>&1
-fi
+rm $MEDIA_RETURN > /dev/null 2>&1
+rm $MEDIA_NOT_PROPER > /dev/null 2>&1
+rm $DVD_CRC_ERRRORS > /dev/null 2>&1
+rm $DVD_STRUCTUR_PROTECTION > /dev/null 2>&1
 
 ###########################################################
 
@@ -197,7 +199,7 @@ OUTPUT=$(dvd+rw-mediainfo $1 > $MEDIA_TYPE 2>/dev/null)
 RETVAL1=$?
 if [ $RETVAL1 -eq 0 ] ; then
 
-   # In booth cases (dvd or blureay) the return valaue is zero
+   # In booth cases (dvd or blueray) the return valaue is zero
 
    lsdvd -a $1 > $DVD_CRC_ERRRORS 2>&1
    RETVAL2=$?
@@ -205,6 +207,22 @@ if [ $RETVAL1 -eq 0 ] ; then
    if [ $RETVAL2 -eq 0 ] ; then
 
        # Ok we have a dvd inserted into the drive specified by paramater $1
+
+       if [ -e $DVD_STRUCTUR_OPTION ] ; then
+          echo 
+          echo "INFO start background-process to detect structure-protection schemata"
+          (
+           makemkvcon info dev:$1 &
+          ) > $DVD_STRUCTUR_PROTECTION 2>&1 
+          sleep 60
+          echo "INFO background-process should have enough information about inserted dvd"
+          echo
+       else
+          echo 
+          echo "INFO dvd's with a structur-protection can not be detected with the current addon-settings"
+          echo "INFO To detect this protection makemkvcon should be installed."
+          echo 
+       fi
 
        cat $MEDIA_TYPE | head -3 | tail -1 | awk '{print $4}' > $MEDIA_RETURN
 
@@ -235,6 +253,14 @@ if [ $RETVAL1 -eq 0 ] ; then
            CRC_COUNTER=1
        fi
 
+       if [ -e $DVD_STRUCTUR_OPTION ] ; then
+          CRC=$(cat $DVD_STRUCTUR_PROTECTION | grep "structure protection")
+          PID=$(ps axu | grep makemkvcon | grep -v grep |awk '{print $2}')
+          kill -9 $PID > /dev/null 2>&1
+          if [ -n "$CRC" ] ; then
+             CRC_COUNTER=1
+          fi
+       fi
 
        if [ $CRC_COUNTER -eq 0 ] ; then
            echo ----------------------- script rc=0 -----------------------------
@@ -243,8 +269,9 @@ if [ $RETVAL1 -eq 0 ] ; then
        else
            echo
            echo This DVD seeems to be very good copy-protected.
-           echo It is a guess that transcoding and dd-copy will not work on this
-           echo DVD.It is recommandet to use resque-copy with this disk.
+           echo It is a guess that transcoding with Handbrake and dd-copy will not
+           echo work on this DVD.
+           echo It is recommandet to use resque-copy or makemkvcon with this disk.
            echo Even with a rescue-copy it is not certain that this disk can be
            echo duplicated.
            echo

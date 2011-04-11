@@ -294,9 +294,9 @@ do
     if [ -n "$chaps" ] ; then
        echo INFO track-index:[$Tindex] length:[$duration] chapters:[$chaps]
        echo $duration $Tindex >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_HELP 
+       echo track:[$Tindex] length:[$duration] chapters:[$chaps] >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/BR_TRACKS
     fi
 
-    echo track:[$Tindex] length:[$duration] chapters:[$chaps] >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray/BR_TRACKS
     Tindex=`expr $Tindex + 1`
 done
 

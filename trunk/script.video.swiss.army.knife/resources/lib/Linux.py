@@ -11,9 +11,9 @@
 # TASKS   : This python code contains only os-dependet  #
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
-# VERSION : 0.6.19                                      #
-# DATE    : 01-02-11                                    #
-# STATE   : Beta 4                                      #
+# VERSION : 0.6.20                                      #
+# DATE    : 11-04-11                                    #
+# STATE   : Beta 5                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -151,7 +151,8 @@ def OSConfiguration(index):
     config[59] = __settings__.getSetting("id-disable-protect")
     config[60] = __settings__.getSetting("id-disable-mkv-licence")
     config[61] = __settings__.getSetting("id-notifications") 
-      
+    config[62] = __settings__.getSetting("id-struct-protect")   
+  
     # Modul-global variable to detect if debug-log is active
 
     __verbose__ = config[17]
@@ -280,6 +281,19 @@ def OSConfiguration(index):
         status = os.system("%s" % (command))
         __lock__.release() 
 
+    if (config[62] == 'true'):
+        sys.platform.startswith('linux')
+        command = "echo -n STRUCTUR-PROTECTION FOR DVD IS ACTIVE ! > $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_STRUCTUR_PROTECTION"
+        __lock__.acquire(1)  
+        status = os.system("%s" % (command))
+        __lock__.release()  
+    else:
+        command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_STRUCTUR_PROTECTION > /dev/null 2>&1"
+        __lock__.acquire(1) 
+        status = os.system("%s" % (command))
+        __lock__.release() 
+
+
     # All the options that can be enabled or disabled over settings or during the execution of setup.sh 
     # are reported back to the shell-scripts.
   
@@ -310,6 +324,14 @@ def OSConfiguration(index):
         status = os.system("%s" % (command))
         __lock__.release()  
 
+        # Even if the paramter [62] is set to true .... we can not enable a option that needs makemkvcon in any case 
+
+        command = "rm " + "$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/DVD_STRUCTUR_PROTECTION > /dev/null 2>&1"
+        __lock__.acquire(1) 
+        status = os.system("%s" % (command))
+        __lock__.release() 
+
+
     # All used internal files are stored inside after here ...
 
     config[26] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/username'  
@@ -318,7 +340,7 @@ def OSConfiguration(index):
 
     # Every release has a sepeperate setup.done file .....
 
-    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.19-setup.done'
+    config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.20-setup.done'
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
     config[32] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid'
@@ -470,26 +492,12 @@ def OSCheckMedia(Media):
     global __configLinux__
     global __verbose__
 
-    # Erase  all temporary files stored inside list but only if
-    # there is no active job
+    OSCleanTemp()
 
-    if (os.path.exists(__configLinux__[45])):
-        if (os.path.exists(__configLinux__[30])):
-            os.remove(__configLinux__[30])
-            if (__verbose__ ==  "true"): 
-               OSlog("state-file do exist prior to loop and will be deleted")
-    else:
-        OSCleanTemp()
-
-    # Execution of shell-script br0.sh inside shell-linux
+    # Execution of shell-script state.sh inside shell-linux
 
     if (__verbose__ == "true"):
         OSlog("state.sh command ready to start")
-
-    if (os.path.exists(__configLinux__[30])):
-       os.remove(__configLinux__[30])
-       if (__verbose__ ==  "true"): 
-          OSlog("state-file do exist prio to loop and will be deleted")
  
     if (Media == 'BLURAY'):
         OSRun("br0.sh " +  __configLinux__[2],True,False)
@@ -498,17 +506,13 @@ def OSCheckMedia(Media):
 
     if (__verbose__ == "true"):
         OSlog("state.sh command executed")
-
-    xbmc.executebuiltin("ActivateWindow(busydialog)")
-
-    # We must wait until the file with the state-information could be read
-    # If someone knows a bettey way to get this list faster ... send me pm .-)
-    # This time-out values is critical and was hardcoded until 0.6.14  
-
-    time.sleep(3)
+    time.sleep(1) 
 
     WCycles = 3
     Waitexit = True
+    rc = 0 
+
+    xbmc.executebuiltin("ActivateWindow(busydialog)")  
     while (Waitexit):
            if (os.path.exists(__configLinux__[30])):
                if (__verbose__ ==  "true"):
@@ -516,6 +520,7 @@ def OSCheckMedia(Media):
                    OSlog("WCycles Value :" + str(WCycles))
                    OSlog("Timeout t1 :" + str(__configLinux__[23]))
                Waitexit = False
+               rc = 0 
            else:
                WCycles = WCycles + 1
                time.sleep(1)
@@ -523,10 +528,13 @@ def OSCheckMedia(Media):
                if (__verbose__ ==  "true"):
                   OSlog("Timeout t1 reached for track-file  ...")
                   OSlog("increase timeout value for timeout t1")
-               xbmc.executebuiltin("Dialog.Close(busydialog)")
-               return 2
+               Waitexit = False 
+               rc = 2
 
     xbmc.executebuiltin("Dialog.Close(busydialog)")
+    
+    if (rc != 0): 
+        return 2      
 
     # We should now have the file with the state
 
@@ -1093,7 +1101,7 @@ def OSChapterDVD(UsingMKV_Tracks):
 
     tracklist = []
 
-    # Because we need a mkv tracklist 
+    # Because we need a mkv tracklist we call a other function  
 
     if (UsingMKV_Tracks == True):     
         tracklist =  OSChapterMKV()
