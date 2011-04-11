@@ -1,4 +1,4 @@
-$#!/bin/bash
+#!/bin/bash
 ###########################################################
 # scriptname : setup.sh                                   #
 ###########################################################
@@ -17,7 +17,7 @@ SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 
 ###########################################################
 # Current version of makemkv for 32 and 64 bit            #
-###########################################################
+#########################################################
 
 MAKEMKV="v1.6.7"
 
@@ -32,6 +32,28 @@ else
 fi
 
 ###########################################################
+
+
+
+
+###########################################################
+# Current version of Handbrake for 32 and 64 bit          #
+###########################################################
+
+HANDBRAKE="0.9.5"
+
+if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
+   HANDBRAKE32="handbrake-0.9.5-32.tar.gz"
+   HANDBRAKEBIN="handbrake-cli_0.9.5ppa1~lucid1_i386.deb"
+else
+   HANDBRAKE64="handbrake-0.9.5-64.tar.gz"
+   HANDBRAKEBIN="handbrake-cli_0.9.5ppa1~lucid1_amd64.deb"
+fi
+
+###########################################################
+
+
+
 
 
 
@@ -497,8 +519,8 @@ fi
 clear
 echo
 echo -----------------------------------------------------------
-echo If you allreaday installed a previous version of this addon
-echo and have used ssh with the addon you can save answer no.
+echo If you did allready used a previous version of this addon
+echo and have used ssh, you can save answer no.
 echo
 echo Inside this section the ssh-system will be configured.
 echo
@@ -572,7 +594,7 @@ which HandBrakeCLI >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
    clear
    echo The command HandBrakeCLI was not found on your system.
-   echo Should HandBrakeCLI 0.9.5 be installed ?
+   echo Should HandBrakeCLI $HANDBRAKE be installed ?
    echo
    echo -n "Do you want to install Handbrake ? Answer:"
    read ans
@@ -584,12 +606,12 @@ if [ $? -eq 1 ] ; then
          echo download software for 32 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.5-32.tar.gz
-         tar xvzf handbrake-0.9.5-32.tar.gz
-         dpkg -i handbrake-cli_0.9.5ppa1~lucid1_i386.deb
+         wget http://swiss-army-knife.googlecode.com/files/$HANDBRAKE32
+         tar xvzf $HANDBRAKE32
+         dpkg -i $HANDBRAKEBIN
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of handbrake-cli_0.9.5ppa1~lucid1_i386.deb
+            echo the installation of $HANDBRAKEBIN
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -597,7 +619,7 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          else
-            rm handbrake-cli_0.9.5ppa1~lucid1_i386.deb > /dev/null 2>&1
+            rm $HANDBRAKE32 > /dev/null 2>&1
          fi
       else
          clear
@@ -605,12 +627,12 @@ if [ $? -eq 1 ] ; then
          echo download software for 64 bit
          echo
          cd /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp
-         wget http://swiss-army-knife.googlecode.com/files/handbrake-0.9.5-64.tar.gz
-         tar xvzf handbrake-0.9.5-64.tar.gz
-         dpkg -i handbrake-cli_0.9.5ppa1~lucid1_amd64.deb
+         wget http://swiss-army-knife.googlecode.com/files/$HANDBRAKE64
+         tar xvzf $HANDBRAKE64
+         dpkg -i $HANDBRAKEBIN
          if [ $? -eq 1 ]; then
             clear
-            echo the installation of handbrake-cli_0.9.5ppa1~lucid1_amd64.deb
+            echo the installation of $HANDBRAKEBIN
             echo was not successfull.
             echo please do confirm that the installation was not successfull.
             echo
@@ -618,7 +640,7 @@ if [ $? -eq 1 ] ; then
             read any
             exit $E_DPKG
          else
-            rm handbrake-cli_0.9.5ppa1~lucid1_amd64.deb > /dev/null 2>&1
+            rm $HANDBRAKE64 > /dev/null 2>&1
          fi
       fi
    fi
@@ -638,9 +660,9 @@ else
    echo The command HandBrakeCLI was found on your system.
    echo
    echo The release found on your system is : [$HINSTALLED]
-   echo The script can download and install : [0.9.5]
+   echo The script can download and install : [$HANDBRAKE]
    echo
-   echo Should HandBrakeCLI [0.9.5] be installed over
+   echo Should HandBrakeCLI [$HANDBRAKE] be installed over
    echo the existing release on your system ?
    echo
    echo Warning : This may make HandbrakeCLI unusable ...
@@ -831,7 +853,7 @@ if [ $? -eq 1 ] ; then
       echo makemkv is not installed.
       echo You can not transcode a bluray as long this tool is not installed.
       echo It is also not possible to transcode a dvd to mkv.
-      echo If you decide to transcode blurays pleas do run this tool again.
+      echo If you decide to transcode blurays please do run this tool again.
       echo
       echo -n press any key to continue ..
       read any
