@@ -13,9 +13,9 @@
 #           - transcode dvd to multiple formats         #
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
-# VERSION : 0.6.19                                      #
-# DATE    : 01-03-11                                    #
-# STATE   : Beta 4                                      #
+# VERSION : 0.6.20                                      #
+# DATE    : 11-04-11                                    #
+# STATE   : Beta 5                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
 #                                                       #
@@ -38,8 +38,8 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "01-03-2011"
-__version__ 		= "0.6.19"
+__date__ 		= "11-04-2011"
+__version__ 		= "0.6.20"
 __code_name__           = "Avatar"
 __XBMC_Revision__ 	= "35648"
 __index_config__        = 65
@@ -1643,7 +1643,10 @@ class GUIMain01Class(xbmcgui.Window):
           # Get current jobstate for addon             # 
           ##############################################
 
+          __lock__.acquire(1)  
           job_state = OSGetJobState()
+          __lock__.release()   
+ 
           if (job_state == 1):
 
               # The real-job files do exist. Prior to set the job-state to active we have 
@@ -2107,7 +2110,7 @@ if __name__ == '__main__':
            GUIInfo(0,__language__(33316))
            Enable_Startup_Addon = 1 
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit   
 
 
@@ -2121,7 +2124,7 @@ if __name__ == '__main__':
          GUIInfo(1,__language__(33327))                     
          Enable_Startup_Addon = Enable_Startup_Addon + 1
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit 
 
 
@@ -2144,7 +2147,7 @@ if __name__ == '__main__':
                Enable_Startup_Addon = Enable_Startup_Addon + 1 
 
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit     
 
    ############################################## 
@@ -2183,7 +2186,7 @@ if __name__ == '__main__':
               GUIInfo(1,__language__(33333))
               Enable_Startup_Addon = Enable_Startup_Addon + 1   
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit  
 
 
@@ -2198,7 +2201,7 @@ if __name__ == '__main__':
          GUIInfo(1,__language__(33306))
          Enable_Startup_Addon = Enable_Startup_Addon + 1
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit  
 
 
@@ -2211,7 +2214,7 @@ if __name__ == '__main__':
          GUIInfo(1,__language__(33305))
          Enable_Startup_Addon = Enable_Startup_Addon + 1
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit  
 
    ############################################## 
@@ -2223,7 +2226,7 @@ if __name__ == '__main__':
          GUIInfo(1,__language__(33318))
          Enable_Startup_Addon = Enable_Startup_Addon + 1
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit  
 
    ############################################## 
@@ -2240,7 +2243,7 @@ if __name__ == '__main__':
             Enable_Startup_Addon = Enable_Startup_Addon + 1
             __enable_network__ == "false" 
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit  
 
 
@@ -2258,7 +2261,7 @@ if __name__ == '__main__':
             Enable_Startup_Addon = Enable_Startup_Addon + 1
             __enable_burning__ == "false" 
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit  
 
    ############################################## 
@@ -2270,7 +2273,7 @@ if __name__ == '__main__':
          GUIInfo(1,__language__(33331))                     
          Enable_Startup_Addon = Enable_Startup_Addon + 1
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit  
 
    ############################################## 
@@ -2282,7 +2285,7 @@ if __name__ == '__main__':
          GUIInfo(1,__language__(33332))                     
          Enable_Startup_Addon = Enable_Startup_Addon + 1
    else:
-        GUILog("Error in startup-configuration")
+        GUIlog("Error in startup-configuration")
         exit  
 
    ############################################## 
@@ -2299,6 +2302,9 @@ if __name__ == '__main__':
 
       xbmc.executebuiltin("Dialog.Close(busydialog)") 
       time.sleep(1)
+
+      # After here we have to be certain that all read and write 
+      # operations to a global var are protected by a lock-statement ...
 
       ############################################## 
       # Start a worker-thread for operations       # 

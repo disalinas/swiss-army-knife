@@ -39,7 +39,7 @@
         <setting id="id-burn" type="text" label="32067" default="4706074624"/>
         <setting id="id-netcat" type="text" label="32068" default="4000"/>
         <setting id="id-verbose" type="bool" label="32069" default="false"/> 
-        <setting id="id-t1" type="text" label="32074" default="5"/> 
+        <setting id="id-t1" type="text" label="32074" default="65"/> 
         <setting id="id-t2" type="text" label="32075" default="10"/> 
         <setting id="id-t3" type="text" label="32076" default="100"/>  
         <setting id="id-delete" type="bool" label="32080" default="true"/>  
@@ -48,6 +48,7 @@
         <setting id="id-use-allways-default" type="bool" label="32083" default="true"/>
         <setting id="id-disable-protect" type="bool" label="32084" default="true"/>    
         <setting id="id-disable-mkv-licence" type="bool" label="32085" default="false"/>          
-        <setting id="id-notifications" type="bool" label="32086" default="true"/>        
+        <setting id="id-notifications" type="bool" label="32086" default="true"/> 
+        <setting id="id-struct-protect" type="bool" label="32087" default="true"/>          
 
 </settings>
