@@ -324,6 +324,8 @@ Date : 11.04.2011 | Release : 0.6.20    | Author  : H.Weber | CVS:497
 Changes:
 
 - Initial-Work for release named "Jurassic Park"
+- Directorys to be created are shown inside setup.sh
+
 
   
 
