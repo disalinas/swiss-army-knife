@@ -1942,7 +1942,7 @@ class GUIWorkerThread(threading.Thread):
                              state = OSKillProc()
                              __lock__.acquire(1)   
                              __jobs__ = False
-                             __lock__.acquire(1)
+                             __lock__.release()
   
                              if (__notifications__ == "true"):
                                 GUINotification(__language__(33243))
