@@ -1947,24 +1947,24 @@ class GUIWorkerThread(threading.Thread):
                              if (__notifications__ == "true"):
                                 GUINotification(__language__(33243))
 
+                                GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
+   
+                       __lock__.acquire(1)    
+                       ProgressView = __ProgressView_
+                       __lock__.release()     
+
                        # Process is running like expected ...
 
-                       if (mainprocess == 0):
+                       if ((mainprocess == 0) and (ProgressView == False)):
                           if (__notifications__ == "true"):
                              if (modula == 0): 
                                 GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
-   
-                          __lock__.acquire(1)    
-                          ProgressView = __ProgressView_
-                          __lock__.release()     
 
-                          if ((progress == 100) and (ProgressView == False)):
+                          if (progress == 100):
                              if (OSDetectLastStage() == True):
                                 __lock__.acquire(1)   
                                 __jobs__ == False
                                 __lock__.release()
- 
-                                # We show this event only if the progress-bar is not active ....
   
                                 if (__notifications__ == "true"):
                                    GUINotification(__language__(33238))
