@@ -157,40 +157,6 @@ def OSConfiguration(index):
 
     __verbose__ = config[17]
 
-    # We neeed more logs ....
-
-    if (__verbose__ == 'true'):
-        OSlog("configuration index 00: [" + config[0] + "]")
-        OSlog("configuration index 01: [" + config[1] + "]")  
-        OSlog("configuration index 02: [" + config[2] + "]")              
-        OSlog("configuration index 03: [" + config[3] + "]")
-        OSlog("configuration index 04: [" + config[4] + "]")  
-        OSlog("configuration index 05: [" + config[5] + "]") 
-        OSlog("configuration index 06: [" + config[6] + "]")
-        OSlog("configuration index 07: [" + config[7] + "]")  
-        OSlog("configuration index 08: [" + config[8] + "]")              
-        OSlog("configuration index 09: [" + config[9] + "]")
-        OSlog("configuration index 10: [" + config[10] + "]") 
-        OSlog("configuration index 11: [" + config[11] + "]")
-        OSlog("configuration index 12: [" + config[12] + "]") 
-        OSlog("configuration index 13: [" + config[13] + "]")      
-        OSlog("configuration index 14: [" + config[14] + "]")
-        OSlog("configuration index 15: [" + config[15] + "]")
-        OSlog("configuration index 16: [" + config[16] + "]")
-        OSlog("configuration index 17: [" + config[17] + "]")
-        OSlog("configuration index 18: [" + config[18] + "]")
-        OSlog("configuration index 19: [" + config[19] + "]")
-        OSlog("configuration index 20: [" + config[20] + "]")
-        OSlog("configuration index 21: [" + config[21] + "]")
-        OSlog("configuration index 22: [" + config[22] + "]")
-        OSlog("configuration index 23: [" + config[23] + "]")
-        OSlog("configuration index 24: [" + config[24] + "]")
-        OSlog("configuration index 25: [" + config[25] + "]") 
-        OSlog("configuration index 50: [" + config[50] + "]")
-        OSlog("configuration index 51: [" + config[51] + "]")     
-                     
-
-
     # On startup we need to check that all data-containers are writeable
 
     # Index 0 : dvd-iso container 
@@ -341,6 +307,8 @@ def OSConfiguration(index):
     # Every release has a sepeperate setup.done file .....
 
     config[29] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/0.6.20-setup.done'
+
+
     config[30] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/state'
     config[31] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress'
     config[32] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/progress/progress-pid'
@@ -364,8 +332,6 @@ def OSConfiguration(index):
 
     # More configuration settings 
 
-    config[50] = __settings__.getSetting("iphone-transcode")
-    config[51] = __settings__.getSetting("psp-transcode")  
     config[52] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD-CRC'
     config[53] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/PWATCH'
     config[54] = os.getenv("HOME") + '/.xbmc/userdata/addon_data/script.video.swiss.army.knife/TERM_ALL'
@@ -2219,6 +2185,10 @@ def OSDVDtoMKV():
 
     parameters = len(__exec_dvd__)
 
+    if (__verbose__ == "true"):
+        OSlog("mkv parameters : " + str(parameters))      
+
+
     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
     # Execution of shell-script dvd9.sh inside shell-linux
@@ -2229,7 +2199,7 @@ def OSDVDtoMKV():
     # Prepare command string
 
     dvd_command = ""
-    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2] + " " + str( __exec_dvd__[3])
+    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2]
 
     if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
@@ -2674,16 +2644,12 @@ def OSCheckMainProcess():
 
         try: 
             os.kill(int(pid[0]), 0)
-            if (__verbose__ == "true"): 
-                OSlog("default transcode-process is running  : [" + str(pid) + "]") 
             return 0
         except OSError, err:
             
             # We send back the signal to stop all polling ....
-            # and to terminae the scripts immediately
+            # and to terminate the scripts immediately
 
-            if (__verbose__ == "true"): 
-                OSlog("default transcode-process is not running  : [" + str(pid) + "]") 
             return 1  
     else:
         if (__verbose__ == "true"): 
