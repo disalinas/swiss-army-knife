@@ -317,6 +317,7 @@ Fixes:
   need to show the same information inside the info-area.
 
 
+
 ----------------------------------------------------------------------------------------------------
 Date : 11.04.2011 | Release : 0.6.20    | Author  : H.Weber | CVS:497
 ----------------------------------------------------------------------------------------------------
@@ -325,6 +326,12 @@ Changes:
 
 - Initial-Work for release named "Jurassic Park"
 - Directorys to be created are shown inside setup.sh
+- By default the new parameter detect structure-protection is 
+  not enabled.(parameter-id 32087)
+- Default transcoding to makemkv was not running properly ....
+- A few speed-up operations ....
+- Blocksize for dd operation has ben increased to 2M 
+
 
 
   

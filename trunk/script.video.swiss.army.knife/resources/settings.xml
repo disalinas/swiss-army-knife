@@ -49,6 +49,6 @@
         <setting id="id-disable-protect" type="bool" label="32084" default="true"/>    
         <setting id="id-disable-mkv-licence" type="bool" label="32085" default="false"/>          
         <setting id="id-notifications" type="bool" label="32086" default="true"/> 
-        <setting id="id-struct-protect" type="bool" label="32087" default="true"/>          
+        <setting id="id-struct-protect" type="bool" label="32087" default="false"/>          
 
 </settings>

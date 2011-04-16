@@ -322,7 +322,6 @@ def GUIProgressbar(InfoText):
 
     global __ProgressView__   
 
-
     __lock__.acquire(1)    
     __ProgressView__ = True
     __lock__.release() 
@@ -346,14 +345,18 @@ def GUIProgressbar(InfoText):
                       dp.close() 
                       exit = False
                       retval = 1
+                      __lock__.acquire(1)  
                       time.sleep(3)
+                      __lock__.release()   
 
            dp.update(progress,OSGetStageText())
            if dp.iscanceled():
               dp.close() 
               exit = False
               retval = 0
+           __lock__.acquire(1)
            time.sleep(1)
+           __lock__.release() 
 
     __lock__.acquire(1)  
     __ProgressView__ = False
@@ -570,11 +573,6 @@ class GUIExpertUserfunctionsClass(xbmcgui.Window):
                             GUINotification("user9.sh executed")     
                      if (choice == 9): 
                         exit = False
-                        time.sleep(1)
- 
-          __lock__.acquire(1)  
-          self.close()
-          __lock__.release() 
 
 #########################################################
 
@@ -1069,12 +1067,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                          __lock__.release()  
 
              if (choice == 5): 
-                 exit = False
-                 time.sleep(1) 
-
-          __lock__.acquire(1)  
-          self.close()
-          __lock__.release() 
+                 exit = False 
 
 #########################################################
 
@@ -1124,11 +1117,6 @@ class GUIExpertNetworkClass(xbmcgui.Window):
                  exit = True 
              if (choice == 4): 
                  exit = False 
-                 time.sleep(1)
-
-          __lock__.acquire(1)                    
-          self.close()
-          __lock__.release()  
 
 #########################################################
 
@@ -1502,28 +1490,19 @@ class GUIExpertWinClass(xbmcgui.Window):
 
              if (choice == 5):
                  if (__enable_burning__ == 'true'):                
-                     TranscodeWindow = GUIExpertTranscodeClass()
-                     __lock__.acquire(1)  
-                     del TranscodeWindow
-                     __lock__.release()  
+                     TranscodeWindow = GUIExpertTranscodeClass() 
                  else:
                      GUIInfo(0,__language__(33325))   
 
              if (choice == 6):
                  if (__enable_network__ == 'true'):                
                      NetworkWindow = GUIExpertNetworkClass()
-                     __lock__.acquire(1) 
-                     del NetworkWindow
-                     __lock__.release()  
                  else:
                      GUIInfo(0,__language__(33320))                            
                   
              if (choice == 7):
                  if (__enable_customer__ == 'true'):                
-                     UserfunctionsWindow = GUIExpertUserfunctionsClass()
-                     __lock__.acquire(1)  
-                     del UserfunctionsWindow
-                     __lock__.release()  
+                     UserfunctionsWindow = GUIExpertUserfunctionsClass() 
                  else:
                      GUIInfo(0,__language__(33322)) 
 
@@ -1538,12 +1517,7 @@ class GUIExpertWinClass(xbmcgui.Window):
                  message = "Author  :  " + __author__ + "\nVersion :  " + __version__ 
                  GUIInfo(3,message)   
              if (choice == 10):   
-                 exit = False
-                 time.sleep(1) 
-    
-          __lock__.acquire(1) 
-          self.close()
-          __lock__.release() 
+                 exit = False 
 
 #########################################################
 
@@ -1612,12 +1586,7 @@ class GUIJobWinClass(xbmcgui.Window):
                  removal = OSRemoveLock()  
              if (choice == 3):  
                  exit = False
-                 time.sleep(1) 
-
-          __lock__.acquire(1)  
-          self.close()
-          __lock__.release()       
-
+    
 #########################################################
 
 
@@ -1660,7 +1629,9 @@ class GUIMain01Class(xbmcgui.Window):
 
                   if (__notifications__ == "true"):
                       GUINotification(__language__(33240))
+                      __lock__.acquire(1)   
                       time.sleep(1)
+                      __lock__.release() 
               else:
 
                   # There must be something wrong ....
@@ -1676,7 +1647,9 @@ class GUIMain01Class(xbmcgui.Window):
                             
                   if (__notifications__ == "true"):
                      GUINotification(__language__(33244))
+                     __lock__.acquire(1) 
                      time.sleep(1)
+                     __lock__.release()  
 
           if (job_state == 0):
               __lock__.acquire(1)  
@@ -1790,7 +1763,7 @@ class GUIMain01Class(xbmcgui.Window):
                                  tracklist = []
 
                                  if (__default_tr_mkv__ == True): 
-                                    tracklist = OSChapterDVD(True)
+                                    tracklist = OSChapterDVD(False)
                                  else:
                                     tracklist = OSChapterDVD(False)
 
@@ -1836,19 +1809,13 @@ class GUIMain01Class(xbmcgui.Window):
                              if (password == __pw__ ):
                                  if (__verbose__ == "true"):
                                      GUIlog('menu expert-mode starting -> password correct')
-                                 ExpertWindow = GUIExpertWinClass()
-                                 __lock__.acquire(1)  
-                                 del ExpertWindow
-                                 __lock__.release()  
+                                 ExpertWindow = GUIExpertWinClass() 
                              else: 
                                  if (__verbose__ == "true"):
                                      GUIlog('menu expert-mode disabled -> password not correct')
                                  GUIInfo(2,__language__(33213))    
                      else:
-                          ExpertWindow = GUIExpertWinClass()
-                          __lock__.acquire(1) 
-                          del ExpertWindow
-                          __lock__.release()                           
+                          ExpertWindow = GUIExpertWinClass()                        
 
                  if (choice == 3):
 
@@ -1859,10 +1826,7 @@ class GUIMain01Class(xbmcgui.Window):
                      if (__verbose__ == "true"):      
                         GUIlog('menu jobs activated')
                      JobWindow = GUIJobWinClass()  
-                     time.sleep(1)
-                     __lock__.acquire(1)   
-                     del JobWindow
-                     __lock__.release() 
+
                      
                  if (choice == 4): 
 
@@ -1870,13 +1834,9 @@ class GUIMain01Class(xbmcgui.Window):
                     # Exit Addon                                 # 
                     ##############################################
 
-                     if (__verbose__ == "true"):
-                         GUIlog('menu exit activated')
-                     exit_script = False
-   
-          __lock__.acquire(1)   
-          self.close()
-          __lock__.release()  
+                    if (__verbose__ == "true"):
+                        GUIlog('menu exit activated')
+                    exit_script = False 
 
 #########################################################
 
@@ -1905,7 +1865,6 @@ class GUIWorkerThread(threading.Thread):
             global __ProgressView__ 
             global __jobs__ 
             global __exitFlag__
-
 
             exit = True
 
@@ -1950,7 +1909,7 @@ class GUIWorkerThread(threading.Thread):
                                 GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
    
                        __lock__.acquire(1)    
-                       ProgressView = __ProgressView_
+                       ProgressView = __ProgressView__
                        __lock__.release()     
 
                        # Process is running like expected ...
@@ -1967,18 +1926,14 @@ class GUIWorkerThread(threading.Thread):
                                 __lock__.release()
   
                                 if (__notifications__ == "true"):
-                                   GUINotification(__language__(33238))
-
-                                
-                     
+                                   GUINotification(__language__(33238))                    
 
             ############################################## 
             # Exit this worker-thread                    # 
             ##############################################
- 
-            thread.exit() 
-        
-                     
+             
+            GUIlog ("Addon worker-thread do terminate now ...")   
+
 #########################################################
 
 
@@ -2019,13 +1974,13 @@ if __name__ == '__main__':
       GUIlog ("Verbose log      : [" + "TRUE" + "]")
    else:
       GUIlog ("Release Addon    : [" + __version__ + "]")
-      GUIlog ("Verbose log      : [" + "TRUE" + "]")
+      GUIlog ("Verbose log      : [" + "FALSE" + "]")
  
    reference =  __language__(34000)    
    __linebreak__ = reference.find("Line-2")
 
-   if (__verbose__ == "true"):                  
-      GUIlog ("Linebreak     : [" +  str(__linebreak__) + "]")      
+   if (__verbose__ == "true"): 
+      GUIlog ("Linebreak        : [" +  str(__linebreak__) + "]")      
 
    if (__verbose__ == "true"):    
        GUIlog ("loading-configuration")   
@@ -2041,6 +1996,36 @@ if __name__ == '__main__':
    __disable_cp_trancode__ = __configuration__[59]
    __notifications__ = __configuration__[61]
 
+   if (__verbose__ == 'true'):
+      GUIlog("configuration index 00: [" + __configuration__[0] + "]")
+      GUIlog("configuration index 01: [" + __configuration__[1] + "]")  
+      GUIlog("configuration index 02: [" + __configuration__[2] + "]")              
+      GUIlog("configuration index 03: [" + __configuration__[3] + "]")
+      GUIlog("configuration index 04: [" + __configuration__[4] + "]")  
+      GUIlog("configuration index 05: [" + __configuration__[5] + "]") 
+      GUIlog("configuration index 06: [" + __configuration__[6] + "]")
+      GUIlog("configuration index 07: [" + __configuration__[7] + "]")  
+      GUIlog("configuration index 08: [" + __configuration__[8] + "]")              
+      GUIlog("configuration index 09: [" + __configuration__[9] + "]")
+      GUIlog("configuration index 10: [" + __configuration__[10] + "]") 
+      GUIlog("configuration index 11: [" + __configuration__[11] + "]")
+      GUIlog("configuration index 12: [" + __configuration__[12] + "]") 
+      GUIlog("configuration index 13: [" + __configuration__[13] + "]")      
+      GUIlog("configuration index 14: [" + __configuration__[14] + "]")
+      GUIlog("configuration index 15: [" + __configuration__[15] + "]")
+      GUIlog("configuration index 16: [" + __configuration__[16] + "]")
+      GUIlog("configuration index 17: [" + __configuration__[17] + "]")
+      GUIlog("configuration index 18: [" + __configuration__[18] + "]")
+      GUIlog("configuration index 19: [" + __configuration__[19] + "]")
+      GUIlog("configuration index 20: [" + __configuration__[20] + "]")
+      GUIlog("configuration index 21: [" + __configuration__[21] + "]")
+      GUIlog("configuration index 22: [" + __configuration__[22] + "]")
+      GUIlog("configuration index 23: [" + __configuration__[23] + "]")
+      GUIlog("configuration index 24: [" + __configuration__[24] + "]")
+      GUIlog("configuration index 25: [" + __configuration__[25] + "]") 
+      GUIlog("configuration index 50: [" + __configuration__[50] + "]")
+      GUIlog("configuration index 51: [" + __configuration__[51] + "]")  
+
 
    #############################################################
    # DVD Tracklists are handled diffrent between handbrake and #
@@ -2049,8 +2034,12 @@ if __name__ == '__main__':
  
    if (__default_dvd_tr__ == 3):
        __default_tr_mkv__ = True
+       if (__verbose__ == 'true'):
+           GUIlog("default transcode is set to [mkv]")
    else:
        __default_tr_mkv__ = False  
+       if (__verbose__ == 'true'):
+           GUIlog("default transcode is set to [handbrake]")
 
 
    ############################################## 
@@ -2313,15 +2302,18 @@ if __name__ == '__main__':
       thread2 = GUIWorkerThread()
       thread2.start()
 
+
+      Thread2State = thread2.isAlive()  
+
+
       ############################################## 
       # Create main-menu for addon                 # 
       ##############################################
 
-      menu01 = GUIMain01Class()
-      time.sleep(1) 
-      __lock__.acquire(1) 
-      del menu01
-      __lock__.release()  
+      menu01 = GUIMain01Class() 
+
+      if (__verbose__ == "true"):
+         GUIlog('prepare addon to exit ....')
 
       ############################################## 
       # Signal worker-thread to stop and exit      # 
@@ -2342,10 +2334,10 @@ if __name__ == '__main__':
             time.sleep(1)  
             if (__verbose__ == "true"):    
                GUIlog ("waiting for termination of thread2")
+
       if (__verbose__ == "true"):   
          GUIlog ("thread2 has been terminated and was detected to be running inside main-loop")
-
-      time.sleep(1)   
+        
       if ( __jobs__ == True):
           if (__notifications__ == "true"):
              GUINotification(__language__(33241))
@@ -2361,10 +2353,9 @@ if __name__ == '__main__':
    ############################################## 
    # Exit the addon                             # 
    ##############################################
-     
-   sys.modules.clear()
 
-       
+   GUIlog ("Addon do terminate now ...")
+      
 #########################################################
 #########################################################
 #########################################################

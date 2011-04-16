@@ -289,13 +289,13 @@ echo INFO starting dd
 # Normal dd operation
 
 (
-dd bs=2048 if=$1 of=$2/$3.iso &
+dd bs=2M if=$1 of=$2/$3.iso &
 ) > $OUT_TRANS 2>&1 &
 
 echo INFO dd command executed
 sleep 3
 
-PID=$(ps axu | grep "dd bs=2048" | grep -v grep |awk '{print $2}')
+PID=$(ps axu | grep "dd bs=2M" | grep -v grep |awk '{print $2}')
 if [ -z "$PID" ] ; then
    echo
    echo dd is not running after 3 secounds. Please check your
