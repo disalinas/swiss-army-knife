@@ -1126,7 +1126,6 @@ def OSChapterDVD(UsingMKV_Tracks):
                 # a track that is shorter than 120 secounds or all indexes are wrong  #
                 #######################################################################
 
-
                 if (UsingMKV_Tracks == True):
 
                     tcounter = line.count("[00:00")
@@ -1266,18 +1265,19 @@ def OSDVDExecuteList(auto_mode):
 
            # Device
            __exec_dvd__.append(tmp[0])
-
+          
            # DVD transcode directory
            __exec_dvd__.append(__configLinux__[4])
-
+                     
            # name
-           __exec_dvd__.append(tmp[1])
-
+           __exec_dvd__.append(tmp[1])    
+            
            # track
            __exec_dvd__.append(tmp[2])
-
+      
            # default language
            __exec_dvd__.append(tmp[3])
+   
 
            if (tmp[4] != 'none'):
                if (__verbose__ == "true"):
@@ -1296,9 +1296,6 @@ def OSDVDExecuteList(auto_mode):
                OSlog("dvd-handbrake.sh para: [" + str(x) +  "]  " + __exec_dvd__[x])
                x = x + 1
            parameters = parameters + 1
-
-       if (__verbose__ == "true"):
-           OSlog("dvd-handbrake.sh is using : " + str(parameters) + " parameters")
 
        # Add device
        GUIList.append(__language__(32151) + tmp[0])
@@ -2543,11 +2540,13 @@ def OSDVDTranscodeDefault(Paramlist):
     global __exec_dvd__
     global __verbose__
     
+    index = 0 
     para = [] 
     for word in Paramlist.split(' '):
         para.append(word)
         if (__verbose__ == "true"): 
-           OSlog("Transcode value prior to execute : [" + word + "]") 
+           OSlog("Transcode value prior to execute : [" + str(index) + "] [" + word + "]")
+        index = index + 1 
 
     # The para string contains all info for the default transcode-selection 
     # The secound parameter is the most importand one ...
@@ -2575,7 +2574,33 @@ def OSDVDTranscodeDefault(Paramlist):
        if (para[0] == 'psp'):
           state_tr = OSDVDtoPSP()
   
-    # we need only device directory name 
+
+    if (para[1] == '4'):
+
+       new_exec = []  
+       export_name = __exec_dvd__[2]
+       export_dir = para[4]
+       export_device = para[3]
+       export_track =  para[3] 
+
+       new_exec.append(export_device)
+       new_exec.append(export_dir) 
+       new_exec.append(export_name)
+       new_exec.append(export_track)
+
+       __exec_dvd__ = new_exec
+
+       if (__verbose__ == "true"): 
+          x = 0 
+          dvd_command = ""
+          for number in __exec_dvd__:
+              dvd_command = dvd_command + " " + __exec_dvd__[x]
+              x = x + 1  
+          OSlog("__exec_dvd__ filds simple [" + dvd_command + "]")  
+
+          state_tr = OSDVDtoMKV() 
+
+    # we need only device directory and a single name 
 
     if (para[1] == '3'):
 

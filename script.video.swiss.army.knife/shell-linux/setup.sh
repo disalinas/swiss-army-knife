@@ -19,16 +19,16 @@ SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
 # Current version of makemkv for 32 and 64 bit            #
 #########################################################
 
-MAKEMKV="v1.6.7"
+MAKEMKV="v1.6.10"
 
 if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
-   MAKEKMKV32="makemkv-swiss-army-knife-32-04-10-2011.tar.gz"
-   MAKEMKVBIN="makemkv-v1.6.7-bin_20110410-1_i386.deb"
-   MAKEMKVOSS="makemkv-v1.6.7-oss_20110410-1_i386.deb"
+   MAKEKMKV32="makemkv-swiss-army-knife-32-05-11-2011.tar.gz"
+   MAKEMKVBIN="makemkv-v1.6.10-bin_20110611-1_i386.deb"
+   MAKEMKVOSS="makemkv-v1.6.10-oss_20110611-1_i386.deb"
 else
-   MAKEKMKV64="makemkv-swiss-army-knife-64-04-10-2011.tar.gz"
-   MAKEMKVBIN="makemkv-v1.6.7-bin_20110410-1_amd64.deb"
-   MAKEMKVOSS="makemkv-v1.6.7-oss_20110410-1_amd64.deb"
+   MAKEKMKV64="makemkv-swiss-army-knife-64-05-11-2011.tar.gz"
+   MAKEMKVBIN="makemkv-v1.6.10-bin_20110611-1_amd64.deb"
+   MAKEMKVOSS="makemkv-v1.6.10-oss_20110611-1_amd64.deb"
 fi
 
 ###########################################################

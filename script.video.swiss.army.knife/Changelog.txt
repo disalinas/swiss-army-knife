@@ -331,9 +331,20 @@ Changes:
 - Default transcoding to makemkv was not running properly ....
 - A few speed-up operations ....
 - Blocksize for dd operation has ben increased to 2M 
+- Integrate installation / upgrade of makemkv 1.6.10 into setup.sh (only 32)
+- Integrate installation / upgrade of makemkv 1.6.10 into setup.sh (only 64)
 
+Testing default dvd operation 
 
+- h264-high
+- iso 
+- h264-low 
+ 
+Fixes:
 
+- In the case that the predefined audio or subtitle is not found on 
+  the current DVD a error message is displayed. ( In this case you have to 
+  transcode or ripp the dvd with the expert mode)
   
 
  

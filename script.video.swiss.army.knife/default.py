@@ -396,7 +396,7 @@ def GUISelectDVDTranscode():
     dvd_parameters.append("h264-high " +  "5 2 " + __configuration__[1] + " " + __configuration__[4] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
     dvd_parameters.append("iso " +  "3 0 " + __configuration__[1] + " " + __configuration__[3] + " " + "var1")
     dvd_parameters.append("h264-low " + "5 2 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
-    dvd_parameters.append("mkv " + "3 0 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1")
+    dvd_parameters.append("mkv " + "4 2 " +  __configuration__[1] + " " + __configuration__[13] + " " + "var1" + " " + "var2")
     dvd_parameters.append("vobcopy " + "3 0 " +  __configuration__[1] + " " + __configuration__[21] + " " + "var1")
     dvd_parameters.append("iphone " + "5 2 " +  __configuration__[1] + " " + __configuration__[50] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
     dvd_parameters.append("psp " + "5 2 " +  __configuration__[1] + " " + __configuration__[51] + " " + "var1" + " " + "var2" + " " + "var3" + " " + "var4")
@@ -1769,7 +1769,11 @@ class GUIMain01Class(xbmcgui.Window):
 
                                  if (tracklist[0] != 'none'):
                                      executeList = []
-                                     executeList = OSDVDExecuteList(True)   
+                                     executeList = OSDVDExecuteList(True)  
+
+                                     if (__verbose__ == "true"):
+                                         GUIlog(__dvd_values__[__default_dvd_tr__])
+                                    
                                      execstate = OSDVDTranscodeDefault(__dvd_values__[__default_dvd_tr__])    
                                      if (execstate == 0):
                                          GUIInfo(2,__language__(33209))
@@ -1919,14 +1923,14 @@ class GUIWorkerThread(threading.Thread):
                              if (modula == 0): 
                                 GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
 
-                          if (progress == 100):
-                             if (OSDetectLastStage() == True):
-                                __lock__.acquire(1)   
-                                __jobs__ == False
-                                __lock__.release()
+                       if (progress == 100):
+                           if (OSDetectLastStage() == True):
+                               __lock__.acquire(1)   
+                               __jobs__ == False
+                               __lock__.release()
   
-                                if (__notifications__ == "true"):
-                                   GUINotification(__language__(33238))                    
+                               if (__notifications__ == "true"):
+                                  GUINotification(__language__(33238))                    
 
             ############################################## 
             # Exit this worker-thread                    # 
@@ -2354,7 +2358,7 @@ if __name__ == '__main__':
    # Exit the addon                             # 
    ##############################################
 
-   GUIlog ("Addon do terminate now ...")
+   GUIlog ("Addon do terminate now ...cu ,-)")
       
 #########################################################
 #########################################################
