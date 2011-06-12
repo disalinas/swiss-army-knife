@@ -249,6 +249,7 @@
         <string id="33332">Répertoire PSP non trouvé ou non inscriptible !</string> 
         <string id="33333">Le mkv par défaut a besoin des fonctionnalités Blu-ray</string>   
         <string id="33334">Protection contre la copie détectée. Traiter quand même ?</string>
+        <string id="33335">Default languages (audio/subtitle) not found on this DVD !</string>  
            
         # Warning : do not modify this id !!!!   
 

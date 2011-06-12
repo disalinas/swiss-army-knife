@@ -249,6 +249,7 @@
         <string id="33332">PSP directory not found or writeable !</string>
         <string id="33333">Default mkv needs Bluray functions</string> 
         <string id="33334">Copy protection detected. Process anyway ?</string> 
+        <string id="33335">Default languages (audio/subtitle) not found on this DVD !</string>  
 
         # Warning : do not modify this id !!!!   
 
