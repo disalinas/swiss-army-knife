@@ -902,6 +902,13 @@ else
    read ans
    if [ $ans == "y" ] ; then
       architecture=`uname -m`
+
+      # Prior to installation we remove the old installation of makemkv 
+     
+      mkvpackets=$(dpkg -l | grep ^ii | grep makemkv | awk '{print $2}')
+      dpkg -r $mkvpackets 
+
+
       if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
          clear
          echo
