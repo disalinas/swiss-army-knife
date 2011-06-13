@@ -316,8 +316,8 @@ echo $VOLNAME > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DV
 
 echo $1 > $GUI_RETURN
 echo $VOLNAME >> $GUI_RETURN
-echo $LONGTRACK >> $GUI_RETURN
 echo 0 >> $GUI_RETURN
+echo $LONGTRACK >> $GUI_RETURN
 echo none >> $GUI_RETURN
 echo -n none >> $GUI_RETURN
 
