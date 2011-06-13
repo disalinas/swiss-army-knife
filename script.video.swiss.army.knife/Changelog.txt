@@ -347,6 +347,8 @@ Fixes:
   the current DVD a error message is displayed. ( In this case you have to 
   transcode or ripp the dvd with the expert mode)
 - Notificatons are only shown after reaching 5 % or higher ...
+- Disable Notifications on menu-point "Kill process" inside job-window.
+
 
   
 

@@ -1539,6 +1539,7 @@ class GUIJobWinClass(xbmcgui.Window):
       def __init__(self):
 
           global __jobs__ 
+          global __ProgressView__ 
           exit = True
 
           menu = []   
@@ -1573,6 +1574,10 @@ class GUIJobWinClass(xbmcgui.Window):
                  if (jobs == False):
                      GUIInfo(0,__language__(32177))
                  else:
+                     __lock__.acquire(1)  
+                     __ProgressView__  = True 
+                     __lock__.release()
+ 
                      state = OSKillProc()
                      if (state == 0):
                          GUIInfo(0,__language__(33206))
@@ -1581,7 +1586,12 @@ class GUIJobWinClass(xbmcgui.Window):
                          __lock__.release()  
                          exit = False
                      if (state == 1):
-                         GUIInfo(0,__language__(33310))     
+                         GUIInfo(0,__language__(33310))
+
+                     __lock__.acquire(1)  
+                     __ProgressView__  = False 
+                     __lock__.release()
+     
              if (choice == 2):  
                  removal = OSRemoveLock()  
              if (choice == 3):  
