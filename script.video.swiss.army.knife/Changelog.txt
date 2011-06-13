@@ -333,6 +333,7 @@ Changes:
 - Blocksize for dd operation has ben increased to 2M 
 - Integrate installation / upgrade of makemkv 1.6.10 into setup.sh (only 32)
 - Integrate installation / upgrade of makemkv 1.6.10 into setup.sh (only 64)
+- Create symbolic link for setup.sh inside addon-directory 
 
 Testing default dvd operation 
 

@@ -13,7 +13,7 @@
 # Setup all files and directorys for the addon            #
 ###########################################################
 SCRIPTDIR="$HOME/.xbmc/addons/script.video.swiss.army.knife/shell-linux"
-
+cd $SCRIPTDIR
 
 ###########################################################
 # Current version of makemkv for 32 and 64 bit            #
