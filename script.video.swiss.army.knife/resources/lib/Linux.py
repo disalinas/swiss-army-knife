@@ -1292,9 +1292,7 @@ def OSDVDExecuteList(auto_mode):
        x = 0
        parameters = 0
        for number in __exec_dvd__:
-           if (__verbose__ == "true"):
-               OSlog("dvd-handbrake.sh para: [" + str(x) +  "]  " + __exec_dvd__[x])
-               x = x + 1
+           x = x + 1
            parameters = parameters + 1
 
        # Add device
@@ -2185,7 +2183,6 @@ def OSDVDtoMKV():
     if (__verbose__ == "true"):
         OSlog("mkv parameters : " + str(parameters))      
 
-
     xbmc.executebuiltin("ActivateWindow(busydialog)")
 
     # Execution of shell-script dvd9.sh inside shell-linux
@@ -2196,7 +2193,7 @@ def OSDVDtoMKV():
     # Prepare command string
 
     dvd_command = ""
-    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2]
+    dvd_command = dvd_command + " " + __exec_dvd__[0] + " " + __exec_dvd__[1] + " " + __exec_dvd__[2] + " " + __exec_dvd__[3]
 
     if (__verbose__ == "true"):
         OSlog("final :" + dvd_command)
@@ -2542,10 +2539,9 @@ def OSDVDTranscodeDefault(Paramlist):
     
     index = 0 
     para = [] 
+
     for word in Paramlist.split(' '):
         para.append(word)
-        if (__verbose__ == "true"): 
-           OSlog("Transcode value prior to execute : [" + str(index) + "] [" + word + "]")
         index = index + 1 
 
     # The para string contains all info for the default transcode-selection 
@@ -2574,19 +2570,21 @@ def OSDVDTranscodeDefault(Paramlist):
        if (para[0] == 'psp'):
           state_tr = OSDVDtoPSP()
   
-
     if (para[1] == '4'):
 
-       new_exec = []  
+       new_exec = []
+       export_track = 0 
+   
        export_name = __exec_dvd__[2]
        export_dir = para[4]
-       export_device = para[3]
-       export_track =  para[3] 
+       export_device = __exec_dvd__[0]
+       export_track = int (__exec_dvd__[4])
+       export_track = export_track - 1       
 
        new_exec.append(export_device)
        new_exec.append(export_dir) 
        new_exec.append(export_name)
-       new_exec.append(export_track)
+       new_exec.append(str(export_track))
 
        __exec_dvd__ = new_exec
 
@@ -2597,7 +2595,6 @@ def OSDVDTranscodeDefault(Paramlist):
               dvd_command = dvd_command + " " + __exec_dvd__[x]
               x = x + 1  
           OSlog("__exec_dvd__ filds simple [" + dvd_command + "]")  
-
           state_tr = OSDVDtoMKV() 
 
     # we need only device directory and a single name 
@@ -2627,8 +2624,6 @@ def OSDVDTranscodeDefault(Paramlist):
           OSlog("simple transcoding selected")
        if (para[0] == 'iso'):
           state_tr = OSDVDcopyToIso()  
-       if (para[0] == 'mkv'):
-          state_tr = OSDVDtoMKV() 
        if (para[0] == 'vobcopy'):
           state_tr = OSDVDvcopy() 
  
