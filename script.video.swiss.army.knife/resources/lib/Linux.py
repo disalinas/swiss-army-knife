@@ -12,7 +12,7 @@
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
 # VERSION : 0.6.20                                      #
-# DATE    : 11-04-11                                    #
+# DATE    : 13-06-11                                    #
 # STATE   : Beta 5                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
