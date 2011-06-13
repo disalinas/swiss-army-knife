@@ -306,6 +306,7 @@ LONGDURATION=$(cat $HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife
 echo "INFO track summery"
 echo "INFO [track:[$LONGTRACK]  duration:[$LONGDURATION]]"
 echo "INFO [volname:[$VOLNAME]]"
+echo "INFO [index autoselect : $LONGTRACK]"
 echo
 echo $1 > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $LONGTRACK >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
@@ -316,22 +317,24 @@ echo $VOLNAME > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DV
 echo $1 > $GUI_RETURN
 echo $VOLNAME >> $GUI_RETURN
 echo $LONGTRACK >> $GUI_RETURN
-
-
+echo 0 >> $GUI_RETURN
+echo none >> $GUI_RETURN
+echo -n none >> $GUI_RETURN
 
 ###########################################################
-
-
-
-
-
-
-
 
 
 echo
 echo ----------------------- script rc=0 -----------------------------
 echo -----------------------------------------------------------------
+
+
+echo ----------------------- GUI_RETURN ------------------------------
+cat $GUI_RETURN 
+echo
+echo ----------------------------------------------------------------- 
+   
+
 
 exit $ZERO
 
