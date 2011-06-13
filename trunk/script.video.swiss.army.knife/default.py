@@ -14,7 +14,7 @@
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
 # VERSION : 0.6.20                                      #
-# DATE    : 11-04-11                                    #
+# DATE    : 13-06-11                                    #
 # STATE   : Beta 5                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -38,7 +38,7 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "11-04-2011"
+__date__ 		= "13-06-2011"
 __version__ 		= "0.6.20"
 __code_name__           = "Avatar"
 __XBMC_Revision__ 	= "35648"
@@ -2106,8 +2106,6 @@ if __name__ == '__main__':
         GUIlog("Error in startup-configuration")
         exit   
 
-
-
    ############################################## 
    # Check container ssh-log files              # 
    ##############################################
@@ -2181,9 +2179,6 @@ if __name__ == '__main__':
    else:
         GUIlog("Error in startup-configuration")
         exit  
-
-
-
 
    ############################################## 
    # Check container dvd-h264 files             # 
