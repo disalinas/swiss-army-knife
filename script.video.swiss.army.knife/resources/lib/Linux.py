@@ -1126,13 +1126,16 @@ def OSChapterDVD(UsingMKV_Tracks):
                 # a track that is shorter than 120 secounds or all indexes are wrong  #
                 #######################################################################
 
-                if (UsingMKV_Tracks == True):
+                ## if (UsingMKV_Tracks == True):
 
-                    tcounter = line.count("[00:00")
-                    if (tcounter == 0): 
-                        tracklist.append(line)
-                else:
-                    tracklist.append(line)
+                ##    tcounter = line.count("[00:00")
+                ##    if (tcounter == 0): 
+                ##        tracklist.append(line)
+                ## else:
+                ##    tracklist.append(line)
+ 
+                tracklist.append(line)
+
         trackfile.close
         return tracklist
     else:
@@ -2579,8 +2582,7 @@ def OSDVDTranscodeDefault(Paramlist):
        export_dir = para[4]
        export_device = __exec_dvd__[0]
        export_track = int (__exec_dvd__[4])
-       export_track = export_track - 1       
-
+     
        new_exec.append(export_device)
        new_exec.append(export_dir) 
        new_exec.append(export_name)

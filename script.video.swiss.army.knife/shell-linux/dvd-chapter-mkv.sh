@@ -94,7 +94,7 @@ echo ---------------------------------------------------------------------------
 ###########################################################
 
 OUTPUT_ERROR="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log/bluray-error.log"
-GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI"
+GUI_RETURN="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/DVD_GUI"
 OUTPUT="$HOME/.xbmc/userdata/addon_data/script.video.swiss.army.knife/tmp/bluray-chapter"
 
 ZERO=0
@@ -312,6 +312,12 @@ echo $LONGTRACK >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/med
 echo $LONGDURATION >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $VOLNAME >> ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/media/BR_GUI
 echo $VOLNAME > ~/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd/DVD_VOLUME
+
+echo $1 > $GUI_RETURN
+echo $VOLNAME >> $GUI_RETURN
+echo $LONGTRACK >> $GUI_RETURN
+
+
 
 ###########################################################
 
