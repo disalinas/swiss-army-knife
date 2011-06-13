@@ -346,6 +346,8 @@ Fixes:
 - In the case that the predefined audio or subtitle is not found on 
   the current DVD a error message is displayed. ( In this case you have to 
   transcode or ripp the dvd with the expert mode)
+- Notificatons are only shown after reaching 5 % or higher ...
+
   
 
  

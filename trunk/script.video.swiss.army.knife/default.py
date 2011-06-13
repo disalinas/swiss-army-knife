@@ -655,7 +655,7 @@ class GUIExpertTranscodeClass(xbmcgui.Window):
                                       execlist.append(__configuration__[1])
                                       execlist.append(savedir)
                                       execlist.append(volname)
-                                      execlist.append(track)
+                                      execlist.append(str(track))
                                       OSDVDAdd(execlist)
        
                                       execstate =  OSDVDtoMKV()
@@ -1763,16 +1763,15 @@ class GUIMain01Class(xbmcgui.Window):
                                  tracklist = []
 
                                  if (__default_tr_mkv__ == True): 
-                                    tracklist = OSChapterDVD(False)
+                                    tracklist = OSChapterDVD(True)
                                  else:
                                     tracklist = OSChapterDVD(False)
+
+                                 GUIlog(tracklist)  
 
                                  if (tracklist[0] != 'none'):
                                      executeList = []
                                      executeList = OSDVDExecuteList(True)  
-
-                                     if (__verbose__ == "true"):
-                                         GUIlog(__dvd_values__[__default_dvd_tr__])
                                     
                                      execstate = OSDVDTranscodeDefault(__dvd_values__[__default_dvd_tr__])    
                                      if (execstate == 0):
@@ -1921,7 +1920,9 @@ class GUIWorkerThread(threading.Thread):
                        if ((mainprocess == 0) and (ProgressView == False)):
                           if (__notifications__ == "true"):
                              if (modula == 0): 
-                                GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
+                                Percent = OSGetStageCurrentIndex()
+                                if (Percent >= 5):
+                                    GUINotification(str(progress) + " % " + str(OSGetStageCurrentIndex())  + "/" +  str(OSGetStagesCounter()))
 
                        if (progress == 100):
                            if (OSDetectLastStage() == True):
