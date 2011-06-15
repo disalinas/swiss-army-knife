@@ -1,0 +1,94 @@
+First-Run-Guide for Version 0.6.20
+----------------------------------
+
+NOTE!
+
+This is for all the Nubes out there. Follow these instructions and you should get the install right the first time. Make sure the answer is yes to both these questions.
+1. Your installation is XBMC LIVE
+2. This is your first time installing SAK (Swiss Army Knife).
+Note! This software is in beta mode there are known and unknown bugs.
+
+Step 1.
+Download the add-on repository zip file here.
+http://luxeria-repository.googlecode.com/files/repository.luxeria.zip
+
+Step 2.
+Put the file onto a USB Drive.
+Insert USB Drive into your XBMC machine.
+
+Use the menu on xbmc to locate file:
+SYSTEM – ADD ON'S – INSTALL FROM ZIP
+Locate zip drive and open
+Locate repository.luxeria.zip
+Highlight and Select OK
+“A message should pop up informing you the file was installed.”
+
+Step 3.
+Using the xbmc menu go to: SYSTEM- ADD ON'S – GET ADD ON'S – LUXERIA ADD ON'S – PROGRAM ADD ON'S – SWISS ARMY KNIFE
+
+Highlight SWISS ARMY KNIFE and hit the ENTER key.
+Select INSTALL then ENTER key
+“A message will come up saying “Swiss Army Knife Enabled”
+
+Step 4.
+Exit out to main menu of XBMC.
+On your Keyboard hit CTL -ALT – F2
+This brings you to a terminal.
+
+Log in with your user name and password.
+Now we need to go to the setup directory. Use this command: Take note of the period in front of the .xbmc
+
+cd .xbmc/addons/script.video.swiss.army.knife/shell-linux
+
+If this does not get you to the shell-linux directory you are typing something wrong.
+Try going one directory at a time.
+cd .xbmc
+cd addons
+cd script.video.swiss.army.knife
+cd shell-linux
+Once inside the shell-linux directory type this command.
+Note! Where it says user-name insert the user name you used when you installed xbmc.
+
+sudo bash setup.sh user-name
+
+Hit the Enter key and the license acceptance screen will come up.
+Enter Y (yes) when asked. You will be asked 5 or 6 times during the install.
+
+When you get to “Generating public / private license rsa key pair” “Enter file in which to save key”
+Just hit the ENTER key to use the default.
+
+Next it will ask for a password leave this blank. Just hit Enter and Enter again to confirm.
+Next it will ask you “ Are you sure you want to continue connecting” Type YES and hit the ENTER key.
+
+Now it will ask you for your XBMC password. This is the password you used when you installed xbmc. (This is NOT the blank password you just created in the prior step).
+Type your password then ENTER.
+
+Now continue selecting Y (yes) to finish installing the supporting programs.
+When you get to the Mr. Luemmels congratulations screen, your half way there.
+
+
+Step 5.
+Now reboot your machine.
+
+sudo reboot
+
+Your now back at the main screen. Note! If your back in the terminal again try rebooting a second time.
+Now you need to tell SAK (Swiss – Army – Knife) where to rip your files to and you need to change the user name from local to your actual xbmc user name.
+
+From the main menu go to:
+SYSTEM – ADD ON'S – SWISS ARMY KNIFE
+Select CONFIGURE
+Scroll down to VARIOUS SETTINGS – DEFAULT SSH COMMANDS and change the user from local@localhost to whatever your XBMC user name is@localhost. Example: johnj1@localhost
+
+Now you can change the directories where you want your movies stored as you rip them.
+
+Normally this would be the same folder you house your movies. You can also leave the current defaults but you will probably want to create a link to that location from the main VIDEO menu.
+
+Once done save the settings and exit to the main menu.
+
+For a detailled overview all settings goto Appendix a.) of the Readme.Linux 
+
+Go to PROGRAMS and you will see SWISS ARMY KNIFE. Select it.
+Now the fun begins start backing up your collection
+
+
