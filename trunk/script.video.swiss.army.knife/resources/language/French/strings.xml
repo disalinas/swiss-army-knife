@@ -48,7 +48,7 @@
         <string id="32084">Désactiver le transcodage de la copie protégée du dvd à partir du menu principal</string> 
         <string id="32085">Désactiver la vérification pour la licence makemkv expirée</string>
         <string id="32086">Activer les notifications pour le traitement courant</string> 
-        <string id="32087">Detect Structur-Protection</string> 
+        <string id="32087">Structur Detect-protection</string> 
                 
  
   
@@ -249,7 +249,7 @@
         <string id="33332">Répertoire PSP non trouvé ou non inscriptible !</string> 
         <string id="33333">Le mkv par défaut a besoin des fonctionnalités Blu-ray</string>   
         <string id="33334">Protection contre la copie détectée. Traiter quand même ?</string>
-        <string id="33335">Default languages (audio/subtitle) not found on this DVD !</string>  
+        <string id="33335">Langues par défaut pas sur ce DVD !</string>  
            
         # Warning : do not modify this id !!!!   
 
