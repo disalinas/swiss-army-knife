@@ -319,7 +319,7 @@ Fixes:
 
 
 ----------------------------------------------------------------------------------------------------
-Date : 11.04.2011 | Release : 0.6.20    | Author  : H.Weber | CVS:497
+Date : 11.04.2011 | Release : 0.6.20    | Author  : H.Weber | CVS:497-514
 ----------------------------------------------------------------------------------------------------
 
 Changes:
@@ -334,12 +334,6 @@ Changes:
 - Integrate installation / upgrade of makemkv 1.6.10 into setup.sh (only 32)
 - Integrate installation / upgrade of makemkv 1.6.10 into setup.sh (only 64)
 - Create symbolic link for setup.sh inside addon-directory 
-
-Testing default dvd operation 
-
-- h264-high
-- iso 
-- h264-low 
  
 Fixes:
 
