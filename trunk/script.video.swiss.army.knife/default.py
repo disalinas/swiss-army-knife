@@ -13,8 +13,8 @@
 #           - transcode dvd to multiple formats         #
 #             including Appple Iphone and Sony PSP      # 
 #           - Integration of user-functions 1-9         #
-# VERSION : 0.6.20                                      #
-# DATE    : 13-06-11                                    #
+# VERSION : 0.6.21                                      #
+# DATE    : 23-06-11                                    #
 # STATE   : Beta 5                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
@@ -38,9 +38,9 @@ __author__ 		= "Hans Weber"
 __url__ 		= "http://code.google.com/p/swiss-army-knife/"
 __svn_url__ 		= "https://swiss-army-knife.googlecode.com/svn/trunk"
 __platform__ 		= "xbmc media center, [LINUX]"
-__date__ 		= "13-06-2011"
-__version__ 		= "0.6.20"
-__code_name__           = "Avatar"
+__date__ 		= "23-06-2011"
+__version__ 		= "0.6.21"
+__code_name__           = "V for vendetta"
 __XBMC_Revision__ 	= "35648"
 __index_config__        = 65
 __credits__             = "a bunch of gpl-devs"
