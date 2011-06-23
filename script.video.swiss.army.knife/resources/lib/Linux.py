@@ -11,8 +11,8 @@
 # TASKS   : This python code contains only os-dependet  #
 #           functions and must be rewritten for every   #
 #           os that should exexcute this addon.         #
-# VERSION : 0.6.20                                      #
-# DATE    : 13-06-11                                    #
+# VERSION : 0.6.21                                      #
+# DATE    : 23-06-11                                    #
 # STATE   : Beta 5                                      #
 # LICENCE : GPL 3.0                                     #
 #########################################################
