@@ -354,6 +354,8 @@ Changes:
 - Initial-Work for release named "V for vendetta"
 - Integrate source-code for makemkv 1.6.14 into project-url
 - Integrate installation / upgrade of makemkv 1.6.14 into setup.sh (only 32)
+- Integrate installation / upgrade of makemkv 1.6.14 into setup.sh (only 64)
+- Update-Directory to downloaded new releases of handbrake and makemkv 
 
 Fixes:
 
