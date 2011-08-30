@@ -26,9 +26,9 @@ if [ "$architecture" != "x86_64" ] && [ "$architecture" != "ia64" ]; then
    MAKEMKVBIN="makemkv-v1.6.14-bin_20110829-1_i386.deb"
    MAKEMKVOSS="makemkv-v1.6.14-bin_20110829-1_i386.deb"
 else
-   MAKEKMKV64="makemkv-swiss-army-knife-64-05-11-2011.tar.gz"
-   MAKEMKVBIN="makemkv-v1.6.10-bin_20110611-1_amd64.deb"
-   MAKEMKVOSS="makemkv-v1.6.10-oss_20110611-1_amd64.deb"
+   MAKEKMKV64="makemkv-swiss-army-knife-64-30-08-2011.tar.gz"
+   MAKEMKVBIN="makemkv-v1.6.14-bin_20110830-1_amd64.deb"
+   MAKEMKVOSS="makemkv-v1.6.14-oss_20110830-1_amd64.deb"
 fi
 
 ###########################################################
@@ -303,6 +303,7 @@ echo inside /dvdrip and the default user-script directory
 echo inside the home-folder of /home/$1 ?
 echo
 echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
+echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/update-bin
 echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray
 echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/dvd
 echo /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/log
@@ -338,6 +339,11 @@ if [ $ans == "y" ] ; then
    if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife ] ; then
       mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
       chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife
+   fi
+
+   if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/update-bin ] ; then
+      mkdir /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/update-bin
+      chown -R $1:$1 /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/update-bin
    fi
 
    if [ ! -e /home/$1/.xbmc/userdata/addon_data/script.video.swiss.army.knife/bluray ] ; then
