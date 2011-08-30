@@ -80,6 +80,7 @@ __enable_network__  = 'false'
 __enable_burning__  = 'false'
 __enable_customer__ = 'false'
 __enable_pw_mode__  = 'false'
+__enable_check_update__ = 'false'
 __verbose__         = 'false'
 __disable_cp_trancode__ = 'false'
 __notifications__ = 'false'
@@ -2010,6 +2011,7 @@ if __name__ == '__main__':
    __allways_default__ = __configuration__[58]   
    __disable_cp_trancode__ = __configuration__[59]
    __notifications__ = __configuration__[61]
+   __enable_check_update__ = __configuration__[63]
 
    if (__verbose__ == 'true'):
       GUIlog("configuration index 00: [" + __configuration__[0] + "]")
@@ -2176,6 +2178,7 @@ if __name__ == '__main__':
               if (__verbose__ == "true"):        
                  GUIlog ("checking for expired makemkv licence is not executed because addon-configuration")
 
+
               ############################################## 
               # Check container bluray-mkv files           # 
               ##############################################
@@ -2286,6 +2289,16 @@ if __name__ == '__main__':
    else:
         GUIlog("Error in startup-configuration")
         exit  
+
+
+   ############################################## 
+   # Check for updated binarys                  # 
+   ##############################################
+
+   if ( Enable_Startup_Addon == 0): 
+       if ( __enable_check_update__ == 'true'):
+          GUIlog("Checking for updated packages on project-url")   
+       
 
    ############################################## 
    # Start addon only in the case of no errors  # 
