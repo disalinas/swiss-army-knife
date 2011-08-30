@@ -48,7 +48,8 @@
         <string id="32084">Disable copy protected dvd's from main menu</string> 
         <string id="32085">Disable checking for Makemkv licence</string>       
         <string id="32086">Enable notifications</string> 
-        <string id="32087">Detect Structur-Protection</string>           
+        <string id="32087">Detect Structur-Protection</string> 
+        <string id="32088">Check for updated packages</string>            
 
         <!--              --> 
         <!-- Window-Names -->
